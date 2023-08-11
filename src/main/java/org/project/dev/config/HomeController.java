@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
 
+
+    /*
+    TODO : 만든 사람 (이메일 주소나 영문명)
+       메소드 설명 ~
+        필수 데이터 ~
+     */
     @GetMapping
     public String index(){
 
