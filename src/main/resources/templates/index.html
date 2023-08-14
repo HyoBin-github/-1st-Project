@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">:
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>메인 페이지</title>
 </head>
 <body>
-<h1>index</h1>
+<h1>메인 페이지</h1>
+<p>이 사이트를 접속하면 제일 처음 만나는 페이지 입니다</p>
+<p>이 사이트에 처음 들어오는 요청은 무조건 모두 homecontroller의 index메소드를 거쳐야 하고
+다른 방식으로 우회해서 들어올 경우에도 로그인이 안되어 있다면 이 페이지로 자동으로 이동하게 되어야 합니다!!
+메인 페이지인만큼 여러가지 기능이 들어갈 생각입니다
+</p>
+
 </body>
 </html>
