@@ -38,8 +38,8 @@ public class InquiryService {
         return 1;
     }
 
-    public Page<InquiryDto> InquiryList(Pageable pageable) {
-    }
+    public Page<InquiryDto> InquiryList(Pageable pageable) {}
+
      /*
   Todo
    1. rladpwls1843@gamil.com
