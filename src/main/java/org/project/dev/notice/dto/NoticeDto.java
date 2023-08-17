@@ -1,6 +1,7 @@
-package org.project.dev.dto;
+package org.project.dev.notice.dto;
 
 import lombok.*;
+import org.project.dev.notice.entity.NoticeEntity;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -16,8 +17,18 @@ public class NoticeDto {
     private String notContent; // 공지사항 글 내용
     private String notWriter; // 공지사항 글 작성자
     private int notHit;  // 공지사항 글 조회수
-    private LocalDateTime createDate;
+    private LocalDateTime createDate; // 공지사항 생성시간
+    private LocalDateTime updateDate; // 공지사항 수정시간
 
-    private LocalDateTime updateDate;
-
+    public static NoticeDto tonoticeDto(NoticeEntity noticeEntity) {
+        NoticeDto noticeDto = new NoticeDto();
+        noticeDto.setNotId(noticeEntity.getNotId());
+        noticeDto.setNotTitle(noticeEntity.getNotTitle());
+        noticeDto.setNotContent(noticeEntity.getNotContent());
+        noticeDto.setNotWriter(noticeEntity.getNotWriter());
+        noticeDto.setNotHit(noticeEntity.getNotHit());
+        noticeDto.setCreateDate(noticeEntity.getCreateDate());
+        noticeDto.setUpdateDate(noticeEntity.getUpdateDate());
+        return noticeDto;
+    }
 }

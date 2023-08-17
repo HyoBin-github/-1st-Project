@@ -1,6 +1,7 @@
-package org.project.dev.entity;
+package org.project.dev.notice.entity;
 
 import lombok.*;
+import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
@@ -17,9 +18,8 @@ public class NoticeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "not_id")
-    private Long notId; // 공지사항 ID -> 순서 아님
-    // html에 변수 사용하지 않고 다른 방법 해보는 건 어떄욥.
-    // 삭제 할 떄 순서가 이상해져서
+    private Long notId; // 공지사항 ID
+    // notID
     @Column(name = "not_title", nullable = false)
     private String notTitle; // 공지사항 글 제목
     @Column(name = "notContent", nullable = false)
@@ -28,6 +28,16 @@ public class NoticeEntity extends BaseEntity {
     private String notWriter; // 공지사항 글 작성자
     @Column(name = "notHit", nullable = false)
     private int notHit; // 공지사항 글 조회수
+
+
+    public static NoticeEntity toNoticeEntityInsert(NoticeDto noticeDto) {
+        NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNotTitle(noticeDto.getNotTitle());
+        noticeEntity.setNotContent(noticeDto.getNotContent());
+        noticeEntity.setNotWriter(noticeDto.getNotWriter());
+        noticeEntity.setNotHit(0);
+        return noticeEntity;
+    }
 
     // 연관관계
     // 1:N 관리자
