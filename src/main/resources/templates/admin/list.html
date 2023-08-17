@@ -4,7 +4,7 @@
       layout:decorate="~{fragments/layout/baseLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>어드민 메인 페이지</title>
+    <title>판매자 상품 리스트</title>
 </head>
 <body>
     <div class="header">
@@ -21,8 +21,21 @@
             </div>
         </div>
     </div>
-    <h1>login 페이지에서 로그인을 성공 했다면 넘어오는 페이지 입니다.</h1>
-    <p>이 페이지는 판매자가 자신이 등록한 상품 리스트 혹은 상품 등록 삭제 등등을 할수있는 페이지 입니다!</p>
+    <div class="content">
+        <ul>
+            <li>
+                <div class="productList">
+                    <a th:href="@{/}">
+                        <img th:src="@{/detail}" alt="no img">
+                    </a>
+                    <div class="title">상품 제목</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    .
+
 
 
 </body>
