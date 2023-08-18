@@ -164,5 +164,6 @@ public class NoticeController {
         }
         return "redirect:/notice/List";
     }
+    /*수정수정*/
 
 }
