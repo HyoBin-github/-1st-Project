@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>공지사항 작성</title>
+    <link rel="stylesheet" th:href="@{/css/notice/write.css}">
 </head>
 <body>
-$END$
+<div th:replace="~{fragments/common/header :: headerFragment}">
+    <div class="container">
+        <div class="write">
+            <div class="write-con">
+
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
