@@ -36,9 +36,8 @@ public class HomeController {
      3. 없음
      4. 없음
      */
-    @GetMapping("/index")
-    public String index(Model model){
-
-        return "index";
+    @GetMapping("/kream")
+    public String kream(){
+        return "kream";
     }
 }
