@@ -24,4 +24,3 @@ public class BaseEntity {
     @Column(insertable = false)
     private LocalDateTime updateDate;
 }
-/*createTime으로 하면 안되나욥*/

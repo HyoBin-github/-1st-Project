@@ -152,4 +152,54 @@ public class NoticeService {
     public void NoticeHit(Long id){
         noticeReopsitory.NoticeHit(id);
     }
+
+    /*
+    TODO
+    공지사항 수정하기 서비스
+    */
+    public NoticeDto NoticeUpdate(Long id) {
+        Optional<NoticeEntity> optionalNoticeEntity
+                = Optional.ofNullable(noticeReopsitory.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("공지사항을 찾을 수 없습니다.");
+        }));
+        if(optionalNoticeEntity.isPresent()){
+            NoticeDto noticeDto = NoticeDto.tonoticeDto(optionalNoticeEntity.get());
+            return noticeDto;
+        }
+        return null;
+    }
+
+    public int NoticeUpdateOk(NoticeDto noticeDto) {
+        Optional<NoticeEntity> optionalNoticeEntity
+                = Optional.ofNullable(noticeReopsitory.findById(noticeDto.getNotId()).orElseThrow(() -> {
+            return new IllegalArgumentException("수정할 공지사항이 없습니다.");
+        }));
+
+        NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityUpdate(noticeDto);
+
+        Long noticeId = noticeReopsitory.save(noticeEntity).getNotId();
+
+        Optional<NoticeEntity> optionalNoticeEntity1
+                = Optional.ofNullable(noticeReopsitory.findById(noticeId).orElseThrow(() -> {
+                return new IllegalArgumentException("수정할 공지사항이 없습니다.");
+        }));
+        if(optionalNoticeEntity.isPresent()){
+            return 1;
+        }
+        return 0;
+    }
+
+    public int NoticeDelete(Long id) {
+        Optional<NoticeEntity> optionalNoticeEntity
+                = Optional.ofNullable(noticeReopsitory.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("삭제할 공지사항이 없습니다.");
+        }));
+        noticeReopsitory.delete(optionalNoticeEntity.get());
+
+        Optional<NoticeEntity> optionalNoticeEntity1 = noticeReopsitory.findById(id);
+        if (!optionalNoticeEntity.isPresent()){
+            return 1;
+        }
+        return 0;
+    }
 }

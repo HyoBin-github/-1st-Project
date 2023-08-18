@@ -66,24 +66,24 @@ public class NoticeController {
      4.
      */
     @GetMapping("/List")
-    public String getNoticeList(@PageableDefault(page = 0, size = 3, sort = "id",
+    public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "id",
             direction = Sort.Direction.DESC)Pageable pageable, Model model){
 
         /*pagingNoticeList noticeList*/
-        Page<NoticeDto> pagingNoticeList = noticeService.NoticeList(pageable);
+        Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
 
-        Long totalCount = pagingNoticeList.getTotalElements();
-        int totalPage = pagingNoticeList.getTotalPages();
-        int pageSize = pagingNoticeList.getSize();
-        int nowPage = pagingNoticeList.getNumber();
-        int blockNum = 3;
+        Long totalCount = noticeList.getTotalElements();
+        int totalPage = noticeList.getTotalPages();
+        int pageSize = noticeList.getSize();
+        int nowPage = noticeList.getNumber();
+        int blockNum = 10;
 
         int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
                 (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if(!pagingNoticeList.isEmpty()){
-            model.addAttribute("noticeList", pagingNoticeList);
+        if(!noticeList.isEmpty()){
+            model.addAttribute("noticeList", noticeList);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
             return "notice/List";
@@ -121,6 +121,48 @@ public class NoticeController {
 //        공지사항 로그인 하면 보이게 하는지?
 //        model.addAttribute("myUserDetails", myUserDetails);
         return "notice/detail";
+    }
+
+    /*
+    TODO
+    공지사항 글 수정 페이지로 이동
+    공지사항은 수정되면 안되도록 하기로 했는데 할지 말지
+    */
+    @GetMapping("/update/{id}")
+    public String getNoticeUpdate(@PathVariable("id") Long id, Model model){
+        NoticeDto noticeDto = noticeService.NoticeUpdate(id);
+
+        if(noticeDto != null){
+            model.addAttribute("notice", noticeDto);
+            return "notice/update";
+        }
+        return "redirect:/notice/List";
+    }
+    @PostMapping("/update")
+    public String postNoticeUpdate(NoticeDto noticeDto){
+        int rs = noticeService.NoticeUpdateOk(noticeDto);
+
+        if(rs == 1){
+            System.out.println("수정 성공");
+        }else{
+            System.out.println("수정 실패");
+        }
+        return "redirect:/notice/List";
+    }
+    /*
+    TODO
+    공지사항 글 삭제 페이지로 이동
+    공지사항이 삭제되도 괜찮은지
+    */
+    @GetMapping("/delete/{id}")
+    public String getNoticeDelete(@PathVariable("id") Long id){
+        int rs = noticeService.NoticeDelete(id);
+        if(rs == 1){
+            System.out.println("공지사항 삭제");
+        }else{
+            System.out.println("공지사항 삭제 실패");
+        }
+        return "redirect:/notice/List";
     }
 
 }

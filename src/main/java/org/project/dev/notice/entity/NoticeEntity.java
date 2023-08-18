@@ -39,6 +39,15 @@ public class NoticeEntity extends BaseEntity {
         return noticeEntity;
     }
 
+    public static NoticeEntity toNoticeEntityUpdate(NoticeDto noticeDto) {
+        NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNotTitle(noticeDto.getNotTitle());
+        noticeEntity.setNotContent(noticeDto.getNotContent());
+        noticeEntity.setNotWriter(noticeDto.getNotWriter());
+        noticeEntity.setNotHit(noticeDto.getNotHit());
+        return noticeEntity;
+    }
+
     // 연관관계
     // 1:N 관리자
 }

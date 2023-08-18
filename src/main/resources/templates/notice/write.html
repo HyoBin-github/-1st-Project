@@ -10,7 +10,23 @@
     <div class="container">
         <div class="write">
             <div class="write-con">
-
+                <form th:action="@{/notice/write}" method="post" th:object="${noticeDto}">
+                    <div class="write-form">
+                        <h1>공지사항 작성</h1>
+                        <ul>
+                            <li>
+                                <select name="Type">
+                                    <option value="none">===종류 선택===</option>
+                                    <option value="product">상품</option>
+                                    <option value="delivery">배송</option>
+                                    <option value="holiday">공휴일</option>
+                                </select>
+                                <label th:for="title">제목</label>
+                                <input type="text" th:field="*{notTitle}">
+                            </li>
+                        </ul>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
