@@ -21,7 +21,7 @@ public class NoticeEntity extends BaseEntity {
     private Long notId; // 공지사항 ID
     // notID
     @Column(name = "not_title", nullable = false)
-    private String notTitle; // 공지사항 글 제목
+    private String noticeTitle; // 공지사항 글 제목
     @Column(name = "notContent", nullable = false)
     private String notContent; // 공지사항 글 내용
     @Column(name = "notWriter", nullable = false)
@@ -32,7 +32,7 @@ public class NoticeEntity extends BaseEntity {
 
     public static NoticeEntity toNoticeEntityInsert(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = new NoticeEntity();
-        noticeEntity.setNotTitle(noticeDto.getNotTitle());
+        noticeEntity.setNoticeTitle(noticeDto.getNotTitle());
         noticeEntity.setNotContent(noticeDto.getNotContent());
         noticeEntity.setNotWriter(noticeDto.getNotWriter());
         noticeEntity.setNotHit(0);
@@ -41,7 +41,7 @@ public class NoticeEntity extends BaseEntity {
 
     public static NoticeEntity toNoticeEntityUpdate(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = new NoticeEntity();
-        noticeEntity.setNotTitle(noticeDto.getNotTitle());
+        noticeEntity.setNoticeTitle(noticeDto.getNotTitle());
         noticeEntity.setNotContent(noticeDto.getNotContent());
         noticeEntity.setNotWriter(noticeDto.getNotWriter());
         noticeEntity.setNotHit(noticeDto.getNotHit());

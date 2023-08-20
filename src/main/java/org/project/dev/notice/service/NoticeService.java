@@ -4,12 +4,11 @@ package org.project.dev.notice.service;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.NoticeEntity;
-import org.project.dev.notice.repository.NoticeReopsitory;
+import org.project.dev.notice.repository.NoticeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.IllformedLocaleException;
@@ -20,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NoticeService {
 
-    private final NoticeReopsitory noticeReopsitory;
+    private final NoticeRepository noticeReopsitory;
 
     /*
    Todo
@@ -100,9 +99,9 @@ public class NoticeService {
         List<NoticeEntity> noticeEntities = new ArrayList<>();
 
         if(noticeId.equals("title")){
-            noticeEntities = noticeReopsitory.findByTitleContaining(noticeSearch);
+            noticeEntities = noticeReopsitory.findByNoticeTitleContaining(noticeSearch);
         }else if(noticeId.equals("content")){
-            noticeEntities = noticeReopsitory.findByContentContaining(noticeSearch);
+            noticeEntities = noticeReopsitory.findByNotContentContaining(noticeSearch);
         }else{
             noticeEntities = noticeReopsitory.findAll();
         }
@@ -110,7 +109,7 @@ public class NoticeService {
         if(!noticeEntities.isEmpty()){
             for(NoticeEntity noticeEntity : noticeEntities) {
                 NoticeDto noticeDto = NoticeDto.builder()
-                        .notTitle(noticeEntity.getNotTitle())
+                        .notTitle(noticeEntity.getNoticeTitle())
                         .notContent(noticeEntity.getNotContent())
                         .notWriter(noticeEntity.getNotWriter())
                         .notHit(noticeEntity.getNotHit())
@@ -135,7 +134,7 @@ public class NoticeService {
 
         return NoticeDto.builder()
                 .notId(noticeEntity.getNotId())
-                .notTitle(noticeEntity.getNotTitle())
+                .notTitle(noticeEntity.getNoticeTitle())
                 .notContent(noticeEntity.getNotContent())
                 .notWriter(noticeEntity.getNotWriter())
                 .notHit(noticeEntity.getNotHit())

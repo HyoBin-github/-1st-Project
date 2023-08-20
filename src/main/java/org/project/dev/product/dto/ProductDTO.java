@@ -42,8 +42,8 @@ public class ProductDTO {
         productDTO.setProductHits(productEntity.getProductHits());
         productDTO.setProductWriter(productEntity.getProductWriter()); // 추후 수정 요망
         productDTO.setProductDisplay(productEntity.getProductDisplay());
-        productDTO.setProductCreateDate(productEntity.getCreateDate());
-        productDTO.setProductUpdateDate(productEntity.getUpdateDate());
+        productDTO.setProductCreateDate(productEntity.getCreateTime());
+        productDTO.setProductUpdateDate(productEntity.getUpdateTime());
         return productDTO;
     }
 

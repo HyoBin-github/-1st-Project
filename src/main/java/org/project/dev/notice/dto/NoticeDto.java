@@ -23,12 +23,12 @@ public class NoticeDto {
     public static NoticeDto tonoticeDto(NoticeEntity noticeEntity) {
         NoticeDto noticeDto = new NoticeDto();
         noticeDto.setNotId(noticeEntity.getNotId());
-        noticeDto.setNotTitle(noticeEntity.getNotTitle());
+        noticeDto.setNotTitle(noticeEntity.getNoticeTitle());
         noticeDto.setNotContent(noticeEntity.getNotContent());
         noticeDto.setNotWriter(noticeEntity.getNotWriter());
         noticeDto.setNotHit(noticeEntity.getNotHit());
-        noticeDto.setCreateDate(noticeEntity.getCreateDate());
-        noticeDto.setUpdateDate(noticeEntity.getUpdateDate());
+        noticeDto.setCreateDate(noticeEntity.getCreateTime());
+        noticeDto.setUpdateDate(noticeEntity.getUpdateTime());
         return noticeDto;
     }
 }
