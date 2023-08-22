@@ -65,7 +65,7 @@ public class NoticeController {
      3.
      4.
      */
-    @GetMapping("/List")
+    @GetMapping("/list")
     public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "id",
             direction = Sort.Direction.DESC)Pageable pageable, Model model){
 

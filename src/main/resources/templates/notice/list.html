@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             <tr th:each="notice: ${noticeList}">
-                <td>공지</td>
+                <td>공지</td><!--공지로 할지 공지사항 종류선택 박스에서 가져올지-->
                 <td th:text="${notice.notTitle}"></td>
                 <td th:text="${notice.notWriter}"></td>
                 <td th:text="${notice.createDate}"></td>
