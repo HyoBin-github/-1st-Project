@@ -4,10 +4,12 @@ package org.project.dev.product.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.project.dev.category.CategoryEntity;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Getter
