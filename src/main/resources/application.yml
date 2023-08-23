@@ -31,3 +31,16 @@ spring:
   #application-oauth2
   profiles:
     include: oauth2
+
+  # code.aiaru@gmail.com
+  servlet:
+    multipart:
+      # 단일 파일에 대한 최대 허용 크기.
+      max-file-size: 10MB
+      # 전체 HTTP 요청에 대한 최대 허용 크기.
+      max-request-size: 50MB
+
+# code.aiaru@gmail.com
+file:
+  productImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+  reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)

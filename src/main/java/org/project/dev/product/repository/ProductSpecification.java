@@ -17,7 +17,7 @@ public class ProductSpecification {
 
     // DB의 productDisplay 값이 true 일 때만 반환하는 쿼리
     public static Specification<ProductEntity> isDisplayTrue(){
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("productDisplay"),true);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("isProductDisplayed"),true);
     }
 
     // DB에 저장된 productName의 값 중, searchKeyword에 입력된 값이 포함되어 있는 경우에만 반환하는 쿼리

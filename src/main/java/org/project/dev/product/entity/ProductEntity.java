@@ -9,6 +9,7 @@ import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +26,7 @@ public class ProductEntity extends BaseEntity {
      3. x
      4. 1) CreateDate와 UpdateDate는 org.project.dev.utils.BaseEntity 상속을 통해 받았습니다.
         2) 판매글 작성자는 일단 productWriter로 해놨습니다. 추후에 member 쪽과 연동을 하면 될 것 같습니다.
+        2023-08-23 : productDisplay -> isProductDisplayed 변경하였습니다.
      */
 
     @Id
@@ -44,17 +46,29 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_description", length = 500, nullable = false)
     private String productDescription;
 
-    @Column
+    @Column(name = "product_hits")
     private int productHits;
 
-    // 이 부분을 나중에 member 쪽에 연결(?) 하면 될 것 같습니다.
+    // 이 부분을 나중에 member_id로 바꾸면 될 것 같습니다.
     @Column(name = "product_writer", length = 20, nullable = false)
     private String productWriter;
 
+    @Column(name = "is_product_display")
     @ColumnDefault("true")
-    private Boolean productDisplay;
+    private Boolean isProductDisplayed;
 
 
+    // DB 연관관계 설정 -> ProductImgEntity
+    @OneToMany(mappedBy = "productEntity", cascade = CascadeType.REMOVE)
+    private List<ProductImgEntity> productImgEntities = new ArrayList<>();
+
+    // DB 연관관계 설정 -> ReviewEntity
+
+
+
+
+
+    // Dto to Entity
     public static ProductEntity toEntity(ProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(productDTO.getId());
@@ -63,8 +77,8 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductSize(productDTO.getProductSize());
         productEntity.setProductDescription(productDTO.getProductDescription());
         productEntity.setProductHits(productDTO.getProductHits());
-        productEntity.setProductWriter(productDTO.getProductWriter()); // 추후 수정 요망
-        productEntity.setProductDisplay(productDTO.getProductDisplay());
+        productEntity.setProductWriter(productDTO.getProductWriter());
+        productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
         return productEntity;
     }
 

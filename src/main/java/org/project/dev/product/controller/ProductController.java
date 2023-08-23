@@ -1,6 +1,8 @@
 package org.project.dev.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.product.dto.ProductImgDTO;
+import org.project.dev.product.entity.ProductEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.service.ProductService;
 import org.project.dev.product.service.ProductUtilService;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -32,8 +38,10 @@ public class ProductController {
         이 부분은 같이 상의를...
      */
 
+
     private final ProductService productService;
     private final ProductUtilService productUtilService;
+
 
     // WRITE (INSERT)
     // 게시물 작성 페이지
@@ -42,11 +50,16 @@ public class ProductController {
         return "/product/write";
     }
 
+
     // WRITE PROCESS (INSERT)
     // 게시물 작성 처리 시
     @PostMapping("/write")
-    public String postProductWrite(@ModelAttribute ProductDTO productDTO) {
-        productService.productWriteDetail(productDTO);
+    public String postProductWrite(@ModelAttribute ProductDTO productDTO,
+                                   @RequestParam(name = "files", required = false) List<MultipartFile> files) throws IOException {
+        // 상품글 작성
+        ProductEntity savedProductEntity = productService.productWriteDetail(productDTO);
+        // 이미지 저장
+        productUtilService.saveProductImages(savedProductEntity, files);
         return "index";
     }
 
@@ -86,13 +99,34 @@ public class ProductController {
         return "/product/list";
     }
 
+
+    // Cursor-Based List
+    @GetMapping("/cursorBasedList")
+    public String cursorBasedList(@RequestParam(required = false) Long lastId, Model model) {
+        int limit = 10; // 페이지당 표시할 개수
+        List<ProductDTO> products = productService.productCursorBasedList(lastId, limit);
+        model.addAttribute("products", products);
+
+        if (!products.isEmpty()) {
+            model.addAttribute("nextCursor", products.get(products.size() - 1).getId());
+        }
+
+        return "/product/cursorBasedList";
+    }
+
+
+
     // DETAIL (SELECT)
     @GetMapping("/{id}")
     public String getProductDetail(@PathVariable Long id, Model model) {
         // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
         productUtilService.updateHits(id);
         ProductDTO productDTOdetail = productService.productViewDetail(id);
+        List<ProductImgDTO> productImgDTOList = productUtilService.getProductImagesByProductId(id);
+
         model.addAttribute("product", productDTOdetail);
+        model.addAttribute("productImages", productImgDTOList);
+
         return "/product/detail";
     }
 

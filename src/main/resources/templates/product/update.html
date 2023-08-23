@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Update</title>
+  <title>update</title>
 </head>
 <body>
 <form action="/product/update" method="post" name="updateForm">
@@ -14,9 +14,9 @@
   상품작성자 : <input type="text" name="productWriter" th:value="${productUpdate.productWriter}" readonly> <br>
   상품노출여부:
   <label for="displayTrue">Y</label>
-  <input type="radio" id="displayTrue" name="productDisplay" value="true" th:checked="${productUpdate.productDisplay == true}">
+  <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" th:checked="${productUpdate.isProductDisplayed == true}">
   <label for="displayFalse">N</label>
-  <input type="radio" id="displayFalse" name="productDisplay" value="false" th:checked="${productUpdate.productDisplay == false}"> <br>
+  <input type="radio" id="displayFalse" name="isProductDisplayed" value="false" th:checked="${productUpdate.isProductDisplayed == false}"> <br>
 
   <input type="hidden" name="productHits" th:value="${productUpdate.productHits}">
   <input type="submit" value="판매글수정" onclick="productUpdate()">

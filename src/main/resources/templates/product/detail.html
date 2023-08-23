@@ -5,6 +5,9 @@
     <title>Detail</title>
 </head>
 <body>
+<th:block th:each="img : ${productImages}">
+    <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="250"/>
+</th:block>
 <table>
     <tr>
         <th>상품아이디</th>
@@ -12,7 +15,7 @@
     </tr>
     <tr>
         <th>날짜</th>
-        <td th:text="${product.productCreatedTime}"></td>
+        <td th:text="${product.productCreateTime}"></td>
     </tr>
     <tr>
         <th>조회수</th>

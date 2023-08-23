@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Write</title>
+  <title>write</title>
 </head>
 <body>
-<form action="/product/write" method="post">
+
+<form action="/product/write" method="post" enctype="multipart/form-data">
+
   상품명: <input type="text" name="productName"> <br>
   상품색상: <input type="text" name="productColor"> <br>
   상품사이즈: <input type="text" name="productSize"> <br>
@@ -13,10 +15,12 @@
   상품작성자: <input type="text" name="productWriter"></input> <br>
   상품노출여부:
   <label for="displayTrue">Y</label>
-  <input type="radio" id="displayTrue" name="productDisplay" value="true">
+  <input type="radio" id="displayTrue" name="isProductDisplayed" value="true">
   <label for="displayFalse">N</label>
-  <input type="radio" id="displayFalse" name="productDisplay" value="false"> <br>
+  <input type="radio" id="displayFalse" name="isProductDisplayed" value="false"> <br>
+  상품 이미지: <input type="file" name="files" multiple> <br>
   <input type="submit" value="판매글작성">
+
 </form>
 </body>
 </html>

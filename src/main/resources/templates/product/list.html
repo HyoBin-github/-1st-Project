@@ -20,7 +20,7 @@
     <td th:text="${product.id}"></td>
     <td><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}"></a></td>
     <td th:text="${product.productWriter}"></td>
-    <td th:text="${#temporals.format(product.productCreatedTime, 'yy/MM/dd HH:mm')}"></td>
+    <td th:text="${#temporals.format(product.productCreateTime, 'yy/MM/dd HH:mm')}"></td>
     <td th:text="${product.productHits}"></td>
   </tr>
 </table>
