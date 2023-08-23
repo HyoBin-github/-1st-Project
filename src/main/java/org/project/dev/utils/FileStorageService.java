@@ -24,7 +24,6 @@ public class FileStorageService {
         1) 파일(이미지) 저장 경로는 yml에 기록하고, @Value로 저장 경로를 불러오도록 합니다.
         2) ProductUtilService 클래스의 saveProductImages 메소드를 참고하여 fileType을 전달합니다.
         3) String uploadDir; 부분의 else if 로직을 추가합니다.
-
      */
 
     // yml에 기록한 파일 저장 경로를 불러옵니다.

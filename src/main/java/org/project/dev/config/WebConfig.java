@@ -11,9 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
    /*
     Todo
      1. code.aiaru@gmail.com
-     2. 이미지 파일을 웹에서 접근할 수 있도록 설정하기 위한 클래스
-     3. x 필수 데이터
-     4. 기타
+     2. 이미지 파일을 웹에서 접근할 수 있도록 설정하기 위한 클래스입니다.
+     3. x
+     4. x
      */
 
     @Value("${file.productImgUploadDir}")

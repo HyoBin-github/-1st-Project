@@ -13,7 +13,7 @@ public class ProductSpecification {
         2) 검색타입을 결정하기 위한 쿼리.
      3. x
      4. x
-     */
+    */
 
     // DB의 productDisplay 값이 true 일 때만 반환하는 쿼리
     public static Specification<ProductEntity> isDisplayTrue(){

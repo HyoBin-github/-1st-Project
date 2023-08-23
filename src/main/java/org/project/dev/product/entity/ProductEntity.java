@@ -53,7 +53,7 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_writer", length = 20, nullable = false)
     private String productWriter;
 
-    @Column(name = "is_product_display")
+    @Column(name = "is_product_displayed")
     @ColumnDefault("true")
     private Boolean isProductDisplayed;
 
