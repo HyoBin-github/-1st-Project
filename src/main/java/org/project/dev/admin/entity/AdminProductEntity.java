@@ -41,7 +41,7 @@ public class AdminProductEntity extends BaseEntity {
     @Column(name = "product_description", length = 500, nullable = false)
     private String productDescription;
 
-    @Column
+    @Column(name = "product_hits")
     private int productHits;
 
     // 이 부분을 나중에 member 쪽에 연결(?) 하면 될 것 같습니다.

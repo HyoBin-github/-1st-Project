@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/*
+TODO
+
+회원 관련 컨트롤러 입니다 = CRUD 회원
+ */
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
