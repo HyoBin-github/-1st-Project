@@ -19,7 +19,8 @@ public class NoticeEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "not_id")
     private Long notId; // 공지사항 ID
-    // notID
+    @Column(name = "not_type")
+    private String notType; // 공지사항 종류
     @Column(name = "not_title", nullable = false)
     private String noticeTitle; // 공지사항 글 제목
     @Column(name = "notContent", nullable = false)
@@ -32,6 +33,7 @@ public class NoticeEntity extends BaseEntity {
 
     public static NoticeEntity toNoticeEntityInsert(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNotType(noticeDto.getNotType());
         noticeEntity.setNoticeTitle(noticeDto.getNotTitle());
         noticeEntity.setNotContent(noticeDto.getNotContent());
         noticeEntity.setNotWriter(noticeDto.getNotWriter());

@@ -15,7 +15,7 @@
                 <th colspan="4">공지사항</th>
             </tr>
             <tr>
-                <th></th> <!--순서가 아니라 "공지"로만 작성-->
+                <th>분류</th> <!--순서가 아니라 "공지"로만 작성-->
                 <th>제목</th>
                 <th>작성자</th>
                 <th>생성시간</th>
@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             <tr th:each="notice: ${noticeList}">
-                <td>공지</td>
+                <td th:text="${notice.notType}"></td>
                 <td th:text="${notice.notTitle}"></td>
                 <td th:text="${notice.notWriter}"></td>
                 <td th:text="${notice.createDate}"></td>
