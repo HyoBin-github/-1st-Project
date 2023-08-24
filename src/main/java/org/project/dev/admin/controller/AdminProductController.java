@@ -1,22 +1,37 @@
 package org.project.dev.admin.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import org.project.dev.admin.dto.AdminProductDto;
+import org.project.dev.admin.service.AdminProductService;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/admin/product1")
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+/*
+TODO
+상품 CRUD 에 관련된 api
+
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/products")
 public class AdminProductController {
+
+    private final AdminProductService productService;
 
     /*
         TODO
-        판매자가 자신의 상품 리스트를 조회 할때 쓰입니다
-        여기서는 상품 수정 삭제 가능합니다.
-         */
+        조건 검색 들어가야하고 페이징 들어가야하고 일단은 모두 다 보이게만!
+    */
     @GetMapping("/list")
-    public String getProductList() {
-
-        return "/admin/list";
+    public Map<String,Object> getProductList(){
+        Map<String,Object> response = new HashMap<String,Object>();
+        List<AdminProductDto> adminProductDtoList = productService.getProductList();
+        response.put("productList",adminProductDtoList);
+        return response;
     }
 
     /*
@@ -25,15 +40,29 @@ public class AdminProductController {
     가격 활성화 기타 등등 정보
      */
     @GetMapping("/detail")
-    public String getProductDetail() {
+    public Map<String,Object> getProductDetail(@RequestParam("id")Long productId) {
+        Map<String,Object> response = new HashMap<String,Object>();
+        AdminProductDto adminProductDto = productService.getProductDetail(productId);
+        response.put("productList",adminProductDto);
+        return response;
+    }
 
-        return "/admin/detail";
+    @PostMapping("/insert")
+    public Map<String,Object> postProductInsert(@RequestBody AdminProductDto productDto) {
+        Map<String,Object> response = new HashMap<>();
+        response.put("responseCode",productService.productInsert(productDto));
+        return response;
     }
 
     /*
     TODO
-    상품 업데이트 처리 메소드 생성 예정
+    업데이트
      */
-
+    @PostMapping("/update")
+    public Map<String,Object> postProductUpdate(@RequestBody AdminProductDto productDto) {
+        Map<String,Object> response = new HashMap<>();
+        response.put("responseCode",productService.productInsert(productDto));
+        return response;
+    }
 
 }
