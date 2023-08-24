@@ -26,7 +26,16 @@ public class paymentController {
     public Map<String,Object> success(
             @RequestParam("pg_token") String pgToken){
 
-        paymentService.paymentSuccess(pgToken);
+        paymentService.paymentPrepare(pgToken);
+
+        return null;
+    }
+
+    @PostMapping("/{pg}/pg")
+    public Map<String,Object> pgRequest(
+            @PathVariable("pg") String pg){
+
+        paymentService.pgRequest(pg);
 
         return null;
     }
