@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -57,58 +58,43 @@ public class ProductController {
     public String postProductWrite(@ModelAttribute ProductDTO productDTO,
                                    @RequestParam(name = "files", required = false) List<MultipartFile> files) throws IOException {
         // 상품글 작성
-        ProductEntity savedProductEntity = productService.productWriteDetail(productDTO);
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO);
         // 이미지 저장
-        productUtilService.saveProductImages(savedProductEntity, files);
+        productUtilService.saveProductImages(productEntityWritePro, files);
         return "index";
     }
 
-    // LIST - with pagination & search (READ)
-    // /product/list?page=2
-    // 만약 searchKeyword(검색어) 값이 없다면 ->  주소/product/list?page=2 (첫번째 페이지는 ?page=1 자동 생략)
-    // 만약 searchKeyword(검색어) 값이 있다면 ->  주소/product/list?searchType=검색타입&searchKeyword=검색어
     @GetMapping("/list")
-    public String list(Model model,
-                       @RequestParam(name = "page", defaultValue = "1") int page,
+    public String list(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                        @RequestParam(name = "searchType", required = false) String searchType,
                        @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
+        ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword);
+        model.addAttribute("productList", response.getProductList());
+        model.addAttribute("nowPage", response.getNowPage());
+        model.addAttribute("startPage", response.getStartPage());
+        model.addAttribute("endPage", response.getEndPage());
+        model.addAttribute("totalPage", response.getTotalPage());
+        model.addAttribute("searchType", response.getSearchType());
+        model.addAttribute("searchKeyword", response.getSearchKeyword());
 
-        Pageable adjustedPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
-        Page<ProductDTO> productList;
-
-        if (searchKeyword == null || searchType == null) {
-            productList = productService.productNoSearchList(adjustedPageable);
-        } else {
-            productList = productService.productSearchList(searchType, searchKeyword, adjustedPageable);
-        }
-
-        int nowPage = productList.getPageable().getPageNumber() + 1;
-        int totalPage = productList.getTotalPages();
-        int startPage = ProductService.calculateStartPage(nowPage, totalPage);
-        int endPage = ProductService.calculateEndPage(nowPage, totalPage);
-
-        model.addAttribute("productList", productList);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("searchType", searchType);
-        model.addAttribute("searchKeyword", searchKeyword);
+        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImages(response.getProductList().getContent());
+        model.addAttribute("productImages", productImgDTOS);
 
         return "/product/list";
     }
+
 
 
     // Cursor-Based List
     @GetMapping("/cursorBasedList")
     public String cursorBasedList(@RequestParam(required = false) Long lastId, Model model) {
         int limit = 10; // 페이지당 표시할 개수
-        List<ProductDTO> products = productService.productCursorBasedList(lastId, limit);
-        model.addAttribute("products", products);
+        List<ProductDTO> productDTOS = productService.productCursorBasedList(lastId, limit);
+        model.addAttribute("products", productDTOS);
 
-        if (!products.isEmpty()) {
-            model.addAttribute("nextCursor", products.get(products.size() - 1).getId());
+        if (!productDTOS.isEmpty()) {
+            model.addAttribute("nextCursor", productDTOS.get(productDTOS.size() - 1).getId());
         }
 
         return "/product/cursorBasedList";
@@ -121,11 +107,11 @@ public class ProductController {
     public String getProductDetail(@PathVariable Long id, Model model) {
         // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
         productUtilService.updateHits(id);
-        ProductDTO productDTOdetail = productService.productViewDetail(id);
-        List<ProductImgDTO> productImgDTOList = productUtilService.getProductImagesByProductId(id);
+        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
 
-        model.addAttribute("product", productDTOdetail);
-        model.addAttribute("productImages", productImgDTOList);
+        model.addAttribute("product", productDTOViewDetail);
+        model.addAttribute("productImages", productImgDTOS);
 
         return "/product/detail";
     }
@@ -133,16 +119,19 @@ public class ProductController {
     // UPDATE (UPDATE)
     @GetMapping("/update/{id}")
     public String getProductUpdate(@PathVariable Long id, Model model) {
-        ProductDTO productDTOupdate = productService.productViewDetail(id);
-        model.addAttribute("productUpdate", productDTOupdate);
+        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
+        model.addAttribute("productUpdate", productDTOViewDetail);
+        model.addAttribute("productImages", productImgDTOS);
+
         return "/product/update";
     }
 
     // UPDATE PROCESS (UPDATE)
     @PostMapping("/update")
     public String postProductUpdate(@ModelAttribute ProductDTO productDTO, Model model) {
-        ProductDTO productDTOupdatepro = productService.productUpdateDetail(productDTO);
-        model.addAttribute("product", productDTOupdatepro);
+        ProductDTO productDTOUpdatePro = productService.productUpdateDetail(productDTO);
+        model.addAttribute("product", productDTOUpdatePro);
         return "/product/detail";
     }
 

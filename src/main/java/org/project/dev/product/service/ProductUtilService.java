@@ -1,6 +1,7 @@
 package org.project.dev.product.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.entity.ProductImgEntity;
@@ -47,23 +48,39 @@ public class ProductUtilService {
                     // storeFile 메서드를 사용하여 파일을 저장하고, 저장된 파일의 경로를 savedPath에 저장.
                     // 첫 번째 매개변수(fileType)로 "product"는 해당 파일이 상품 관련 파일임을 전달.
                     String savedPath = fileStorageService.storeFile("product", multipartFile);
-                    ProductImgEntity productImgEntity = ProductImgEntity.toImgEntity(
-                            savedProductEntity,
-                            multipartFile.getOriginalFilename(),
-                            new File(savedPath).getName(),
-                            savedPath
-                    );
+
+                    // Lombok의 builder를 사용하여 ProductImgEntity 객체 생성
+                    ProductImgEntity productImgEntity = ProductImgEntity.builder()
+                            .productEntity(savedProductEntity)
+                            .productImgOriginalName(multipartFile.getOriginalFilename())
+                            .productImgSavedName(new File(savedPath).getName())
+                            .productImgSavedPath(savedPath)
+                            .build();
+
                     productImgRepository.save(productImgEntity);
                 }
             }
         }
     }
 
-    // 이미지 정보를 가져오기.
+    // 이미지 정보를 가져오기. (product_id 기준)
     public List<ProductImgDTO> getProductImagesByProductId(Long productId) {
         List<ProductImgEntity> imgEntities = productImgRepository.findByProductId(productId);
         return imgEntities.stream()
                 .map(ProductImgDTO::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    // 메인 이미지 가져오기.
+    public List<ProductImgDTO> getMainProductImages(List<ProductDTO> products) {
+        return products.stream()
+                .map(product -> getProductImagesByProductId(product.getId()))
+                .map(images -> {
+                    return images.stream()
+                            .filter(img -> img.getIsProductImgMain())
+                            .findFirst()
+                            .orElse(images.isEmpty() ? null : images.get(0));
+                })
                 .collect(Collectors.toList());
     }
 

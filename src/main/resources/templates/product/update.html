@@ -5,6 +5,9 @@
   <title>update</title>
 </head>
 <body>
+<th:block th:each="img : ${productImages}">
+  <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="250"/>
+</th:block>
 <form action="/product/update" method="post" name="updateForm">
   <input type="hidden" name="id" th:value="${productUpdate.id}">
   상품명: <input type="text" name="productName" th:value="${productUpdate.productName}"> <br>

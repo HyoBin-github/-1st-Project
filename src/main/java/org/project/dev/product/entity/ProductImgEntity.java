@@ -1,6 +1,7 @@
 package org.project.dev.product.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.project.dev.utils.BaseEntity;
 
 
@@ -37,27 +38,19 @@ public class ProductImgEntity extends BaseEntity {
     @Column(name = "product_img_saved_path", nullable = false)
     private String productImgSavedPath;
 
+    @Column(name = "is_product_img_main")
+    @ColumnDefault("false")
+    private Boolean isProductImgMain;
+
+    @Column(name = "is_product_img_displayed")
+    @ColumnDefault("false")
+    private Boolean isProductImgDisplayed;
+
 
     // DB 연관관계 설정 -> ProductEntity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id") // Foreign Key
     private ProductEntity productEntity;
-
-
-    // 수정을 위해 만든 메소드
-    public static ProductImgEntity toImgEntity(ProductEntity productEntity,
-                                               String productImgOriginalName,
-                                               String productImgSavedName,
-                                               String productImgSavedPath){
-        ProductImgEntity productImgEntity = new ProductImgEntity();
-        productImgEntity.setProductEntity(productEntity);
-        productImgEntity.setProductImgOriginalName(productImgOriginalName);
-        productImgEntity.setProductImgSavedName(productImgSavedName);
-        productImgEntity.setProductImgSavedPath(productImgSavedPath);
-        return productImgEntity;
-    }
-
-
 
 
 }

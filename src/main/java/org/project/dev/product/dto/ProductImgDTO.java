@@ -1,8 +1,10 @@
 package org.project.dev.product.dto;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.project.dev.product.entity.ProductImgEntity;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,6 +26,8 @@ public class ProductImgDTO {
     private String productImgOriginalName;
     private String productImgSavedName;
     private String productImgSavedPath;
+    private Boolean isProductImgMain;
+    private Boolean isProductImgDisplayed;
 
     private LocalDateTime productImgCreateTime;
     private LocalDateTime productImgUpdateTime;
@@ -35,6 +39,8 @@ public class ProductImgDTO {
         productImgDTO.setProductImgOriginalName(productImgEntity.getProductImgOriginalName());
         productImgDTO.setProductImgSavedName(productImgEntity.getProductImgSavedName());
         productImgDTO.setProductImgSavedPath(productImgEntity.getProductImgSavedPath());
+        productImgDTO.setIsProductImgMain(productImgEntity.getIsProductImgMain());
+        productImgDTO.setIsProductImgDisplayed(productImgEntity.getIsProductImgDisplayed());
         productImgDTO.setProductImgCreateTime(productImgEntity.getCreateTime());
         productImgDTO.setProductImgUpdateTime(productImgEntity.getUpdateTime());
         return productImgDTO;

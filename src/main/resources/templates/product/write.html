@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>write</title>
+  <script th:src="@{/js/product/write.js}"></script>
 </head>
 <body>
 
 <form action="/product/write" method="post" enctype="multipart/form-data">
+  <!-- 상품 이미지 미리보기 -->
+  <div id="imagePreview"></div>
+  상품 이미지: <input type="file" name="files" multiple onchange="previewImages(event)"> <br>
 
   상품명: <input type="text" name="productName"> <br>
   상품색상: <input type="text" name="productColor"> <br>
   상품사이즈: <input type="text" name="productSize"> <br>
   상품설명: <textarea name="productDescription" cols="30" rows="10"></textarea> <br>
-  상품작성자: <input type="text" name="productWriter"></input> <br>
+  상품작성자: <input type="text" name="productWriter"> <br>
+<!--  상품가격: <input type="text" name="productPrice"> <br>-->
   상품노출여부:
   <label for="displayTrue">Y</label>
-  <input type="radio" id="displayTrue" name="isProductDisplayed" value="true">
+  <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" checked>
   <label for="displayFalse">N</label>
   <input type="radio" id="displayFalse" name="isProductDisplayed" value="false"> <br>
-  상품 이미지: <input type="file" name="files" multiple> <br>
   <input type="submit" value="판매글작성">
 
 </form>

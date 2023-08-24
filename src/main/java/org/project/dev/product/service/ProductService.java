@@ -1,5 +1,7 @@
 package org.project.dev.product.service;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.entity.ProductEntity;
@@ -29,6 +31,7 @@ public class ProductService {
 
 
     private final ProductRepository productRepository;
+    private final ProductPaginationService productPaginationService;
 
 
     // WRITE (CREATE)
@@ -39,51 +42,35 @@ public class ProductService {
         return productRepository.save(productEntity);
     }
 
-    // LIST with search & pagination (READ)
-    // 검색어 없이 리스트 출력
-    public Page<ProductDTO> productNoSearchList(Pageable pageable) {
-        Specification<ProductEntity> entitySpecification = Specification.where(ProductSpecification.isDisplayTrue());
-        Page<ProductEntity> productEntities = productRepository.findAll(entitySpecification,pageable);
-        return productEntities.map(ProductDTO::toDTO);
-    }
 
-    // 검색어를 통한 리스트 출력
-    public Page<ProductDTO> productSearchList(String searchType, String searchKeyword, Pageable pageable) {
-        // DB의 productDisplay 값이 true 인 경우에만 보이도록 처리. (ADMIN/SELLER의 경우에는 false여도 보이도록 처리)
-        Specification<ProductEntity> entitySpecification = Specification.where(ProductSpecification.isDisplayTrue());
+    public ProductListResponse getProductList(int page, Pageable pageable, String searchType, String searchKeyword) {
+        Pageable adjustedPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
+        Page<ProductDTO> productList;
 
-        // 검색타입 추가 시, 이 곳에 위치하게 됩니다.
-        switch (searchType) {
-            case "productNameContains":
-                entitySpecification = entitySpecification
-                        .and(ProductSpecification.productNameContains(searchKeyword));
-                break;
-            case "productDescriptionContains":
-                entitySpecification = entitySpecification
-                        .and(ProductSpecification.productDescriptionContains(searchKeyword));
-                break;
+        if (searchKeyword == null || searchType == null) {
+            productList = productPaginationService.productNoSearchList(adjustedPageable);
+        } else {
+            productList = productPaginationService.productSearchList(searchType, searchKeyword, adjustedPageable);
         }
 
-        Page<ProductEntity> productEntities = productRepository.findAll(entitySpecification, pageable);
-        return productEntities.map(ProductDTO::toDTO); // Entity를 DTO로 변환
+        int nowPage = productList.getPageable().getPageNumber() + 1;
+        int totalPage = productList.getTotalPages();
+        int startPage = productPaginationService.calculateStartPage(nowPage, totalPage);
+        int endPage = productPaginationService.calculateEndPage(nowPage, totalPage);
+
+        return new ProductListResponse(productList, nowPage, startPage, endPage, totalPage, searchType, searchKeyword);
     }
 
-    // 페이징처리 : 시작 페이지 계산 로직
-    public static int calculateStartPage(int nowPage, int totalPage) {
-        int startPage = Math.max(nowPage - 4, 1);
-        if (totalPage - startPage < 8) {
-            startPage = Math.max(totalPage - 8, 1);
-        }
-        return startPage;
-    }
-
-    // 페이징처리 : 마지막 페이지 계산 로직
-    public static int calculateEndPage(int nowPage, int totalPage) {
-        int endPage = Math.min(nowPage + 4, totalPage);
-        if (endPage - calculateStartPage(nowPage, totalPage) < 8) {
-            endPage = Math.min(calculateStartPage(nowPage, totalPage) + 8, totalPage);
-        }
-        return endPage;
+    @Data
+    @AllArgsConstructor
+    public class ProductListResponse {
+        private Page<ProductDTO> productList;
+        private int nowPage;
+        private int startPage;
+        private int endPage;
+        private int totalPage;
+        private String searchType;
+        private String searchKeyword;
     }
 
 
