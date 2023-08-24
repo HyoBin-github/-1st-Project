@@ -53,6 +53,9 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_writer", length = 20, nullable = false)
     private String productWriter;
 
+    @Column(name = "product_price")
+    private Long productPrice;
+
     @Column(name = "is_product_displayed")
     @ColumnDefault("true")
     private Boolean isProductDisplayed;
