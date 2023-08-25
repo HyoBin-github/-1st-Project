@@ -21,8 +21,12 @@ public class KakaoPayPrepareDto {
 
 
     public static KakaoPayPrepareDto toDto(){
+<<<<<<< HEAD
         return null;
+=======
+>>>>>>> 0a0811effe07968bd7f7e1434146bf4b92d7cd72
 
+        return null;
     }
 
 
