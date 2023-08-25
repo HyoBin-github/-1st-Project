@@ -1,8 +1,9 @@
 package org.project.dev.payment.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.project.dev.payment.entity.KakaoPayPrepareEntity;
 import org.project.dev.payment.dto.KakaoPayPrepareDto;
 import org.project.dev.payment.entity.PaymentEntity;
 import org.project.dev.payment.repository.PaymentRepository;
@@ -34,9 +35,10 @@ public class PaymentService {
     결제 "준비" 승인 아님 카카오에서 요청을 날리고 redirect를 받아서 tic pg_token db에 저장
      */
     @Transactional
-    public void paymentPrepare(String pgToken) {
+    public void paymentPrepare(String pgToken, Long paymentId) {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setPgToken(pgToken);
+        paymentEntity.setPaymentId(paymentId);
         paymentRepository.save(paymentEntity);
 
 
@@ -47,10 +49,16 @@ public class PaymentService {
 
      */
     @Transactional
-    public KakaoPayPrepareDto pgRequest(String pg) {
+    public void pgRequest(String pg) {
         RestTemplate restTemplate = new RestTemplate();
+        PaymentEntity paymentEntity = new PaymentEntity();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String kakaoJsonString = null;
+        Long paymentId;
 
         if (pg.equals("kakao")) {
+            paymentEntity.setPaymentType("KAKAO");
+            paymentId = paymentRepository.save(paymentEntity).getPaymentId();
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization","KakaoAK 6bf92b429a38f0eabe31b6d0642a9a24");
             HttpEntity<String> entity = new HttpEntity<String>(headers);
@@ -66,7 +74,7 @@ public class PaymentService {
                     .queryParam("quantity", "1")
                     .queryParam("total_amount", "1000")
                     .queryParam("tax_free_amount", "100")
-                    .queryParam("approval_url", "http://localhost:8111/payment/success")
+                    .queryParam("approval_url", "http://localhost:8111/payment/approval/"+paymentId)
                     .queryParam("cancel_url", "http://localhost:8111/payment/cancel")
                     .queryParam("fail_url", "http://localhost:8111/payment/fail")
                     .encode()
@@ -75,11 +83,18 @@ public class PaymentService {
 
             ResponseEntity<KakaoPayPrepareDto> result = restTemplate.exchange(uri,HttpMethod.POST,entity, KakaoPayPrepareDto.class);
 
+            //카카오 paymentJson자체를 컬럼에 insert하려고 to string함
+            try {
+                kakaoJsonString = objectMapper.writeValueAsString(result.getBody());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("kakao payment request : json to string error : "+e);
+            }
 
+            paymentEntity.setPaymentJson(kakaoJsonString);
+            System.out.println(result.getBody().getNext_redirect_pc_url().toString());
 
-            result.getBody();
+            paymentRepository.save(paymentEntity);
 
-            return null;
         } else {
             throw new RuntimeException("제휴되지 않은 결제 업체 입니다.!!!!");
         }

@@ -1,26 +1,40 @@
 package org.project.dev.payment.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.project.dev.payment.dto.KakaoPayPrepareDto;
 
-
+import javax.persistence.Entity;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class KakaoPayPrepareEntity {
 
     private String tid;
-    private String tms_result;
-    private String next_redirect_app_url;
-    private String next_redirect_mobile_url;
-    private String next_redirect_pc_url;
-    private String android_app_scheme;
-    private String ios_app_scheme;
-    private String created_at;
+    private String tmsResult;
+    private String nextRedirectAppUrl;
+    private String nextRedirectMobileUrl;
+    private String nextRedirectPcUrl;
+    private String androidAppScheme;
+    private String iosAppScheme;
+    private String createdAt;
+
+    public static KakaoPayPrepareEntity toEntity(KakaoPayPrepareDto kakaoPayPrepareDto) {
+        return KakaoPayPrepareEntity.builder()
+                .tid(kakaoPayPrepareDto.getTid())
+                .tmsResult(kakaoPayPrepareDto.getTms_result())
+                .nextRedirectAppUrl(kakaoPayPrepareDto.getNext_redirect_app_url())
+                .nextRedirectMobileUrl(kakaoPayPrepareDto.getNext_redirect_mobile_url())
+                .nextRedirectPcUrl(kakaoPayPrepareDto.getNext_redirect_pc_url())
+                .androidAppScheme(kakaoPayPrepareDto.getAndroid_app_scheme())
+                .iosAppScheme(kakaoPayPrepareDto.getIos_app_scheme())
+                .createdAt(kakaoPayPrepareDto.getCreated_at())
+                .build();
+
+    }
+
 
 }

@@ -3,7 +3,6 @@ package org.project.dev.payment.controller;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.payment.dto.PaymentDto;
 import org.project.dev.payment.service.PaymentService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -11,7 +10,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/payment")
 @RequiredArgsConstructor
-public class paymentController {
+public class PaymentController {
 
     private final PaymentService paymentService;
     @PostMapping("/request")
@@ -22,16 +21,17 @@ public class paymentController {
         return null;
     }
 
-    @GetMapping("/success")
+    @GetMapping("/success/{paymentId}")
     public Map<String,Object> success(
+            @PathVariable(name = "paymentId") Long paymentId,
             @RequestParam("pg_token") String pgToken){
 
-        paymentService.paymentPrepare(pgToken);
+        paymentService.paymentPrepare(pgToken,paymentId);
 
         return null;
     }
 
-    @PostMapping("/{pg}/pg")
+    @GetMapping("/{pg}/pg")
     public Map<String,Object> pgRequest(
             @PathVariable("pg") String pg){
 

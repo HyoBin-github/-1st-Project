@@ -1,6 +1,7 @@
 package org.project.dev.payment.dto;
 
 import lombok.*;
+import org.project.dev.payment.entity.KakaoPayPrepareEntity;
 
 
 @Getter
@@ -20,9 +21,18 @@ public class KakaoPayPrepareDto {
     private String created_at;
 
 
-    public static KakaoPayPrepareDto toDto(){
+    public static KakaoPayPrepareDto toDto(KakaoPayPrepareEntity kakaoPayPrepareEntity) {
 
-        return null;
+        return KakaoPayPrepareDto.builder()
+                .android_app_scheme(kakaoPayPrepareEntity.getAndroidAppScheme())
+                .created_at(kakaoPayPrepareEntity.getCreatedAt())
+                .ios_app_scheme(kakaoPayPrepareEntity.getIosAppScheme())
+                .tid(kakaoPayPrepareEntity.getTid())
+                .next_redirect_app_url(kakaoPayPrepareEntity.getNextRedirectAppUrl())
+                .next_redirect_mobile_url(kakaoPayPrepareEntity.getNextRedirectMobileUrl())
+                .next_redirect_pc_url(kakaoPayPrepareEntity.getNextRedirectPcUrl())
+                .tms_result(kakaoPayPrepareEntity.getTmsResult())
+                .build();
     }
 
 
