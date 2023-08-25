@@ -3,9 +3,11 @@ package org.project.dev.product.dto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.project.dev.product.entity.ProductImgEntity;
+import org.project.dev.review.entity.ReviewEntity;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,6 +34,7 @@ public class ProductImgDTO {
     private LocalDateTime productImgCreateTime;
     private LocalDateTime productImgUpdateTime;
 
+    private List<ReviewEntity> reviewEntityList;
 
     public static ProductImgDTO toDTO(ProductImgEntity productImgEntity) {
         ProductImgDTO productImgDTO = new ProductImgDTO();

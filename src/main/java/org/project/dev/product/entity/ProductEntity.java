@@ -6,6 +6,7 @@
     import org.hibernate.annotations.ColumnDefault;
     import org.project.dev.category.CategoryEntity;
     import org.project.dev.product.dto.ProductDTO;
+    import org.project.dev.review.entity.ReviewEntity;
     import org.project.dev.utils.BaseEntity;
 
     import javax.persistence.*;
@@ -68,7 +69,8 @@
 
         // DB 연관관계 설정 -> ReviewEntity
 
-
+        @OneToMany(mappedBy = "productEntity",cascade = CascadeType.REMOVE)
+        private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
 
 

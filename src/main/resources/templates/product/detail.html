@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Detail</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/review/review.js}" defer></script>
 </head>
 <body>
 <th:block th:each="img : ${productImages}">
@@ -45,6 +47,36 @@
 <button onclick="listReq()">목록</button>
 <button onclick="updateReq()">수정</button>
 <button onclick="deleteReq()">삭제</button>
+<div class="review-con">
+
+    <div class="review-write">
+
+        <!-- 덧글 작성 -->
+        <!--          <form th:action="@{/reply/write}" method="post">-->
+        <!-- 게시글 번호 ** 필수 -->
+        <input type="hidden" readonly name="productId"
+               th:value="${product.id}" id="productId">
+        <ul>
+            <li>
+<!--                <input type="file" name="upload_file" id="upload_file">-->
+                <textarea name="review" id="review"
+                          cols="30" rows="1" placeholder="내용작성"></textarea>
+            </li>
+            <li>
+                <!--                <input type="submit" value="덧글작성">-->
+                <input type="button" value="댓글작성" id="ajaxBtn">
+            </li>
+        </ul>
+        <!--          </form>-->
+    </div>
+    <div class="review-list">
+        <!-- 덧글리스트 -->
+        <div id="tData">
+
+
+        </div>
+    </div>
+</div>
 </body>
 <script th:inline="javascript">
     const listReq = () => {
