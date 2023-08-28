@@ -6,14 +6,19 @@ import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.entity.ProductImgEntity;
 import org.project.dev.product.repository.ProductImgRepository;
+import org.project.dev.product.repository.ProductImgSpecification;
 import org.project.dev.product.repository.ProductRepository;
+import org.project.dev.product.repository.ProductSpecification;
 import org.project.dev.utils.FileStorageService;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,21 +45,39 @@ public class ProductUtilService {
         productRepository.updateHits(id);
     }
 
-    // 이미지 정보를 DB에 업로드
-    public void saveProductImages(ProductEntity savedProductEntity, List<MultipartFile> files) throws IOException {
+    public void saveProductImages(ProductEntity savedProductEntity, List<MultipartFile> files, String imageOrders) throws IOException {
+        int[] parsedImageOrders;
+
+        if (imageOrders == null || imageOrders.isEmpty()) {
+            // imageOrders가 비어 있거나 null인 경우, 기본 순서를 사용
+            parsedImageOrders = new int[files.size()];
+            for (int i = 0; i < files.size(); i++) {
+                parsedImageOrders[i] = i + 1;
+            }
+        } else {
+            // imageOrders가 제공된 경우, 해당 값을 파싱하여 사용
+            parsedImageOrders = Arrays.stream(imageOrders.split(","))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+        }
+
+        // 나머지 이미지 저장 로직
         if (files != null && !files.isEmpty()) {
-            for (MultipartFile multipartFile : files) {
+            for (int i = 0; i < files.size(); i++) {
+                MultipartFile multipartFile = files.get(i);
                 if (!multipartFile.isEmpty()) {
-                    // storeFile 메서드를 사용하여 파일을 저장하고, 저장된 파일의 경로를 savedPath에 저장.
-                    // 첫 번째 매개변수(fileType)로 "product"는 해당 파일이 상품 관련 파일임을 전달.
                     String savedPath = fileStorageService.storeFile("product", multipartFile);
 
-                    // Lombok의 builder를 사용하여 ProductImgEntity 객체 생성
+                    // 해당 이미지의 순서를 parsedImageOrders 배열에서 가져옵니다.
+                    int order = parsedImageOrders[i];
+
                     ProductImgEntity productImgEntity = ProductImgEntity.builder()
                             .productEntity(savedProductEntity)
                             .productImgOriginalName(multipartFile.getOriginalFilename())
                             .productImgSavedName(new File(savedPath).getName())
                             .productImgSavedPath(savedPath)
+                            .productImgOrder(order)
+                            .isProductImgDisplayed(true)
                             .build();
 
                     productImgRepository.save(productImgEntity);
@@ -63,25 +86,39 @@ public class ProductUtilService {
         }
     }
 
+
+
+
     // 이미지 정보를 가져오기. (product_id 기준)
     public List<ProductImgDTO> getProductImagesByProductId(Long productId) {
-        List<ProductImgEntity> imgEntities = productImgRepository.findByProductId(productId);
+        // DB의 isProductImgDisplay 값이 true 인 경우 & ProductId로 필터링.
+        Specification<ProductImgEntity> combinedSpec = Specification
+                .where(ProductImgSpecification.isDisplayTrue())
+                .and(ProductImgSpecification.byProductId(productId));
+        Sort sort = Sort.by(Sort.Order.asc("productImgOrder"));  // 오름차순 정렬
+        List<ProductImgEntity> imgEntities = productImgRepository.findAll(combinedSpec, sort);
+
         return imgEntities.stream()
                 .map(ProductImgDTO::toDTO)
                 .collect(Collectors.toList());
     }
 
     // 메인 이미지 가져오기.
-    public List<ProductImgDTO> getMainProductImages(List<ProductDTO> products) {
+    public List<ProductImgDTO> getMainProductImage(List<ProductDTO> products) {
         return products.stream()
                 .map(product -> getProductImagesByProductId(product.getId()))
                 .map(images -> {
                     return images.stream()
-                            .filter(img -> img.getIsProductImgMain())
+                            .filter(img -> img.getProductImgOrder() == 1)
                             .findFirst()
                             .orElse(images.isEmpty() ? null : images.get(0));
                 })
                 .collect(Collectors.toList());
     }
+
+
+
+
+
 
 }

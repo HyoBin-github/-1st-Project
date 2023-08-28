@@ -56,11 +56,11 @@ public class ProductController {
     // 게시물 작성 처리 시
     @PostMapping("/write")
     public String postProductWrite(@ModelAttribute ProductDTO productDTO,
+                                   @RequestParam String imageOrders,
                                    @RequestParam(name = "files", required = false) List<MultipartFile> files) throws IOException {
-        // 상품글 작성
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO);
-        // 이미지 저장
-        productUtilService.saveProductImages(productEntityWritePro, files);
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO); // 상품글 작성
+        productUtilService.saveProductImages(productEntityWritePro, files, imageOrders); // 이미지 저장
+        System.out.println("Image Orders: " + imageOrders);
         return "index";
     }
 
@@ -69,6 +69,7 @@ public class ProductController {
                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                        @RequestParam(name = "searchType", required = false) String searchType,
                        @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
+
         ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword);
         model.addAttribute("productList", response.getProductList());
         model.addAttribute("nowPage", response.getNowPage());
@@ -78,29 +79,11 @@ public class ProductController {
         model.addAttribute("searchType", response.getSearchType());
         model.addAttribute("searchKeyword", response.getSearchKeyword());
 
-        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImages(response.getProductList().getContent());
+        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImage(response.getProductList().getContent());
         model.addAttribute("productImages", productImgDTOS);
 
         return "/product/list";
     }
-
-
-
-    // Cursor-Based List
-    @GetMapping("/cursorBasedList")
-    public String cursorBasedList(@RequestParam(required = false) Long lastId, Model model) {
-        int limit = 10; // 페이지당 표시할 개수
-        List<ProductDTO> productDTOS = productService.productCursorBasedList(lastId, limit);
-        model.addAttribute("products", productDTOS);
-
-        if (!productDTOS.isEmpty()) {
-            model.addAttribute("nextCursor", productDTOS.get(productDTOS.size() - 1).getId());
-        }
-
-        return "/product/cursorBasedList";
-    }
-
-
 
     // DETAIL (SELECT)
     @GetMapping("/{id}")
@@ -123,7 +106,6 @@ public class ProductController {
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
         model.addAttribute("productUpdate", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
-
         return "/product/update";
     }
 

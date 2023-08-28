@@ -1,14 +1,16 @@
 package org.project.dev.product.repository;
 
+import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.entity.ProductImgEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductImgRepository extends JpaRepository<ProductImgEntity, Long> {
+public interface ProductImgRepository extends JpaRepository<ProductImgEntity, Long>, JpaSpecificationExecutor<ProductImgEntity> {
 
     /*
     Todo

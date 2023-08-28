@@ -3,28 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>write</title>
+  <link rel="stylesheet" th:href="@{/css/product/write.css}">
   <script th:src="@{/js/product/write.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
 </head>
 <body>
+<div class="container">
+  <form action="/product/write" method="post" enctype="multipart/form-data">
+    <ul class="drag-drop-area" id="dragDropArea">
+      <li class="add-image-placeholder" onclick="document.querySelector('input[type=file]').click();">
+        <span>+</span>
+      </li>
+    </ul>
+    <!-- 로딩창 -->
+    <div id="loading" class="loading-popup" style="display: none;">
+      <h1>Loading...</h1>
+    </div>
 
-<form action="/product/write" method="post" enctype="multipart/form-data">
-  <!-- 상품 이미지 미리보기 -->
-  <div id="imagePreview"></div>
-  상품 이미지: <input type="file" name="files" multiple onchange="previewImages(event)"> <br>
+    <input type="file" name="files" multiple style="display:none;" id="fileInput"> <br>
+    <input type="hidden" id="imageOrders" name="imageOrders">
 
-  상품명: <input type="text" name="productName"> <br>
-  상품색상: <input type="text" name="productColor"> <br>
-  상품사이즈: <input type="text" name="productSize"> <br>
-  상품설명: <textarea name="productDescription" cols="30" rows="10"></textarea> <br>
-  상품작성자: <input type="text" name="productWriter"> <br>
-<!--  상품가격: <input type="text" name="productPrice"> <br>-->
-  상품노출여부:
-  <label for="displayTrue">Y</label>
-  <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" checked>
-  <label for="displayFalse">N</label>
-  <input type="radio" id="displayFalse" name="isProductDisplayed" value="false"> <br>
-  <input type="submit" value="판매글작성">
+    상품명: <input type="text" name="productName"> <br>
+    상품색상: <input type="text" name="productColor"> <br>
+    상품사이즈: <input type="text" name="productSize"> <br>
+    상품설명: <textarea name="productDescription" cols="30" rows="10"></textarea> <br>
+    상품작성자: <input type="text" name="productWriter"> <br>
+    상품가격: <input type="text" name="productPrice"> <br>
+    상품노출여부:
+    <label for="displayTrue">Y</label>
+    <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" checked>
+    <label for="displayFalse">N</label>
+    <input type="radio" id="displayFalse" name="isProductDisplayed" value="false"> <br>
 
-</form>
+    <input type="submit" value="판매글작성">
+
+  </form>
+</div>
 </body>
 </html>
