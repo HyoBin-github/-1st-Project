@@ -17,7 +17,7 @@ public class PaymentAgencyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;
+    private Long agencyId;
 
     @Column(name = "payment_agency")
     private String paymentAgency; //kakao 인지 naver인지
