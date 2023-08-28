@@ -40,6 +40,7 @@ public class PaymentService {
         paymentEntity.setPgToken(pgToken);
         paymentEntity.setPaymentId(paymentId);
         paymentRepository.save(paymentEntity);
+        // paymentRepository.sa
 
 
     }
