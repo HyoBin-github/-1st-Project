@@ -29,7 +29,7 @@ public class PaymentEntity extends BaseEntity {
     private String paymentReadyJson; //업체별 payment request 보냈을때 json보관용 가져올땐 jackson 써서 객체화
 
     @Lob
-//    private String paymentap
+    private String paymentApproveJson; // 결제 승인시 JSON 데이터
 
     private int isSucced; // 최종적으로 redirect가 와서 성공 했는지?? = 사용자에게 카톡으로 결제 완료가 왔는지?
 }
