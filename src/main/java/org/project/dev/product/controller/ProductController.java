@@ -3,6 +3,9 @@ package org.project.dev.product.controller;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
+import org.project.dev.review.dto.ReviewDto;
+import org.project.dev.review.entity.ReviewEntity;
+import org.project.dev.review.repository.ReviewRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +20,10 @@ import org.project.dev.product.service.ProductUtilService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -42,6 +48,8 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductUtilService productUtilService;
+    private  final ReviewRepository reviewRepository;
+
 
 
     // WRITE (INSERT)
@@ -101,6 +109,20 @@ public class ProductController {
     }
 
 
+    @GetMapping("/review/{id}/{review}")
+    public @ResponseBody List<Map<String , String>> getReview(@PathVariable Long id){
+        List<ReviewEntity> reviewEntities = reviewRepository.findByProductId(id);
+
+        List<Map<String, String>> list = new ArrayList<>();
+
+        reviewEntities.forEach(v->
+            list.add( Map.of("내용",v.getReview(),
+                    "작성자",v.getReviewWriter().toString()) ));
+
+
+        return list;
+    }
+
 
     // DETAIL (SELECT)
     @GetMapping("/{id}")
@@ -110,9 +132,12 @@ public class ProductController {
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
 
+        // dto 해야댐
+        List<ReviewEntity> reviewEntities = reviewRepository.findByProductId(id);
+
         model.addAttribute("product", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
-
+        model.addAttribute("reviewEntities", reviewEntities);
         return "/product/detail";
     }
 

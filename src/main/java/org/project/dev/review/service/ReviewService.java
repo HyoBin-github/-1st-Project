@@ -1,7 +1,6 @@
 package org.project.dev.review.service;
 
 import lombok.RequiredArgsConstructor;
-import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductRepository;
@@ -10,6 +9,7 @@ import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.Optional;
 
 @Service
@@ -23,6 +23,7 @@ public class ReviewService {
 
     private final MemberRepository memberRepository;
 
+    @Transient
     public ReviewDto reviewAjaxCreate(ReviewDto reviewDto, String memberNickName) {
 
 //        Optional<MemberEntity> optionalMemberEntity =
@@ -55,4 +56,16 @@ public class ReviewService {
         return null;
     }
 
+    @Transient
+    public ReviewDto reviewDelete(Long id) {
+
+        Optional<ReviewEntity> optionalReviewEntity = Optional.ofNullable(reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+
+
+        reviewRepository.delete(optionalReviewEntity.get());
+
+         reviewRepository.findById(id);
+
+        return new ReviewDto();
+    }
 }

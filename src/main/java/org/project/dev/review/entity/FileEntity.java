@@ -21,6 +21,7 @@ public class FileEntity extends BaseEntity {
     @Column(name = "file_id")
     private Long id;
 
+
     @Column(nullable = false)
     private String fileOldName;
 

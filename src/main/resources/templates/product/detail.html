@@ -65,6 +65,9 @@
             <li>
                 <!--                <input type="submit" value="덧글작성">-->
                 <input type="button" value="댓글작성" id="ajaxBtn">
+
+
+<!--                <input type="text" value="0" id="star">-->
             </li>
         </ul>
         <!--          </form>-->
@@ -72,8 +75,12 @@
     <div class="review-list">
         <!-- 덧글리스트 -->
         <div id="tData">
-
-
+            <ul th:each="review : ${reviewEntities}">
+                <li th:text="${review.review}"></li>
+                <li th:text="${review.reviewWriter}"></li>
+                <li th:text="${review.createTime}"></li>
+                <input type="button" value="삭제" th:onclick="onDelete([[${review.id}]])">
+            </ul>
         </div>
     </div>
 </div>
@@ -93,5 +100,7 @@
         const id = [[${product.id}]];
         location.href = "/product/delete/" + id;
     }
+
+
 </script>
 </html>

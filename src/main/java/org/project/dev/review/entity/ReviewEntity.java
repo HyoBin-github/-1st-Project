@@ -1,18 +1,20 @@
 package org.project.dev.review.entity;
 
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
+@Getter
+@Setter
 @Table(name = "product_review")
 public class ReviewEntity extends BaseEntity {
 
@@ -29,9 +31,16 @@ public class ReviewEntity extends BaseEntity {
 
     private Long productId;
 
+//    private Long likeCount;
+
+//    private Long reviewStar;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id")
     private ProductEntity productEntity;
+
+
+
 
     public static ReviewEntity toReviewEntity(ReviewDto reviewDto1) {
 

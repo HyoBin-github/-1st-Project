@@ -24,4 +24,12 @@ public class ReviewController {
         return reviewDto1;
     }
 
+    @PostMapping("/delete/{id}")
+    public @ResponseBody ReviewDto reviewDelete(@RequestParam("id") Long id){
+
+        reviewService.reviewDelete(id);
+
+
+        return new ReviewDto();
+    }
 }

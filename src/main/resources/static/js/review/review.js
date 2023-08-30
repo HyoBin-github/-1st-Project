@@ -1,14 +1,24 @@
 $('#ajaxBtn').on('click', ajaxFn);
+//$('#produtId').val(),
 
 function ajaxFn(){
-    const data={
+    const data= {
         'productId':$('#productId').val(),
         'review':$('#review').val(),
+//        'start':$('#star').val(),
+
     }
+
+
+
 //    var form = new FormData();
 //    form.append("newFile", $("#upload_File")[0].files[0]);
-
-    console.log(data);
+//    const formData = new FormData();
+//    formData.append("file",file)
+//        formData.append("productId",$('#productId').val())
+//           formData.append("review",$('#review').val())
+//         formData.append("star",$('#star').val())
+//    console.log(data);
 
      $.ajax({
         type:'POST',
@@ -17,20 +27,47 @@ function ajaxFn(){
         success:function(res){
             alert("댓글작성완료");
             console.log(res);
-
-            let reData="<ul>";
+            let reData="<ul id="res.id">";
     		    reData+="<li>"+res.reviewWriter+"</li>";
     		    reData+="<li>"+res.review+"</li>";
-                reData+="<li>"+res.createDate+"</li>";
+                reData+="<li>"+res.createTime+"</li>";
+                reData+='<input type="button" value="삭제" onclick="onDelete('+res.id+')">'
                 reData+="</ul>";
 
         $('#tData').append(reData);
+
     },
     error:()=>{
     	alert("Faill!!");
     }
 })
 }
+
+
+function onDelete(id){
+    console.log(id)
+    console.log("delete")
+
+      $.ajax({
+            type:'POST',
+            url:"/review/delete/"+id,
+            data:data, //body
+            success:function(res){
+                alert("삭제완료 ");
+                console.log(res);
+
+                let reData="<ul id="res.id">";
+                    		    reData+="<li>"+res.reviewWriter+"</li>";
+                    		    reData+="<li>"+res.review+"</li>";
+                                reData+="<li>"+res.createTime+"</li>";
+                                reData+='<input type="button" value="삭제" onclick="onDelete('+res.id+')">'
+                                reData+="</ul>";
+
+                        $('#tData').append(reData);
+
+        },
+}
+
 //$('#deleteBtn').on('click', deleteFn);
 //
 //function deleteFn(){
