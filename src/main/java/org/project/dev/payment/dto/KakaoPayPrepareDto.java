@@ -20,7 +20,10 @@ public class KakaoPayPrepareDto {
     private String ios_app_scheme;
     private String created_at;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 436475b2d0350fe505ef598b16986e11e3998621
     public static KakaoPayPrepareDto toDto(KakaoPayPrepareEntity kakaoPayPrepareEntity) {
 
         return KakaoPayPrepareDto.builder()

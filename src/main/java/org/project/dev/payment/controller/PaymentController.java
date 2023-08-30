@@ -5,6 +5,7 @@ import org.project.dev.payment.dto.PaymentDto;
 import org.project.dev.payment.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -21,16 +22,28 @@ public class PaymentController {
         return null;
     }
 
-    @GetMapping("/success/{paymentId}")
+    /*
+    TODO
+
+    paymentId 어떻게??
+     */
+    @GetMapping("approval/{paymentId}")
     public Map<String,Object> success(
             @PathVariable(name = "paymentId") Long paymentId,
             @RequestParam("pg_token") String pgToken){
-
+        Map<String,Object> paymentMap = new HashMap<String,Object>();
         paymentService.paymentPrepare(pgToken,paymentId);
 
         return null;
     }
 
+
+    /*
+    TODO
+    1.catfather49@gmail.com
+    2.productId, total price
+    결제 버튼 클릭시  제일 먼저 시작
+     */
     @GetMapping("/{pg}/pg")
     public Map<String,Object> pgRequest(
             @PathVariable("pg") String pg){

@@ -43,6 +43,7 @@ public class ProductService {
     }
 
 
+    // LIST (READ)
     public ProductListResponse getProductList(int page, Pageable pageable, String searchType, String searchKeyword) {
         Pageable adjustedPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
         Page<ProductDTO> productList;
@@ -71,21 +72,6 @@ public class ProductService {
         private int totalPage;
         private String searchType;
         private String searchKeyword;
-    }
-
-
-    // Cursor-Based List
-    public List<ProductDTO> productCursorBasedList(Long lastId, int limit) {
-        List<ProductEntity> productEntities;
-        Pageable pageable = PageRequest.of(0, limit); // 첫 페이지에서 'limit' 개의 결과 가져오기
-
-        if (lastId == null) {
-            productEntities = productRepository.findProductsByOrderByIdDesc(pageable);
-        } else {
-            productEntities = productRepository.findProductsByIdLessThanOrderByIdDesc(lastId, pageable);
-        }
-
-        return productEntities.stream().map(ProductDTO::toDTO).collect(Collectors.toList());
     }
 
 

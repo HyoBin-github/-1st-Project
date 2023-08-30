@@ -8,7 +8,7 @@
 </head>
 <body>
 <th:block th:each="img : ${productImages}">
-    <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="250"/>
+    <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="100"/>
 </th:block>
 <table>
     <tr>

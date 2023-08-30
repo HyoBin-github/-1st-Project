@@ -64,11 +64,11 @@ public class ProductController {
     // 게시물 작성 처리 시
     @PostMapping("/write")
     public String postProductWrite(@ModelAttribute ProductDTO productDTO,
+                                   @RequestParam String imageOrders,
                                    @RequestParam(name = "files", required = false) List<MultipartFile> files) throws IOException {
-        // 상품글 작성
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO);
-        // 이미지 저장
-        productUtilService.saveProductImages(productEntityWritePro, files);
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO); // 상품글 작성
+        productUtilService.saveProductImages(productEntityWritePro, files, imageOrders); // 이미지 저장
+        System.out.println("Image Orders: " + imageOrders);
         return "index";
     }
 
@@ -77,6 +77,7 @@ public class ProductController {
                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                        @RequestParam(name = "searchType", required = false) String searchType,
                        @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
+
         ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword);
         model.addAttribute("productList", response.getProductList());
         model.addAttribute("nowPage", response.getNowPage());
@@ -86,12 +87,13 @@ public class ProductController {
         model.addAttribute("searchType", response.getSearchType());
         model.addAttribute("searchKeyword", response.getSearchKeyword());
 
-        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImages(response.getProductList().getContent());
+        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImage(response.getProductList().getContent());
         model.addAttribute("productImages", productImgDTOS);
 
         return "/product/list";
     }
 
+<<<<<<< HEAD
 
 
     // Cursor-Based List
@@ -124,6 +126,8 @@ public class ProductController {
     }
 
 
+=======
+>>>>>>> 436475b2d0350fe505ef598b16986e11e3998621
     // DETAIL (SELECT)
     @GetMapping("/{id}")
     public String getProductDetail(@PathVariable Long id, Model model) {
@@ -148,7 +152,6 @@ public class ProductController {
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
         model.addAttribute("productUpdate", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
-
         return "/product/update";
     }
 

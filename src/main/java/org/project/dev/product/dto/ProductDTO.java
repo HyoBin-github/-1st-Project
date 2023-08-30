@@ -29,6 +29,7 @@ public class ProductDTO {
     private int productHits;
     // 이 부분을 나중에 member 쪽에 연결(?) 하면 될 것 같습니다.
     private String productWriter;
+    private Long productPrice;
     private Boolean isProductDisplayed;
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
@@ -44,6 +45,7 @@ public class ProductDTO {
         productDTO.setProductDescription(productEntity.getProductDescription());
         productDTO.setProductHits(productEntity.getProductHits());
         productDTO.setProductWriter(productEntity.getProductWriter()); // 추후 수정 요망
+        productDTO.setProductPrice(productEntity.getProductPrice());
         productDTO.setIsProductDisplayed(productEntity.getIsProductDisplayed());
         productDTO.setProductCreateTime(productEntity.getCreateTime());
         productDTO.setProductUpdateTime(productEntity.getUpdateTime());
