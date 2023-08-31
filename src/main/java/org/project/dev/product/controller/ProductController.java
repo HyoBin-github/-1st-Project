@@ -93,7 +93,7 @@ public class ProductController {
         return "/product/list";
     }
 
-<<<<<<< HEAD
+
 
 
     // Cursor-Based List
@@ -126,8 +126,7 @@ public class ProductController {
     }
 
 
-=======
->>>>>>> 436475b2d0350fe505ef598b16986e11e3998621
+
     // DETAIL (SELECT)
     @GetMapping("/{id}")
     public String getProductDetail(@PathVariable Long id, Model model) {

@@ -80,6 +80,13 @@
                 <li th:text="${review.reviewWriter}"></li>
                 <li th:text="${review.createTime}"></li>
                 <input type="button" value="삭제" th:onclick="onDelete([[${review.id}]])">
+                <input type="button" id="reviewUp" value="수정" th:onclick="onUpdate([[${review.id}]])">
+                <form class="onUpdate([[${review.id}]])">
+                    <input type="hidden" id="id" th:value="${review.id}">
+                    <div class="form-group">
+                        <textarea class="form-control" id="review-content" rows="3">content</textarea>
+                    </div>
+                </form>
             </ul>
         </div>
     </div>

@@ -9,8 +9,6 @@ function ajaxFn(){
 
     }
 
-
-
 //    var form = new FormData();
 //    form.append("newFile", $("#upload_File")[0].files[0]);
 //    const formData = new FormData();
@@ -55,6 +53,10 @@ function onDelete(id){
             success:function(res){
                 alert("삭제완료 ");
                 console.log(res);
+                if(res>0){
+
+
+
 
                 let reData="<ul id="res.id">";
                     		    reData+="<li>"+res.reviewWriter+"</li>";
@@ -65,8 +67,16 @@ function onDelete(id){
 
                         $('#tData').append(reData);
 
+                }else{
+                alert("삭제실패")
+                }
         },
 }
+}
+$('#reviewUp').on('click', updateRe);
+
+function updateRe()
+
 
 //$('#deleteBtn').on('click', deleteFn);
 //

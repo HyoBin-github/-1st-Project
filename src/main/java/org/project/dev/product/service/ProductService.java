@@ -62,6 +62,10 @@ public class ProductService {
         return new ProductListResponse(productList, nowPage, startPage, endPage, totalPage, searchType, searchKeyword);
     }
 
+    public List<ProductDTO> productCursorBasedList(Long lastId, int limit) {
+    return null;
+    }
+
     @Data
     @AllArgsConstructor
     public class ProductListResponse {
