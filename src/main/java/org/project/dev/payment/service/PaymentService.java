@@ -126,7 +126,7 @@ public class PaymentService {
     지금 하드 코딩으로 설정 값들 다 보이는데 설정 파일하나로 관리하게...
      */
     @Transactional
-    public void pgRequest(String pg) {
+    public String pgRequest(String pg, Long memberId, Long productId, Long cartId, Long totalPrice) {
         RestTemplate restTemplate = new RestTemplate();
         PaymentEntity paymentEntity = new PaymentEntity();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -146,7 +146,7 @@ public class PaymentService {
                     .path("/v1/payment/ready")
                     .queryParam("cid", "TC0ONETIME")
                     .queryParam("partner_order_id", paymentId) //partner_order_id = paymentId 로 매칭 시켜야함
-                    .queryParam("partner_user_id", "test") //마찬가지로 partner_user_id = member_id로 매칭
+                    .queryParam("partner_user_id", memberId) //마찬가지로 partner_user_id = member_id로 매칭
                     .queryParam("item_name", "test_item") //우리 상품 이름
                     .queryParam("quantity", "1") //구매자가 설정한 상품 갯수
                     .queryParam("total_amount", "1000") //총 결제 금액
@@ -168,9 +168,10 @@ public class PaymentService {
             }
 
             paymentEntity.setPaymentReadyJson(kakaoJsonString);
-            System.out.println(result.getBody().getNext_redirect_pc_url().toString());
 
             paymentRepository.save(paymentEntity);
+
+            return result.getBody().getNext_redirect_pc_url();
 
         } else {
             throw new RuntimeException("제휴되지 않은 결제 업체 입니다.!!!!");
