@@ -30,7 +30,6 @@ public class NoticeEntity extends BaseEntity {
     @Column(name = "notHit", nullable = false)
     private int notHit; // 공지사항 글 조회수
 
-
     public static NoticeEntity toNoticeEntityInsert(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = new NoticeEntity();
         noticeEntity.setNotType(noticeDto.getNotType());

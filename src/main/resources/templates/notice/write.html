@@ -5,6 +5,7 @@
     <title>공지사항 작성</title>
     <link rel="stylesheet" th:href="@{/css/notice/write.css}">
 </head>
+<!--공지사항 작성 페이지로 관리자만 작성이 가능합니다.-->
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}">
     <div class="container">
@@ -20,9 +21,12 @@
                                     <option value="product">상품</option>
                                     <option value="delivery">배송</option>
                                     <option value="holiday">공휴일</option>
-                                </select>
+                                    <option value="event">이벤트</option>
+                                </select><br>
                                 <label th:for="title">제목</label>
-                                <input type="text" th:field="*{notTitle}">
+                                    <input type="text" th:field="*{notTitle}"><br>
+                                <label th:for="content">내용</label>
+                                    <input type="text" th:field="*{notContent}">
                             </li>
                         </ul>
                     </div>
