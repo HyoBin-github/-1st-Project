@@ -46,11 +46,16 @@ public class PaymentController {
      */
     @GetMapping("/{pg}/pg")
     public Map<String,Object> pgRequest(
-            @PathVariable("pg") String pg){
-
-        paymentService.pgRequest(pg);
-
-        return null;
+            @PathVariable("pg") String pg,
+            @RequestParam("productId") Long productId,
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("productPrice") Long productPrice,
+            @RequestParam("productName") String productName
+    ){
+        Map<String,Object> map = new HashMap<String,Object>();
+        String approvalUrl = paymentService.pgRequest(pg,productId,memberId,productPrice,productName);
+        map.put("approvalUrl",approvalUrl);
+        return map;
     }
 
     @PostMapping("/fail")
