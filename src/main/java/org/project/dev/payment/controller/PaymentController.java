@@ -34,17 +34,20 @@ public class PaymentController {
 
     /*
     TODO
-
-    paymentId 어떻게??
+    catfather49@gmail.com
      */
-    @GetMapping("approval/{paymentId}")
-    public Map<String, Object> success(
+    @GetMapping("approval/{paymentId}/{productPrice}/{productName}/{memberId}")
+    public String approval(
             @PathVariable(name = "paymentId") Long paymentId,
+            @PathVariable(name = "productPrice") Long productPrice,
+            @PathVariable(name = "productName") String productName,
+            @PathVariable(name = "memberId") Long memberId,
             @RequestParam("pg_token") String pgToken) {
         Map<String, Object> paymentMap = new HashMap<String, Object>();
-        paymentService.paymentPrepare(pgToken, paymentId);
+        paymentService.paymentApproval(pgToken, paymentId,productPrice,productName,memberId);
 
-        return null;
+
+        return "payment/succed";
     }
 
 

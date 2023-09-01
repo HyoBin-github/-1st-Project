@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NoticeService {
 
-    private final NoticeRepository noticeReopsitory;
+    private final NoticeRepository noticeRepository;
 
     /*
    Todo
@@ -31,10 +31,11 @@ public class NoticeService {
     @Transactional
     public int NoticeInsert(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityInsert(noticeDto);
-        Long noticeId = noticeReopsitory.save(noticeEntity).getNotId();
+
+        Long noticeId = noticeRepository.save(noticeEntity).getNotId(); // entity값을 받아서 repository에 저장
 
         Optional<NoticeEntity> optionalNoticeEntity
-                = Optional.ofNullable(noticeReopsitory.findById(noticeId).orElseThrow(() -> {
+                = Optional.ofNullable(noticeRepository.findById(noticeId).orElseThrow(() -> {
             return new IllegalArgumentException("공지사항을 찾을 수 없습니다.");
         }));
         if(!optionalNoticeEntity.isPresent()){
@@ -75,7 +76,7 @@ public class NoticeService {
         4.
         */
     public Page<NoticeDto> NoticeList(Pageable pageable) {
-        Page<NoticeEntity> noticeEntities = noticeReopsitory.findAll(pageable);
+        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable);
 
         noticeEntities.getNumber();
         noticeEntities.getTotalElements();
@@ -94,23 +95,24 @@ public class NoticeService {
         3.
         4.
         */
-    public List<NoticeDto> NoticeListSearch(String noticeId, String noticeSearch) {
+    public List<NoticeDto> NoticeListSearch(String noticeSelect, String noticeSearch) {
+
         List<NoticeDto> noticeDtoList = new ArrayList<>();
         List<NoticeEntity> noticeEntities = new ArrayList<>();
 
-        if(noticeId.equals("title")){
-            noticeEntities = noticeReopsitory.findByNoticeTitleContaining(noticeSearch);
-        }else if(noticeId.equals("content")){
-            noticeEntities = noticeReopsitory.findByNotContentContaining(noticeSearch);
+        if(noticeSelect.equals("title")){
+            noticeEntities = noticeRepository.findByNoticeTitleContaining(noticeSearch);
+        }else if(noticeSelect.equals("content")){
+            noticeEntities = noticeRepository.findByNoticeContentContaining(noticeSearch);
         }else{
-            noticeEntities = noticeReopsitory.findAll();
+            noticeEntities = noticeRepository.findAll();
         }
 
         if(!noticeEntities.isEmpty()){
             for(NoticeEntity noticeEntity : noticeEntities) {
                 NoticeDto noticeDto = NoticeDto.builder()
-                        .notTitle(noticeEntity.getNoticeTitle())
-                        .notContent(noticeEntity.getNotContent())
+                        .noticeTitle(noticeEntity.getNoticeTitle())
+                        .noticeContent(noticeEntity.getNoticeContent())
                         .notWriter(noticeEntity.getNotWriter())
                         .notHit(noticeEntity.getNotHit())
                         .build();
@@ -126,16 +128,17 @@ public class NoticeService {
             3.
             4.
             */
-    @Transactional
+    @Transactional // error
     public NoticeDto NoticeDetail(Long id) {
+
         NoticeHit(id);
 
-        NoticeEntity noticeEntity = noticeReopsitory.findById(id).orElseThrow(IllformedLocaleException::new);
+        NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(IllformedLocaleException::new);
 
         return NoticeDto.builder()
                 .notId(noticeEntity.getNotId())
-                .notTitle(noticeEntity.getNoticeTitle())
-                .notContent(noticeEntity.getNotContent())
+                .noticeTitle(noticeEntity.getNoticeTitle())
+                .noticeContent(noticeEntity.getNoticeContent())
                 .notWriter(noticeEntity.getNotWriter())
                 .notHit(noticeEntity.getNotHit())
                 .build();
@@ -149,7 +152,7 @@ public class NoticeService {
         */
     @Transactional
     public void NoticeHit(Long id){
-        noticeReopsitory.NoticeHit(id);
+        noticeRepository.NoticeHit(id);
     }
 
     /*
@@ -157,48 +160,56 @@ public class NoticeService {
     공지사항 수정하기 서비스
     */
     public NoticeDto NoticeUpdate(Long id) {
+
         Optional<NoticeEntity> optionalNoticeEntity
-                = Optional.ofNullable(noticeReopsitory.findById(id).orElseThrow(() -> {
+                = Optional.ofNullable(noticeRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("공지사항을 찾을 수 없습니다.");
         }));
         if(optionalNoticeEntity.isPresent()){
             NoticeDto noticeDto = NoticeDto.tonoticeDto(optionalNoticeEntity.get());
+
             return noticeDto;
         }
         return null;
     }
 
-    public int NoticeUpdateOk(NoticeDto noticeDto) {
+    public int NoticeUpdateOk(NoticeDto noticeDto, Long id) {
+
+        noticeDto.setNotId(id); // dto에 id 들어감
+
         Optional<NoticeEntity> optionalNoticeEntity
-                = Optional.ofNullable(noticeReopsitory.findById(noticeDto.getNotId()).orElseThrow(() -> {
-            return new IllegalArgumentException("수정할 공지사항이 없습니다.");
+                = Optional.ofNullable(noticeRepository.findById(noticeDto.getNotId()).orElseThrow(() -> {
+            return new IllegalArgumentException("수정할 공지사항이 없습니다."); // id 확인해서 가져와
         }));
 
-        NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityUpdate(noticeDto);
+        NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityUpdate(noticeDto); //수정해
 
-        Long noticeId = noticeReopsitory.save(noticeEntity).getNotId();
+        Long noticeId = noticeRepository.save(noticeEntity).getNotId(); // 내놔
 
         Optional<NoticeEntity> optionalNoticeEntity1
-                = Optional.ofNullable(noticeReopsitory.findById(noticeId).orElseThrow(() -> {
-                return new IllegalArgumentException("수정할 공지사항이 없습니다.");
-        }));
-        if(optionalNoticeEntity.isPresent()){
+                = Optional.ofNullable(noticeRepository.findById(noticeId).orElseThrow(() -> {
+            return new IllegalArgumentException("수정할 공지사항이 없습니다.");
+        })); //
+        if(optionalNoticeEntity1.isPresent()){
             return 1;
         }
         return 0;
     }
 
+    @Transactional
     public int NoticeDelete(Long id) {
+
         Optional<NoticeEntity> optionalNoticeEntity
-                = Optional.ofNullable(noticeReopsitory.findById(id).orElseThrow(() -> {
+                = Optional.ofNullable(noticeRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("삭제할 공지사항이 없습니다.");
         }));
-        noticeReopsitory.delete(optionalNoticeEntity.get());
+        noticeRepository.delete(optionalNoticeEntity.get());
 
-        Optional<NoticeEntity> optionalNoticeEntity1 = noticeReopsitory.findById(id);
+        Optional<NoticeEntity> optionalNoticeEntity1 = noticeRepository.findById(id);
         if (!optionalNoticeEntity.isPresent()){
             return 1;
         }
         return 0;
     }
+
 }

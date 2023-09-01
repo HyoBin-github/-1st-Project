@@ -1,6 +1,7 @@
 package org.project.dev.notice.dto;
 
 import lombok.*;
+import org.project.dev.notice.entity.InquiryEntity;
 
 import java.time.LocalDateTime;
 
@@ -11,11 +12,25 @@ import java.time.LocalDateTime;
 @Setter
 public class InquiryDto {
     private Long inqId; // 공지사항 아이디
-    private String ingType;
-    private String inqTitle; // 공지사항 글 제목
-    private String inqContent; // 공지사항 글 내용
+    private String inqType;
+    private String inquiryTitle; // 공지사항 글 제목
+    private String inquiryContent; // 공지사항 글 내용
     private String inqWriter; // 공지사항 글 작성자
     private int inqHit;  // 공지사항 글 조회수
-    private LocalDateTime createDate; // 공지사항 생성시간
-    private LocalDateTime updateDate; // 공지사항 수정시간
+    private LocalDateTime CreateTime; // 공지사항 생성시간
+    private LocalDateTime UpdateTime; // 공지사항 수정시간
+
+    public static InquiryDto toinquiryDto(InquiryEntity inquiryEntity) {
+        InquiryDto inquiryDto = new InquiryDto();
+        inquiryDto.setInqId(inquiryEntity.getInqId());
+        inquiryDto.setInqType(inquiryEntity.getInqType());
+        inquiryDto.setInquiryTitle(inquiryEntity.getInquiryTitle());
+        inquiryDto.setInquiryContent(inquiryEntity.getInquiryContent());
+        inquiryDto.setInqWriter(inquiryEntity.getInqWriter());
+        inquiryDto.setInqHit(inquiryEntity.getInqHit());
+        inquiryDto.setCreateTime(inquiryEntity.getCreateTime());
+        inquiryDto.setUpdateTime(inquiryEntity.getUpdateTime());
+        return inquiryDto;
+    }
 }
+

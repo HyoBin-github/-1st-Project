@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/notice/detail.css}">
+</head>
+<body>
+<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div class="container">
+    <div class="detail">
+        <div class="detail-con">
+            <div class="board-con">
+                <h1>공지사항</h1>
+                <ul>
+                    <li>
+                        <span>제목</span>
+                        <span th:text = "${noticeDto.noticeTitle}"></span>
+                    </li>
+                    <li>
+                        <span>작성자</span>
+                        <span th:text="${noticeDto.notWriter}"></span>
+                    </li>
+                    <li>
+                        <span>작성날짜</span>
+                        <span th:text="${noticeDto.createTime}"></span> <!--?-->
+                    </li>
+                    <li>
+                        <span>조회수</span>
+                        <span th:text = "${noticeDto.notHit}"></span>
+                    </li>
+                    <li>
+                        <span class="content"></span>
+                        <span th:text = "${noticeDto.noticeContent}"></span>
+                    </li>
+                    <li>
+                        <a th:href="@{/notice/delete/{id}(id=${noticeDto.notId})}">삭제하기</a>
+                        <a th:href="@{/notice/update/{id}(id=${noticeDto.notId})}">수정하기</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/notice/list}">LIST</a>
+                    </li>
+                </ul>
+            </div>
+            <!--댓글-->
+            <div class="reply-con">
+                <div class="reply-write">
+                    <form action="@{/notice/}">
+                        <!-- 번호 -->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+</html>

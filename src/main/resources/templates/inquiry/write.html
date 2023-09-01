@@ -3,39 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항 작성</title>
-    <link rel="stylesheet" th:href="@{/css/notice/write.css}">
+    <link rel="stylesheet" th:href="@{/css/inquiry/write.css}">
 </head>
 <body>
 <div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
     <div class="container">
         <div class="write">
             <div class="write-con">
-                <form th:action="@{/notice/write}" method="post" accept-charset="utf-8" th:object="${noticeDto}">
+                <form th:action="@{/inquiry/write}" method="post" accept-charset="utf-8" th:object="${inquiryDto}">
                     <div class="write-form">
-                        <h1>공지사항 작성</h1>
+                        <h1>문의사항 작성</h1>
                         <ul>
                             <li>
-                                <select name="Type" id="noticeType" th:field="*{notType}">
+                                <select name="Type" id="inquiryType" th:field="*{inqType}">
                                     <option th:value="''" disabled>===종류 선택===</option>
                                     <option th:value="'product'">상품</option>
                                     <option th:value="'delivery'">배송</option>
-                                    <option th:value="'holiday'">공휴일</option>
-                                    <option th:value="'event'">이벤트</option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="Writer" id="noticeWriter" th:field="*{notWriter}">
-                                    <option th:value="''" disabled>===작성자 선택===</option>
-                                    <option th:value="'admin'">관리자</option>
+                                    <option th:value="'etc'">기타</option>
                                 </select>
                             </li>
                             <li>
                                 <label th:for="title">제목</label>
-                                <input type="text" th:field="*{noticeTitle}" placeholder="제목을 입력하세요.">
+                                <input type="text" th:field="*{inquiryTitle}" placeholder="제목을 입력하세요.">
                             </li>
                             <li>
                                 <label th:for="content">내용</label>
-                                <textarea rows="20" th:field="*{noticeContent}" placeholder="공지사항을 작성하세요" />
+                                <textarea rows="20" th:field="*{inquiryContent}" placeholder="문의사항을 작성하세요" />
+                            </li>
+                            <li>
+                                <label th:for="writer">글쓴이</label>
+                                <input type="text" th:field="*{inqWriter}">
                             </li>
                             <li>
                                 <input type="submit" value="작성">
@@ -44,7 +41,6 @@
                         </ul>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
