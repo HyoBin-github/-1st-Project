@@ -151,11 +151,12 @@ public class PaymentService {
                     .queryParam("quantity", "1") //구매자가 설정한 상품 갯수
                     .queryParam("total_amount", productPrice) //총 결제 금액
                     .queryParam("tax_free_amount", "100") // 비과세라는데 필수값이라서 10%정도 잡으면 될듯
-                    .queryParam("approval_url", "http://localhost:8111/payment/approval/" + paymentId) //call back uri
+                    .queryParam("approval_url", "http://localhost:8111/payment/approval/"
+                            +paymentId+"/"+productPrice+"/"+productName+"/"+memberId) //call back uri
                     .queryParam("cancel_url", "http://localhost:8111/payment/cancel") //주문 취소
                     .queryParam("fail_url", "http://localhost:8111/payment/fail") //실패
                     .encode()
-                    .build()
+            ild()
                     .toUri();
 
             ResponseEntity<KakaoPayPrepareDto> result = restTemplate.exchange(uri, HttpMethod.POST, entity, KakaoPayPrepareDto.class);
