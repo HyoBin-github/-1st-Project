@@ -25,6 +25,8 @@ public class PaymentEntity extends BaseEntity {
     
     private String paymentType; //결제 업체 타임 ex) kakao, naver, toss 기타 등등등
 
+    private Long productPrice; // totalPrice
+
     @Lob
     private String paymentReadyJson; //업체별 payment request 보냈을때 json보관용 가져올땐 jackson 써서 객체화
 

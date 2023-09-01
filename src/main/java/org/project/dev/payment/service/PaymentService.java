@@ -133,6 +133,7 @@ public class PaymentService {
 
         if (pg.equals("kakao")) {
             paymentEntity.setPaymentType("KAKAO");
+            paymentEntity.setProductPrice(productPrice);
             paymentId = paymentRepository.save(paymentEntity).getPaymentId();
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", "KakaoAK 6bf92b429a38f0eabe31b6d0642a9a24");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>payment test</title>
@@ -10,8 +10,19 @@
 </body>
 
 <script>
+
+    var text = "";
     fetch("http://localhost:8111/payment/kakao/pg?productId=123&memberId=123&productPrice=100000&productName=testProduct")
-    .then((response) =>console.log(response));
+    .then(res => res.json())
+    .then(json => {
+        text = json;
+        console.log(text.approvalUrl);
+        var link = text.approvalUrl;
+
+        location.href=link;
+        location.replace(link);
+        window.open(link);
+    });
 
 </script>
 </html>
