@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>payment test</title>
+</head>
+<body>
+<h1>payment test</h1>
+<a href="/payment/kakao/pg?"></a>
+</body>
+
+<script>
+    fetch("http://localhost:8111/payment/kakao/pg?productId=123&memberId=123&productPrice=100000&productName=testProduct")
+    .then((response) =>console.log(response));
+
+</script>
+</html>
