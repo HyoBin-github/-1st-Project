@@ -1,0 +1,69 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/cream_header.css);
+@import url(/css/common/footer.css);
+.container{
+    width: 100%;
+}
+.container .detail{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+    box-sizing: border-box;
+}
+.container .detail .detail-con{
+    flex-basis: 1400px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+}
+.container .detail .detail-con .board-con{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.container .detail .detail-con .board-con h1{
+    border-bottom: 2px solid #cccccc;
+    text-align: start;
+    font-size: 25px;
+    padding: 10px 0;
+}
+.container .detail .detail-con .board-con>ul{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.container .detail .detail-con .board-con>ul>li{
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+}
+.container .detail .detail-con .board-con>ul>li span{
+    line-height: 20px;
+    padding: 5px 10px;
+}
+.container .detail .detail-con .board-con>ul>li span:nth-child(1){
+    flex:1;
+    background-color: #e5e0ff;
+    font-size: 15px;
+    font-weight: bold;
+}
+.container .detail .detail-con .board-con>ul>li span:nth-child(2){
+    border: 1px solid #e5e0ff;
+    flex:3;
+}
+.container .detail .detail-con .board-con>ul>li a{
+    flex:1;
+    text-align: center;
+    padding: 3px 0;
+    font-size: 15px;
+    transition: all 0.2s;
+    background-color: #e5e0ff;
+}
+.container .detail .detail-con .board-con>ul>li a:hover{
+    background-color: #7286D3;
+    color: #ffffff;
+}

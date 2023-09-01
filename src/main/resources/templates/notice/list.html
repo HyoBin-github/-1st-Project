@@ -6,29 +6,48 @@
     <link rel="stylesheet" th:href="@{/css/notice/list.css}">
 </head>
 <body>
-<div th:replace="~{fragments/common/header :: headerFragment}"></div>
+<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
 <div class="List">
     <div class="List-con">
+        <div class="List-title">
+            <div class="title">
+                <h1>공지사항</h1>
+            </div>
+        </div>
+        <div class="type">
+            <table>
+                <tbody>
+                <tr>
+                    <td><a href="">전체</a></td>
+                    <td><a href="">상품</a></td>
+                    <td><a href="">배송</a></td>
+                    <td><a href="">이벤트</a></td>
+                    <td><a href="">공휴일</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <table>
             <thead>
-            <tr class="title">
-                <th colspan="4">공지사항</th>
-            </tr>
             <tr>
-                <th>분류</th> <!--순서가 아니라 "공지"로만 작성-->
-                <th>제목</th>
+                <th>구분</th>
+                <th class="title">제목</th>
                 <th>작성자</th>
                 <th>생성시간</th>
                 <th>조회수</th>
+                <th>≖‿≖</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="notice: ${noticeList}">
                 <td th:text="${notice.notType}"></td>
-                <td th:text="${notice.notTitle}"></td>
+                <td th:text="${notice.noticeTitle}">
+                    <a th:href="@{/notice/detail/{id}(id=${notice.notId})}"></a>
+                </td>
                 <td th:text="${notice.notWriter}"></td>
-                <td th:text="${notice.createDate}"></td>
+                <td th:text="${#temporals.format(notice.createTime,'yyyy-MM-dd')}"></td>
                 <td th:text="${notice.notHit}"></td>
+                <td><a th:href="@{/notice/detail/{id}(id=${notice.notId})}">상세보기</a></td>
             </tr>
             </tbody>
         </table>
@@ -37,14 +56,14 @@
                 <li>
                     <span th:if="${1 == noticeList.pageable.pageNumber+1}" style="font-weight:bold" class="span0"></span>
                     <span th:unless="${1 == noticeList.pageable.pageNumber+1}">
-                        <a th:href="@{/notice/List(page=0}" class="span1"><<</a>
+                        <a th:href="@{/notice/list(page=0)}" class="span1">처음</a>
                         <!--처음으로 이동-->
                     </span>
                 </li>
                 <li>
                     <span th:if="${1 == noticeList.pageable.pageNumber+1}" style="font-weight:bold" class="span0"></span>
                     <span th:unless="${1 == noticeList.pageable.pageNumber+1}">
-                        <a th:href="@{/notice/List(page=${noticeList.pageable.pageNumber-1})}" class="=span1"><</a>
+                        <a th:href="@{/notice/list(page=${noticeList.pageable.pageNumber-1})}" class="=span1">이전</a>
                         <!--이전페이지로 이동-->
                     </span>
                 </li>
@@ -52,23 +71,33 @@
                     <!--블럭 처리-->
                     <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
                         <span th:if="${i == noticeList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
-                        <a th:unless="${i == noticeList.pageable.pageNumber+1}" th:href="@{/notice/List(page=${i - 1})}" th:text="${i}"></a>
+                        <a th:unless="${i == noticeList.pageable.pageNumber+1}" th:href="@{/notice/list(page=${i - 1})}" th:text="${i}"></a>
                     </li>
                 </li>
                 <li>
                     <span th:if="${noticeList.totalPages == noticeList.pageable.pageNumber + 1}" class="span0">끝</span>
                     <span th:unless="${noticeList.totalPages == noticeList.pageable.pageNumber + 1}">
-                        <a th:href="@{/notice/List(page=${noticeList.pageable.pageNumber + 1})}" classa="span1">다음</a>
+                        <a th:href="@{/notice/list(page=${noticeList.pageable.pageNumber + 1})}" classa="span1">다음</a>
                     </span>
                 </li>
                 <li>
                     <!--현재 페이지가 마지막 페이지이면 span표시-->
                     <span th:if="${noticeList.totalPages == noticeList.pageable.pageNumber + 1}" class="span0">END</span>
                     <span th:unless="${noticeList.totalPages == noticeList.pageable.pageNumber + 1}">
-                        <a th:href="@{/notice/List(page=${noticeList.totalPages-1})}" class="span1">마지막</a>
+                        <a th:href="@{/notice/list(page=${noticeList.totalPages-1})}" class="span1">마지막</a>
                     </span>
                 </li>
             </ul>
+        </div>
+        <div class="search">
+            <form th:action="@{/notice/search}" method="get">
+                <select name="select" id="select">
+                    <option th:value="''">전체</option>
+                    <option th:value="title">제목</option>
+                </select>
+                <input type="text" name="search" id="search" th:value="${param.search}">
+                <input type="submit" value="검색">
+            </form>
         </div>
     </div>
 </div>
