@@ -110,6 +110,7 @@ public class PaymentService {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("kakao payment request : json to string error : " + e);
             }
+
             //paymentEntity.setPaymentJson(kakaoJsonString);
 
             paymentRepository.updateIsSucced(paymentDto.getPaymentId(),1);
