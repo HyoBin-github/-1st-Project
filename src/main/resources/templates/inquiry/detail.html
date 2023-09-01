@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의사 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/inquiry/detail.css}">
+</head>
+<body>
+<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div class="container">
+    <div class="detail">
+        <div class="detail-con">
+            <div class="board-con">
+                <h1>공지사항</h1>
+                <ul>
+                    <li>
+                        <span>제목</span>
+                        <span th:text = "${inquiryDto.inquiryTitle}"></span>
+                    </li>
+                    <li>
+                        <span>작성자</span>
+                        <span th:text="${inquiryDto.inqWriter}"></span>
+                    </li>
+                    <li>
+                        <span>작성날짜</span>
+                        <span th:text="${#temporals.format(inquiryDto.createTime, 'yyyy-MM-dd')}"></span> <!--?-->
+                    </li>
+                    <li>
+                        <span>조회수</span>
+                        <span th:text = "${inquiryDto.inqHit}"></span>
+                    </li>
+                    <li>
+                        <span th:text = "${inquiryDto.inquiryContent}" class="content"></span>
+                    </li>
+                    <li>
+                        <a th:href="@{/inquiry/delete/{id}(id=${inquiryDto.inqId})}">삭제하기</a>
+                        <a th:href="@{/inquiry/update/{id}(id=${inquiryDto.inqId})}">수정하기</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/inquiry/list}">LIST</a>
+                    </li>
+                </ul>
+            </div>
+            <!--댓글-->
+            <div class="reply-con">
+                <div class="reply-write">
+                    <form action="@{/notice/}">
+                        <!-- 번호 -->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+</html>

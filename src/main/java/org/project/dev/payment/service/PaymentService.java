@@ -38,7 +38,7 @@ public class PaymentService {
     결제 "준비" 승인 아님 카카오에서 요청을 날리고 redirect를 받아서 tic pg_token db에 저장
      */
     @Transactional
-    public void paymentPrepare(String pgToken, Long paymentId) {
+    public void paymentApproval(String pgToken, Long paymentId, Long productPrice, String productName, Long memberId) {
 
         paymentRepository.updatePgToken(paymentId, pgToken);
         PaymentEntity paymentEntity = paymentRepository.findById(paymentId).orElseThrow();
@@ -53,7 +53,7 @@ public class PaymentService {
         paymentDto.setTid(getTidPaymentDto.getTid());
 
         //카카오 결제 승인
-        paymentApproveKakao(paymentDto);
+        paymentApproveKakao(paymentDto,paymentId, productPrice, productName,memberId);
 
     }
 
@@ -72,7 +72,7 @@ public class PaymentService {
     }
 
     // 결제 요청 카카오
-    public void paymentApproveKakao(PaymentDto paymentDto) {
+    public void paymentApproveKakao(PaymentDto paymentDto, Long paymentId, Long productPrice, String productName, Long memberId) {
         RestTemplate restTemplate = new RestTemplate();
         PaymentEntity paymentEntity = new PaymentEntity();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -91,10 +91,10 @@ public class PaymentService {
                     .path("/v1/payment/approve")
                     .queryParam("cid", "TC0ONETIME") //가맹점 코드
                     .queryParam("partner_order_id", paymentDto.getPaymentId()) //partner_order_id = paymentId 로 매칭 시켜야함
-                    .queryParam("partner_user_id", "test") //마찬가지로 partner_user_id = member_id로 매칭
-                    .queryParam("item_name", "test_item") //우리 상품 이름
+                    .queryParam("partner_user_id", memberId) //마찬가지로 partner_user_id = member_id로 매칭
+                    .queryParam("item_name", productName) //우리 상품 이름
                     .queryParam("tid", paymentDto.getTid()) //
-                    .queryParam("total_amount", "1000") //총 결제 금액
+                    .queryParam("total_amount", productPrice) //총 결제 금액
                     .queryParam("tax_free_amount", "100") // 비과세라는데 필수값이라서 10%정도 잡으면 될듯
                     .queryParam("pg_token", paymentDto.getPgToken()) //call back uri
                     .encode()
@@ -110,6 +110,7 @@ public class PaymentService {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("kakao payment request : json to string error : " + e);
             }
+
             //paymentEntity.setPaymentJson(kakaoJsonString);
 
             paymentRepository.updateIsSucced(paymentDto.getPaymentId(),1);
@@ -117,8 +118,6 @@ public class PaymentService {
         } else {
             throw new IllegalArgumentException("해당 아이디에 값이 없습니다.");
         }
-
-
     }
 
     /*
@@ -126,7 +125,7 @@ public class PaymentService {
     지금 하드 코딩으로 설정 값들 다 보이는데 설정 파일하나로 관리하게...
      */
     @Transactional
-    public String pgRequest(String pg, Long memberId, Long productId, Long cartId, Long totalPrice) {
+    public String pgRequest(String pg, Long productId, Long memberId, Long productPrice, String productName) {
         RestTemplate restTemplate = new RestTemplate();
         PaymentEntity paymentEntity = new PaymentEntity();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -135,6 +134,7 @@ public class PaymentService {
 
         if (pg.equals("kakao")) {
             paymentEntity.setPaymentType("KAKAO");
+            paymentEntity.setProductPrice(productPrice);
             paymentId = paymentRepository.save(paymentEntity).getPaymentId();
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", "KakaoAK 6bf92b429a38f0eabe31b6d0642a9a24");
@@ -147,11 +147,12 @@ public class PaymentService {
                     .queryParam("cid", "TC0ONETIME")
                     .queryParam("partner_order_id", paymentId) //partner_order_id = paymentId 로 매칭 시켜야함
                     .queryParam("partner_user_id", memberId) //마찬가지로 partner_user_id = member_id로 매칭
-                    .queryParam("item_name", "test_item") //우리 상품 이름
+                    .queryParam("item_name", productName) //우리 상품 이름
                     .queryParam("quantity", "1") //구매자가 설정한 상품 갯수
-                    .queryParam("total_amount", "1000") //총 결제 금액
+                    .queryParam("total_amount", productPrice) //총 결제 금액
                     .queryParam("tax_free_amount", "100") // 비과세라는데 필수값이라서 10%정도 잡으면 될듯
-                    .queryParam("approval_url", "http://localhost:8111/payment/approval/" + paymentId) //call back uri
+                    .queryParam("approval_url", "http://localhost:8111/payment/approval/"
+                            +paymentId+"/"+productPrice+"/"+productName+"/"+memberId) //call back uri
                     .queryParam("cancel_url", "http://localhost:8111/payment/cancel") //주문 취소
                     .queryParam("fail_url", "http://localhost:8111/payment/fail") //실패
                     .encode()
@@ -170,11 +171,13 @@ public class PaymentService {
             paymentEntity.setPaymentReadyJson(kakaoJsonString);
 
             paymentRepository.save(paymentEntity);
-
             return result.getBody().getNext_redirect_pc_url();
+
 
         } else {
             throw new RuntimeException("제휴되지 않은 결제 업체 입니다.!!!!");
         }
+
     }
+
 }

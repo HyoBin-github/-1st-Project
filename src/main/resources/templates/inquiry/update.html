@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의사항 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/inquiry/update.css}">
+</head>
+<body>
+<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div class="container">
+    <div class="update">
+        <div class="update-con">
+            <form th:action="@{/inquiry/update/{id}(id=${inquiryDto.inqId})}" method="post">
+                <div class="update-form">
+                    <h1>공지사항</h1>
+                    <ul>
+                       <li>
+                           <select name="Type" id="inquiryType" th:value="${inquiryDto.inqType}">
+                               <option th:value="''" disabled>===종류 선택===</option>
+                               <option th:value="'product'">상품</option>
+                               <option th:value="'delivery'">배송</option>
+                               <option th:value="'etc'">기타</option>
+                           </select>
+                       </li>
+                        <li>
+                            <label th:for="inqId"></label>
+                            <input type="text" name="inqId" th:value="${inquiryDto.inqId}" readonly>
+                        </li>
+                        <li>
+                            <label th:for="inquiryTitle">제목</label>
+                            <input type="text" name="inquiryTitle" th:value="${inquiryDto.inquiryTitle}">
+                        </li>
+                        <li>
+                            <label th:for="inquiryContent">내용</label>
+                            <input type="text" name="inquiryContent" th:value="${inquiryDto.inquiryContent}">
+                        </li>
+                        <li>
+                            <label th:for="inqHit">조회수</label>
+                            <input type="text" name="inqHit" th:value="${inquiryDto.inqHit}" readonly>
+                        </li>
+                        <li>
+                            <input type="submit" value="수정하기">
+                        </li>
+                    </ul>
+                </div>
+            </form>
+            <!--댓글-->
+            <div class="reply-con">
+                <div class="reply-write">
+                    <form action="@{/inquiry/}">
+                        <!-- 번호 -->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+</html>

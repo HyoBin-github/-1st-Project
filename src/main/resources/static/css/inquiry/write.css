@@ -1,8 +1,4 @@
 @import url(/css/common/reset.css);
-<<<<<<< HEAD
-@import url(/css/common/header.css);
-@import url(/css/common/footer.css);
-=======
 @import url(/css/common/cream_header.css);
 @import url(/css/common/footer.css);
 container write write-con h1,ul
@@ -55,4 +51,3 @@ container write write-con h1,ul
     flex: 3;
     color: inherit;
 }
->>>>>>> 73aed2e674cb4cf8b57ce9a11e75af3279a4f879
