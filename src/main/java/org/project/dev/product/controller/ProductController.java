@@ -93,8 +93,6 @@ public class ProductController {
         return "/product/list";
     }
 
-
-
     // Cursor-Based List
     @GetMapping("/cursorBasedList")
     public String cursorBasedList(@RequestParam(required = false) Long lastId, Model model) {
@@ -123,7 +121,6 @@ public class ProductController {
 
         return list;
     }
-
 
     // DETAIL (SELECT)
     @GetMapping("/{id}")
