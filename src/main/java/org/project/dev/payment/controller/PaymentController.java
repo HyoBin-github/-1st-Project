@@ -62,7 +62,7 @@ public class PaymentController {
     public Map<String, Object> pgRequest(
             @PathVariable("pg") String pg,
             @RequestParam("productId") Long productId,
-            @RequestParam("memberId") Long memberId,
+            @RequestParam("memberId") Long memberId, // myuserdetail로 가져오기
             @RequestParam("productPrice") Long productPrice,
             @RequestParam("productName") String productName
     ) {
