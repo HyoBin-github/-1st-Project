@@ -1,5 +1,6 @@
 package org.project.dev.notice.repository;
 
+
 import org.project.dev.notice.entity.NoticeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,9 +14,10 @@ import java.util.List;
 public interface NoticeRepository extends JpaRepository<NoticeEntity, Long> {
 
     List<NoticeEntity> findByNoticeTitleContaining(String title);
-    List<NoticeEntity> findByNotContentContaining(String content);
+    List<NoticeEntity> findByNoticeContentContaining(String content);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE NoticeEntity n set n.not_hit = n.not_hit + 1 where n.not_id = :id" , nativeQuery = true)
+    @Query(value = "UPDATE notice n set n.not_hit = n.not_hit + 1 where n.not_id = :id" , nativeQuery = true)
     void NoticeHit(@Param("id") Long id);
 }
+

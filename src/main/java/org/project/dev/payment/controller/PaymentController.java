@@ -3,60 +3,82 @@ package org.project.dev.payment.controller;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.payment.dto.PaymentDto;
 import org.project.dev.payment.service.PaymentService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/payment")
 @RequiredArgsConstructor
 public class PaymentController {
 
     private final PaymentService paymentService;
+
     @PostMapping("/request")
-    public Map<String,Object> request(
+    public Map<String, Object> request(
             @RequestBody PaymentDto paymentDto,
-            @RequestParam("memberid") String memberId){
+            @RequestParam("memberid") String memberId) {
 
         return null;
     }
 
+    @GetMapping("/paymentTestPg")
+    public String testPg() {
+
+        return "payment/paymentIndex";
+
+    }
+
+
     /*
     TODO
-
-    paymentId 어떻게??
+    catfather49@gmail.com
      */
-    @GetMapping("approval/{paymentId}")
-    public Map<String,Object> success(
+    @GetMapping("approval/{paymentId}/{productPrice}/{productName}/{memberId}")
+    public String approval(
             @PathVariable(name = "paymentId") Long paymentId,
-            @RequestParam("pg_token") String pgToken){
-        Map<String,Object> paymentMap = new HashMap<String,Object>();
-        paymentService.paymentPrepare(pgToken,paymentId);
+            @PathVariable(name = "productPrice") Long productPrice,
+            @PathVariable(name = "productName") String productName,
+            @PathVariable(name = "memberId") Long memberId,
+            @RequestParam("pg_token") String pgToken) {
+        Map<String, Object> paymentMap = new HashMap<String, Object>();
+        paymentService.paymentApproval(pgToken, paymentId,productPrice,productName,memberId);
 
-        return null;
+
+
+        return "payment/succed";
     }
 
 
     /*
     TODO
     1.catfather49@gmail.com
-    2.productId, total price
-    결제 버튼 클릭시  제일 먼저 시작
+    2.productId, cartId, totalPrice, itemPrice, itemName,
+    3. return 으로 result pc 앱 결제 url 만 설정
      */
     @GetMapping("/{pg}/pg")
-    public Map<String,Object> pgRequest(
-            @PathVariable("pg") String pg){
 
-        paymentService.pgRequest(pg);
+    @ResponseBody
+    public Map<String, Object> pgRequest(
+            @PathVariable("pg") String pg,
+            @RequestParam("productId") Long productId,
+            @RequestParam("memberId") Long memberId, // myuserdetail로 가져오기
+            @RequestParam("productPrice") Long productPrice,
+            @RequestParam("productName") String productName
+    ) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        String approvalUrl = paymentService.pgRequest(pg, productId, memberId, productPrice, productName);
+        map.put("approvalUrl", approvalUrl);
+        return map;
 
-        return null;
     }
 
     @PostMapping("/fail")
-    public Map<String,Object> fail(
+    public Map<String, Object> fail(
             @RequestBody PaymentDto paymentDto,
-            @RequestParam("memberid") String memberId){
+            @RequestParam("memberid") String memberId) {
 
         return null;
     }

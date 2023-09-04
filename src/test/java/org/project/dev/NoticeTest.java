@@ -20,9 +20,9 @@ public class NoticeTest {
     @Test
     void insertTest(){
         NoticeDto noticeDto = new NoticeDto();
-        noticeDto.setNotTitle("제목1");
+//        noticeDto.setNotTitle("제목1");
         noticeDto.setNotType("배송");
-        noticeDto.setNotContent("내용");
+//        noticeDto.setNotContent("내용");
         noticeDto.setNotWriter("관리자");
 
         NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityInsert(noticeDto);

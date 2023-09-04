@@ -1,8 +1,10 @@
 package org.project.dev.notice.controller;
 
+
 import lombok.RequiredArgsConstructor;
 import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.service.NoticeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/notice")
 @RequiredArgsConstructor
 public class NoticeController {
 
+    @Autowired
     private final NoticeService noticeService;
 
     /*
@@ -41,7 +43,7 @@ public class NoticeController {
         }
         int rs = noticeService.NoticeInsert(noticeDto);
         if(rs==1){
-            return "redirect:/notice/List";
+            return "redirect:/notice/list";
         }
         return "index";
     }
@@ -65,9 +67,10 @@ public class NoticeController {
      3.
      4.
      */
-    @GetMapping("/List")
-    public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "id",
-            direction = Sort.Direction.DESC)Pageable pageable, Model model){
+    @GetMapping("/list")
+    public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "notId",
+            direction = Sort.Direction.DESC) Pageable pageable, Model model){
+
 
         /*pagingNoticeList noticeList*/
         Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
@@ -86,41 +89,78 @@ public class NoticeController {
             model.addAttribute("noticeList", noticeList);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
-            return "notice/List";
+            return "notice/list";
         }
         System.out.println("조회할 공지사항이 없다.");
 
-        return "notice/List";
+        return "notice/list";
     }
-     /*
-    Todo
-     1. rladpwls1843@gamil.com
-     2. 공지사항 검색 페이지로 이동
-     3.
-     4.
-     */
+
+//    @GetMapping("/list/{type}")
+//    public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "notId",
+//            direction = Sort.Direction.DESC)Pageable pageable, Model model
+//            @PathVariable("type") String type){
+//
+//        NoticeDto noticeDto = noticeService.NoticeList(type);
+//        model.addAttribute("noticeDto", noticeDto);
+//
+//        Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
+//
+//        Long totalCount = noticeList.getTotalElements();
+//        int totalPage = noticeList.getTotalPages();
+//        int pageSize = noticeList.getSize();
+//        int nowPage = noticeList.getNumber();
+//        int blockNum = 10;
+//
+//        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
+//                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
+//        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+//
+//        if(!noticeList.isEmpty()){
+//            model.addAttribute("noticeList", noticeList);
+//            model.addAttribute("startPage", startPage);
+//            model.addAttribute("endPage", endPage);
+//            return "notice/list";
+//        }
+//        System.out.println("조회할 공지사항이 없다.");
+//
+//        return "notice/list";
+//    }
+
+    /*
+   Todo
+    1. rladpwls1843@gamil.com
+    2. 공지사항 검색 페이지로 이동
+    3.
+    4.
+    */
     @GetMapping("/search")
     public String getNoticeSearch(
-            @RequestParam(value = "ID", required = false) String noticeId,
+            @RequestParam(value = "select", required = false) String noticeSelect,
             @RequestParam(value = "search", required = false) String noticeSearch,
             Model model){
-        List<NoticeDto> noticeDtoList = noticeService.NoticeListSearch(noticeId,noticeSearch);
+
+        List<NoticeDto> noticeDtoList = noticeService.NoticeListSearch(noticeSelect,noticeSearch);
 
         if(!noticeDtoList.isEmpty()){
             model.addAttribute("noticeList", noticeDtoList);
-            return "notice/List";
+            return "notice/list";
         }
-        return "redirect:notice/List";
+        return "redirect:notice/list";
     }
+
+//    @ResponseBody // hit를 위한 html주소를 return시키기 위한 어노테이션 값을 반환하는 어노테이션
 
     @GetMapping("/detail/{id}")
     public String getNoticeDetail(@PathVariable("id") Long id, Model model){
         NoticeDto noticeDto = noticeService.NoticeDetail(id);
 
-        model.addAttribute("noticeDto", noticeDto);
-//        공지사항 로그인 하면 보이게 하는지?
+        if(noticeDto != null){
+            model.addAttribute("noticeDto", noticeDto);
+            return "notice/detail";
+        }
 //        model.addAttribute("myUserDetails", myUserDetails);
-        return "notice/detail";
+        return "redirect:/notice/list";
     }
 
     /*
@@ -130,25 +170,30 @@ public class NoticeController {
     */
     @GetMapping("/update/{id}")
     public String getNoticeUpdate(@PathVariable("id") Long id, Model model){
+
         NoticeDto noticeDto = noticeService.NoticeUpdate(id);
 
         if(noticeDto != null){
-            model.addAttribute("notice", noticeDto);
+            model.addAttribute("noticeDto", noticeDto);
             return "notice/update";
         }
-        return "redirect:/notice/List";
+        return "redirect:/notice/list";
     }
-    @PostMapping("/update")
-    public String postNoticeUpdate(NoticeDto noticeDto){
-        int rs = noticeService.NoticeUpdateOk(noticeDto);
+    @PostMapping("/update/{id}")
+    public String postNoticeUpdate(@PathVariable("id") Long id, NoticeDto noticeDto){
+
+//        NoticeDto noticeDto1 = noticeService.NoticeDetail(id);
+
+        int rs = noticeService.NoticeUpdateOk(noticeDto, id);
 
         if(rs == 1){
             System.out.println("수정 성공");
         }else{
             System.out.println("수정 실패");
         }
-        return "redirect:/notice/List";
+        return "redirect:/notice/detail/"+id;
     }
+
     /*
     TODO
     공지사항 글 삭제 페이지로 이동
@@ -162,8 +207,7 @@ public class NoticeController {
         }else{
             System.out.println("공지사항 삭제 실패");
         }
-        return "redirect:/notice/List";
+        return "redirect:/notice/list";
     }
-    /*수정수정*/
 
 }
