@@ -9,25 +9,34 @@
 
 
 <tr th:each="cartDto: ${cartDtoList}">
-<!-- 타임리프 변환 -->
-    <a th:href="@{/payment/kakao/pg(productId=${cartDto.productId}, memberId=${cartDto.memberId}, productPrice=${cartDto.productPrice}, productName=${cartDto.productName})}">결제</a>
+
+    <button id="payment-button" th:value="@{/payment/kakao/pg(productId=${cartDto.productId}, memberId=${cartDto.memberId}, productPrice=${cartDto.productPrice}, productName=${cartDto.productName})}">
+        결제
+    </button>
 </tr>
 
 <!--<a th:href=@{"/payment/kakao/pg?{productId=123&memberId=123&productPrice=100000&productName=testProduct"}></a>-->
 </body>
 
-<!--<script>-->
-<!--    var text = "";-->
-<!--    fetch("http://localhost:8111/payment/kakao/pg?productId=123&memberId=123&productPrice=100000&productName=testProduct")-->
-<!--    .then(res => res.json())-->
-<!--    .then(json => {-->
-<!--        text = json;-->
-<!--        console.log(text.approvalUrl);-->
-<!--        var link = text.approvalUrl;-->
+<script>
 
-<!--        location.href=link;-->
-<!--        location.replace(link);-->
-<!--        window.open(link);-->
-<!--    });-->
-<!--</script>-->
+    var paymentButton = document.getElementById("payment-button").value
+    document.getElementById("payment-button").onclick = function(){
+    var text = "";
+    fetch("http://localhost:8111"+paymentButton)
+    .then(res => res.json())
+    .then(json => {
+        text = json;
+        console.log(text.approvalUrl);
+        var link = text.approvalUrl;
+
+        location.href=link;
+        location.replace(link);
+        window.open(link);
+    });
+    }
+
+
+
+</script>
 </html>
