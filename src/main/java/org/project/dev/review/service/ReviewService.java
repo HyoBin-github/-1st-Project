@@ -9,7 +9,10 @@ import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +26,7 @@ public class ReviewService {
 
     private final MemberRepository memberRepository;
 
-    @Transient
+    @Transactional
     public ReviewDto reviewAjaxCreate(ReviewDto reviewDto, String memberNickName) {
 
 //        Optional<MemberEntity> optionalMemberEntity =
@@ -56,16 +59,37 @@ public class ReviewService {
         return null;
     }
 
-    @Transient
-    public ReviewDto reviewDelete(Long id) {
+    @Transactional
+    public int reviewDelete(Long id) {
 
-        Optional<ReviewEntity> optionalReviewEntity = Optional.ofNullable(reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+        Optional<ReviewEntity> optionalReviewEntity
+                = Optional.ofNullable(reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+
+        System.out.println("============="+ optionalReviewEntity.get().getId() +"===================");
+            if (optionalReviewEntity.isPresent()) {
+                System.out.println("============="+ optionalReviewEntity.get().getId() +"===================");
+            reviewRepository.deleteById(id);
+
+            return 1;
+        }
+        return 0;
 
 
-        reviewRepository.delete(optionalReviewEntity.get());
 
-         reviewRepository.findById(id);
+    }
 
-        return new ReviewDto();
+    public List<ReviewDto> reviewList(Long id) {
+
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
+        ProductEntity productEntity = optionalProductEntity.get();
+
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+        List<ReviewEntity> reviewEntityList = reviewRepository.findAllByProductEntity(productEntity);
+
+        for (ReviewEntity reviewEntity : reviewEntityList) {
+            ReviewDto reviewDto = ReviewDto.toReviewDto(reviewEntity);
+            reviewDtos.add(reviewDto);
+        }
+        return reviewDtos;
     }
 }

@@ -3,9 +3,14 @@ package org.project.dev.review.controller;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.MyUserDetails;
 import org.project.dev.review.dto.ReviewDto;
+import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.service.ReviewService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/review")
@@ -25,11 +30,24 @@ public class ReviewController {
     }
 
     @PostMapping("/delete/{id}")
-    public @ResponseBody ReviewDto reviewDelete(@RequestParam("id") Long id){
+    public int reviewDelete(@PathVariable("id") Long id){
 
-        reviewService.reviewDelete(id);
+        System.out.println(id + "<<id");
+        int rs = reviewService.reviewDelete(id);
 
 
-        return new ReviewDto();
+
+        return rs;
     }
+
+    @GetMapping("/reviewList/{id}")
+    public @ResponseBody List<ReviewDto> reviewDto(@ModelAttribute ReviewDto reviewDto, @PathVariable Long id, Model model){
+
+        List<ReviewDto> reviewDtos = reviewService.reviewList(id);
+
+//        model.addAttribute("reviews", reviewDtos);
+
+        return reviewDtos;
+    }
+
 }

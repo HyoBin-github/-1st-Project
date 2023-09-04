@@ -20,7 +20,7 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
 
     @Modifying
     @Query(value = "UPDATE payment_tb " +
-            "SET is_succed = : isSucced " +
+            "SET is_succed = :isSucced " +
             "WHERE payment_id = :paymentId", nativeQuery = true)
     void updateIsSucced(@Param("paymentId") Long paymentId,@Param("isSucced") int isSucced);
 }

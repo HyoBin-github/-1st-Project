@@ -73,20 +73,18 @@
         <!--          </form>-->
     </div>
     <div class="review-list">
+        <div id="reviewCount"></div>
+        <input type="hidden" th:id="prId" th:value="${product.id}">
         <!-- 덧글리스트 -->
         <div id="tData">
-            <ul th:each="review : ${reviewEntities}">
-                <li th:text="${review.review}"></li>
+            <ul th:each="review : ${reviews}">
+                <li th:text="${review.review}">
+                    <input type="hidden" name="">
+                </li>
                 <li th:text="${review.reviewWriter}"></li>
                 <li th:text="${review.createTime}"></li>
                 <input type="button" value="삭제" th:onclick="onDelete([[${review.id}]])">
                 <input type="button" id="reviewUp" value="수정" th:onclick="onUpdate([[${review.id}]])">
-                <form class="onUpdate([[${review.id}]])">
-                    <input type="hidden" id="id" th:value="${review.id}">
-                    <div class="form-group">
-                        <textarea class="form-control" id="review-content" rows="3">content</textarea>
-                    </div>
-                </form>
             </ul>
         </div>
     </div>
