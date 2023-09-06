@@ -14,6 +14,17 @@
                 <h1>문의사항</h1>
             </div>
         </div>
+        <div class="search">
+            <form th:action="@{/inquiry/search}" method="get">
+                <select name="select" id="select">
+                    <option th:value="''">전체</option>
+                    <option th:value="title">제목</option>
+                    <option th:value="writer">작성자</option>
+                </select>
+                <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요">
+                <input type="submit" value="검색">
+            </form>
+        </div>
         <table>
             <thead>
             <tr>
@@ -75,17 +86,6 @@
                     </span>
                 </li>
             </ul>
-        </div>
-        <div class="search">
-            <form th:action="@{/inquiry/search}" method="get">
-                <select name="select" id="select">
-                    <option th:value="''">전체</option>
-                    <option th:value="title">제목</option>
-                    <option th:value="writer">작성자</option>
-                </select>
-                <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요">
-                <input type="submit" value="검색">
-            </form>
         </div>
     </div>
 </div>
