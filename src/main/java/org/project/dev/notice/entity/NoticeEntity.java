@@ -32,6 +32,7 @@ public class NoticeEntity extends BaseEntity {
     @Column(name = "not_Hit", nullable = false)
     private int notHit; // 공지사항 글 조회수
 
+
     public static NoticeEntity toNoticeEntityInsert(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = new NoticeEntity();
         noticeEntity.setNotType(noticeDto.getNotType());
@@ -42,14 +43,16 @@ public class NoticeEntity extends BaseEntity {
         return noticeEntity;
     }
 
-    // Dto -> Entitty ㅜ 난 뭘 배웠지
+    // Dto -> Entitty
     public static NoticeEntity toNoticeEntityUpdate(NoticeDto noticeDto) {
         NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNotId(noticeDto.getNotId());
         noticeEntity.setNotType(noticeDto.getNotType());
         noticeEntity.setNoticeTitle(noticeDto.getNoticeTitle());
         noticeEntity.setNoticeContent(noticeDto.getNoticeContent());
         noticeEntity.setNotWriter(noticeDto.getNotWriter());
         noticeEntity.setNotHit(noticeDto.getNotHit());
+        noticeEntity.setUpdateTime(noticeDto.getUpdateTime());
         return noticeEntity;
     }
 

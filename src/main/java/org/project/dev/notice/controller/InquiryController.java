@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class InquiryController {
         return "inquiry/write";
     }
     @PostMapping("/write")
-    public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model){
+    public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model) throws IOException {
         if(bindingResult.hasErrors()){
             return "inquiry/write";
         }
@@ -86,16 +87,28 @@ public class InquiryController {
       3.
       4.
       */
+    @GetMapping("/searchList")
+    public String getInquirySearchList(Model model){
+        List<InquiryDto> inquiryDtoList = inquiryService.findAllList();
+
+        if(!inquiryDtoList.isEmpty()){
+            model.addAttribute("inquiryList", inquiryDtoList);
+            return "inquiry/searchlist";
+        }
+        return "redirect:inquiry/list";
+    }
     @GetMapping("/search")
     public String getInquirySearch(
             @RequestParam(value = "select", required = false) String inquirySelect,
             @RequestParam(value = "search", required = false) String inquirySearch,
             Model model){
+
         List<InquiryDto> inquiryDtoList = inquiryService.InquiryListSearch(inquirySelect,inquirySearch);
+        // thymeleaf-paging에서 컨트롤러에서 뷰로 넘길 때 list형태로 model에 담아 오류 발생
 
         if(!inquiryDtoList.isEmpty()){
             model.addAttribute("inquiryList", inquiryDtoList);
-            return "inquiry/list";
+            return "inquiry/searchlist";
         }
         return "redirect:inquiry/list";
     }
@@ -126,6 +139,7 @@ public class InquiryController {
     */
     @GetMapping("/update/{id}")
     public String getInquiryUpdate(@PathVariable("id") Long id, Model model){
+
         InquiryDto inquiryDto = inquiryService.InquiryUpdate(id);
 
         if(inquiryDto != null){
@@ -143,7 +157,7 @@ public class InquiryController {
         }else{
             System.out.println("수정 실패");
         }
-        return "redirect:/inquiry/list";
+        return "redirect:/inquiry/detail/"+id;
     }
     /*
     TODO

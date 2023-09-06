@@ -1,8 +1,4 @@
 @import url(/css/common/reset.css);
-<<<<<<< HEAD
-@import url(/css/common/header.css);
-@import url(/css/common/footer.css);
-=======
 @import url(/css/common/cream_header.css);
 @import url(/css/common/footer.css);
 container write write-con h1,ul
@@ -51,8 +47,24 @@ container write write-con h1,ul
     flex: 1;
     color: inherit;
 }
+.content{
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize:  none;
+    outline: none;
+}
 .conatainer .write .write-con .write-form ul>li input{
     flex: 3;
-    color: inherit;
+    /* color: inherit; */
+    color: #222222;
+    width: 300px;
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    position: relative;
+    background: none;
+    z-index: 5;
 }
->>>>>>> 73aed2e674cb4cf8b57ce9a11e75af3279a4f879

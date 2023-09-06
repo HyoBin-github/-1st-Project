@@ -71,7 +71,6 @@ public class NoticeController {
     public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "notId",
             direction = Sort.Direction.DESC) Pageable pageable, Model model){
 
-
         /*pagingNoticeList noticeList*/
         Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
 
@@ -96,36 +95,36 @@ public class NoticeController {
         return "notice/list";
     }
 
-//    @GetMapping("/list/{type}")
-//    public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "notId",
-//            direction = Sort.Direction.DESC)Pageable pageable, Model model
-//            @PathVariable("type") String type){
-//
-//        NoticeDto noticeDto = noticeService.NoticeList(type);
-//        model.addAttribute("noticeDto", noticeDto);
-//
-//        Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
-//
-//        Long totalCount = noticeList.getTotalElements();
-//        int totalPage = noticeList.getTotalPages();
-//        int pageSize = noticeList.getSize();
-//        int nowPage = noticeList.getNumber();
-//        int blockNum = 10;
-//
-//        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
-//                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
-//        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
-//
-//        if(!noticeList.isEmpty()){
-//            model.addAttribute("noticeList", noticeList);
-//            model.addAttribute("startPage", startPage);
-//            model.addAttribute("endPage", endPage);
-//            return "notice/list";
-//        }
-//        System.out.println("조회할 공지사항이 없다.");
-//
-//        return "notice/list";
-//    }
+//    @ResponseBody // ajax사용 시 사용해야 하는 어노테이션
+    @GetMapping("/list/{type}")
+    public String getNoticeList(
+            @PageableDefault(page = 0, size = 10, sort = "notId",direction = Sort.Direction.DESC)Pageable pageable,
+            Model model,
+            @PathVariable("type") String type){
+
+        // type을 가져오고 페이징
+        Page<NoticeDto> noticeList = noticeService.noticeList(type,pageable);
+
+        Long totalCount = noticeList.getTotalElements();
+        int totalPage = noticeList.getTotalPages();
+        int pageSize = noticeList.getSize();
+        int nowPage = noticeList.getNumber();
+        int blockNum = 10;
+
+        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
+                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        if(!noticeList.isEmpty()){
+            model.addAttribute("noticeList", noticeList);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            return "notice/list";
+        }
+        System.out.println("조회할 공지사항이 없다.");
+
+        return "notice/list";
+    }
 
     /*
    Todo
@@ -136,6 +135,7 @@ public class NoticeController {
     */
     @GetMapping("/search")
     public String getNoticeSearch(
+//            @PageableDefault(page = 0, size = 10, sort = "notId", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(value = "select", required = false) String noticeSelect,
             @RequestParam(value = "search", required = false) String noticeSearch,
             Model model){
@@ -144,12 +144,16 @@ public class NoticeController {
 
         if(!noticeDtoList.isEmpty()){
             model.addAttribute("noticeList", noticeDtoList);
-            return "notice/list";
+            return "notice/searchlist";
         }
+//        List<NoticeDto> noticeList = noticeService.NoticeListSearch(pageable);
+//
+//        if(noticeList != null){
+//            model.addAttribute("noticeList", noticeList);
+//            return "notice/list";
+//        }
         return "redirect:notice/list";
     }
-
-//    @ResponseBody // hit를 위한 html주소를 return시키기 위한 어노테이션 값을 반환하는 어노테이션
 
     @GetMapping("/detail/{id}")
     public String getNoticeDetail(@PathVariable("id") Long id, Model model){

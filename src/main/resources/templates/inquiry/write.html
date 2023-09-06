@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>공지사항 작성</title>
+    <title>문의사항 작성</title>
     <link rel="stylesheet" th:href="@{/css/inquiry/write.css}">
 </head>
 <body>
@@ -27,12 +27,16 @@
                                 <input type="text" th:field="*{inquiryTitle}" placeholder="제목을 입력하세요.">
                             </li>
                             <li>
+                                <label th:for="img">파일/label>
+                                <input type="file" name="inquiryImg" id="inquiryImg">
+                            </li>
+                            <li>
                                 <label th:for="content">내용</label>
-                                <textarea rows="20" th:field="*{inquiryContent}" placeholder="문의사항을 작성하세요" />
+                                <textarea rows="20" th:field="*{inquiryContent}" placeholder="문의사항을 작성하세요" class="content"/>
                             </li>
                             <li>
                                 <label th:for="writer">글쓴이</label>
-                                <input type="text" th:field="*{inqWriter}">
+                                <input type="text" th:field="*{inquiryWriter}">
                             </li>
                             <li>
                                 <input type="submit" value="작성">

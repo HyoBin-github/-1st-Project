@@ -5,7 +5,6 @@
     <title>공지사항 작성</title>
     <link rel="stylesheet" th:href="@{/css/notice/write.css}">
 </head>
-<!--공지사항 작성 페이지로 관리자만 작성이 가능합니다.-->
 <body>
 <div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
     <div class="container">
@@ -16,20 +15,7 @@
                         <h1>공지사항 작성</h1>
                         <ul>
                             <li>
-<<<<<<< HEAD
-                                <select name="Type">
-                                    <option value="none">===종류 선택===</option>
-                                    <option value="product">상품</option>
-                                    <option value="delivery">배송</option>
-                                    <option value="holiday">공휴일</option>
-                                    <option value="event">이벤트</option>
-                                </select><br>
-                                <label th:for="title">제목</label>
-                                    <input type="text" th:field="*{notTitle}"><br>
-                                <label th:for="content">내용</label>
-                                    <input type="text" th:field="*{notContent}">
-=======
-                                <select name="Type" id="noticeType" th:field="*{notType}">
+                                <select name="Type" id="notType" th:field="*{notType}">
                                     <option th:value="''" disabled>===종류 선택===</option>
                                     <option th:value="'product'">상품</option>
                                     <option th:value="'delivery'">배송</option>
@@ -49,12 +35,11 @@
                             </li>
                             <li>
                                 <label th:for="content">내용</label>
-                                <textarea rows="20" th:field="*{noticeContent}" placeholder="공지사항을 작성하세요" />
+                                <textarea rows="20" th:field="*{noticeContent}" placeholder="공지사항을 작성하세요" class="content"></textarea>
                             </li>
                             <li>
                                 <input type="submit" value="작성">
                                 <input type="reset" value="취소">
->>>>>>> 73aed2e674cb4cf8b57ce9a11e75af3279a4f879
                             </li>
                         </ul>
                     </div>
