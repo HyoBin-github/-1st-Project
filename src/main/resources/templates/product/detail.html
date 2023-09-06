@@ -78,11 +78,12 @@
         <!-- 덧글리스트 -->
         <div id="tData">
             <ul th:each="review : ${reviews}">
-                <li th:text="${review.review}">
-                    <input type="hidden" name="">
-                </li>
                 <li th:text="${review.reviewWriter}"></li>
                 <li th:text="${review.createTime}"></li>
+                <li th:text="${review.review}">
+                    <input type="hidden" id="upReview">
+                    <textarea name="saveReview" th:id="saveReview" rows="5">${review.review}</textarea>
+                </li>
                 <input type="button" value="삭제" th:onclick="onDelete([[${review.id}]])">
                 <input type="button" id="reviewUp" value="수정" th:onclick="onUpdate([[${review.id}]])">
             </ul>

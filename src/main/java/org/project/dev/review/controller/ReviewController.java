@@ -41,11 +41,10 @@ public class ReviewController {
     }
 
     @GetMapping("/reviewList/{id}")
-    public @ResponseBody List<ReviewDto> reviewDto(@ModelAttribute ReviewDto reviewDto, @PathVariable Long id, Model model){
+    public @ResponseBody List<ReviewDto> reviewDto(@ModelAttribute ReviewDto reviewDto, @PathVariable Long id){
 
         List<ReviewDto> reviewDtos = reviewService.reviewList(id);
-
-//        model.addAttribute("reviews", reviewDtos);
+        
 
         return reviewDtos;
     }

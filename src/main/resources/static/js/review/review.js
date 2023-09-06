@@ -46,7 +46,7 @@ function reviewList(){
             reviewBody.html(''); // tData 초기화
             console.log(res);
             let list ="";
-            $.each(res, function(i, content){
+            $.each(res, function(i, content){ // res= return data, i= key, content= value
                 list="<ul id="+ content.id+">";
                 list+="<li>"+content.reviewWriter+"</li>";
                 list+="<li>"+content.review+"</li>";
@@ -91,7 +91,6 @@ function onDelete(id){
     })
 
 }
-
 
 
 
