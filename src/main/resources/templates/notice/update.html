@@ -15,7 +15,7 @@
                     <h1>공지사항</h1>
                     <ul>
                        <li>
-                           <select name="Type" id="noticeType" th:value="${noticeDto.notType}">
+                           <select name="Type" id="notType" th:field="${noticeDto.notType}">
                                <option th:value="''" disabled>===종류 선택===</option>
                                <option th:value="'product'">상품</option>
                                <option th:value="'delivery'">배송</option>
@@ -25,19 +25,19 @@
                        </li>
                         <li>
                             <label th:for="notId"></label>
-                            <input type="text" name="notId" th:value="${noticeDto.notId}" readonly>
+                            <input type="text" name="notId" th:value="${noticeDto.notId}" readonly class="readonly">
                         </li>
                         <li>
                             <label th:for="notTitle">제목</label>
-                            <input type="text" name="notTitle" th:value="${noticeDto.noticeTitle}">
+                            <input type="text" name="noticeTitle" th:value="${noticeDto.noticeTitle}">
                         </li>
                         <li>
                             <label th:for="notWriter">작성자</label>
-                            <input type="text" name="notWriter" th:value="${noticeDto.notWriter}" readonly>
+                            <input type="text" name="notWriter" th:value="${noticeDto.notWriter}" readonly class="readonly">
                         </li>
                         <li>
                             <label th:for="notContent">내용</label>
-                            <input type="text" name="notContent" th:value="${noticeDto.noticeContent}">
+                            <textarea rows="20" type="text" id="noticeContent" th:field="${noticeDto.noticeContent}"></textarea>
                         </li>
                         <li>
                             <label th:for="notHit">조회수</label>

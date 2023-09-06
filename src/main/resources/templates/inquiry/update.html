@@ -12,10 +12,10 @@
         <div class="update-con">
             <form th:action="@{/inquiry/update/{id}(id=${inquiryDto.inqId})}" method="post">
                 <div class="update-form">
-                    <h1>공지사항</h1>
+                    <h1>문의사항</h1>
                     <ul>
                        <li>
-                           <select name="Type" id="inquiryType" th:value="${inquiryDto.inqType}">
+                           <select name="Type" id="inquiryType" th:field="${inquiryDto.inqType}">
                                <option th:value="''" disabled>===종류 선택===</option>
                                <option th:value="'product'">상품</option>
                                <option th:value="'delivery'">배송</option>
@@ -29,6 +29,10 @@
                         <li>
                             <label th:for="inquiryTitle">제목</label>
                             <input type="text" name="inquiryTitle" th:value="${inquiryDto.inquiryTitle}">
+                        </li>
+                        <li>
+                            <label th:for="inquiryWriter">작성자</label>
+                            <input type="text" name="inquiryWriter" th:value="${inquiryDto.inquiryWriter}" readonly>
                         </li>
                         <li>
                             <label th:for="inquiryContent">내용</label>

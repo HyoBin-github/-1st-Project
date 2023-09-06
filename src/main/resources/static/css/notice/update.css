@@ -27,13 +27,13 @@
     box-sizing: border-box;
     border-radius: 25%;
 }
-.conatainer .update .update-con .update-form{ ul{
+.conatainer .update .update-con .update-form >ul{
     /* display: flex; */
     /* justify-content: space-between; */
     flex-direction: column;
     gap: 10px;
 }
-.conatainer .update .update-con .update-form{ ul>li{
+.conatainer .update .update-con .update-form >ul>li{
     /* display: flex; */
     /* justify-content: space-between; */
     gap: 10px;
@@ -42,11 +42,14 @@
     box-sizing: border-box;
     color: inherit;
 }   
-.conatainer .update .update-con .update-form{ ul>li label{
+.conatainer .update .update-con .update-form >ul>li label{
     flex: 1;
     color: inherit;
 }
-.conatainer .update .update-con .update-form{ ul>li input{
+.conatainer .update .update-con .update-form >ul>li input{
     flex: 3;
     color: inherit;
+}
+.conatainer .update .update-con .update-form >ul>li input .readonly{
+    
 }

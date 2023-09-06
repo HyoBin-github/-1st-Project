@@ -12,12 +12,14 @@ import java.util.List;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<InquiryEntity, Long> {
-    List<InquiryEntity> findByInquiryTitleContaining(String title);
-
-    List<InquiryEntity> findByInquiryContentContaining(String content);
+    List<InquiryEntity> findByInquiryTitleContaining(String title); // 제목
+    List<InquiryEntity> findByInquiryContentContaining(String content); // 내용
+    List<InquiryEntity> findByInquiryWriterContaining(String inquirySearch); // 작성자
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE inquiry i set i.inq_hit = i.inq_hit+1 where i.inq_id = :id", nativeQuery = true)
     void InquiryHit(@Param("id") Long id);
+
+
 }
 

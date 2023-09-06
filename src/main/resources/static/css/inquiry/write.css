@@ -47,6 +47,14 @@ container write write-con h1,ul
     flex: 1;
     color: inherit;
 }
+.content{
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize:  none;
+    outline: none;
+}
 .conatainer .write .write-con .write-form ul>li input{
     flex: 3;
     color: inherit;

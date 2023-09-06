@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.IllformedLocaleException;
 import java.util.List;
@@ -68,6 +69,7 @@ public class NoticeService {
 //        }
 //        return noticeDtos;
 //    }
+
     /*
        Todo
         1. rladpwls1843@gamil.com
@@ -87,6 +89,27 @@ public class NoticeService {
 
         return noticeDtoPage;
     }
+    /*
+       Todo
+        1. rladpwls1843@gamil.com
+        2. 공지사항 목록로 이동
+        3.
+        4.type에 해당하는 목록으로 이동
+        */
+    @Transactional
+    public Page<NoticeDto> noticeList(String type, Pageable pageable) {
+
+        Page<NoticeEntity> noticeEntities = noticeRepository.findByNotType(type, pageable); // not_type에 해당하는 값만 출력
+
+        noticeEntities.getNumber();
+        noticeEntities.getTotalElements();
+        noticeEntities.getTotalPages();
+        noticeEntities.getSize();
+
+        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+
+        return noticeDtoPage;
+    }
 
     /*
        Todo
@@ -95,8 +118,20 @@ public class NoticeService {
         3.
         4.
         */
-    public List<NoticeDto> NoticeListSearch(String noticeSelect, String noticeSearch) {
+    //            Pageable pageable
+    public List<NoticeDto> NoticeListSearch(
+            @NotNull String noticeSelect, String noticeSearch) {
+//
+//        Page<NoticeEntity> noticeEntitiespage = noticeRepository.findAll(pageable);
+//
+//        noticeEntitiespage.getNumber();
+//        noticeEntitiespage.getTotalElements();
+//        noticeEntitiespage.getTotalPages();
+//        noticeEntitiespage.getSize();
 
+//        Page<NoticeDto> noticeDtoPage = noticeEntitiespage.map(NoticeDto::tonoticeDto);
+//        return noticeDtoPage;
+//
         List<NoticeDto> noticeDtoList = new ArrayList<>();
         List<NoticeEntity> noticeEntities = new ArrayList<>();
 
@@ -104,6 +139,8 @@ public class NoticeService {
             noticeEntities = noticeRepository.findByNoticeTitleContaining(noticeSearch);
         }else if(noticeSelect.equals("content")){
             noticeEntities = noticeRepository.findByNoticeContentContaining(noticeSearch);
+        }else if(noticeSelect.equals("writer")){
+            noticeEntities = noticeRepository.findByNotWriterContaining(noticeSearch);
         }else{
             noticeEntities = noticeRepository.findAll();
         }
@@ -111,9 +148,13 @@ public class NoticeService {
         if(!noticeEntities.isEmpty()){
             for(NoticeEntity noticeEntity : noticeEntities) {
                 NoticeDto noticeDto = NoticeDto.builder()
+                        .notId(noticeEntity.getNotId())
+                        .notType(noticeEntity.getNotType())
                         .noticeTitle(noticeEntity.getNoticeTitle())
                         .noticeContent(noticeEntity.getNoticeContent())
                         .notWriter(noticeEntity.getNotWriter())
+                        .CreateTime(noticeEntity.getCreateTime())
+                        .UpdateTime(noticeEntity.getUpdateTime())
                         .notHit(noticeEntity.getNotHit())
                         .build();
                 noticeDtoList.add(noticeDto);
@@ -139,6 +180,8 @@ public class NoticeService {
                 .notId(noticeEntity.getNotId())
                 .noticeTitle(noticeEntity.getNoticeTitle())
                 .noticeContent(noticeEntity.getNoticeContent())
+                .CreateTime(noticeEntity.getCreateTime())
+                .UpdateTime(noticeEntity.getUpdateTime())
                 .notWriter(noticeEntity.getNotWriter())
                 .notHit(noticeEntity.getNotHit())
                 .build();
@@ -175,20 +218,20 @@ public class NoticeService {
 
     public int NoticeUpdateOk(NoticeDto noticeDto, Long id) {
 
-        noticeDto.setNotId(id); // dto에 id 들어감
-
         Optional<NoticeEntity> optionalNoticeEntity
                 = Optional.ofNullable(noticeRepository.findById(noticeDto.getNotId()).orElseThrow(() -> {
-            return new IllegalArgumentException("수정할 공지사항이 없습니다."); // id 확인해서 가져와
+            return new IllegalArgumentException("수정할 공지사항이 없습니다."); // id 확인해
         }));
 
-        NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityUpdate(noticeDto); //수정해
+        noticeDto.setNotId(id); // dto에 id 들어감
 
-        Long noticeId = noticeRepository.save(noticeEntity).getNotId(); // 내놔
+        Long noticeId = noticeRepository.save(NoticeEntity.toNoticeEntityUpdate(noticeDto)).getNotId(); // 수정을 위한 jparepository.save
+
+        NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityUpdate(noticeDto); // dto->entity
 
         Optional<NoticeEntity> optionalNoticeEntity1
-                = Optional.ofNullable(noticeRepository.findById(noticeId).orElseThrow(() -> {
-            return new IllegalArgumentException("수정할 공지사항이 없습니다.");
+                = Optional.ofNullable(noticeRepository.findById(noticeDto.getNotId()).orElseThrow(() -> {
+            return new IllegalArgumentException("수정한 공지사항이 없습니다.");
         })); //
         if(optionalNoticeEntity1.isPresent()){
             return 1;
@@ -211,5 +254,6 @@ public class NoticeService {
         }
         return 0;
     }
+
 
 }

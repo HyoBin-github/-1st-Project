@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>문의사 상세 페이지</title>
+    <title>문의사항 상세 페이지</title>
     <link rel="stylesheet" th:href="@{/css/inquiry/detail.css}">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="detail">
         <div class="detail-con">
             <div class="board-con">
-                <h1>공지사항</h1>
+                <h1>문의사항</h1>
                 <ul>
                     <li>
                         <span>제목</span>
@@ -19,11 +19,15 @@
                     </li>
                     <li>
                         <span>작성자</span>
-                        <span th:text="${inquiryDto.inqWriter}"></span>
+                        <span th:text="${inquiryDto.inquiryWriter}"></span>
                     </li>
                     <li>
                         <span>작성날짜</span>
-                        <span th:text="${#temporals.format(inquiryDto.createTime, 'yyyy-MM-dd')}"></span> <!--?-->
+                        <span th:text="${#temporals.format(inquiryDto.CreateTime, 'yyyy년 MM월 dd일 hh시 mm분')}"></span>
+                    </li>
+                    <li>
+                        <span>수정날짜</span>
+                        <span th:text="${#temporals.format(inquiryDto.UpdateTime, 'yyyy년 MM월 dd일 hh시 mm분')}"></span>
                     </li>
                     <li>
                         <span>조회수</span>

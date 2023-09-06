@@ -15,17 +15,33 @@
             </div>
         </div>
         <div class="type">
-            <table>
-                <tbody>
-                <tr>
-                    <td><a href="">전체</a></td>
-                    <td><a href="">상품</a></td>
-                    <td><a href="">배송</a></td>
-                    <td><a href="">이벤트</a></td>
-                    <td><a href="">공휴일</a></td>
-                </tr>
-                </tbody>
-            </table>
+                <ul>
+                    <li>
+                        <span>
+                            <a th:href="@{/notice/list}">전체</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <a th:href="@{/notice/list/{type}(type='product')}">상품</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <a th:href="@{/notice/list/{type}(type='delivery')}">배송</a>
+                        </span>
+                    </li>
+                    <li>
+                       <span>
+                            <a th:href="@{/notice/list/{type}(type='event')}">이벤트</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <a th:href="@{/notice/list/{type}(type='holiday')}">공휴일</a>
+                        </span>
+                    </li>
+                </ul>
         </div>
         <table>
             <thead>
@@ -34,26 +50,18 @@
                 <th class="title">제목</th>
                 <th>작성자</th>
                 <th>생성시간</th>
+                <th>수정시간</th>
                 <th>조회수</th>
                 <th>≖‿≖</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="notice: ${noticeList}">
-<<<<<<< HEAD
                 <td th:text="${notice.notType}"></td>
-<<<<<<< HEAD
-=======
-                <td>공지</td><!--공지로 할지 공지사항 종류선택 박스에서 가져올지-->
->>>>>>> c6a0af5169fb061b85f97f867814a618fccb2825
-                <td th:text="${notice.notTitle}"></td>
-=======
-                <td th:text="${notice.noticeTitle}">
-                    <a th:href="@{/notice/detail/{id}(id=${notice.notId})}"></a>
-                </td>
->>>>>>> 73aed2e674cb4cf8b57ce9a11e75af3279a4f879
+                <td th:text="${notice.noticeTitle}"></td>
                 <td th:text="${notice.notWriter}"></td>
-                <td th:text="${#temporals.format(notice.createTime,'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(notice.createTime,'yyyy.MM.dd')}"></td>
+                <td th:text="${#temporals.format(notice.updateTime,'yyyy.MM.dd')}"></td>
                 <td th:text="${notice.notHit}"></td>
                 <td><a th:href="@{/notice/detail/{id}(id=${notice.notId})}">상세보기</a></td>
             </tr>
@@ -103,7 +111,7 @@
                     <option th:value="''">전체</option>
                     <option th:value="title">제목</option>
                 </select>
-                <input type="text" name="search" id="search" th:value="${param.search}">
+                <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요.">
                 <input type="submit" value="검색">
             </form>
         </div>

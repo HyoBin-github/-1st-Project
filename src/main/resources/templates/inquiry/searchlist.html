@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의사항 목록 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/inquiry/searchlist.css}">
+</head>
+<body>
+<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div class="List">
+    <div class="List-con">
+        <div class="List-title">
+            <div class="title">
+                <h2> 검색결과 </h2>
+                <table>
+                    <tr>
+                        <td th:text="${param.search}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>구분</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>생성시간</th>
+                <th>수정시간</th>
+                <th>조회수</th>
+                <th>≖‿≖</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inquiry: ${inquiryList}">
+                <td th:text="${inquiry.inqType}"></td>
+                <td th:text="${inquiry.inquiryTitle}"></td>
+                <td th:text="${inquiry.inquiryWriter}"></td>
+                <td th:text="${#temporals.format(inquiry.CreateTime, 'yyyy.MM.dd')}"></td>
+                <td th:text="${#temporals.format(inquiry.UpdateTime, 'yyyy.MM.dd')}"></td>
+                <td th:text="${inquiry.inqHit}"></td>
+                <td><a th:href="@{/inquiry/detail/{id}(id=${inquiry.inqId})}">상세보기</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="search">
+            <form th:action="@{/inquiry/search}" method="get">
+                <select name="select" id="select">
+                    <option th:value="''">전체</option>
+                    <option th:value="title">제목</option>
+                    <option th:value="writer">작성자</option>
+                </select>
+                <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요">
+                <input type="submit" value="검색">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+</html>
