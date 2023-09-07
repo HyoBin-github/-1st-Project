@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/notice/list.css}">
 </head>
 <body>
-<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <div class="List">
     <div class="List-con">
         <div class="List-title">
@@ -21,7 +21,7 @@
                     <option th:value="title">제목</option>
                 </select>
                 <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요.">
-                <input type="submit" value="검색">
+                <input type="image" onclick="alert('검색')" th:src="@{/images/zoom.png}" value="검색">
             </form>
         </div>
         <div class="type">
