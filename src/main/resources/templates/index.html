@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}"
+>
+<th:block layout:fragment="title">
+    <title>Cloth Keeper</title>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</th:block>
+<th:block layout:fragment="script">
+    <!--  <script th:src="${/js/index.js}"></script>-->
+</th:block>
+<th:block layout:fragment="container">
+    <div class="container">
+        <div class="index">
+            <div class="index-con">
+                <div class="sections">
+                    <div class="section-sec1">
+                        <div class="con">
+                            AUTOGALLERY
+                        </div>
+                    </div>
+                    <div class="section-sec2">
+                        <div class="con">
+                            <div class="main-img-slider">
+                                <ul>
+                                    <li><img th:src="@{images/mainSilderImg/main-silder-item1.jpg}" alt="no Img" /></li>
+                                    <li><img th:src="@{images/mainSilderImg/main-silder-item2.jpg}" alt="no Img" /></li>
+                                    <li><img th:src="@{images/mainSilderImg/main-silder-item3.jpg}" alt="no Img" /></li>
+                                    <li><img th:src="@{images/mainSilderImg/main-silder-item4.jpg}" alt="no Img" /></li>
+                                    <li><img th:src="@{images/mainSilderImg/main-silder-item5.jpg}" alt="no Img" /></li>
+                                </ul>
+                            </div>
+                            <div class="sub2">
+
+                            </div>
+                            <div class="sub3">
+
+                            </div>
+                            <div class="sun4">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

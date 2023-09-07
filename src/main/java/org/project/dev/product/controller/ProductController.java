@@ -6,6 +6,7 @@ import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.repository.ReviewRepository;
+import org.project.dev.review.service.ReviewService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -49,7 +50,7 @@ public class ProductController {
     private final ProductService productService;
     private final ProductUtilService productUtilService;
     private  final ReviewRepository reviewRepository;
-
+    private final ReviewService reviewService;
 
 
     // WRITE (INSERT)
@@ -131,11 +132,11 @@ public class ProductController {
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
 
         // dto 해야댐
-        List<ReviewEntity> reviewEntities = reviewRepository.findByProductId(id);
+        List<ReviewDto> reviewDtos = reviewService.reviewList(productDTOViewDetail.getId());
 
         model.addAttribute("product", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
-        model.addAttribute("reviewEntities", reviewEntities);
+        model.addAttribute("reviews", reviewDtos);
         return "/product/detail";
     }
 

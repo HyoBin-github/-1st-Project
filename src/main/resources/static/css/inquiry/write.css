@@ -1,0 +1,61 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/cream_header.css);
+@import url(/css/common/footer.css);
+container write write-con h1,ul
+.container{
+    width: 100%;
+}
+.container .write{
+    width: 100%;
+    height: auto;
+    /* display: flex; */
+    /* justify-content: start; */
+    gap: 10px;
+}
+.container .write .write-con{
+    flex-basis: 1600px;
+    height: calc( 100vh - 64px - 200px - 30px);
+    background-color: aliceblue;
+    /* display: flex; */
+    /* justify-content: start; */
+    gap: 10px;
+    /* align-items: center; */
+}
+.conatainer .write .write-con .write-form{
+    /* flex-basis: 600px; */
+    background-color: #7286D3;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 25%;
+}
+.conatainer .write .write-con .write-form ul{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    flex-direction: column;
+    gap: 10px;
+}
+.conatainer .write .write-con .write-form ul>li{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    gap: 10px;
+    border-radius: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+    color: inherit;
+}   
+.conatainer .write .write-con .write-form ul>li label{
+    flex: 1;
+    color: inherit;
+}
+.content{
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize:  none;
+    outline: none;
+}
+.conatainer .write .write-con .write-form ul>li input{
+    flex: 3;
+    color: inherit;
+}

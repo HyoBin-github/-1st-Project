@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/notice/update.css}">
+</head>
+<body>
+<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div class="container">
+    <div class="update">
+        <div class="update-con">
+            <form th:action="@{/notice/update/{id}(id=${noticeDto.notId})}" method="post">
+                <div class="update-form">
+                    <h1>공지사항</h1>
+                    <ul>
+                       <li>
+                           <select name="Type" id="notType" th:field="${noticeDto.notType}">
+                               <option th:value="''" disabled>===종류 선택===</option>
+                               <option th:value="'product'">상품</option>
+                               <option th:value="'delivery'">배송</option>
+                               <option th:value="'holiday'">공휴일</option>
+                               <option th:value="'event'">이벤트</option>
+                           </select>
+                       </li>
+                        <li>
+                            <label th:for="notId"></label>
+                            <input type="text" name="notId" th:value="${noticeDto.notId}" readonly class="readonly">
+                        </li>
+                        <li>
+                            <label th:for="notTitle">제목</label>
+                            <input type="text" name="noticeTitle" th:value="${noticeDto.noticeTitle}">
+                        </li>
+                        <li>
+                            <label th:for="notWriter">작성자</label>
+                            <input type="text" name="notWriter" th:value="${noticeDto.notWriter}" readonly class="readonly">
+                        </li>
+                        <li>
+                            <label th:for="notContent">내용</label>
+                            <textarea rows="20" type="text" id="noticeContent" th:field="${noticeDto.noticeContent}"></textarea>
+                        </li>
+                        <li>
+                            <label th:for="notHit">조회수</label>
+                            <input type="text" name="notHit" th:value="${noticeDto.notHit}" readonly>
+                        </li>
+                        <li>
+                            <input type="submit" value="수정하기">
+                        </li>
+                    </ul>
+                </div>
+            </form>
+            <!--댓글-->
+            <div class="reply-con">
+                <div class="reply-write">
+                    <form action="@{/notice/}">
+                        <!-- 번호 -->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+</html>

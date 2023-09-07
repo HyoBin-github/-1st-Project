@@ -1,0 +1,121 @@
+/* header */
+.header{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* header > nav */
+.header .nav{
+    flex-basis: 1400px;
+    box-sizing: border-box; /* 박스의 크기를 테두리를 기준으로 계산*/
+    /* border-bottom: 2px solid #8ea6e9db; */
+    /* background-color: #ffeaeaaf; */
+    /* background-color: #8ea6e9db; */
+}
+
+/* header > nav > top-nav */
+.header .nav .top-nav{
+    box-sizing: border-box;
+    display: flex; /*flex 레이아웃*/
+    justify-content: flex-end;
+    /* border-bottom: 2px solid #E5E0FF; */
+}
+.header .nav .top-nav .top-menu{
+    box-sizing: border-box;
+}
+.header .nav .top-nav .top-menu>ul{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.header .nav .top-nav .top-menu>ul>li{
+    padding: 5px 10px;
+}
+.header .nav .top-nav .top-menu>ul>Li>a{
+    font-size: 13px;
+}
+
+/* header > nav > middle-nav */
+.header .nav .middle-nav{
+    /* background-color: #E5E0FFdb; */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+.header .nav .middle-nav h1{
+    flex-basis: 120px; /* logo 이미지 삽입 시 flex기본 크기 설정 */
+}
+.header .nav .middle-nav h1 image{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.header .nav .middle-nav .middle-menu{
+    padding: 5px; /*ul과의 전체 간격*/
+    box-sizing: border-box;
+    /* border: 2px solid red; */
+}
+.header .nav .middle-nav .middle-menu ul{  
+  display: flex;
+  justify-content: space-between;
+  gap: 5px; /*li 간격*/
+  /* border: 2px solid orange; */
+}
+.header .nav .middle-nav .middle-menu ul>li{
+    padding: 5px;
+    /* border: 2px solid yellow; */
+}  
+.header .nav .middle-nav .middle-menu ul>li a{
+    font-size: 15px;
+    letter-spacing: 2px; /*글자 간격 설정*/
+    /* border: 2px solid green; */
+    line-height: 30px; 
+}
+.header .nav .middle-nav .middle-menu ul>li form{
+    line-height: 30px; 
+    /* border: 2px solid purple; */
+}
+.header .nav .middle-nav .middle-menu ul >li:nth-child(1) a{  
+  font-weight: bold;
+  line-height: 30px; 
+ }
+ .header .nav .middle-nav .middle-menu ul >li a img {  
+  /* width: 30px; */
+  /* display: block; */
+ }
+
+/* header > nav > bottom-nav*/
+.header .nav .bottom-nav{  
+  /* width: 100%; */
+  /* border: 1px solid; */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  /* justify-content: space-evenly; */
+}
+
+.header .nav .bottom-nav .gnb{  
+  /* flex:1; */
+ padding: 10px 0 ;
+ box-sizing: border-box;
+}
+.header .nav .bottom-nav .gnb>ul{  
+ display: flex;
+ justify-content: space-between;
+ gap: 5px;
+}
+.header .nav .bottom-nav .gnb>ul>li{  
+  line-height: 20px;
+  font-size: 18px;
+ }
+.header .nav .bottom-nav .gnb>ul>li a{  
+  padding: 5px 10px;
+ }
+ .header .nav .bottom-nav .gnb>ul>li:nth-child(1) a{
+  font-weight: bold;
+  color: #8F7AFF;
+ }
+ 

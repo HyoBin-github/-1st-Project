@@ -1,0 +1,55 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/cream_header.css);
+@import url(/css/common/footer.css);
+.container{
+    width: 100%;
+}
+.container .update{
+    width: 100%;
+    height: auto;
+    /* display: flex; */
+    /* justify-content: start; */
+    gap: 10px;
+}
+.container .update .update-con{
+    flex-basis: 1600px;
+    height: calc( 100vh - 64px - 200px - 30px);
+    background-color: aliceblue;
+    /* display: flex; */
+    /* justify-content: start; */
+    gap: 10px;
+    /* align-items: center; */
+}
+.conatainer .update .update-con .update-form{
+    /* flex-basis: 600px; */
+    background-color: #7286D3;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 25%;
+}
+.conatainer .update .update-con .update-form >ul{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    flex-direction: column;
+    gap: 10px;
+}
+.conatainer .update .update-con .update-form >ul>li{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    gap: 10px;
+    border-radius: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+    color: inherit;
+}   
+.conatainer .update .update-con .update-form >ul>li label{
+    flex: 1;
+    color: inherit;
+}
+.conatainer .update .update-con .update-form >ul>li input{
+    flex: 3;
+    color: inherit;
+}
+.conatainer .update .update-con .update-form >ul>li input .readonly{
+    
+}
