@@ -68,11 +68,16 @@ public class NoticeController {
      4.
      */
     @GetMapping("/list")
-    public String getNoticeList(@PageableDefault(page = 0, size = 10, sort = "notId",
-            direction = Sort.Direction.DESC) Pageable pageable, Model model){
+    public String getNoticeList(
+            @PageableDefault(page = 0, size = 10, sort = "notId", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model){
 
         /*pagingNoticeList noticeList*/
         Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
+
+        if(noticeList == null){
+            throw new IllegalArgumentException("없어");
+        }
 
         Long totalCount = noticeList.getTotalElements();
         int totalPage = noticeList.getTotalPages();
@@ -105,6 +110,9 @@ public class NoticeController {
         // type을 가져오고 페이징
         Page<NoticeDto> noticeList = noticeService.noticeList(type,pageable);
 
+        if (noticeList==null) {
+         throw new RuntimeException("list none");
+        }
         Long totalCount = noticeList.getTotalElements();
         int totalPage = noticeList.getTotalPages();
         int pageSize = noticeList.getSize();

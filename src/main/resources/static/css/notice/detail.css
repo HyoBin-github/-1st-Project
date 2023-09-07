@@ -43,6 +43,7 @@
     gap: 5px;
 }
 .container .detail .detail-con .board-con>ul>li span{
+    empty-cells: hide;
     line-height: 20px;
     padding: 5px 10px;
     text-align: center;
