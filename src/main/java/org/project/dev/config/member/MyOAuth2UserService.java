@@ -1,4 +1,4 @@
-package org.project.dev.config;
+package org.project.dev.config.member;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
