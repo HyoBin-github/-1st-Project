@@ -24,22 +24,36 @@
     border-bottom: 2px solid #7285d3a4;
 }
 .List .List-con .search{
+    padding: 0 0 0 10px;
     box-sizing: border-box;
+    justify-content: center;
     /* line-height: 20px; */
 }
+.List .List-con .search .form{
+    margin: auto;
+    text-align: center;
+}
 .List .List-con .search form{
+    width: 700px;
     border: 1px solid #7285d3;
     border-radius: 10px;
     height: 30px;
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    /* gap: 10px; */
     box-sizing: border-box;
+    /* box-shadow: 2px #cccccc; */
 }
 .List .List-con .search form .select{
-    width: 40px;
+    width: 200px;
+    border-radius: 10px;
+    border: none;
+    /* padding: 1px; */
+    font-size: 15px;
+    text-align: center;
+}
+.List .List-con .search form .select:focus{
 
-    -o-appearance: none;
 }
 .List .List-con .search form input:focus{
     outline: none;
@@ -47,7 +61,7 @@
 .List .List-con .search form input:nth-child(1){
     flex: 5;
     border: 0;
-    padding: 0 10px;
+    padding: 0 0 0 10px;
 }
 .List .List-con .search form input:nth-child(2){
     flex: 1;
@@ -80,12 +94,13 @@
     border: 1px solid #8C9CDB;
     border-radius: 10px;
     box-sizing: border-box;
-    /* box-shadow: 2px 1px 1px #8C9CDB; */
+    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 }
 .List .List-con .type >ul>li span{
+    gap: 5px;
     vertical-align: middle;
     display: table-cell;
     padding: 20px;

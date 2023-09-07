@@ -1,5 +1,5 @@
 @import url(/css/common/reset.css);
-@import url(/css/common/cream_header.css);
+@import url(/css/common/header.css);
 @import url(/css/common/footer.css);
 .container{
     width: 100%;
@@ -42,6 +42,26 @@
     align-items: center;
     gap: 5px;
 }
+.container .detail .detail-con .board-con>ul>li a:not(.list){
+  flex: 1;
+  padding: 3px 0;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  line-height: 1;
+  text-decoration: none;
+  font-size: 15px;
+  border-radius: 0px;
+  height: 20px;
+  border-top: 1px solid #C7D3F4;
+  border-right: 1px solid #C7D3F4;
+  border-left: 20px solid #C7D3F4;
+  border-bottom: 1px solid #C7D3F4;
+  transition: all 0.3s;
+}
+.container .detail .detail-con .board-con>ul>li a:hover:not(.list){
+    border-left-width: 1px;
+}
 .container .detail .detail-con .board-con>ul>li span{
     empty-cells: hide;
     line-height: 20px;
@@ -58,7 +78,7 @@
     border: 1px solid #C7D3F4;
     flex:3;
 }
-.container .detail .detail-con .board-con>ul>li a{
+.container .detail .detail-con .board-con>ul>li.list{
     flex:1;
     text-align: center;
     padding: 3px 0;
@@ -66,7 +86,7 @@
     transition: all 0.2s;
     background-color: #C7D3F4;
 }
-.container .detail .detail-con .board-con>ul>li a:hover{
+.container .detail .detail-con .board-con>ul>li.list a:hover{
     background-color: #AABDEF;
     color: #ffffff;
 }
