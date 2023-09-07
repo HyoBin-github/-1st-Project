@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+<!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
+<!--<div th:replace="~{fragments/common/header_SONG :: headerFragment}"></div>-->
+<h1>회원가입</h1>
+<!-- 일반 회원가입 버튼 -->
+<button th:onclick="window.location.href='/member/join'">일반 회원가입</button>
+<!-- 간편 회원가입 버튼 -->
+<button th:onclick="window.location.href='/semiMember/join'">간편 회원가입</button>
+</body>
+</html>
