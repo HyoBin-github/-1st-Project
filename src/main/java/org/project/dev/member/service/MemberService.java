@@ -1,7 +1,9 @@
 package org.project.dev.member.service;
 
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
+import org.project.dev.cartNew.entity.CartEntity;
+import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
@@ -13,62 +15,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j // log 객체 사용하기위함
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
 
-    // Create (builder 활용)
-//    @Transactional
-//    public void insertMember(MemberDto memberDto) {
-//
-//        String email = memberRepository.save(MemberEntity.builder()
-//                .email(memberDto.getEmail())
-//                .password(passwordEncoder.encode(memberDto.getPassword()))
-//                .name(memberDto.getName())
-//                .nickName(memberDto.getNickName())
-//                .phone(memberDto.getPhone())
-//                .birth(memberDto.getBirth())
-//                .address(memberDto.getAddress())
-//                .role(Role.MEMBER)
-//                .build()).getEmail();
-//        memberRepository.findByEmail(email).orElseThrow(IllegalAccessError::new);
-//    }
-
-    // Create (to메서드 활용)
+    // Create + 장바구니 생성
     @Transactional
     public void insertMember(MemberDto memberDto){
 
         MemberEntity memberEntity=MemberEntity.toMemberEntityInsert(memberDto, passwordEncoder);
         Long memberId=memberRepository.save(memberEntity).getMemberId();
-        MemberEntity memberEntity1=memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
-    }
 
-    // Read (builder)
-//    public List<MemberDto> listMember() {
-//
-//        List<MemberDto> memberDtoList = new ArrayList<>();
-//        List<MemberEntity> memberEntityList = memberRepository.findAll();
-//
-//        for (MemberEntity memberEntity : memberEntityList) {
-//            memberDtoList.add(MemberDto.builder()
-//                    .id(memberEntity.getId())
-//                    .email(memberEntity.getEmail())
-//                    .password(memberEntity.getPassword())
-//                    .name(memberEntity.getName())
-//                    .nickName(memberEntity.getNickName())
-//                    .phone(memberEntity.getPhone())
-//                    .birth(memberEntity.getBirth())
-//                    .address(memberEntity.getAddress())
-//                    .role(memberEntity.getRole())
-//                    .createTime(memberEntity.getCreateTime())
-//                    .updateTime(memberEntity.getUpdateTime())
-//                    .build());
-//        }
-//        return memberDtoList;
-//    }
+        // 회원가입 이후 카트 생성
+        createCartForMember(memberId);
+    }
+    private void createCartForMember(Long memberId) {
+        MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
+        CartEntity cart = CartEntity.createCart(memberEntity);
+        cartRepository.save(cart);
+    }
 
     // Read (to메서드)
     public List<MemberDto> listMember(){
@@ -86,27 +56,7 @@ public class MemberService {
         return memberDtoList;
     }
 
-    // Detail (builder)
-//    public MemberDto detailMember(Long id) {
-//
-//        MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(IllegalAccessError::new);
-//
-//        return MemberDto.builder()
-//                .id(memberEntity.getId())
-//                .email(memberEntity.getEmail())
-//                .password(memberEntity.getPassword())
-//                .name(memberEntity.getName())
-//                .nickName(memberEntity.getNickName())
-//                .phone(memberEntity.getPhone())
-//                .birth(memberEntity.getBirth())
-//                .address(memberEntity.getAddress())
-//                .role(memberEntity.getRole())
-//                .createTime(memberEntity.getCreateTime())
-//                .updateTime(memberEntity.getUpdateTime())
-//                .build();
-//    }
-
-    // Detail (to메서드)
+//  Detail (to메서드)
     public MemberDto detailMember(Long memberId){
 
         Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
@@ -130,36 +80,7 @@ public class MemberService {
         return MemberDto.toMemberDto(memberEntity);
     }
 
-    // Update - 실제 실행(builder)
-//    @Transactional
-//    public int updateMember(MemberDto memberDto){
-//
-//        MemberEntity memberEntity=MemberEntity.builder()
-//                .id(memberDto.getId())
-//                .email(memberDto.getEmail())
-//                .password(memberDto.getPassword())
-//                .name(memberDto.getName())
-//                .nickName(memberDto.getNickName())
-//                .phone(memberDto.getPhone())
-//                .birth(memberDto.getBirth())
-//                .address(memberDto.getAddress())
-//                .role(memberDto.getRole())
-//                .build();
-//        Long id=memberRepository.save(memberEntity).getId();
-//        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(id).orElseThrow(()->{
-//            return new IllegalArgumentException("수정할 아이디가 없습니다");
-//        }));
-//
-//        if (optionalMemberEntity.isPresent()) {
-//            System.out.println("회원정보 수정 성공");
-//            return 1;
-//        }else{
-//            System.out.println("회원정보 수정 실패");
-//            return 0;
-//        }
-//    }
-
-        // Update - 실제 실행(to메서드)
+    // Update - 실제 실행(to메서드)
     @Transactional
     public int updateMember(MemberDto memberDto){
 
@@ -202,15 +123,97 @@ public class MemberService {
         }
     }
 
-    // 이메일 중복 확인 기능
-    @Transactional
-    public boolean existsByMemberEmail(String memberEmail) {
-        return memberRepository.existsByMemberEmail(memberEmail);
-    }
+    // 이메일 중복 확인 메서드, CheckDuplicateController에서 두 테이블 직접 조회해 사용하면 이 메서드 필요 없음
+//    @Transactional
+//    public boolean existsByMemberEmail(String memberEmail) {
+//        return memberRepository.existsByMemberEmail(memberEmail);
+//    }
 
-    // 닉네임 중복 확인 기능
+    // 닉네임 중복 확인 메서드
     @Transactional
     public boolean existsByMemberNickName(String memberNickName) {
         return memberRepository.existsByMemberNickName(memberNickName);
     }
+    
+    // 휴대전화번호 중복 확인 메서드, CheckDuplicateController에서 두 테이블 직접 조회해 사용하면 이 메서드 필요 없음
+//    @Transactional
+//    public boolean existsByMemberPhone(String memberPhone) {
+//        return memberRepository.existsByMemberPhone(memberPhone);
+//    }
+    
+    // 임시 비밀번호 발급 관련 메서드
+    public void SetTempPassword(String memberEmail, String tempPassword) {
+
+        Optional<MemberEntity> optionalMemberEntity=memberRepository.findByMemberEmail(memberEmail);
+
+        if(optionalMemberEntity.isPresent()){
+            MemberEntity memberEntity=optionalMemberEntity.get();
+            String encodedPassword=passwordEncoder.encode(tempPassword);
+            memberEntity.setMemberPassword(encodedPassword);
+            memberRepository.save(memberEntity);
+            log.info("이메일 주소에 임시 비밀번호가 설정되었습니다: {}", memberEmail);
+        }else{
+            log.error("해당 이메일을 가진 회원을 찾을수없습니다: {}", memberEmail);
+        }
+    }
+    
+    // 닉네임, 휴대전화번호 이용한 이메일 찾기 메서드
+    public String findEmailByNicknameAndPhone(String memberNickName, String memberPhone) {
+
+        MemberEntity memberEntity=memberRepository.findByMemberNickNameAndMemberPhone(memberNickName, memberPhone);
+        if (memberEntity!=null) {
+            return memberEntity.getMemberEmail();
+        }
+        return null;
+    }
+
+    // 비밀번호 찾기 기능에서 이메일, 휴대전화번호 일치하는지 확인
+    public boolean checkEmailPhoneMatching(String memberEmail, String memberPhone) {
+
+        MemberEntity memberEntity=memberRepository.findByMemberEmailAndMemberPhone(memberEmail, memberPhone);
+            return memberEntity!=null; // 이메일과 휴대전화번호가 일치하면 memberEntity 객체가 반환되어서 null이 아님
+    }
+
+    // 비밀번호 변경 메서드 // gpt
+    public boolean changePassword(Long memberId, String currentPassword, String newPassword, MemberDto memberDto) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+
+        if (optionalMemberEntity.isEmpty()) {
+            throw new RuntimeException("해당 아이디를 가진 회원을 찾을 수 없습니다.");
+        }
+
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
+        // 현재 비밀번호 확인
+        if (!passwordEncoder.matches(currentPassword, memberEntity.getMemberPassword())) {
+            throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        // 새로운 비밀번호 암호화
+        String encryptedNewPassword = passwordEncoder.encode(newPassword);
+        memberEntity.setMemberPassword(encryptedNewPassword);
+
+        // 회원 정보 저장
+        memberRepository.save(memberEntity);
+
+        return true;
+    }
+
+    // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지 확인하는 메서드
+    public boolean checkCurrentPassword(Long memberId, String currentPassword) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            return passwordEncoder.matches(currentPassword, memberEntity.getMemberPassword());
+        }
+        return false;
+    }
+
+    // memberId로 member 찾기
+    public MemberEntity findMember(Long memberId) {
+        return memberRepository.findById(memberId).get();
+    }
+
 }
+

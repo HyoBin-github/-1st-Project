@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>detail</title>
+</head>
+<body>
+<!--<div th:replace="~{fragments/header :: headerFragment}"></div>-->
+<div class="detail">
+  <h1 class="title"><span th:text="${semiMember.semiMemberEmail}" ></span>님 상세정보</h1>
+<!--  아이디 : <span th:text="${member.memberId}"></span> <br>-->
+  <span th:if="${false}" th:text="${semiMember.semiMemberId}"></span> <br> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
+  이메일 : <span th:text="${semiMember.semiMemberEmail}"></span> <br>
+  휴대전화(암호화됨) : <span th:text="${semiMember.semiMemberPhone}"></span> <br>
+  권한 : <span th:text="${semiMember.role}"></span> <br>
+  가입일 : <span th:text="${#temporals.format(semiMember.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span> <br>
+  <a th:href="@{/semiMember/confirmEmail/{semiMemberId}(semiMemberId=${semiMember.semiMemberId})}">삭제</a>
+</div>
+</body>
+</html>

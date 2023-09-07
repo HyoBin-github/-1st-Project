@@ -4,6 +4,7 @@ import lombok.*;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.entity.MemberEntity;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -20,6 +21,7 @@ public class MemberDto {
 
     @NotBlank
     @Size(min = 10, max = 255)
+    @Email
     private String memberEmail;
 
     @NotBlank
@@ -27,6 +29,8 @@ public class MemberDto {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&^./,+=-])[A-Za-z\\d@$!%*#?&^./,+=-]{8,}$",
             message = "최소 하나의 특수문자, 알파벳, 숫자를 포함해야 합니다")
     private String memberPassword;
+
+    private String confirmPassword;
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -51,6 +55,17 @@ public class MemberDto {
     private String memberAddress;
 
     private Role role;
+
+    // 비밀번호 찾기 기능에서 이메일, 휴대전화번호 일치하는지 확인 시 필요 //
+    private boolean matching;
+    public MemberDto(boolean matching) {
+        this.matching = matching;
+    }
+
+    public boolean isMatching(){ // 부에서 해당 멤버 변수 값을 읽을 수 있는 인터페이스를 제공하기 위해 사용
+        return matching;
+    }
+    //////////////////////////////////////////////////////////////
 
     private LocalDateTime createTime;
 
