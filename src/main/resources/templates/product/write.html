@@ -10,19 +10,17 @@
 </head>
 <body>
 <div class="container">
-  <form action="/product/write" method="post" enctype="multipart/form-data">
-    <ul class="drag-drop-area" id="dragDropArea">
-      <li class="add-image-placeholder" onclick="document.querySelector('input[type=file]').click();">
-        <span>+</span>
-      </li>
-    </ul>
-    <!-- 로딩창 -->
-    <div id="loading" class="loading-popup" style="display: none;">
-      <h1>Loading...</h1>
-    </div>
+  <form action="/product/write" id="product-form" method="post" enctype="multipart/form-data">
 
-    <input type="file" name="files" multiple style="display:none;" id="fileInput"> <br>
-    <input type="hidden" id="imageOrders" name="imageOrders">
+    <input type="file" id="fileInput" style="display: none;" multiple>
+    
+    <div class="image-container" id="image-container">
+      <div class="image-dropbox-description-box">
+        <div class="image-dropbox-description">클릭이나 드래그로 이미지를 첨부</div>
+      </div>
+      <ul class="image-preview-box-container" id="image-preview-box-container">
+      </ul>
+    </div>
 
     상품명: <input type="text" name="productName"> <br>
     상품색상: <input type="text" name="productColor"> <br>

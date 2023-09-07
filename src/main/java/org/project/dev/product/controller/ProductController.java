@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,7 @@ import org.project.dev.product.service.ProductUtilService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -64,13 +63,15 @@ public class ProductController {
     // WRITE PROCESS (INSERT)
     // 게시물 작성 처리 시
     @PostMapping("/write")
-    public String postProductWrite(@ModelAttribute ProductDTO productDTO,
-                                   @RequestParam String imageOrders,
-                                   @RequestParam(name = "files", required = false) List<MultipartFile> files) throws IOException {
+    public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
+                                                  @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages) throws IOException {
         ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO); // 상품글 작성
-        productUtilService.saveProductImages(productEntityWritePro, files, imageOrders); // 이미지 저장
-        System.out.println("Image Orders: " + imageOrders);
-        return "index";
+        productUtilService.saveProductImages(productEntityWritePro, productImages); // 이미지 저장
+        System.out.println("productImages: " + productImages);
+        Map<String,Object> response = new HashMap<>();
+        response.put("status","success");
+        response.put("redirectUrl","/product/index");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/list")
