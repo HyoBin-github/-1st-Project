@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 삭제 시 이메일 인증</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/member/confirmEmail.js/}" defer="defer"></script>
+</head>
+<body>
+<!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
+<h1>이메일 인증</h1>
+<form th:action="@{/member/delete/{memberId}(memberId=${memberId})}" id="confirmEmailForm">
+    <ul>
+        <li>
+            <label th:for="memberEmail">이메일</label>
+            <input type="email" name="memberEmail" id="memberEmail" th:value="${member.memberEmail}" readonly> <br>
+        </li>
+        <!-- 인증번호 입력란 -->
+        <li>
+            <label th:for="emailVerificationCode">인증번호</label>
+            <input type="text" id="emailVerificationCode" placeholder="인증번호 입력">
+            <button type="button" id="verifyEmailButton">인증번호 확인</button>
+        </li>
+        <!-- 이메일 인증 버튼 -->
+        <li>
+            <button type="button" id="certifyEmailButton">인증번호 전송</button>
+        </li>
+        <!-- 인증 결과 메시지 영역 -->
+        <li>
+            <div id="certifyEmailMessage" class="valid-feedback" style="display: none;"></div>
+        </li>
+        </li>
+    </ul>
+    <button type="submit" id="deleteBtn">삭제</button>
+</form>
+</body>
+</html>
