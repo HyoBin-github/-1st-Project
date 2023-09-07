@@ -8,9 +8,10 @@
 </th:block>
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/main/mainSlider.css}">
 </th:block>
 <th:block layout:fragment="script">
-    <!--  <script th:src="${/js/index.js}"></script>-->
+      <script th:src="@{/js/main/mainSlider.js}" defer></script>
 </th:block>
 <th:block layout:fragment="container">
     <div class="container">
@@ -24,14 +25,21 @@
                     </div>
                     <div class="section-sec2">
                         <div class="con">
-                            <div class="main-img-slider">
-                                <ul>
-                                    <li><img th:src="@{images/mainSilderImg/main-silder-item1.jpg}" alt="no Img" /></li>
-                                    <li><img th:src="@{images/mainSilderImg/main-silder-item2.jpg}" alt="no Img" /></li>
-                                    <li><img th:src="@{images/mainSilderImg/main-silder-item3.jpg}" alt="no Img" /></li>
-                                    <li><img th:src="@{images/mainSilderImg/main-silder-item4.jpg}" alt="no Img" /></li>
-                                    <li><img th:src="@{images/mainSilderImg/main-silder-item5.jpg}" alt="no Img" /></li>
+                            <div id="slideShow">
+                                <ul class="slides">
+                                    <li><img src="images/mainSilderImg/main-silder-item1.jpg" alt="no img"></li>
+                                    <li><img src="images/mainSilderImg/main-silder-item2.jpg" alt="no img"></li>
+                                    <li><img src="images/mainSilderImg/main-silder-item3.jpg" alt="no img"></li>
+                                    <li><img src="images/mainSilderImg/main-silder-item4.png" alt="no img"></li>
+                                    <li><img src="images/mainSilderImg/main-silder-item5.jpg" alt="no img"></li>
                                 </ul>
+                                <p class="controller">
+
+                                    <!-- &lang: 왼쪽 방향 화살표
+                                    &rang: 오른쪽 방향 화살표 -->
+                                    <span class="prev">&lang;</span>
+                                    <span class="next">&rang;</span>
+                                </p>
                             </div>
                             <div class="sub2">
 

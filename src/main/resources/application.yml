@@ -58,4 +58,3 @@ spring:
 file:
   productImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
   reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
-  mainSliderImgDir: \images\mainSilderImg\
