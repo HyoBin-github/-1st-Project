@@ -29,6 +29,7 @@ function ajaxFn(){
     }
 })
 }
+ajaxFn.init();
 
 function reviewList(){
     const prId = $('#prId').val();
@@ -58,8 +59,6 @@ function reviewList(){
               $('#tData').append(list);
                 });
             }
-
-
     });
 
 }
@@ -91,6 +90,48 @@ function onDelete(id){
     })
 
 }
+
+var comment = {
+    init:function(){
+        var _this = this;
+const upBtn = document.querySelectorAll('.reviewUpBtn');
+
+upBtn.forEach(function(item){
+    item.addEventListener('click', function(){
+        var form = this.closest('form');
+        _this.update(form);
+            });
+
+        });
+    },
+    update: function(form){
+        var data= {
+            id: form.querySelector('#proId').value,
+            review: form.querySelector('#upRv').value
+        };
+
+        var split = location.pathname.split('/');
+        var articleId = split[split.length - 1];
+
+        fetch('/review/up'+data.id, {
+            method: 'PUT', // PUT: 서버의 데이터를 갱신 작성
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        }).ten(function(res){
+            if(res==1){
+                alert('댓글 수정완료')
+            }else{
+                alert('댓글 수정실패')
+            }
+            reviewList();
+        });
+    }
+};
+// 객체 초기화
+comment.init();
+
 
 
 

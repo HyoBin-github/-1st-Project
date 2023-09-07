@@ -51,26 +51,19 @@
 
     <div class="review-write">
 
-        <!-- 덧글 작성 -->
-        <!--          <form th:action="@{/reply/write}" method="post">-->
-        <!-- 게시글 번호 ** 필수 -->
+
         <input type="hidden" readonly name="productId"
                th:value="${product.id}" id="productId">
         <ul>
             <li>
-<!--                <input type="file" name="upload_file" id="upload_file">-->
                 <textarea name="review" id="review"
                           cols="30" rows="1" placeholder="내용작성"></textarea>
             </li>
             <li>
-                <!--                <input type="submit" value="덧글작성">-->
                 <input type="button" value="댓글작성" id="ajaxBtn">
-
-
-<!--                <input type="text" value="0" id="star">-->
             </li>
         </ul>
-        <!--          </form>-->
+
     </div>
     <div class="review-list">
         <div id="reviewCount"></div>
@@ -80,12 +73,22 @@
             <ul th:each="review : ${reviews}">
                 <li th:text="${review.reviewWriter}"></li>
                 <li th:text="${review.createTime}"></li>
-                <li th:text="${review.review}">
-                    <input type="hidden" id="upReview">
-                    <textarea name="saveReview" th:id="saveReview" rows="5">${review.review}</textarea>
+                <li th:text="${review.review}" id="cReview">
+                    <input type="hidden" id="upReview" th:value="${review.id}">
                 </li>
                 <input type="button" value="삭제" th:onclick="onDelete([[${review.id}]])">
-                <input type="button" id="reviewUp" value="수정" th:onclick="onUpdate([[${review.id}]])">
+                <button type="button" class="reviewUpBtn" value="수정" th:onclick="onUpdate([[${review.id}]])">수정</button>
+                <form th:action="@{/review/up}" method="post" id="upForm">
+                    <div class="form-group">
+                    <textarea id="upRv" cols="1000" rows="3" placeholder="내용을 작성하세요." required="required">
+                        [[${review.review}]]
+                    </textarea>
+                    </div>
+                    <input type="hidden" name="reviewId" id="reviewId" th:value="@{review.id}">
+                    <input type="hidden" readonly name="productId"
+                           th:value="${product.id}" id="proId">
+                    <button type="button" class="reviewUpBtn" value="찐수정">수정</button>
+                </form>
             </ul>
         </div>
     </div>

@@ -44,7 +44,6 @@ public class ReviewController {
     public @ResponseBody List<ReviewDto> reviewDto(@ModelAttribute ReviewDto reviewDto, @PathVariable Long id){
 
         List<ReviewDto> reviewDtos = reviewService.reviewList(id);
-        
 
         return reviewDtos;
     }
