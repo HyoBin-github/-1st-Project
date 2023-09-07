@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/notice/detail.css}">
 </head>
 <body>
-<div th:replace="~{fragments/common/kreamHeader :: headerFragment}"></div>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <div class="container">
     <div class="detail">
         <div class="detail-con">
@@ -42,7 +42,7 @@
                         <a th:href="@{/notice/update/{id}(id=${noticeDto.notId})}">수정하기</a>
                     </li>
                     <li>
-                        <a th:href="@{/notice/list}">LIST</a>
+                        <a th:href="@{/notice/list}" class="list">LIST</a>
                     </li>
                 </ul>
             </div>

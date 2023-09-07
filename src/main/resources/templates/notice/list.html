@@ -15,14 +15,17 @@
             </div>
         </div>
         <div class="search">
-            <form th:action="@{/notice/search}" method="get">
-                <select name="select" id="select">
-                    <option th:value="''">전체</option>
-                    <option th:value="title">제목</option>
-                </select>
-                <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요.">
-                <input type="image" onclick="alert('검색')" th:src="@{/images/zoom.png}" value="검색">
-            </form>
+            <div id="form">
+                <form th:action="@{/notice/search}" method="get">
+                    <select name="select" id="select" class="select">
+                        <option th:value="''">전체</option>
+                        <option th:value="title">제목</option>
+                        <option th:value="content">내용</option>
+                    </select>
+                    <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요.">
+                    <input type="image" onclick="alert('검색')" th:src="@{/images/zoom.png}" value="검색">
+                </form>
+            </div>
         </div>
         <div class="type">
                 <ul>
