@@ -1,130 +1,197 @@
-// 문서의 모든 컨텐츠가 로드되면 함수를 실행합니다.
-document.addEventListener('DOMContentLoaded', function() {
-    // HTML 문서에서 필요한 요소를 선택합니다.
-    let dragDropArea = document.getElementById('dragDropArea');
-    let fileInput = document.getElementById('fileInput');
-    let collectedFiles = []; // 선택된 파일을 저장할 배열을 초기화합니다.
+document.addEventListener("DOMContentLoaded", function() {
 
-    // dragDropArea 요소 위에서 드래그 이벤트가 일어나면 실행되는 이벤트 리스너를 추가합니다.
-    dragDropArea.addEventListener('dragover', function(e) {
-        e.preventDefault(); // 기본 동작을 막습니다.
-        e.stopPropagation(); // 이벤트 전파를 막습니다.
+    let queuedFiles = [];
+
+    const imgPreviewBoxContainer = document.getElementById("image-preview-box-container");
+    // const imgPreviewBox = document.getElementById("image-preview-box");
+
+    var imageContainer = document.getElementById("image-container");
+
+
+    // 마우스 관련 로직 =========================================================
+
+    // imageContainer 위로 마우스가 올라가면 작동
+    imageContainer.addEventListener("mouseover", (event) => {
+      event.preventDefault();
+      if (imgPreviewBoxContainer.childElementCount === 0) {
+        imageContainer?.classList.add("imageContainer--hover");
+      }
     });
 
-    // 파일이 dragDropArea에 드롭되면 실행되는 이벤트 리스너를 추가합니다.
-    dragDropArea.addEventListener('drop', function(e) {
-        e.preventDefault(); // 기본 동작을 막습니다.
-        e.stopPropagation(); // 이벤트 전파를 막습니다.
-        let files = e.dataTransfer.files; // 드롭된 파일을 가져옵니다.
-        handleFiles(files); // 파일을 처리하는 함수를 호출합니다.
+    // imageContainer 밖으로 마우스가 나가면 작동
+    imageContainer.addEventListener("mouseout", (event) => {
+      event.preventDefault();
+      imageContainer?.classList.remove("imageContainer--hover");
     });
 
-    // fileInput에서 파일이 선택되면 실행되는 이벤트 리스너를 추가합니다.
-    fileInput.addEventListener('change', function(e) {
-        let files = e.target.files; // 선택된 파일을 가져옵니다.
-        handleFiles(files); // 파일을 처리하는 함수를 호출합니다.
+
+    // 이미지 처리 관련 로직 ====================================================
+
+    // 기본 dragover 이벤트 설정
+    imgPreviewBoxContainer.addEventListener("dragover", function(event) {
+      event.preventDefault();
     });
 
-    // 파일을 처리하는 함수입니다.
-    function handleFiles(files) {
-        let newFileOrders = []; // 새로운 파일 순서를 저장할 배열을 초기화합니다.
-        let promises = []; // 비동기 작업을 저장할 Promise 배열을 초기화합니다.
+    // 기본 drop 이벤트 설정
+    imgPreviewBoxContainer.addEventListener("drop", function(event) {
+      event.preventDefault();
+      const files = event.dataTransfer?.files;
+      
+      if (files && files.length > 0) {
+        console.log("File drop operation.")
+        const fileList = [...files].sort((a, b) => a.name.localeCompare(b.name));
+        handleUpdate(fileList);
+      }
+    });
 
-        // 로딩 창을 표시합니다.
-        document.getElementById('loading').style.display = 'block';
+    // 클릭 이벤트 설정
+    imgPreviewBoxContainer.addEventListener("click", function(event) {
+      event.preventDefault();
+      const fileInput = document.getElementById("fileInput");
+      fileInput.click(); // 프로그래밍적으로 파일 입력을 클릭합니다.
+    });
 
-        // 각 파일에 대해서 반복합니다.
-        for (let i = 0; i < files.length; i++) {
-            let file = files[i]; // 현재 파일을 가져옵니다.
-            collectedFiles.push(file); // 파일을 collectedFiles 배열에 추가합니다.
-            let reader = new FileReader(); // FileReader 객체를 생성합니다.
+    // 파일 입력 변경 이벤트 설정
+    document.getElementById("fileInput").addEventListener("change", function(event) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        console.log("File input operation.");
+        const fileList = [...files].sort((a, b) => a.name.localeCompare(b.name));
+        handleUpdate(fileList);
+      }
+    });
 
-            // FileReader 작업을 Promise로 감쌉니다.
-            let promise = new Promise((resolve) => {
-                // 파일 읽기가 완료되면 실행될 콜백 함수를 정의합니다.
-                reader.onload = function(e) {
-                    // 미리보기 이미지를 생성합니다.
-                    let imgPreview = document.createElement('li');
-                    imgPreview.classList.add('image-preview');
-                    imgPreview.style.backgroundImage = 'url(' + e.target.result + ')';
 
-                    // 새 파일의 순서를 임시로 저장합니다.
-                    newFileOrders.push({element: imgPreview, file: file});
-                    resolve(); // Promise를 해결합니다.
-                };
-            });
 
-            promises.push(promise); // Promise 배열에 추가합니다.
-            reader.readAsDataURL(file); // 파일을 읽어 Data URL로 변환합니다.
-        }
 
-        // 모든 Promise가 완료되면 실행됩니다.
-        Promise.all(promises).then(() => {
-            // 파일 이름으로 정렬합니다.
-            newFileOrders.sort((a, b) => {
-                return a.file.name.localeCompare(b.file.name);
-            });
-            // 정렬된 순서에 따라 data-order 속성을 설정하고 DOM에 삽입합니다.
-            newFileOrders.forEach((item, index) => {
-                item.element.setAttribute('data-order', collectedFiles.length - files.length + index + 1);
-                dragDropArea.insertBefore(item.element, dragDropArea.querySelector('.add-image-placeholder'));
-            });
-            updateImageOrder(); // 이미지 순서를 업데이트합니다.
+    // 비동기 함수로 선언하여 Promise와 async/await를 사용할 수 있게 합니다.
+    async function handleUpdate(fileList) {
+      // 이미지 미리보기를 할 컨테이너를 DOM에서 가져옵니다.
+      const imgPreviewBoxContainer = document.getElementById("image-preview-box-container");
+      
+      queuedFiles = [...queuedFiles, ...Array.from(fileList)];
 
-            // 로딩 창을 숨깁니다.
-            document.getElementById('loading').style.display = 'none';
+      
+      // FileReader를 Promise로 감싸는 함수를 선언합니다.
+      // 이 함수는 파일을 읽고 결과를 반환하는 Promise를 생성합니다.
+      const loadFile = (file) => new Promise((resolve, reject) => {
+        // FileReader 인스턴스를 생성합니다.
+        const reader = new FileReader();
+        
+        // 파일 읽기가 성공적으로 완료되면 호출되는 이벤트 리스너를 추가합니다.
+        reader.addEventListener("load", (event) => {
+          // 읽기가 성공적으로 완료되면 resolve 함수를 호출하여 Promise를 완료합니다.
+          // 파일과 읽은 결과를 객체로 묶어서 반환합니다.
+          resolve({ file, result: event.target.result });
         });
+        
+        // 파일 읽기에 실패하면 호출되는 이벤트 리스너를 추가합니다.
+        reader.addEventListener("error", reject);
+        
+        // 실제로 파일을 읽기 시작합니다. 데이터 URL 형식으로 읽습니다.
+        reader.readAsDataURL(file);
+      });
+      
+      // 모든 파일을 읽기 위한 Promise 배열을 생성합니다.
+      // map 함수를 사용하여 각 파일에 대한 Promise를 생성하고 배열에 담습니다.
+      const filePromises = fileList.map(loadFile);
+      
+      // Promise.all을 사용하여 모든 파일이 읽힐 때까지 기다립니다.
+      // 이후 loadedFiles 배열에 각 파일과 그 결과가 담깁니다.
+      const loadedFiles = await Promise.all(filePromises);
+      
+      // 모든 파일이 읽힌 후, 그 결과를 사용하여 DOM을 업데이트합니다.
+      loadedFiles.forEach((loadedFile, index) => {
 
-        updateFileInput(); // 파일 입력을 업데이트합니다.
+        // 미리보기 이미지를 생성합니다.
+        const imgPreview = document.createElement("img");
+        imgPreview.className = "image-preview";
+        imgPreview.src = loadedFile.result;
+        imgPreview.source = "internal";
+
+        // 이미지를 담을 li 요소를 생성합니다.
+        const imgPreviewBox = document.createElement("li");
+        imgPreviewBox.className = "image-preview-box";
+        imgPreviewBox.id = "draggable-container";
+
+        // 생성한 li 요소에 이미지를 추가합니다.
+        imgPreviewBox.appendChild(imgPreview);
+
+        // 최종적으로 li 요소를 컨테이너에 추가합니다.
+        imgPreviewBoxContainer.append(imgPreviewBox);
+      });
+
+      console.log(queuedFiles);
     }
 
+    // 이미지 순서변경 로직 ======================================================
 
-    // 파일 입력을 업데이트하는 함수입니다.
-    function updateFileInput() {
-        let dataTransfer = new DataTransfer(); // DataTransfer 객체를 생성합니다.
-        // 각 파일을 DataTransfer 객체에 추가합니다.
-        for (let file of collectedFiles) {
-            dataTransfer.items.add(file);
-        }
-        fileInput.files = dataTransfer.files; // 파일 입력의 files 속성을 업데이트합니다.
+    // 배열 요소 교환 함수 (상대적인 순서)
+    function moveElement(arr, oldIndex, newIndex) {
+      const [movedElement] = arr.splice(oldIndex, 1);
+      arr.splice(newIndex, 0, movedElement);
     }
 
-    // 이미지 순서를 업데이트하는 함수입니다.
-    function updateImageOrder() {
-        console.log('Updating image order...'); // 콘솔에 로그를 출력합니다.
-        const imageOrder = []; // 이미지 순서를 저장할 배열을 초기화합니다.
-        const imagePreviews = dragDropArea.querySelectorAll('.image-preview'); // 모든 이미지 미리보기를 선택합니다.
-        const imageOrdersInput = document.getElementById('imageOrders'); // 순서를 저장할 입력 필드를 선택합니다.
+    // sortable.js 라이브러리 사용. 이미지 순서 변경 기능.
+    new Sortable(imgPreviewBoxContainer, {
+      animation: 150, // 애니메이션 지속 시간.
+      filter: ".imgPreviewBox", // 필터링할 요소.
+      preventOnFilter: false, // 필터링된 요소가 preventDefault를 호출하지 않도록 설정.
 
-        // 이미지 미리보기가 있을 경우 순서를 업데이트합니다.
-        if (imagePreviews.length > 0) {
-            imagePreviews.forEach((img) => {
-                // 이미 설정된 data-order 값을 사용합니다.
-                imageOrder.push(img.getAttribute('data-order'));
-            });
-            imageOrdersInput.value = imageOrder.join(','); // 배열을 문자열로 변환하여 입력 필드에 저장합니다.
-            console.log('Updated image order:', imageOrder.join(',')); // 콘솔에 로그를 출력합니다.
-        }
-    }
+      onStart: function(evt) {
+        console.log("Drag and drop operation started.");;
+      },
+      onEnd: function(evt) { // 드래그 앤 드롭이 끝났을 때 호출될 함수.
+        console.log("Drag and drop operation ended.");
+      },
+      onAdd: function(evt) {
 
-    // Sortable.js 라이브러리를 사용하여 dragDropArea를 드래그 앤 드롭 가능하게 만듭니다.
-    new Sortable(dragDropArea, {
-        animation: 0, // 애니메이션 지속 시간입니다.
-        filter: '.add-image-placeholder', // 필터링할 요소의 클래스입니다.
-        preventOnFilter: false, // 필터링된 요소가 preventDefault를 호출하지 않도록 설정합니다.
-        onEnd: function() { // 드래그 앤 드롭이 끝났을 때 호출될 함수입니다.
-            console.log('Drag and drop operation ended.'); // 콘솔에 로그를 출력합니다.
-            updateImageOrder(); // 이미지 순서를 업데이트합니다.
-        }
+      },
+      onUpdate: function(evt) {
+        // 배열에서 드래그 앤 드롭으로 순서가 변경된 요소의 인덱스를 찾아 위치를 바꿉니다.
+        moveElement(queuedFiles, evt.oldIndex, evt.newIndex);
+        console.log(queuedFiles);
+        console.log("Item order changed.");
+      }
+
+
     });
 
-    // 폼이 제출될 때 실행되는 이벤트 리스너를 추가합니다.
-    document.querySelector('form').addEventListener('submit', function(e) {
-        const imageOrdersInput = document.getElementById('imageOrders'); // 순서를 저장할 입력 필드를 선택합니다.
-        console.log("Submitting image orders: ", imageOrdersInput.value); // 콘솔에 로그를 출력합니다.
-        if (!imageOrdersInput.value) {
-            // 입력 값이 없을 경우 기본값이나 다른 동작을 수행할 수 있습니다.
-        }
+    document.getElementById("product-form").addEventListener("submit", async function(event) {
+      event.preventDefault(); // 폼 제출 중지
+  
+      const formData = new FormData(event.target); // 폼 요소로부터 FormData 객체 생성
+      formData.delete("fileInput"); // queuedFiles에 fileInput 이미지가 포함되어 있으므로 중복방지를 위해 삭제.
+
+      // 이미지 파일 추가
+      queuedFiles.forEach((file, index) => {
+          formData.append("productImages", file);
+      });
+  
+      // 서버로 데이터 전송
+      const response = await fetch(event.target.action, {
+          method: "POST",
+          body: formData
+      });
+  
+      if (response.ok) {
+          const data = await response.json();
+          if (data.status === "success"){
+            console.log("Data sent successfully");
+            window.location.href = data.redirectUrl; // 서버에서 받은 URL로 이동
+          }
+      } else {
+          console.log("Error sending data");
+      }
+
+
     });
+
+
 
 });
+
+
+
+
+

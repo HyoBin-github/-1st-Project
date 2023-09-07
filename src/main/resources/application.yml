@@ -14,20 +14,20 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update  # DDL?? ??
+      ddl-auto: create  # DDL?? ??
     properties:
       hibernate:
         show_sql: true
         format_sql: true
 
-  # yaml/yml ?? - Thymeleaf ??
-  thymeleaf:
-    cache: false
-    check-template-location: true
-    #    prefix: classpath:/templates/
-    #    suffix: .html
-    enabled: true
-
+#  # yaml/yml ?? - Thymeleaf ??
+#  thymeleaf:
+#    cache: false
+#    check-template-location: true
+#    #    prefix: classpath:/templates/
+#    #    suffix: .html
+#    enabled: true
+#
 #    #live reload 설정 배포시 주석
 #    prefix: file:src/main/resources/templates/
 #
@@ -58,4 +58,3 @@ spring:
 file:
   productImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
   reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
-  mainSliderImgDir: \images\mainSilderImg\

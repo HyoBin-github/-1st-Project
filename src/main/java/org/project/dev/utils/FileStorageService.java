@@ -36,20 +36,22 @@ public class FileStorageService {
 
 
     // 첨부된 파일의 고유한 이름을 생성하기 위한 메소드 (이름이 중복 되지 않도록)
-    public String generateFileName(MultipartFile file) {
-        String originalName = file.getOriginalFilename();
+    public String generateFileName(MultipartFile productImages) {
+        String originalName = productImages.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
         String extension = originalName.substring(originalName.lastIndexOf("."));
         return uuid + extension;
     }
 
     // 첨부된 파일을 로컬저장소에 저장하기 위한 메소드
-    public String storeFile(String fileType, MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
+    public String storeFile(String fileType, MultipartFile productImages) throws IOException {
+
+        if (productImages.isEmpty()) {
             throw new RuntimeException("첨부된 파일이 없습니다.");
         }
 
         String uploadDir;
+
         if ("product".equals(fileType)) {
             uploadDir = productImgUploadDir;
         } else if ("review".equals(fileType)) {
@@ -61,10 +63,10 @@ public class FileStorageService {
             throw new RuntimeException("유효한 파일 형식이 아닙니다.");
         }
 
-        String fileName = generateFileName(file);
+        String fileName = generateFileName(productImages);
         String filePath = uploadDir + fileName;
 
-        file.transferTo(new File(filePath));
+        productImages.transferTo(new File(filePath));
 
         return filePath;
     }
