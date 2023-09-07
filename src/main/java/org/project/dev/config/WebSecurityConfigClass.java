@@ -30,6 +30,7 @@ public class WebSecurityConfigClass {
                 .antMatchers("/", "/member/login", "/member/join").permitAll()
                 // css, images, js
                 .antMatchers("/css/**", "/images/**", "/js/**").permitAll()
+
                 // 로그인한 경우, 권한과 상관없이
                 .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/delete/**", "/board/**").authenticated()
                 // ADMIN
