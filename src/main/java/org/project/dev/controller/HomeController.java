@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class HomeController {
 
 
@@ -24,6 +24,10 @@ public class HomeController {
      4. 기타
      */
 
+    @GetMapping({"","/index"})
+    public String index(){
+        return "index";
+    }
 
     /*
     Todo
