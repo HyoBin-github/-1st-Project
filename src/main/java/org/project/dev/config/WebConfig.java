@@ -21,7 +21,13 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        // 업로드되는 외부의 이미지들을 허가
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("file:" + productImgUploadDir);
+
+        // static/image에 들어있는 이미지들을 허가.
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("classpath:/static/images/").setCachePeriod(60 * 60 * 24 * 365);
     }
 }
