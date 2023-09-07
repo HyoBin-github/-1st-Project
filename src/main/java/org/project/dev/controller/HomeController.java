@@ -40,4 +40,24 @@ public class HomeController {
     public String kream(){
         return "kream";
     }
+
+    /*
+    Todo
+     1. songwc3@gmail.com
+     2. 회원가입, 로그인 View
+     3. 없음
+     4. 없음
+     */
+    @GetMapping("/join")
+    public String join(){
+        return "join";
+    }
+
+    // 로그인 View(일반회원, 간편회원 포함)
+    @GetMapping("/login")
+    public String getLogin(){
+        return "login";
+    }
+
+
 }
