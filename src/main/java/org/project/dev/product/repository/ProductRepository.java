@@ -42,4 +42,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>, J
     @Query(value = "SELECT p FROM ProductEntity p WHERE p.id < :lastId ORDER BY p.id DESC")
     List<ProductEntity> findProductsByIdLessThanOrderByIdDesc(@Param("lastId") Long lastId, Pageable pageable);
 
+    // 송원철 / 장바구니 관련
+    ProductEntity findProductById(Long id);
+
 }
