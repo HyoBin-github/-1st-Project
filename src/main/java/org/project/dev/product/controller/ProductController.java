@@ -1,6 +1,11 @@
 package org.project.dev.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.config.semiMember.SemiMyUserDetails;
+import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
@@ -14,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+@Slf4j // 송원철, log
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
@@ -125,8 +132,26 @@ public class ProductController {
     }
 
     // DETAIL (SELECT)
+//    @GetMapping("/{id}")
+//    public String getProductDetail(@PathVariable Long id, Model model) {
+//        // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
+//        productUtilService.updateHits(id);
+//        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+//        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
+//
+//        // dto 해야댐
+//        List<ReviewDto> reviewDtos = reviewService.reviewList(productDTOViewDetail.getId());
+//
+//        model.addAttribute("product", productDTOViewDetail);
+//        model.addAttribute("productImages", productImgDTOS);
+//        model.addAttribute("reviews", reviewDtos);
+//        return "/product/detail";
+//    }
+
+    // 송원철 - member, semiMember 추가
+    // 로그인 안한 사람, member, semiMember 모두 접근 가능
     @GetMapping("/{id}")
-    public String getProductDetail(@PathVariable Long id, Model model) {
+    public String getProductDetail(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails, SemiMyUserDetails semiMyUserDetails) {
         // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
         productUtilService.updateHits(id);
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);
@@ -135,9 +160,27 @@ public class ProductController {
         // dto 해야댐
         List<ReviewDto> reviewDtos = reviewService.reviewList(productDTOViewDetail.getId());
 
+        MemberEntity member = myUserDetails != null ? myUserDetails.getMemberEntity() : null;
+        SemiMemberEntity semiMember = semiMyUserDetails != null ? semiMyUserDetails.getSemiMemberEntity() : null;
+
         model.addAttribute("product", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
         model.addAttribute("reviews", reviewDtos);
+
+        // 추가: member가 null이 아닌 경우에만 memberId를 model에 추가
+        if (member != null) {
+            model.addAttribute("member", member);
+            log.info("Member: {}", member.getMemberId());
+        }else {
+            log.info("Member is null");
+        }
+
+        if (semiMember != null) {
+            model.addAttribute("semiMember", semiMember);
+            log.info("SemiMember: {}", semiMember.getSemiMemberId());
+        }else {
+            log.info("SemiMember is null");
+        }
         return "/product/detail";
     }
 
@@ -164,6 +207,12 @@ public class ProductController {
     public String delete(@PathVariable Long id){
         productService.delete(id);
         return "redirect:/product/list";
+    }
+
+    // 송원철 - 상품관리 페이지
+    @GetMapping("/manage")
+    public String getProductManage(){
+        return "/product/manage";
     }
 
 
