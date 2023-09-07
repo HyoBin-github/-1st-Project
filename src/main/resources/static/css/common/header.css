@@ -147,25 +147,6 @@
   font-weight: bold;
   color: #8F7AFF;
  }
-<<<<<<< HEAD
-
- /*search bar*/
- .searchBar {
-   width: 300px;
-   height: 32px;
-   font-size: 15px;
-   border: 0;
-   border-radius: 15px;
-   outline: none;
-   padding-left: 10px;
-   background-color: rgb(233, 233, 233);
- }
-
- .serarchBtn{
-  border: 0;
-  background-color: transparent;
- }
-=======
  /* 마우스 올리면 밑줄 생성 */
 .header .nav .bottom-nav .gnb >ul>li>a::after{
     content: '';
@@ -189,5 +170,3 @@
     opacity: 1;
     color: #cccccc;
 }
- 
->>>>>>> 0c3660bf17d546c2b1d2a2328fc092c3461c0abe

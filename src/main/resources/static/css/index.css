@@ -78,3 +78,30 @@
     flex-wrap: wrap;
     gap: 10px;
   }
+
+
+  /*메인 섹션 2번쨰*/
+
+  .section-sec2 {
+    width: 100%;
+  }
+  .section-sec2 > ul{
+     display: grid;
+     grid-template-columns: repeat(5, 1fr);
+     grid-template-rows: repeat(2,minmax(200px, auto));
+     grid-auto-rows: minmax(150px, auto);
+     gap: 10px;
+
+  }
+
+  .section-sec2 > ul > li{
+      flex-basis: 1600px;
+      border: 1px solid;
+      box-sizing: border-box;
+      padding: 20px 0;
+      width: 350px;
+      height: 500px;
+      text-align: center;
+
+  }
+
