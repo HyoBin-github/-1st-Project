@@ -94,7 +94,7 @@ public class ProductUtilService {
                 .map(product -> getProductImagesByProductId(product.getId()))
                 .map(images -> {
                     return images.stream()
-                            .filter(img -> img.getProductImgOrder() == 1)
+                            .filter(img -> img.getProductImgOrder() == 0)
                             .findFirst()
                             .orElse(images.isEmpty() ? null : images.get(0));
                 })

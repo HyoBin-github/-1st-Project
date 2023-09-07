@@ -1,23 +1,29 @@
 @import url(/css/common/reset.css);
 /* @import url(/css/common/header.css);
 @import url(/css/common/footer.css); */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Pretendard, 'Malgun Gothic', sans-serif;
+  font-size: 15px;
 }
+.container {
 
-
+}
 .image-container {
-  width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 728px;
   min-height: 104px;
   border: 2px dashed #8c8c8c;
+  border-radius: 15px;
   text-align: center;
   padding: 5px;
   background-image: url("/images/product/iconmonstr-picture-5-120.png");
-  background-position: center 15px;
+  background-position: center 25px;
 	background-repeat: no-repeat;
   background-size: 50px;
   position: relative;
@@ -32,19 +38,19 @@
 .image-dropbox-description-box{
   position: absolute;
   z-index: 1;
-  width: 800px;
+  width: inherit;
 }
 
 .image-dropbox-description{
   position: relative;
-  top: 65px;
+  top: 72px;
   font-size: 10px; /* 텍스트 크기 설정 */
-  font-family: 'Pretendard-Regular';
+  font-weight: normal;
   color: #8c8c8c;
 }
 
 .image-preview-box-container{
-  width: 800px;
+  width: 728px;
   min-height: 104px;
   display: flex;
   position: relative;
@@ -90,6 +96,7 @@
 li img {
   width: 100px;
   height: 100px;
+  object-fit: cover;
 }
 
 li .delete-btn {
@@ -97,4 +104,117 @@ li .delete-btn {
   top: 0;
   right: 0;
   cursor: pointer;
+}
+
+
+
+
+
+.productInputs-class {
+  box-sizing: border-box;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productInputs {
+  width: 325px;
+  border: 1px solid #dddddd !important;
+  font-size: 1rem;
+  line-height: 1.45;
+  letter-spacing: -0.04rem;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+
+input::placeholder, textarea::placeholder {
+  color: #d9d9d9
+}
+
+.productInput-label {
+  /* display: inline-block; */
+  position: relative;
+  top: 21px;
+  left: 31px;
+  padding: 8px;
+  background: white;
+  font-size: 14px;
+  color: #888;
+  font-weight: bold;
+}
+
+.productInput-label span {
+  color: #da4841;
+  vertical-align: -1px;
+}
+
+.productInput-label2 {
+  /* display: inline-block; */
+  position: relative;
+  top: 11px;
+  left: 31px;
+  padding: 8px;
+  background: white;
+  font-size: 14px;
+  color: #888;
+  font-weight: bold;
+}
+
+.productInput-label2 span {
+  color: #da4841;
+  vertical-align: -1px;
+}
+
+.radioBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 75px;
+}
+
+input[type="radio"] {
+  margin-left: 2px;
+  margin-right: 25px;
+}
+
+.productDescription-class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productDescription-class textarea {
+  width: 325px;
+  height: 180px;
+  resize: none;
+  border: 1px solid #dddddd !important;
+  font-size: 1rem;
+  line-height: 1.45;
+  letter-spacing: -0.04rem;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+table, tr, td {
+  /* border: 1px solid #949494; */
+}
+
+table{
+  margin: 0 auto;
+  width: 1200px;
+  border-collapse: collapse;
+}
+
+tr{
+  height: 50px;
+}
+td{
+  min-width: 375px;
+}
+
+.borderline-left {
+  border-left: 1px solid #888;
 }
