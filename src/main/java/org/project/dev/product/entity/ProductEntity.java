@@ -4,6 +4,7 @@ package org.project.dev.product.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.category.CategoryEntity;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.review.entity.ReviewEntity;
@@ -71,6 +72,9 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "productEntity",cascade = CascadeType.REMOVE)
     private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
+    // 송원철 / cartItem과 연관관계 설정
+    @OneToMany(mappedBy = "product")
+    private List<CartItemEntity> cartItems = new ArrayList<>();
 
 
     // Dto to Entity
