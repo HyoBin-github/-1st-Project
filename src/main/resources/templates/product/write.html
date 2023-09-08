@@ -10,34 +10,85 @@
 </head>
 <body>
 <div class="container">
-  <form action="/product/write" method="post" enctype="multipart/form-data">
-    <ul class="drag-drop-area" id="dragDropArea">
-      <li class="add-image-placeholder" onclick="document.querySelector('input[type=file]').click();">
-        <span>+</span>
-      </li>
-    </ul>
-    <!-- 로딩창 -->
-    <div id="loading" class="loading-popup" style="display: none;">
-      <h1>Loading...</h1>
-    </div>
+  <form action="/product/write" id="product-form" method="post" enctype="multipart/form-data">
 
-    <input type="file" name="files" multiple style="display:none;" id="fileInput"> <br>
-    <input type="hidden" id="imageOrders" name="imageOrders">
+    
 
-    상품명: <input type="text" name="productName"> <br>
-    상품색상: <input type="text" name="productColor"> <br>
-    상품사이즈: <input type="text" name="productSize"> <br>
-    상품설명: <textarea name="productDescription" cols="30" rows="10"></textarea> <br>
-    상품작성자: <input type="text" name="productWriter"> <br>
-    상품가격: <input type="text" name="productPrice"> <br>
-    상품노출여부:
-    <label for="displayTrue">Y</label>
-    <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" checked>
-    <label for="displayFalse">N</label>
-    <input type="radio" id="displayFalse" name="isProductDisplayed" value="false"> <br>
+    <table>
+      <tr>
+        <td rowspan="5"></td>
+        <td class="borderline-left">
+          <label for="productName" class="productInput-label"><span>* </span>상품명</label>
+          <div class="productInputs-class">
+            <input type="text" name="productName" class="productInputs" id="productName" placeholder="상품명을 입력해주세요.">
+          </div>
+        </td>
+      </tr>
 
-    <input type="submit" value="판매글작성">
+      <tr>
+        <td class="borderline-left">
+          <label for="productColor" class="productInput-label"><span>* </span>상품색상</label>
+          <div class="productInputs-class">
+            <input type="text" name="productColor" class="productInputs" placeholder="상품색상을 입력해주세요.">
+          </div>
+        </td>
+      </tr>
 
+      <tr>
+        <td class="borderline-left">
+          <label for="productSize" class="productInput-label"><span>* </span>상품사이즈</label>
+          <div class="productInputs-class">
+            <input type="text" name="productSize" class="productInputs" placeholder="상품사이즈를 입력해주세요.">
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="borderline-left">
+          <label for="productPrice" class="productInput-label"><span>* </span>상품가격</label>
+          <div class="productInputs-class">
+            <input type="text" name="productPrice" class="productInputs" placeholder="상품가격을 입력해주세요.">
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="borderline-left">
+          <label for="radioBtn" class="productInput-label"><span>* </span>상품노출여부</label>
+          <div class="radioBtn">
+            <label for="displayTrue">Y</label>
+            <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" checked>
+            <label for="displayFalse">N</label>
+            <input type="radio" id="displayFalse" name="isProductDisplayed" value="false">
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <input type="file" id="fileInput" style="display: none;" multiple>
+          <div class="image-container" id="image-container">
+            <div class="image-dropbox-description-box">
+              <div class="image-dropbox-description">클릭이나 드래그로 이미지를 첨부</div>
+            </div>
+            <ul class="image-preview-box-container" id="image-preview-box-container">
+            </ul>
+          </div>
+        </td>
+        <td class="borderline-left">
+          <label for="productDescription" class="productInput-label2"><span>* </span>상품설명</label>
+          <div class="productDescription-class">
+            <textarea name="productDescription" placeholder="상품설명을 입력해주세요."></textarea>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><input type="submit" value="판매글작성" class="productInputs"></td>
+      </tr>
+    
+      <input type="text" name="productWriter" style="display: none;">
+    
+    </table>
   </form>
 </div>
 </body>

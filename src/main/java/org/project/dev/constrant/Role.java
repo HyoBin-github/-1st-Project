@@ -2,5 +2,5 @@ package org.project.dev.constrant;
 
 public enum Role {
 
-    ADMIN,SELLER,MEMBER
+    ADMIN,SELLER,MEMBER,SEMIMEMBER
 }

@@ -1,6 +1,7 @@
 package org.project.dev.member.entity;
 
 import lombok.*;
+import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.utils.BaseEntity;
@@ -36,7 +37,7 @@ public class MemberEntity extends BaseEntity {
     private String memberNickName;
 
     // 휴대전화번호
-    @Column(name = "member_phone", nullable = false)
+    @Column(name = "member_phone", unique = true, nullable = false)
     private String memberPhone;
 
     // 생년월일
@@ -49,6 +50,12 @@ public class MemberEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "temporary_password")
+    private String temporaryPassword;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private CartEntity cart;
 
     public static MemberEntity toMemberEntityInsert(MemberDto memberDto, PasswordEncoder passwordEncoder) {
 
@@ -83,6 +90,7 @@ public class MemberEntity extends BaseEntity {
 
         return memberEntity;
     }
+
 
 
 }

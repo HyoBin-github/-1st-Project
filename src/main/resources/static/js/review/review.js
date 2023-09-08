@@ -52,6 +52,7 @@ function reviewList(){
             data:data,
             type:"get",
             success:function(res){
+
             var reviewBody = $('#tData'); // tData를 변수에 삽입
             reviewBody.html(''); // tData 초기화
             console.log(res);

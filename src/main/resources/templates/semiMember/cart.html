@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니</title>
+</head>
+<body>
+<!--<div th:replace="~{fragments/header :: headerFragment}"></div>-->
+<h1 class="title"><span th:text="${semiMember.semiMemberEmail}" ></span>님 장바구니</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">상품ID</th>
+            <th scope="col">상품명</th>
+            <th scope="col">수량</th>
+            <th scope="col">가격</th>
+            <th scope="col">담은날짜</th>
+            <th scope="col">삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartItem, i: ${cartItems}">
+            <td th:text="${i.count}">1</td>
+            <td th:text="${cartItem.getProduct().getId()}">3번상품</td>
+            <td th:text="${cartItem.getProduct().getProductName()}">상품명</td>
+            <td th:text="${cartItem.getCartItemCount()}">수량</td>
+            <td th:text="${cartItem.getProduct().getProductPrice() * cartItem.getCartItemCount()}">가격</td>
+            <td th:text="${cartItem.getCart().getCreateTime()}">날짜</td>
+            <td class="btn btn-outline-dark"><a th:href="@{/cart/semiMember/{semiMemberId}/{cartItemId}/delete(semiMemberId=${cartItem.getCart().getSemiMember().getSemiMemberId}, cartItemId=${cartItem.getCartItemId()})}" style="text-decoration: none">삭제</a></td>
+        </tr>
+        </tbody>
+    </table>
+총가격 : <span th:text="${totalPrice}">총가격</span>
+</div>
+</body>
+</html>

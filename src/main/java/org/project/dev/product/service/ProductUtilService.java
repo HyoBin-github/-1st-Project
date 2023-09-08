@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,38 +47,21 @@ public class ProductUtilService {
         productRepository.updateHits(id);
     }
 
-    public void saveProductImages(ProductEntity savedProductEntity, List<MultipartFile> files, String imageOrders) throws IOException {
-        int[] parsedImageOrders;
+    public void saveProductImages(ProductEntity savedProductEntity,
+                                  List<MultipartFile> productImages) throws IOException {
 
-        if (imageOrders == null || imageOrders.isEmpty()) {
-            // imageOrders가 비어 있거나 null인 경우, 기본 순서를 사용
-            parsedImageOrders = new int[files.size()];
-            for (int i = 0; i < files.size(); i++) {
-                parsedImageOrders[i] = i + 1;
-            }
-        } else {
-            // imageOrders가 제공된 경우, 해당 값을 파싱하여 사용
-            parsedImageOrders = Arrays.stream(imageOrders.split(","))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-        }
-
-        // 나머지 이미지 저장 로직
-        if (files != null && !files.isEmpty()) {
-            for (int i = 0; i < files.size(); i++) {
-                MultipartFile multipartFile = files.get(i);
+        if (productImages != null && !productImages.isEmpty()) {
+            for (int i = 0; i < productImages.size(); i++) {
+                MultipartFile multipartFile = productImages.get(i);
                 if (!multipartFile.isEmpty()) {
                     String savedPath = fileStorageService.storeFile("product", multipartFile);
-
-                    // 해당 이미지의 순서를 parsedImageOrders 배열에서 가져옵니다.
-                    int order = parsedImageOrders[i];
 
                     ProductImgEntity productImgEntity = ProductImgEntity.builder()
                             .productEntity(savedProductEntity)
                             .productImgOriginalName(multipartFile.getOriginalFilename())
                             .productImgSavedName(new File(savedPath).getName())
                             .productImgSavedPath(savedPath)
-                            .productImgOrder(order)
+                            .productImgOrder(i)
                             .isProductImgDisplayed(true)
                             .build();
 
@@ -109,12 +94,16 @@ public class ProductUtilService {
                 .map(product -> getProductImagesByProductId(product.getId()))
                 .map(images -> {
                     return images.stream()
-                            .filter(img -> img.getProductImgOrder() == 1)
+                            .filter(img -> img.getProductImgOrder() == 0)
                             .findFirst()
                             .orElse(images.isEmpty() ? null : images.get(0));
                 })
                 .collect(Collectors.toList());
     }
+
+
+
+
 
 
 

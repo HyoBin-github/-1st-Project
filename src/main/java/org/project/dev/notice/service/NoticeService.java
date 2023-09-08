@@ -80,6 +80,11 @@ public class NoticeService {
     public Page<NoticeDto> NoticeList(Pageable pageable) {
         Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable);
 
+//        Optional<NoticeEntity> optionalNoticeEntity
+//                = Optional.ofNullable(noticeRepository.findById(id).orElseThrow(() -> {
+//            return new IllegalArgumentException("공지사항을 찾을 수 없습니다.");
+//        }));
+
         noticeEntities.getNumber();
         noticeEntities.getTotalElements();
         noticeEntities.getTotalPages();
@@ -121,7 +126,7 @@ public class NoticeService {
     //            Pageable pageable
     public List<NoticeDto> NoticeListSearch(
             @NotNull String noticeSelect, String noticeSearch) {
-//
+
 //        Page<NoticeEntity> noticeEntitiespage = noticeRepository.findAll(pageable);
 //
 //        noticeEntitiespage.getNumber();

@@ -67,6 +67,11 @@ public class ProductService {
         return null;
     }
 
+    // 송원철 / 상품 개별 불러오기
+    public ProductEntity productView(Long productId) {
+        return productRepository.findById(productId).get();
+    }
+
     @Data
     @AllArgsConstructor
     public class ProductListResponse {

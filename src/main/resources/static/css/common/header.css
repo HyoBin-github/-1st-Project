@@ -11,7 +11,6 @@
 .header .nav{
     flex-basis: 1400px;
     box-sizing: border-box; /* 박스의 크기를 테두리를 기준으로 계산*/
-    /* border-bottom: 2px solid #8ea6e9db; */
     /* background-color: #ffeaeaaf; */
     /* background-color: #8ea6e9db; */
 }
@@ -65,26 +64,57 @@
   /* border: 2px solid orange; */
 }
 .header .nav .middle-nav .middle-menu ul>li{
-    padding: 5px;
+    box-sizing: border-box;
+    padding: 10px;
     /* border: 2px solid yellow; */
 }  
 .header .nav .middle-nav .middle-menu ul>li a{
+    align-items: center;
     font-size: 15px;
     letter-spacing: 2px; /*글자 간격 설정*/
     /* border: 2px solid green; */
     line-height: 30px; 
 }
-.header .nav .middle-nav .middle-menu ul>li form{
-    line-height: 30px; 
+.header .nav .middle-nav .middle-menu ul>li:last-child{
+    box-sizing: border-box;
+    /* padding: 10px 0; */
+    /* line-height: 30px;  */
     /* border: 2px solid purple; */
+}
+.header .nav .middle-nav .middle-menu ul>li:last-child form{
+    border: 2px solid #E5E0FFdb;
+    border-radius: 10px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    box-sizing: border-box;
+    /* padding: 10px; */
+}
+.header .nav .middle-nav .middle-menu ul>li:last-child form input:focus{
+    /* focus가 가면 border 없애기 */
+    outline: none;
+}
+.header .nav .middle-nav .middle-menu ul>li:last-child form input:nth-child(1){
+    flex: 5;
+    border: 0;
+    padding: 0 0 0 10px;
+}
+.header .nav .middle-nav .middle-menu ul>li:last-child form input:nth-child(2){
+    flex: 1;
+    border: 0;
+    padding: 0 10px;
+    border-radius: 10%;
+    /* background: url("/images/zoom.png") no-repeat; */
+    width: 25px;
+    height: 25px;
+}
+.header .nav .middle-nav .middle-menu ul>li:last-child form input{
+   background-color: none;
 }
 .header .nav .middle-nav .middle-menu ul >li:nth-child(1) a{  
   font-weight: bold;
   line-height: 30px; 
- }
- .header .nav .middle-nav .middle-menu ul >li a img {  
-  /* width: 30px; */
-  /* display: block; */
  }
 
 /* header > nav > bottom-nav*/
@@ -96,9 +126,7 @@
   justify-content: flex-start;
   /* justify-content: space-evenly; */
 }
-
-.header .nav .bottom-nav .gnb{  
-  /* flex:1; */
+.header .nav .bottom-nav .gnb{
  padding: 10px 0 ;
  box-sizing: border-box;
 }
@@ -111,11 +139,34 @@
   line-height: 20px;
   font-size: 18px;
  }
-.header .nav .bottom-nav .gnb>ul>li a{  
+.header .nav .bottom-nav .gnb>ul>li>a{  
   padding: 5px 10px;
+  position: relative;
  }
  .header .nav .bottom-nav .gnb>ul>li:nth-child(1) a{
   font-weight: bold;
   color: #8F7AFF;
  }
- 
+ /* 마우스 올리면 밑줄 생성 */
+.header .nav .bottom-nav .gnb >ul>li>a::after{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0;
+    background-color: #8e7affb4;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.1s;
+}
+.header .nav .bottom-nav .gnb >ul>li>a:hover::after{
+    height: 2px;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    visibility: visible;
+    opacity: 1;
+    color: #cccccc;
+}

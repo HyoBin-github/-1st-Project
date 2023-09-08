@@ -1,4 +1,4 @@
-package org.project.dev.config;
+package org.project.dev.config.member;
 
 
 import lombok.Data;
