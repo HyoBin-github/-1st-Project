@@ -43,6 +43,8 @@ public class ReviewEntity extends BaseEntity {
     @Column(nullable = false, length = 1)
     private int isFile;
 
+    @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.REMOVE)
+    private List<ReviewFileEntity> reviewFileEntities = new ArrayList<>();
 
 
     public static ReviewEntity toReviewEntity(ReviewDto reviewDto1) {

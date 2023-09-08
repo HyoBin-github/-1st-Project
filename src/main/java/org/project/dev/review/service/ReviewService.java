@@ -73,7 +73,7 @@ public class ReviewService {
                 String fileOldName = reviewFile.getOriginalFilename();
                 UUID uuid = UUID.randomUUID();
                 String fileNewName = uuid+"_"+fileOldName;
-                String savePath = "C://Users/code.aiaru/Desktop/coding/saveFiles/reviewImg/" + fileNewName;
+                String savePath = "C:/Users/bin77/Desktop/새 폴더/" + fileNewName;
                 reviewFile.transferTo(new File(savePath));
 
                 ProductEntity productEntity = new ProductEntity();
@@ -95,6 +95,12 @@ public class ReviewService {
                 Optional<ReviewEntity> optionalReviewEntity =
                         Optional.ofNullable(reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new));
 
+                ReviewFileEntity reviewFileEntity
+                        = ReviewFileEntity.toReviewFileEntity(reviewEntity,fileOldName,fileNewName);
+
+                Long fileId = reviewFileRepository.save(reviewFileEntity).getId();
+
+                reviewFileRepository.findById(fileId).orElseThrow(IllegalArgumentException::new);
 
                 return ReviewDto.toReviewDto(optionalReviewEntity.get());
 

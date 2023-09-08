@@ -1,7 +1,6 @@
 package org.project.dev.review.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.project.dev.config.MyUserDetails;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.service.ReviewService;
@@ -27,7 +26,8 @@ public class ReviewController {
     public @ResponseBody ReviewDto ajaxWrite(@ModelAttribute ReviewDto reviewDto
             /*, @AuthenticationPrincipal MyUserDetails myUserDetails*/) throws IOException {
 
-
+        System.out.println(reviewDto.getReview()+"<<<< Review");
+        System.out.println("review>>" + reviewDto.getReview());
         String memberNickName = "m1"; /*myUserDetails.getUsername();*/
         ReviewDto reviewDto1 = reviewService.reviewAjaxCreate(reviewDto, memberNickName);
 

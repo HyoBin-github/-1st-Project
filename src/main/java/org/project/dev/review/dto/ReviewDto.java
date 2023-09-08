@@ -35,7 +35,7 @@ public class ReviewDto {
 
     private MultipartFile reviewFile;
 
-
+    private List<ReviewFileEntity> reviewFileEntities;
 
 
 

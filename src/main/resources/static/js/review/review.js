@@ -3,21 +3,31 @@ $('#ajaxBtn').on('click', ajaxFn);
 
 function ajaxFn(){
 
+       var formData = new FormData();
 
-     var formData = new FormData();
-     formData.append('productId', $('#productId').val());
-     formData.append('review', $('#review').val());
-     formData.append('reviewFile', $('reviewFile')[0].files[0] );
+        const productId = $('#productId').val();
+        const review = $('#review').val();
+        const reviewFile = $('#reviewFile')[0].files[0];
 
-    alert(formData);
-    // const data= {
-    //     'productId':$('#productId').val(),
-    //     'review':$('#review').val()
-    // }
+        formData.append('productId', $('#productId').val());
+        formData.append('review', $('#review').val());
+        formData.append('reviewFile',$('#reviewFile')[0].files[0]);
+
+//     const data= {
+//         'productId':$('#productId').val(),
+//         'review':$('#review').val(),
+//         'reviewFile':$('#reviewFile')[0]
+//     }
+//        console.log(data);
+
+    console.log(formData);
+
      $.ajax({
         type:'POST',
         url:"/review/ajaxWrite",
-        data:foemData,
+        data: formData,
+        contentType: false, // 파일 업로드 시 false로 설정
+        processData: false,
         success:function(res){
             alert("댓글작성완료");
             console.log(res);
