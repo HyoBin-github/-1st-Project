@@ -91,16 +91,17 @@ public class NoticeService {
 //    }
     public Page<NoticeDto> NoticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
 
-        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable, noticeSelect, noticeSearch);
+//        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable, noticeSelect, noticeSearch);
+//
+//        noticeEntities.getNumber();
+//        noticeEntities.getTotalElements();
+//        noticeEntities.getTotalPages();
+//        noticeEntities.getSize();
+//
+//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
 
-        noticeEntities.getNumber();
-        noticeEntities.getTotalElements();
-        noticeEntities.getTotalPages();
-        noticeEntities.getSize();
-
-        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
-
-        return noticeDtoPage;
+//        return noticeDtoPage;
+        return null;
     }
     /*
        Todo

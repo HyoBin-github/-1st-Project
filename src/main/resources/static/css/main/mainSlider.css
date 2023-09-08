@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+button{
+    all: unset;
+}
+
 li{
   list-style-type: none;
 }
@@ -43,7 +47,91 @@ li{
 
 .slides li{
   float: left;
+  position : relative;
 }
+
+.slides li span{
+  position: absolute;
+}
+.slides li:nth-child(1) > span{
+
+      top: 200px;
+      left: 1300px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+      padding: 10px;
+      color: white;
+      font-size: 50px;
+}
+
+.slides li:nth-child(2) > span{
+
+      top: 540px;
+      left: 730px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+      padding: 10px;
+      color: white;
+      font-size: 50px;
+}
+
+.slides li:nth-child(3) > span{
+
+     top: 330px;
+     left: 900px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+      padding: 10px;
+      color: white;
+      font-size: 50px;
+}
+
+.slides li:nth-child(4) > span{
+
+      top: 300px;
+      left: 400px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+      padding: 10px;
+      color: white;
+      font-size: 50px;
+}
+
+.slides li:nth-child(5) > span{
+
+          top: 200px;
+          left: 400px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+          padding: 10px;
+          color: black;
+          font-size: 50px;
+}
+
+.slides li:nth-child(6) > span{
+
+      top: 200px;
+      left: 1300px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+      padding: 10px;
+      color: white;
+      font-size: 50px;
+}
+
+.slides li:nth-child(7) > span{
+
+         top: 300px;
+         left: 950px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+      padding: 10px;
+      color: white;
+      font-size: 50px;
+}
+.slides li:nth-child(8) > span{
+
+          top: 200px;
+          left: 300px;
+          /* background-color: rgba(0, 0, 0, 0.7); */
+          padding: 10px;
+          color: black;
+      font-size: 50px;
+}
+
 
 .controller span{
   position:absolute;
