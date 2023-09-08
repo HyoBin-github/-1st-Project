@@ -1,7 +1,7 @@
 package org.project.dev.review.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.project.dev.config.MyUserDetails;
+import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.service.ReviewService;
