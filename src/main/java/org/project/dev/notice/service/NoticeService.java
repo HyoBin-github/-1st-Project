@@ -92,7 +92,6 @@ public class NoticeService {
     public Page<NoticeDto> NoticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
 
 //        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable, noticeSelect, noticeSearch);
-<<<<<<< HEAD
 //
 //        noticeEntities.getNumber();
 //        noticeEntities.getTotalElements();
@@ -103,17 +102,6 @@ public class NoticeService {
 
 //        return noticeDtoPage;
         return null;
-=======
-
-//        noticeEntities.getNumber();
-//        noticeEntities.getTotalElements();
-//        noticeEntities.getTotalPages();
-//        noticeEntities.getSize();
-//
-//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
-
-        return null /*noticeDtoPage*/;
->>>>>>> 300b388dca93bb00187f52c3036390e5a747b530
     }
     /*
        Todo
