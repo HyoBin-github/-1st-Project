@@ -38,7 +38,7 @@ public class CartEntity extends BaseEntity {
     private SemiMemberEntity semiMember;
 
     @OneToMany(mappedBy = "cart")
-    private List<CartItemEntity> cartItems=new ArrayList<>();
+    private List<CartItemEntity> cartItems = new ArrayList<>();
 
     public static CartEntity createCart(MemberEntity member){
         CartEntity cart=new CartEntity();

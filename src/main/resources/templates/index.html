@@ -9,11 +9,23 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/main/mainSlider.css}">
+    <link rel="stylesheet" href="maincss.css">
 </th:block>
 <th:block layout:fragment="script">
     <script th:src="@{/js/main/mainSlider.js}" defer></script>
 </th:block>
 <th:block layout:fragment="container">
+
+    <div class="moveBtn">
+        <a href="#header">
+            <div class="moveBtnTop">△</div>
+        </a>
+        <a href="#footer">
+            <div class="moveBtnBotton">▽</div>
+        </a>
+    </div>
+
+
     <div class="container">
         <div class="index">
             <div class="index-con">
@@ -37,77 +49,347 @@
                             </div>
                         </div>
                     </div>
-                    <div class="section-sec2">
+                    <div id="new" class="section-sec2">
                         <div class="sec2-title">
-                            <span>sec2-title(상의)</span>
+                            <span class="title-eng">new Product</span>
+                            <br>
+                            <span class="title-kor">신상품</span>
                         </div>
                         <ul>
                             <li>
                                 <div class="top-sec">
-                                    <img src="" alt="no img">
+                                    <img src="images/item0.jpg" alt="">
                                 </div>
                                 <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
                                     <div class="title">
-                                        대충 제목
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
                                     </div>
                                     <div class="price">
-                                        대충 가격
+                                        <span>356,000</span>
                                     </div>
+
                                 </div>
                             </li>
                             <li>
                                 <div class="top-sec">
-                                    <img src="" alt="no img">
+                                    <img src="images/item0.jpg" alt="">
                                 </div>
                                 <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
                                     <div class="title">
-                                        대충 제목
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
                                     </div>
                                     <div class="price">
-                                        대충 가격
+                                        <span>356,000</span>
                                     </div>
+
                                 </div>
                             </li>
                             <li>
                                 <div class="top-sec">
-                                    <img src="" alt="no img">
+                                    <img src="images/item0.jpg" alt="">
                                 </div>
                                 <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
                                     <div class="title">
-                                        대충 제목
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
                                     </div>
                                     <div class="price">
-                                        대충 가격
+                                        <span>356,000</span>
                                     </div>
+
                                 </div>
                             </li>
                             <li>
                                 <div class="top-sec">
-                                    <img src="" alt="no img">
+                                    <img src="images/item0.jpg" alt="">
                                 </div>
                                 <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
                                     <div class="title">
-                                        대충 제목
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
                                     </div>
                                     <div class="price">
-                                        대충 가격
+                                        <span>356,000</span>
                                     </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+                    <div id="top10" class="section-sec2">
+                        <div class="section-border"></div>
+                        <div class="sec2-title">
+                            <span class="title-eng">Top 10</span>
+                            <br>
+                            <span class="title-kor">인기순</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-sec">
+                                    <img src="images/item0.jpg" alt="">
+                                </div>
+                                <div class="bottom-sec">
+                                    <div class="brand">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div class="title">
+                                        <span>title x title</span>
+                                    </div>
+                                    <div class="description">
+                                        <span>description</span>
+                                    </div>
+                                    <div class="price">
+                                        <span>356,000</span>
+                                    </div>
+
                                 </div>
                             </li>
                         </ul>
-                        <!--<ul>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                            <li>item1</li>
-                        </ul>-->
-
                     </div>
                 </div>
             </div>
