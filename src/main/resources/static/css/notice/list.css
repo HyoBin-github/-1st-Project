@@ -64,6 +64,7 @@
     padding: 0 0 0 10px;
 }
 .List .List-con .search form input:nth-child(2){
+    background-image: url(/static/images/zoom.png);
     flex: 1;
     border: 0;
     padding: 0 10px;

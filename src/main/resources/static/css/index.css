@@ -10,66 +10,126 @@
 }
 
 /* .container */
-
-*{
-    margin: 0;
-    padding: 0;
-  }
-  html,body{
-    width: 100%;
-    min-height:100%;
-  }
-  ul,li{
-    list-style: none;
-  }
-  a{
-    text-decoration: none;
-    color: #000;
-  }
-
- html{
-    scroll-behavior: smooth;
-  }
-
-
-.moveBtn {
-    position: fixed;
-    bottom: 6rem;
-    right: 4rem;
-    width: 4rem;
-    height: 4rem;
-    text-align: center;
-    border-radius: 20%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-   }
-
-.moveBtn .moveBtnTop{
-
-    width: 75px;
-    height: 35px;
-    border-radius: 150px 150px 0 0;
-
-    border: 1px solid #8C9CDB;
-    box-sizing: border-box;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
-
-
-
+/* reset.css에 없나요 */
+*
+{
+  margin: 0;
+  padding: 0;
+}
+html,body{
+  width: 100%;
+  min-height:100%;
+}
+ul,li{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+  color: #000;
+}
+html{
+  scroll-behavior: smooth;
 }
 
-.moveBtn .moveBtnBotton{
+/* 이동 스크롤 버튼 */
+.moveBtn{
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+  width: 40px;
+  height: 60px;
 
-    width: 75px;
-    height: 35px;
-    border-radius: 0 0 150px 150px;
+  border: 2px solid #E5E0FF;
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-    border: 1px solid #8C9CDB;
-    box-sizing: border-box;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
-
+  box-shadow: #BAADFF 0px 25px 50px -10px,
+   #BAADFF 0px 15px 30px -15px,
+    #BAADFF 0px -1px 3px 0px inset;
+}
+.moveBtn .top{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 3px;
+}
+.moveBtn .top .topBtn{
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #C8BEFF;
+  box-shadow: #CDD4EF 0px 1px 3px,
+   #CDD4EF 0px 1px 2px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.moveBtn .top .topBtn a{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.moveBtn .top .topBtn a .moveBtnTop{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.moveBtn .top .topBtn a:hover{
+  background-color: #C8BEFF;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  color: white;
+  border: none;
+}
+.moveBtn .bottom{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: 1px ridge #CDD4EF;
+  padding-top: 3px;
+}
+.moveBtn .bottom .bottomBtn{
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #C8BEFF;
+  box-shadow: #CDD4EF 0px 1px 3px,
+   #CDD4EF 0px 1px 2px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.moveBtn .bottom .bottomBtn a{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.moveBtn .bottom .bottomBtn a .moveBtnBotton{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.moveBtn .bottom .bottomBtn a:hover{
+  background-color: #C8BEFF;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  border: none;
+  color: white;
 }
 
 .container{

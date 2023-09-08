@@ -97,16 +97,17 @@
 }
 .header .nav .middle-nav .middle-menu ul>li:last-child form input:nth-child(1){
     flex: 5;
-    border: 0;
-    padding: 0 0 0 10px;
+    border: none;
+    /* padding: 0 0 0 10px; */
 }
 .header .nav .middle-nav .middle-menu ul>li:last-child form input:nth-child(2){
     flex: 1;
-    border: 0;
-    padding: 0 10px;
+    border: 2px solid red;
+    /* padding: 0 10px; */
     border-radius: 10%;
-    /* background: url("/images/zoom.png") no-repeat; */
-    width: 35px;
+    /* background-image: url('/static/images/main/mainIcon/search.png'); */
+    background-repeat: no-repeat;
+    width: 30px;
     height: 30px;
 }
 .header .nav .middle-nav .middle-menu ul>li:last-child form input{
