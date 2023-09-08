@@ -8,8 +8,11 @@ import org.project.dev.review.service.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,7 +24,9 @@ public class ReviewController {
 
 
     @PostMapping("/ajaxWrite")
-    public @ResponseBody ReviewDto ajaxWrite(@ModelAttribute ReviewDto reviewDto/*, @AuthenticationPrincipal MyUserDetails myUserDetails*/){
+    public @ResponseBody ReviewDto ajaxWrite(@ModelAttribute ReviewDto reviewDto
+            /*, @AuthenticationPrincipal MyUserDetails myUserDetails*/) throws IOException {
+
 
         String memberNickName = "m1"; /*myUserDetails.getUsername();*/
         ReviewDto reviewDto1 = reviewService.reviewAjaxCreate(reviewDto, memberNickName);

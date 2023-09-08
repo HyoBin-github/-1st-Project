@@ -2,15 +2,22 @@ $('#ajaxBtn').on('click', ajaxFn);
 //$('#produtId').val(),
 
 function ajaxFn(){
-    const data= {
-        'productId':$('#productId').val(),
-        'review':$('#review').val(),
-//        'start':$('#star').val(),
-    }
+
+
+     var formData = new FormData();
+     formData.append('productId', $('#productId').val());
+     formData.append('review', $('#review').val());
+     formData.append('reviewFile', $('reviewFile')[0].files[0] );
+
+    alert(formData);
+    // const data= {
+    //     'productId':$('#productId').val(),
+    //     'review':$('#review').val()
+    // }
      $.ajax({
         type:'POST',
         url:"/review/ajaxWrite",
-        data:data,
+        data:foemData,
         success:function(res){
             alert("댓글작성완료");
             console.log(res);
@@ -27,16 +34,18 @@ function ajaxFn(){
     error:()=>{
     	alert("Faill!!");
     }
-})
+});
+// 작성초기화
+$('#review').val("");
 }
-ajaxFn.init();
+
 
 function reviewList(){
     const prId = $('#prId').val();
     console.log(prId)
     const data= {
             'productId':$('#productId').val()
-            }
+        }
 
     $.ajax({
             url:"/review/reviewList/"+prId,
@@ -57,8 +66,8 @@ function reviewList(){
 
 
               $('#tData').append(list);
-                });
-            }
+            });
+        }
     });
 
 }
@@ -92,7 +101,7 @@ function onDelete(id){
 }
 
 var comment = {
-    init:function(){
+    init:function(){``
         var _this = this;
 const upBtn = document.querySelectorAll('.reviewUpBtn');
 
@@ -106,8 +115,9 @@ upBtn.forEach(function(item){
     },
     update: function(form){
         var data= {
-            id: form.querySelector('#proId').value,
-            review: form.querySelector('#upRv').value
+            id: form.querySelector('#reviewId').value,
+            review: form.querySelector('#upRv').value,
+            reviewWriter: form.querySelector('#reviewWriter').value
         };
 
         var split = location.pathname.split('/');

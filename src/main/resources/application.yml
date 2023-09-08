@@ -20,13 +20,25 @@ spring:
         show_sql: true
         format_sql: true
 
-  # yaml/yml ?? - Thymeleaf ??
+    # yaml/yml ?? - Thymeleaf ??
   thymeleaf:
     cache: false
     check-template-location: true
     #    prefix: classpath:/templates/
     #    suffix: .html
     enabled: true
+
+    #live reload 설정 배포시 주석
+    prefix: file:src/main/resources/templates/
+
+    #live reload 설정 배포시 주석
+    devtools:
+      livereload:
+        enabled: true
+      thymeleaf:
+        cache: false
+      restart:
+        enabled: true
 
   #application-oauth2
   profiles:
