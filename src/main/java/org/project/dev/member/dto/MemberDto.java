@@ -50,9 +50,14 @@ public class MemberDto {
     @Size(min = 8, max = 8)
     private String memberBirth;
 
-    @NotBlank
-    @Size(min = 2, max = 255)
-    private String memberAddress;
+    @NotBlank(message = "우편번호를 입력해주세요")
+    private String memberPostCode;
+
+    @NotBlank(message = "도로명주소를 입력해주세요")
+    private String memberStreetAddress;
+
+    @NotBlank(message = "상세주소를 입력해주세요")
+    private String memberDetailAddress;
 
     private Role role;
 
@@ -65,7 +70,7 @@ public class MemberDto {
     public boolean isMatching(){ // 부에서 해당 멤버 변수 값을 읽을 수 있는 인터페이스를 제공하기 위해 사용
         return matching;
     }
-    //////////////////////////////////////////////////////////////
+
 
     private LocalDateTime createTime;
 
@@ -80,7 +85,9 @@ public class MemberDto {
             memberDto.setMemberNickName(memberEntity.getMemberNickName());
             memberDto.setMemberPhone(memberEntity.getMemberPhone());
             memberDto.setMemberBirth(memberEntity.getMemberBirth());
-            memberDto.setMemberAddress(memberEntity.getMemberAddress());
+            memberDto.setMemberPostCode(memberEntity.getMemberPostCode());
+            memberDto.setMemberStreetAddress(memberEntity.getMemberStreetAddress());
+            memberDto.setMemberDetailAddress(memberEntity.getMemberDetailAddress());
             memberDto.setRole(memberEntity.getRole());
             memberDto.setCreateTime(memberEntity.getCreateTime());
             memberDto.setUpdateTime(memberEntity.getUpdateTime());

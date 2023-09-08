@@ -4,10 +4,13 @@ import lombok.*;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.utils.BaseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -15,7 +18,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "member_project")
+@Table(name = "member_project1")
 public class MemberEntity extends BaseEntity {
 
     @Id
@@ -44,9 +47,17 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "member_birth", nullable = false)
     private String memberBirth;
 
-    // 주소
-    @Column(name = "member_address", nullable = false)
-    private String memberAddress;
+    // 우편번호(주소 api 이용 위해 필요)
+    @Column(name = "member_postCode", nullable = false)
+    private String memberPostCode;
+
+    // 도로명주소(주소 api 이용 위해 필요)
+    @Column(name = "member_streetAddress")
+    private String memberStreetAddress;
+
+    // 상세주소(주소 api 이용 위해 필요)
+    @Column(name = "member_detailAddress")
+    private String memberDetailAddress;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -56,6 +67,9 @@ public class MemberEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
     private CartEntity cart;
+    // 연관 관계
+    @OneToMany(mappedBy = "member")
+    private List<ProductEntity> products = new ArrayList<>();
 
     public static MemberEntity toMemberEntityInsert(MemberDto memberDto, PasswordEncoder passwordEncoder) {
 
@@ -67,7 +81,9 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberNickName(memberDto.getMemberNickName());
         memberEntity.setMemberPhone(memberDto.getMemberPhone());
         memberEntity.setMemberBirth(memberDto.getMemberBirth());
-        memberEntity.setMemberAddress(memberDto.getMemberAddress());
+        memberEntity.setMemberPostCode(memberDto.getMemberPostCode());
+        memberEntity.setMemberStreetAddress(memberDto.getMemberStreetAddress());
+        memberEntity.setMemberDetailAddress(memberDto.getMemberDetailAddress());
         memberEntity.setRole(Role.MEMBER);
 
         return memberEntity;
@@ -83,7 +99,9 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberNickName(memberDto.getMemberNickName());
         memberEntity.setMemberPhone(memberDto.getMemberPhone());
         memberEntity.setMemberBirth(memberDto.getMemberBirth());
-        memberEntity.setMemberAddress(memberDto.getMemberAddress());
+        memberEntity.setMemberPostCode(memberDto.getMemberPostCode());
+        memberEntity.setMemberStreetAddress(memberDto.getMemberStreetAddress());
+        memberEntity.setMemberDetailAddress(memberDto.getMemberDetailAddress());
         memberEntity.setRole(memberDto.getRole());
         memberEntity.setCreateTime(memberDto.getCreateTime());
         memberEntity.setUpdateTime(memberDto.getUpdateTime());

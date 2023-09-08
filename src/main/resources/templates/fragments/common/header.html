@@ -7,9 +7,6 @@
         <div class="top-nav">
             <div class="top-menu">
                 <ul>
-                    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
-                    <li><a th:href="@{/product/manage}">상품관리</a></li>
-                    </th:block>
                     <li><a th:href="@{/notice/list}">공지사항</a></li>
                     <th:block sec:authorize="isAuthenticated()">
                         <li><a th:href="@{/inquiry/list}">문의하기</a></li>
@@ -29,9 +26,17 @@
                         <li><a th:href="@{/semiMember/detail/{semiMemberId}(semiMemberId=${#authentication.principal.semiMemberEntity.semiMemberId})}">마이페이지</a></li>
                         <li><a th:href="@{/cart/semiMember/{semiMemberId}(semiMemberId=${#authentication.principal.semiMemberEntity.semiMemberId})}">장바구니</a></li>
                     </th:block>
-                    <th:block sec:authorize="isAuthenticated()">
+                    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
+                        <li><a th:href="@{/product/manage}">상품관리</a></li>
+                    </th:block>
+                    <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SELLER')">
                         <li><a th:href="@{/member/logout}">로그아웃</a></li>
-                        <span sec:authentication="name" class="data1 span"></span>님
+                        <!--                        <span sec:authentication="name" class="data1 span"></span>님--> <!-- 일반, 간편회원 모두 이메일 출력 -->
+                        <span th:text="${#authentication.principal.memberEntity.memberNickName}" class="data1 span"></span>님 <!-- 일반회원 닉네임 출력 -->
+                    </th:block>
+                    <th:block sec:authorize="hasAnyRole('SEMIMEMBER')">
+                        <li><a th:href="@{/member/logout}">로그아웃</a></li>
+                        <span sec:authentication="name" class="data1 span"></span>님 <!-- 간편회원 이메일 출력(간편회원은 닉네임이 없음) -->
                     </th:block>
                 </ul>
             </div>

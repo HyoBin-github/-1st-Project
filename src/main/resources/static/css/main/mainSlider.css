@@ -10,8 +10,8 @@ li{
 
 /* 보여줄 구간의 높이와 넓이 설정 */
 #slideShow{
-  width: 1200px;
-  height: 1100px;
+  width: 1920px;
+  height: 800px;
   position: relative;
   margin: 50px auto;
   overflow: hidden;

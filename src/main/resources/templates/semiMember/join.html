@@ -18,13 +18,9 @@
             <li>
                 <label th:for="semiMemberEmail">이메일</label>
                 <input type="email" th:field="*{semiMemberEmail}" required="required" placeholder="이메일 입력">
-            </li>
-            <p th:if="${#fields.hasErrors('semiMemberEmail')}" th:errors="*{semiMemberEmail}" class="error"></p>
-            <!-- 이메일 중복 확인 버튼 -->
-            <li>
                 <button type="button" id="emailCheckButton">이메일 중복 확인</button>
             </li>
-            <!-- 중복 확인 결과 메시지 영역 -->
+            <p th:if="${#fields.hasErrors('semiMemberEmail')}" th:errors="*{semiMemberEmail}" class="error"></p>
             <li>
                 <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
                 <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>
