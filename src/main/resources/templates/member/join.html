@@ -10,6 +10,9 @@
     <script th:src="@{/js/member/confirmPw_join.js}" defer="defer"></script>
     <script th:src="@{/js/member/email.js}" defer="defer"></script>
     <script th:src="@{/js/member/join.js}" defer="defer"></script>
+    <script th:src="@{/js/member/join_birth.js}" defer="defer"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 카카오 주소 api -->
+    <script th:src="@{/js/member/addressApi.js}" defer="defer"></script> <!-- 카카오 주소 api -->
 </head>
 <body>
 <!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
@@ -20,13 +23,9 @@
             <li>
                 <label th:for="memberEmail">이메일</label>
                 <input type="email" th:field="*{memberEmail}" required="required" placeholder="이메일 입력">
-            </li>
-            <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" class="error"></p>
-            <!-- 이메일 중복 확인 버튼 -->
-            <li>
                 <button type="button" id="emailCheckButton">이메일 중복 확인</button>
             </li>
-            <!-- 중복 확인 결과 메시지 영역 -->
+            <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" class="error"></p>
             <li>
                 <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
                 <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>
@@ -94,13 +93,23 @@
                 <input type="text" th:field="*{memberBirth}" required="required" placeholder="ex)21001031">
             </li>
             <p th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}" class="error"></p>
+            <!--            <li>-->
+            <!--                <label th:for="memberAddress">주소</label>-->
+            <!--                <input type="text" th:field="*{memberAddress}" required="required" placeholder="주소 입력">-->
+            <!--            </li>-->
+            <!--            <p th:if="${#fields.hasErrors('memberAddress')}" th:errors="*{memberAddress}" class="error"></p>-->
+            <div class="form-group">
+                <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호 필수로 입력해주세요" name="memberPostCode" id="memberPostCode" type="text" readonly="readonly" >
+                <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
+            </div>
+            <div class="form-group">
+                <input class="form-control" style="top: 5px;" placeholder="도로명주소" name="memberStreetAddress" id="memberStreetAddress" type="text" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="상세주소" name="memberDetailAddress" id="memberDetailAddress" type="text"  />
+            </div>
             <li>
-                <label th:for="memberAddress">주소</label>
-                <input type="text" th:field="*{memberAddress}" required="required" placeholder="주소 입력">
-            </li>
-            <p th:if="${#fields.hasErrors('memberAddress')}" th:errors="*{memberAddress}" class="error"></p>
-            <li>
-                <input type="submit" value="회원가입">
+                <input type="submit" value="회원가입" onclick="validateAndSubmit();">
             </li>
         </ul>
     </form>
