@@ -77,22 +77,30 @@ public class NoticeService {
         3.
         4.
         */
-    public Page<NoticeDto> NoticeList(Pageable pageable) {
-        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable);
+//    public Page<NoticeDto> NoticeList(Pageable pageable) {
+//        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable);
+//
+//        noticeEntities.getNumber();
+//        noticeEntities.getTotalElements();
+//        noticeEntities.getTotalPages();
+//        noticeEntities.getSize();
+//
+//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+//
+//        return noticeDtoPage;
+//    }
+    public Page<NoticeDto> NoticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
 
-//        Optional<NoticeEntity> optionalNoticeEntity
-//                = Optional.ofNullable(noticeRepository.findById(id).orElseThrow(() -> {
-//            return new IllegalArgumentException("공지사항을 찾을 수 없습니다.");
-//        }));
+//        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable, noticeSelect, noticeSearch);
 
-        noticeEntities.getNumber();
-        noticeEntities.getTotalElements();
-        noticeEntities.getTotalPages();
-        noticeEntities.getSize();
+//        noticeEntities.getNumber();
+//        noticeEntities.getTotalElements();
+//        noticeEntities.getTotalPages();
+//        noticeEntities.getSize();
+//
+//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
 
-        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
-
-        return noticeDtoPage;
+        return null /*noticeDtoPage*/;
     }
     /*
        Todo
@@ -126,7 +134,7 @@ public class NoticeService {
     //            Pageable pageable
     public List<NoticeDto> NoticeListSearch(
             @NotNull String noticeSelect, String noticeSearch) {
-
+//
 //        Page<NoticeEntity> noticeEntitiespage = noticeRepository.findAll(pageable);
 //
 //        noticeEntitiespage.getNumber();

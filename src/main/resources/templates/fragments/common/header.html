@@ -1,63 +1,8 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<div class="header" th:fragment="headerFragment">-->
-<!--    <div class="nav">-->
-<!--        <div class="top-nav">-->
-<!--            <div class="top-menu">-->
-<!--                <ul>-->
-<!--                    <li><a th:href="@{/}">상품관리</a></li>-->
-<!--                    <li><a th:href="@{/}">상품등록</a></li>-->
-<!--                    <li><a th:href="@{/notice/list}">공지사항</a></li>-->
-<!--                    <li><a th:href="@{/inquiry/list}">문의하기</a></li>-->
-<!--&lt;!&ndash;                    <li><a href="">님</a></li>&ndash;&gt;-->
-<!--                    <li><a th:href="@{/member/login}">로그인</a></li>-->
-<!--                    <li><a th:href="@{/member/join}">회원가입</a></li>-->
-<!--                    <li><a th:href="@{/admin/detail}">관리자페이지</a></li>-->
-<!--&lt;!&ndash;                    <li><a th:href="@{/member/detail/{memberId}(memberId=${memberDto.memberId})}">마이페이지</a></li>&ndash;&gt;-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="middle-nav">-->
-<!--            <h1>-->
-<!--                <a th:href="@{/}"><img th:src="@{/images/logo3.png}" alt="HOME"></a>-->
-<!--            </h1>-->
-<!--            <div class="middle-menu">-->
-<!--                <ul>-->
-<!--                    <li><a th:href="@{/}">HOME</a></li>-->
-<!--                    <li><a th:href="@{/}">SHOP</a></li>-->
-
-<!--                   <li>-->
-<!--                        <form th:action="@{/}">-->
-<!--                            <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">-->
-<!--                            <input type="image" onclick="alert('검색')" th:src="@{/images/zoom.png}">-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="bottom-nav">-->
-<!--            <div class="gnb">-->
-<!--                <ul>-->
-<!--                    <li><a th:href="@{/}">Cloth Keeper</a></li>-->
-<!--                    <li><a th:href="@{/}">1</a></li>-->
-<!--&lt;!&ndash;                    조회순으로&ndash;&gt;-->
-<!--                    <li><a th:href="@{/}">2</a></li>-->
-<!--&lt;!&ndash;                    랜덤하게&ndash;&gt;-->
-<!--                    <li><a th:href="@{/}">상의</a></li>-->
-<!--                    <li><a th:href="@{/}">하의</a></li>-->
-<!--                    <li><a th:href="@{/}">악세사리</a></li>-->
-<!--                    <li></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<div class="header" th:fragment="headerFragment">
+<div id="header" class="header" th:fragment="headerFragment">
     <div class="nav">
         <div class="top-nav">
             <div class="top-menu">
@@ -70,8 +15,8 @@
                         <li><a th:href="@{/inquiry/list}">문의하기</a></li>
                     </th:block>
                     <th:block sec:authorize="isAnonymous()">
-                        <li><a th:href="@{/login}">로그인</a></li>
-                        <li><a th:href="@{/join}">회원가입</a></li>
+                        <li><a th:href="@{/member/login}">로그인</a></li>
+                        <li><a th:href="@{/member/join}">회원가입</a></li>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('ADMIN')">
                         <li><a th:href="@{/admin/detail}">관리자페이지</a></li>
@@ -88,6 +33,7 @@
                         <li><a th:href="@{/member/logout}">로그아웃</a></li>
                         <span sec:authentication="name" class="data1 span"></span>님
                     </th:block>
+                </ul>
             </div>
         </div>
         <div class="middle-nav">
@@ -112,9 +58,9 @@
             <div class="gnb">
                 <ul>
                     <li><a th:href="@{/}">Cloth Keeper</a></li>
-                    <li><a th:href="@{/}">1</a></li>
+                    <li><a href="#new">New</a></li>
                     <!--                    조회순으로-->
-                    <li><a th:href="@{/}">2</a></li>
+                    <li><a href="#top10">Top 10</a></li>
                     <!--                    랜덤하게-->
                     <li><a th:href="@{/}">상의</a></li>
                     <li><a th:href="@{/}">하의</a></li>

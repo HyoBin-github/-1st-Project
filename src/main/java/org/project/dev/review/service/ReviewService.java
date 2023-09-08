@@ -85,6 +85,7 @@ public class ReviewService {
                 reviewDto1.setReview(reviewDto.getReview());
                 reviewDto1.setReviewWriter(memberNickName);
                 reviewDto1.setReviewFile(reviewDto.getReviewFile());
+                reviewDto1.setReviewFileEntities(reviewDto.getReviewFileEntities());
                 reviewDto1.setIsFile(reviewDto.getIsFile());
                 reviewDto1.setProductEntity(productEntity);
 

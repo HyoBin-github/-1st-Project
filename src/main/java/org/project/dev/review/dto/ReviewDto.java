@@ -45,6 +45,7 @@ public class ReviewDto {
         reviewDto.setId(reviewEntity.getId());
         reviewDto.setReview(reviewEntity.getReview());
         reviewDto.setReviewWriter(reviewEntity.getReviewWriter());
+        reviewDto.setReviewFileEntities(reviewEntity.getReviewFileEntities());
         reviewDto.setProductId(reviewEntity.getProductEntity().getId());
         reviewDto.setCreateTime(reviewEntity.getCreateTime());
         reviewDto.setUpdateTime(reviewEntity.getUpdateTime());

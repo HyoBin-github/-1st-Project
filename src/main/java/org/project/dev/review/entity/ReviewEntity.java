@@ -68,6 +68,7 @@ public class ReviewEntity extends BaseEntity {
         reviewEntity.setReviewWriter(reviewDto1.getReviewWriter());
         reviewEntity.setProductId(reviewDto1.getProductId());
         reviewEntity.setIsFile(1);
+        reviewEntity.setReviewFileEntities(reviewDto1.getReviewFileEntities());
         reviewEntity.setProductEntity(reviewDto1.getProductEntity());
 
         return reviewEntity;

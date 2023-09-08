@@ -1,0 +1,45 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/footer.css);
+/* .container */
+.container{
+    width: 100%;
+}
+/* .container >.join */
+.container .join{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+.container .join .join-con{
+    flex-basis: 1300px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.container .join .join-con .join-title{
+    padding: 20px;
+    gap: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #7285d3a4;
+}
+.container .join .join-con .join-form{
+    padding: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+.container .join .join-con .join-form .form{
+    margin: auto;
+    text-align: center;
+    width: 700px;
+    border: 2px solid yellow;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    box-sizing: border-box;
+}

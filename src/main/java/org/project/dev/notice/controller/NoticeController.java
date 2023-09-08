@@ -70,10 +70,14 @@ public class NoticeController {
     @GetMapping("/list")
     public String getNoticeList(
             @PageableDefault(page = 0, size = 10, sort = "notId", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model){
+            Model model,
+            @RequestParam(required = false, value = "subject") String noticeSearch,
+            @RequestParam(required = false, value = "select") String noticeSelect
+            ){
 
         /*pagingNoticeList noticeList*/
-        Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
+//        Page<NoticeDto> noticeList = noticeService.NoticeList(pageable);
+        Page<NoticeDto> noticeList = noticeService.NoticeList(pageable, noticeSelect, noticeSearch);
 
         if(noticeList == null){
             throw new IllegalArgumentException("없어");
@@ -100,7 +104,7 @@ public class NoticeController {
         return "notice/list";
     }
 
-//    @ResponseBody // ajax사용 시 사용해야 하는 어노테이션
+    //    @ResponseBody // ajax사용 시 사용해야 하는 어노테이션
     @GetMapping("/list/{type}")
     public String getNoticeList(
             @PageableDefault(page = 0, size = 10, sort = "notId",direction = Sort.Direction.DESC)Pageable pageable,
@@ -111,7 +115,7 @@ public class NoticeController {
         Page<NoticeDto> noticeList = noticeService.noticeList(type,pageable);
 
         if (noticeList==null) {
-         throw new RuntimeException("list none");
+            throw new RuntimeException("list none");
         }
         Long totalCount = noticeList.getTotalElements();
         int totalPage = noticeList.getTotalPages();
@@ -152,7 +156,7 @@ public class NoticeController {
 
         if(!noticeDtoList.isEmpty()){
             model.addAttribute("noticeList", noticeDtoList);
-            return "notice/searchlist";
+            return "notice/list";
         }
 //        List<NoticeDto> noticeList = noticeService.NoticeListSearch(pageable);
 //
