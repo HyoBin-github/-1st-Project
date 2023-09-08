@@ -157,7 +157,7 @@ public class ProductController {
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
 
-        // dto 해야댐
+
         List<ReviewDto> reviewDtos = reviewService.reviewList(productDTOViewDetail.getId());
 
         MemberEntity member = myUserDetails != null ? myUserDetails.getMemberEntity() : null;

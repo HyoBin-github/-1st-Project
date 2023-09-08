@@ -41,8 +41,8 @@ spring:
         show_sql: true
         format_sql: true
 
-
   # yaml/yml ?? - Thymeleaf ??
+
   thymeleaf:
     cache: false
     check-template-location: true
@@ -52,7 +52,7 @@ spring:
 
 
     #live reload 설정 배포시 주석
-    prefix: file:src/main/resources/templates/
+#    prefix: file:src/main/resources/templates/
 
     #live reload 설정 배포시 주석
     devtools:
@@ -62,6 +62,8 @@ spring:
         cache: false
       restart:
         enabled: true
+
+
 
 
 
@@ -79,5 +81,9 @@ spring:
 
 # code.aiaru@gmail.com
 file:
-  productImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-  reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
+  productImgUploadDir: C:\Users\bin77\Desktop\새 폴더\ # 상품이미지 경로 (절대경로로 설정해주세요)
+  reviewImgUploadDir:  C:\Users\bin77\Desktop\새 폴더\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+
+#  productImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+#  reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
+
