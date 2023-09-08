@@ -2,9 +2,12 @@ package org.project.dev.review.dto;
 
 import lombok.*;
 import org.project.dev.product.entity.ProductEntity;
+import org.project.dev.review.entity.ReviewFileEntity;
 import org.project.dev.review.entity.ReviewEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +31,11 @@ public class ReviewDto {
 
     private ProductEntity productEntity;
 
+    private int isFile;
+
+    private MultipartFile reviewFile;
+
+    private List<ReviewFileEntity> reviewFileEntities;
 
 
 
@@ -37,6 +45,7 @@ public class ReviewDto {
         reviewDto.setId(reviewEntity.getId());
         reviewDto.setReview(reviewEntity.getReview());
         reviewDto.setReviewWriter(reviewEntity.getReviewWriter());
+        reviewDto.setReviewFileEntities(reviewEntity.getReviewFileEntities());
         reviewDto.setProductId(reviewEntity.getProductEntity().getId());
         reviewDto.setCreateTime(reviewEntity.getCreateTime());
         reviewDto.setUpdateTime(reviewEntity.getUpdateTime());

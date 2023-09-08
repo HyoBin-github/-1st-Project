@@ -53,7 +53,9 @@
                     <li>
                         <form th:action="@{/}">
                             <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-                            <input type="image" onclick="alert('검색')" th:src="@{/images/zoom.png}">
+                            <button type="button">
+                                <input type="image" onclick="alert('검색')" th:src="@{/images/main/mainIcon/search.png}">
+                            </button>
                         </form>
                     </li>
                 </ul>

@@ -102,6 +102,55 @@
 //
 //        return noticeDtoPage;
 //    }
+<<<<<<< HEAD
+=======
+    public Page<NoticeDto> NoticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
+
+//        Page<NoticeEntity> noticeEntities = noticeRepository.findAll(pageable, noticeSelect, noticeSearch);
+//
+//        noticeEntities.getNumber();
+//        noticeEntities.getTotalElements();
+//        noticeEntities.getTotalPages();
+//        noticeEntities.getSize();
+//
+//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+
+//        return noticeDtoPage;
+        return null;
+    }
+    /*
+       Todo
+        1. rladpwls1843@gamil.com
+        2. 공지사항 목록로 이동
+        3.
+        4.type에 해당하는 목록으로 이동
+        */
+    @Transactional
+    public Page<NoticeDto> noticeList(String type, Pageable pageable) {
+
+        Page<NoticeEntity> noticeEntities = noticeRepository.findByNotType(type, pageable); // not_type에 해당하는 값만 출력
+
+        noticeEntities.getNumber();
+        noticeEntities.getTotalElements();
+        noticeEntities.getTotalPages();
+        noticeEntities.getSize();
+
+        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+
+        return noticeDtoPage;
+    }
+
+    /*
+       Todo
+        1. rladpwls1843@gamil.com
+        2. 공지사항 검색페이지로 이동
+        3.
+        4.
+        */
+    //            Pageable pageable
+    public List<NoticeDto> NoticeListSearch(
+            @NotNull String noticeSelect, String noticeSearch) {
+>>>>>>> f4b2a6276037d1fc4fd1022f43b2b042ce70f721
 //
 //    /*
 //       Todo

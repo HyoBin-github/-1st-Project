@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "review_file")
-public class FileEntity extends BaseEntity {
+public class ReviewFileEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +33,12 @@ public class FileEntity extends BaseEntity {
     private ReviewEntity reviewEntity;
 
 
+    public static ReviewFileEntity toReviewFileEntity(ReviewEntity reviewEntity, String fileOldName, String fileNewName) {
+        ReviewFileEntity reviewFileEntity = new ReviewFileEntity();
+        reviewFileEntity.setReviewEntity(reviewEntity);
+        reviewFileEntity.setFileOldName(fileOldName);
+        reviewFileEntity.setFileNewName(fileNewName);
+
+        return reviewFileEntity;
+    }
 }

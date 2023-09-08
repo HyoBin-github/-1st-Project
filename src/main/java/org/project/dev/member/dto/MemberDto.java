@@ -70,7 +70,7 @@ public class MemberDto {
     public boolean isMatching(){ // 부에서 해당 멤버 변수 값을 읽을 수 있는 인터페이스를 제공하기 위해 사용
         return matching;
     }
-    //////////////////////////////////////////////////////////////
+
 
     private LocalDateTime createTime;
 

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileDto {
+public class ReviewFileDto {
 
     private Long id;
 
