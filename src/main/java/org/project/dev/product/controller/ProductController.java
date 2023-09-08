@@ -2,10 +2,16 @@ package org.project.dev.product.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.project.dev.cartNew.entity.CartEntity;
+import org.project.dev.cartNew.entity.CartItemEntity;
+import org.project.dev.cartNew.service.CartService;
+import org.project.dev.cartNew.service.SemiCartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
+import org.project.dev.member.service.MemberService;
+import org.project.dev.member.service.SemiMemberService;
 import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
@@ -55,9 +61,13 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductUtilService productUtilService;
-    private  final ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
     private final ReviewService reviewService;
-
+    private final MemberService memberService; // 송원철 / 장바구니 관련
+    private final CartService cartService; // 송원철 / 장바구니 관련
+    private final SemiMemberService semiMemberService; // 송원철 / 장바구니 관련
+    private final SemiCartService semiCartService; // 송원철 / 장바구니 관련
+    
 
     // WRITE (INSERT)
     // 게시물 작성 페이지
@@ -169,6 +179,16 @@ public class ProductController {
 
         // 추가: member가 null이 아닌 경우에만 memberId를 model에 추가
         if (member != null) {
+            MemberEntity loginMember = memberService.findMember(member.getMemberId());
+
+            int cartCount = 0;
+            CartEntity memberCart = cartService.findMemberCart(loginMember.getMemberId());
+            List<CartItemEntity> cartItems = cartService.allMemberCartView(memberCart);
+
+            for(CartItemEntity cartItem : cartItems) {
+                cartCount += cartItem.getCartItemCount();
+            }
+            model.addAttribute("cartCount", cartCount);
             model.addAttribute("member", member);
             log.info("Member: {}", member.getMemberId());
         }else {
@@ -176,6 +196,16 @@ public class ProductController {
         }
 
         if (semiMember != null) {
+            SemiMemberEntity loginSemiMember = semiMemberService.findSemiMember(semiMember.getSemiMemberId());
+
+            int cartCount = 0;
+            CartEntity semiMemberCart = semiCartService.findSemiMemberCart(loginSemiMember.getSemiMemberId());
+            List<CartItemEntity> cartItems = semiCartService.allSemiMemberCartView(semiMemberCart);
+
+            for(CartItemEntity cartItem : cartItems) {
+                cartCount += cartItem.getCartItemCount();
+            }
+            model.addAttribute("cartCount", cartCount);
             model.addAttribute("semiMember", semiMember);
             log.info("SemiMember: {}", semiMember.getSemiMemberId());
         }else {

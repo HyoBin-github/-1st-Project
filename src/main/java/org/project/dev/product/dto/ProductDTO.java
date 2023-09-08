@@ -1,6 +1,7 @@
 package org.project.dev.product.dto;
 
 import lombok.*;
+import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.product.entity.ProductEntity;
 import java.time.LocalDateTime;
 
@@ -34,6 +35,8 @@ public class ProductDTO {
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
 
+    // 송원철 / 장바구니 관련
+    private MemberEntity member;
 
 
     public static ProductDTO toDTO(ProductEntity productEntity){
@@ -51,6 +54,5 @@ public class ProductDTO {
         productDTO.setProductUpdateTime(productEntity.getUpdateTime());
         return productDTO;
     }
-
 
 }

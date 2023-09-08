@@ -15,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class SemiMyUserDetails implements UserDetails{
 
-    @Autowired
+//    @Autowired
     private SemiMemberEntity semiMemberEntity;
 
     // 간편회원
@@ -66,3 +66,4 @@ public class SemiMyUserDetails implements UserDetails{
         return true;
     }
 }
+

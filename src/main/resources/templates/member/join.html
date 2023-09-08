@@ -94,11 +94,6 @@
                 <input type="text" th:field="*{memberBirth}" required="required" placeholder="ex)21001031">
             </li>
             <p th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}" class="error"></p>
-            <!--            <li>-->
-            <!--                <label th:for="memberAddress">주소</label>-->
-            <!--                <input type="text" th:field="*{memberAddress}" required="required" placeholder="주소 입력">-->
-            <!--            </li>-->
-            <!--            <p th:if="${#fields.hasErrors('memberAddress')}" th:errors="*{memberAddress}" class="error"></p>-->
             <div class="form-group">
                 <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호 필수로 입력해주세요" name="memberPostCode" id="memberPostCode" type="text" readonly="readonly" >
                 <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>

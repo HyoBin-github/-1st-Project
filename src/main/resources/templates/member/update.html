@@ -45,11 +45,6 @@
         <input type="text" th:field="*{memberBirth}" th:value="${memberDto.memberBirth}" required="required" placeholder="이름을 입력하세요"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
       </li>
       <p th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}" class="error"></p>
-      <!--      <li>-->
-      <!--        <label th:for="memberAddress">주소</label>-->
-      <!--        <input type="text" th:field="*{memberAddress}" th:value="${memberDto.memberAddress}" required="required" placeholder="이름을 입력하세요"> <br> &lt;!&ndash; required 추가 시 값 꼭 입력해야함 &ndash;&gt;-->
-      <!--      </li>-->
-      <!--      <p th:if="${#fields.hasErrors('memberAddress')}" th:errors="*{memberAddress}" class="error"></p>-->
       <li>
         <label th:for="memberPostCode">우편번호</label>
         <input type="text" th:field="*{memberPostCode}" th:value="${memberDto.memberPostCode}" required="required" readonly="readonly"> <br>
@@ -72,7 +67,6 @@
     </ul>
   </form>
   <a href="javascript:history.back()">수정취소</a>
-  <!--  <a th:href="@{/member/changePassword/{memberId}(memberId=${member.memberId})}">비밀번호 변경</a>-->
   <a th:href="@{/member/confirmPassword/{memberId}(memberId=${memberDto.memberId})}">비밀번호 변경</a>
 </div>
 </body>

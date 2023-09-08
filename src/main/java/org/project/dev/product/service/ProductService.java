@@ -3,6 +3,8 @@ package org.project.dev.product.service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductRepository;
@@ -32,6 +34,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductPaginationService productPaginationService;
+    private final MemberRepository memberRepository; // 송원철
 
 
     // WRITE (CREATE)

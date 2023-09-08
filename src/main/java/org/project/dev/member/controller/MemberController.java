@@ -46,7 +46,7 @@ public class MemberController {
         return "login";
     }
 
-//  Login
+    //  Login
     @GetMapping("/login")
     public String getLogin(){
         return "member/login";
@@ -75,6 +75,7 @@ public class MemberController {
         return "member/detail";
     }
 
+    // Update - 회원 수정 화면
     @GetMapping("/update/{memberId}")
     public String getUpdate(@PathVariable("memberId") Long memberId, MemberDto memberDto, Model model){
 
