@@ -117,7 +117,7 @@ table, th, td{
     border-left: none;
     border-right: none;
     text-align: center;
-    empty-cells: hide;
+
 }
 .List .List-con table{
     width: 100%;

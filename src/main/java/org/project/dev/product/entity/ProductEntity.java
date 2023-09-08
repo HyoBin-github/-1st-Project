@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.category.CategoryEntity;
+import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.utils.BaseEntity;
@@ -76,6 +77,10 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "product")
     private List<CartItemEntity> cartItems = new ArrayList<>();
 
+    // 송원철 / member와 연관관계 설정
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private MemberEntity member;
 
     // Dto to Entity
     public static ProductEntity toEntity(ProductDTO productDTO){
@@ -90,6 +95,14 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductPrice(productDTO.getProductPrice());
         productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
         return productEntity;
+    }
+
+    // 송원철 / productWriter를 memberNickName으로 설정하는 메서드
+    public String getProductWriter(){
+        if(member != null){
+            return member.getMemberNickName();
+        }
+        return null;
     }
 
 

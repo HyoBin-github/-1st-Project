@@ -7,6 +7,8 @@
   <title>update</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script th:src="@{/js/member/updateValid.js}" defer="defer"></script>
+  <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+  <script th:src="@{/js/member/addressApi.js}" defer="defer"></script>
 </head>
 <body>
 <!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
@@ -15,10 +17,10 @@
   <form th:action="@{/member/update}" method="post" th:object="${memberDto}" onsubmit="return onSubmitForm()">
     <ul>
       <li>
-       아이디 : <input type="text" name="memberId" th:value="${memberDto.memberId}" id="memberId" readonly> <br>
+        아이디 : <input type="text" name="memberId" th:value="${memberDto.memberId}" id="memberId" readonly> <br>
       </li>
       <li>
-       이메일 : <input type="email" name="memberEmail" th:value="${memberDto.memberEmail}" id="memberEmail" readonly> <br>
+        이메일 : <input type="email" name="memberEmail" th:value="${memberDto.memberEmail}" id="memberEmail" readonly> <br>
       </li>
       <li>
         비밀번호 : <input type="password" name="memberPassword" th:value="${memberDto.memberPassword}" id="memberPassword" readonly> <br>
@@ -43,16 +45,30 @@
         <input type="text" th:field="*{memberBirth}" th:value="${memberDto.memberBirth}" required="required" placeholder="이름을 입력하세요"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
       </li>
       <p th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}" class="error"></p>
+      <!--      <li>-->
+      <!--        <label th:for="memberAddress">주소</label>-->
+      <!--        <input type="text" th:field="*{memberAddress}" th:value="${memberDto.memberAddress}" required="required" placeholder="이름을 입력하세요"> <br> &lt;!&ndash; required 추가 시 값 꼭 입력해야함 &ndash;&gt;-->
+      <!--      </li>-->
+      <!--      <p th:if="${#fields.hasErrors('memberAddress')}" th:errors="*{memberAddress}" class="error"></p>-->
       <li>
-        <label th:for="memberAddress">주소</label>
-        <input type="text" th:field="*{memberAddress}" th:value="${memberDto.memberAddress}" required="required" placeholder="이름을 입력하세요"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
+        <label th:for="memberPostCode">우편번호</label>
+        <input type="text" th:field="*{memberPostCode}" th:value="${memberDto.memberPostCode}" required="required" readonly="readonly"> <br>
+        <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
       </li>
-      <p th:if="${#fields.hasErrors('memberAddress')}" th:errors="*{memberAddress}" class="error"></p>
+      <p th:if="${#fields.hasErrors('memberPostCode')}" th:errors="*{memberPostCode}" class="error"></p>
+      <li>
+        <label th:for="memberStreetAddress">도로명주소</label>
+        <input type="text" th:field="*{memberStreetAddress}" th:value="${memberDto.memberStreetAddress}" placeholder="도로명주소를 입력하세요" readonly="readonly"> <br>
+      </li>
+      <li>
+        <label th:for="memberDetailAddress">상세주소</label>
+        <input type="text" th:field="*{memberDetailAddress}" th:value="${memberDto.memberDetailAddress}" placeholder="상세주소를 입력하세요"> <br>
+      </li>
       <li>
         <label th:for="role">권한</label>
         <input type="text" th:field="*{role}" th:value="${memberDto.role}" readonly> <br>
       </li>
-    <input type="submit" value="수정실행">
+      <input type="submit" value="수정실행">
     </ul>
   </form>
   <a href="javascript:history.back()">수정취소</a>
@@ -61,38 +77,4 @@
 </div>
 </body>
 </html>
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>update</title>-->
-<!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-<!--  <script th:src="@{/js/updateValid.js}" defer="defer"></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div th:replace="~{fragments/header :: headerFragment}"></div>-->
-<!--<div class="update">-->
-<!--  <h1 class="title"><span th:text="${memberDto.memberName}" ></span>님 정보 수정</h1>-->
-<!--  <form th:action="@{/member/update}" method="post" onsubmit="return onSubmitForm();">-->
-<!--    아이디 : <input type="text" name="memberId" th:value="${memberDto.memberId}" id="memberId" readonly> <br>-->
-<!--    이메일 : <input type="email" name="memberEmail" th:value="${memberDto.memberEmail}" id="memberEmail" readonly> <br>-->
-<!--    비밀번호 : <input type="password" name="memberPassword" th:value="${memberDto.memberPassword}" id="memberPassword" readonly> <br>-->
-<!--    이름 : <input type="text" name="memberName" th:value="${memberDto.memberName}" required="required" placeholder="이름을 입력하세요"> <br> &lt;!&ndash; required 추가 시 값 꼭 입력해야함 &ndash;&gt;-->
-<!--    닉네임 : <input type="text" name="memberNickName" th:value="${memberDto.memberNickName}" required="required" placeholder="닉네임을 입력하세요" th:data-original-value="${memberDto.memberNickName}"> <br> &lt;!&ndash; 정보 수정 시 nickName값 비교 위해 사용 &ndash;&gt;-->
-<!--    휴대전화 : <input type="text" name="memberPhone" th:value="${memberDto.memberPhone}" required="required" placeholder="휴대전화번호를 입력하세요"> <br>-->
-<!--    생년월일 : <input type="text" name="memberBirth" th:value="${memberDto.memberBirth}" required="required" placeholder="생년월일을 입력하세요"> <br>-->
-<!--    주소 : <input type="text" name="memberAddress" th:value="${memberDto.memberAddress}" required="required" placeholder="주소를 입력하세요"> <br>-->
-<!--    권한 : <input type="text" name="role" th:value="${memberDto.role}" readonly> <br>-->
-<!--    <input type="submit" value="수정실행">-->
-<!--  </form>-->
-<!--  <a href="javascript:history.back()">수정취소</a>-->
-<!--  &lt;!&ndash;  <a th:href="@{/member/changePassword/{memberId}(memberId=${memberDto.memberId})}">비밀번호 변경</a>&ndash;&gt;-->
-<!--  <a th:href="@{/member/confirmPassword/{memberId}(memberId=${memberDto.memberId})}">비밀번호 변경</a>-->
-<!--  </form>-->
-<!--</div>-->
-<!--</body>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
+
