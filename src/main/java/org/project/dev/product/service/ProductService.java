@@ -38,10 +38,19 @@ public class ProductService {
 
 
     // WRITE (CREATE)
+//    @Transactional
+//    public ProductEntity productWriteDetail(ProductDTO productDTO){
+//        productDTO.setProductHits(0); // productHits 초기화
+//        ProductEntity productEntity = ProductEntity.toEntity(productDTO);
+//        return productRepository.save(productEntity);
+//    }
+
+    // 송원철 / write 시 memberId 저장
     @Transactional
-    public ProductEntity productWriteDetail(ProductDTO productDTO){
+    public ProductEntity productWriteDetail(ProductDTO productDTO, MemberEntity memberEntity){
         productDTO.setProductHits(0); // productHits 초기화
         ProductEntity productEntity = ProductEntity.toEntity(productDTO);
+        productEntity.setMember(memberEntity); // 현재 로그인한 사용자의 MemberEntity 설정
         return productRepository.save(productEntity);
     }
 

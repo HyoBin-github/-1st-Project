@@ -12,9 +12,6 @@
 <div class="container">
   <form action="/product/write" id="product-form" method="post" enctype="multipart/form-data">
 
-    <!-- 송원철 -->
-
-    <!--------------->
 
     <div class="grid-wrapper">
 
@@ -35,6 +32,21 @@
             <ul class="image-preview-box-container" id="image-preview-box-container"></ul>
           </div>
         </div>
+
+        <!-- 송원철 -->
+        <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
+        <script th:inline="javascript">
+            /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
+            var memberId = /*[[${member?.memberId}]]*/ null;
+
+            /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
+            if (memberId !== null) {
+                console.log('Member ID:', memberId);
+            }else {
+                console.log('Member ID: null');
+            }
+        </script>
+        <!----------->
 
       </div>
 

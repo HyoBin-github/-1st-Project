@@ -95,6 +95,14 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductWriter(productDTO.getProductWriter());
         productEntity.setProductPrice(productDTO.getProductPrice());
         productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
+
+        // 송원철 / memberId 가져오기
+        if (productDTO.getMember() != null) {
+            MemberEntity memberEntity = new MemberEntity();
+            memberEntity.setMemberId(productDTO.getMember().getMemberId());
+            productEntity.setMember(memberEntity);
+        }
+
         return productEntity;
     }
 
