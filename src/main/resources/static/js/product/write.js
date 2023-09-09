@@ -1,31 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     let queuedFiles = [];
+    let prevImgTarget = null;  // 이전에 마우스가 올라간 타겟을 추적하기 위한 변수
 
     const imgPreviewBoxContainer = document.getElementById("image-preview-box-container");
-    // const imgPreviewBox = document.getElementById("image-preview-box");
 
     var imageContainer = document.getElementById("image-container");
 
+    const colorRadioBtn = document.querySelectorAll(".colorRadioBtn");
 
-    // 마우스 관련 로직 =========================================================
+    var productSubmit = document.getElementById("productSubmit");
 
-    // imageContainer 위로 마우스가 올라가면 작동
-    imageContainer.addEventListener("mouseover", (event) => {
-      event.preventDefault();
-      if (imgPreviewBoxContainer.childElementCount === 0) {
-        imageContainer?.classList.add("imageContainer--hover");
-      }
-    });
+    var imagePreview = document.getElementById("image-preview");
 
-    // imageContainer 밖으로 마우스가 나가면 작동
-    imageContainer.addEventListener("mouseout", (event) => {
-      event.preventDefault();
-      imageContainer?.classList.remove("imageContainer--hover");
-    });
+    var imagePreviewExpand = document.getElementById("imagePreviewExpand");
 
-
-    // 이미지 처리 관련 로직 ====================================================
+    
+    // 이미지 업로드 시작 처리 관련 로직 =========================================
 
     // 기본 dragover 이벤트 설정
     imgPreviewBoxContainer.addEventListener("dragover", function(event) {
@@ -44,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
-    // 클릭 이벤트 설정
+    // 클릭 이벤트 설정 (imagePreviewBoxContainer)
     imgPreviewBoxContainer.addEventListener("click", function(event) {
       event.preventDefault();
       const fileInput = document.getElementById("fileInput");
@@ -62,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+    // 이미지 처리 관련 로직 ====================================================
+    
+
+    let isFirstUpload = true;  // 첫 번째 이미지 첨부를 추적하기 위한 플래그 변수
 
 
     // 비동기 함수로 선언하여 Promise와 async/await를 사용할 수 있게 합니다.
@@ -71,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function() {
       
       queuedFiles = [...queuedFiles, ...Array.from(fileList)];
 
-      
       // FileReader를 Promise로 감싸는 함수를 선언합니다.
       // 이 함수는 파일을 읽고 결과를 반환하는 Promise를 생성합니다.
       const loadFile = (file) => new Promise((resolve, reject) => {
@@ -106,22 +100,31 @@ document.addEventListener("DOMContentLoaded", function() {
         // 미리보기 이미지를 생성합니다.
         const imgPreview = document.createElement("img");
         imgPreview.className = "image-preview";
+        // imgPreview.id = "image-preview";
         imgPreview.src = loadedFile.result;
         imgPreview.source = "internal";
 
         // 이미지를 담을 li 요소를 생성합니다.
         const imgPreviewBox = document.createElement("li");
         imgPreviewBox.className = "image-preview-box";
-        imgPreviewBox.id = "draggable-container";
+        // imgPreviewBox.id = "draggable-container";
 
         // 생성한 li 요소에 이미지를 추가합니다.
         imgPreviewBox.appendChild(imgPreview);
 
         // 최종적으로 li 요소를 컨테이너에 추가합니다.
         imgPreviewBoxContainer.append(imgPreviewBox);
-      });
 
+      });
+      // 첫번째 이미지 업로드 시에만 실행되는 로직.
+      if (isFirstUpload = true) {
+        isFirstUpload = false;  // 플래그를 false로 설정하여 다시 실행되지 않게 합니다.
+        imagePreviewExpandInit();
+      }
+      
       console.log(queuedFiles);
+      
+      
     }
 
     // 이미지 순서변경 로직 ======================================================
@@ -157,11 +160,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
+
+    // 폼 제출 ===================================================================
+
+
     document.getElementById("product-form").addEventListener("submit", async function(event) {
       event.preventDefault(); // 폼 제출 중지
   
       const formData = new FormData(event.target); // 폼 요소로부터 FormData 객체 생성
+
       formData.delete("fileInput"); // queuedFiles에 fileInput 이미지가 포함되어 있으므로 중복방지를 위해 삭제.
+
+      // productPrice 값을 가져옴.
+      let productPrice = formData.get("productPrice");
+
+      // productPrice 값에서 특수 문자와 원화 기호를 제거.
+      if (productPrice) {
+        productPrice = productPrice.replace(/[^0-9]/g, "");
+        formData.set("productPrice", productPrice); // 수정된 값을 다시 설정합니다.
+      }
 
       // 이미지 파일 추가
       queuedFiles.forEach((file, index) => {
@@ -188,6 +205,110 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+    // 이미지 미리보기 큰 화면 ===================================================
+    function imagePreviewExpandInit(){
+      const imgPreviewInit = document.querySelector(".image-preview"); // 첫번째 요소만 부른다.
+      const previewImageSrcInit = imgPreviewInit.getAttribute("src");
+
+      imagePreviewExpand.src = previewImageSrcInit;
+      imagePreviewExpand.className = "imagePreviewExpand" 
+
+      imgPreviewInit.classList.add("--hover2");
+      prevImgTarget = imgPreviewInit;
+    }
+
+
+    // 이미지 미리보기 큰 화면
+    imgPreviewBoxContainer.addEventListener("mouseover", (event) => {
+      event.preventDefault();
+      
+      if (event.target.source === "internal"){
+        const previewImageSrc = event.target.getAttribute("src");
+
+        if (imagePreviewExpand.src !== previewImageSrc) {    
+          imagePreviewExpand.src = previewImageSrc;
+          imagePreviewExpand.className = "imagePreviewExpand" 
+
+          if (prevImgTarget != null) {
+            prevImgTarget.classList.remove("--hover2");
+          }
+
+          event.target.classList.add("--hover2");
+
+          prevImgTarget = event.target;
+        }
+      } 
+    });
+
+
+    // 기타 로직 ================================================================
+
+    // imageContainer 위로 마우스가 올라가면 작동
+    imageContainer.addEventListener("mouseover", (event) => {
+      event.preventDefault();
+      if (imgPreviewBoxContainer.childElementCount === 0) {
+        imageContainer?.classList.add("--hover");
+      }
+    });
+
+    // imageContainer 밖으로 마우스가 나가면 작동
+    imageContainer.addEventListener("mouseout", (event) => {
+      event.preventDefault();
+      imageContainer?.classList.remove("--hover");
+    });
+
+    colorRadioBtn.forEach((colorRadioBtn) => {
+      // 마우스가 위로 올라가면 작동
+      colorRadioBtn.addEventListener("mouseover", (event) => {
+        event.preventDefault();
+        colorRadioBtn.classList.add("--hover");
+      });
+    
+      // 마우스가 밖으로 나가면 작동
+      colorRadioBtn.addEventListener("mouseout", (event) => {
+        event.preventDefault();
+        colorRadioBtn.classList.remove("--hover");
+      });
+    });
+
+    // productSubmit 위로 마우스가 올라가면 작동
+    productSubmit.addEventListener("mouseover", (event) => {
+      event.preventDefault();
+      productSubmit?.classList.add("--hover");
+    });
+
+    // productSubmit 밖으로 마우스가 나가면 작동
+    productSubmit.addEventListener("mouseout", (event) => {
+      event.preventDefault();
+      productSubmit?.classList.remove("--hover");
+    });
+
+    // inputNumbersOnly 값을 가진 태그에 keydown 할 시 작동할 로직
+    $(document).on("keydown", "input:text[inputNumbersOnly]", function(event) {
+      // const strVal = $(this).val();
+      const key = event.key;
+      const allowedKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+      "ArrowLeft", "ArrowRight", "Backspace", "Delete", "Tab"];
+      
+      if (!allowedKeys.includes(key)) {
+          event.preventDefault();
+      }
+    });
+    
+    // koreanCurrency 값을 가진 태그를 focus out 할 시 작동할 로직
+    $(document).on("focusout", "input:text[koreanCurrency]", function()	{
+      $(this).val( $(this).val().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+      // 만약 값이 있다면, 
+      if($(this).val() != "" ) {
+        // 원화(￦) 표시.
+        $(this).val( $(this).val()+"￦");
+      }		
+    });
+    
+    // koreanCurrency 값을 가진 태그를 focus 할 시 작동할 로직
+    $(document).on("focus", "input:text[koreanCurrency]", function()	{	
+      $(this).val( $(this).val().replace("￦", ""));
+    });
 
 });
 

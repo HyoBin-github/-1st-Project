@@ -6,91 +6,112 @@
   <link rel="stylesheet" th:href="@{/css/product/write.css}">
   <script th:src="@{/js/product/write.js}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="container">
   <form action="/product/write" id="product-form" method="post" enctype="multipart/form-data">
 
-
     <!-- 송원철 -->
 
     <!--------------->
-    <table>
-      <tr>
-        <td rowspan="5"></td>
-        <td class="borderline-left">
-          <label for="productName" class="productInput-label"><span>* </span>상품명</label>
-          <div class="productInputs-class">
-            <input type="text" name="productName" class="productInputs" id="productName" placeholder="상품명을 입력해주세요.">
-          </div>
-        </td>
-      </tr>
 
-      <tr>
-        <td class="borderline-left">
-          <label for="productColor" class="productInput-label"><span>* </span>상품색상</label>
-          <div class="productInputs-class">
-            <input type="text" name="productColor" class="productInputs" placeholder="상품색상을 입력해주세요.">
-          </div>
-        </td>
-      </tr>
+    <div class="grid-wrapper">
 
-      <tr>
-        <td class="borderline-left">
-          <label for="productSize" class="productInput-label"><span>* </span>상품사이즈</label>
-          <div class="productInputs-class">
-            <input type="text" name="productSize" class="productInputs" placeholder="상품사이즈를 입력해주세요.">
-          </div>
-        </td>
-      </tr>
+      <div class="gridWrapper-prev-drop">
 
-      <tr>
-        <td class="borderline-left">
-          <label for="productPrice" class="productInput-label"><span>* </span>상품가격</label>
-          <div class="productInputs-class">
-            <input type="text" name="productPrice" class="productInputs" placeholder="상품가격을 입력해주세요.">
+        <div class="imagePreviewExpand-wrapper">  
+          <div class="imagePreviewExpand-box" id="imagePreviewExpand-box">
+            <img src="/images/product/iconmonstr-photo-camera-13.svg" alt="미리보기 화면" class="imagePreviewExpand-alt" id="imagePreviewExpand">
           </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="borderline-left">
-          <label for="radioBtn" class="productInput-label"><span>* </span>상품노출여부</label>
-          <div class="radioBtn">
-            <label for="displayTrue">Y</label>
-            <input type="radio" id="displayTrue" name="isProductDisplayed" value="true" checked>
-            <label for="displayFalse">N</label>
-            <input type="radio" id="displayFalse" name="isProductDisplayed" value="false">
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
+        </div>
+        
+        <div class="imageDrop-wrapper">
           <input type="file" id="fileInput" style="display: none;" multiple>
           <div class="image-container" id="image-container">
             <div class="image-dropbox-description-box">
               <div class="image-dropbox-description">클릭이나 드래그로 이미지를 첨부</div>
             </div>
-            <ul class="image-preview-box-container" id="image-preview-box-container">
-            </ul>
+            <ul class="image-preview-box-container" id="image-preview-box-container"></ul>
           </div>
-        </td>
-        <td class="borderline-left">
-          <label for="productDescription" class="productInput-label2"><span>* </span>상품설명</label>
-          <div class="productDescription-class">
-            <textarea name="productDescription" placeholder="상품설명을 입력해주세요."></textarea>
+        </div>
+
+      </div>
+
+      <div class="grid-productName">
+        <label for="productName" class="productInput-label"><span>* </span>상품명</label>
+        <div class="productInputs-class">
+          <input type="text" name="productName" class="productInputs" id="productName" placeholder="상품명을 입력해주세요.">
+        </div>
+      </div>
+
+      <div class="grid-productColor">
+        <label for="productColor" class="productInput-label"><span>* </span>상품색상</label>
+        <div class="productInputs-class">
+          <div class="productColorInputs" id="productColor">
+            <input type="radio" name="productColor" id="colorRadioBtn1"  value="black" checked>
+            <label for="colorRadioBtn1" class="colorRadioBtn --black"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn2"  value="red">
+            <label for="colorRadioBtn2" class="colorRadioBtn --red"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn3"  value="pink">
+            <label for="colorRadioBtn3" class="colorRadioBtn --pink"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn4"  value="orange">
+            <label for="colorRadioBtn4" class="colorRadioBtn --orange"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn5"  value="yellow">
+            <label for="colorRadioBtn5" class="colorRadioBtn --yellow"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn6"  value="green">
+            <label for="colorRadioBtn6" class="colorRadioBtn --green"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn7"  value="skyblue">
+            <label for="colorRadioBtn7" class="colorRadioBtn --skyblue"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn8"  value="navy">
+            <label for="colorRadioBtn8" class="colorRadioBtn --navy"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn9"  value="purple">
+            <label for="colorRadioBtn9" class="colorRadioBtn --purple"></label>
+            <input type="radio" name="productColor" id="colorRadioBtn10"  value="white">
+            <label for="colorRadioBtn10" class="colorRadioBtn --white"></label>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2"><input type="submit" value="판매글작성" class="productInputs"></td>
-      </tr>
-    
-      <input type="text" name="productWriter" style="display: none;">
-    
-    </table>
+        </div>
+      </div>
+
+      <div class="grid-productSize">
+        <label for="productSize" class="productInput-label"><span>* </span>상품사이즈</label>
+        <div class="productInputs-class">
+          <input type="text" name="productSize" class="productInputs" id="productSize" placeholder="상품사이즈를 입력해주세요.">
+        </div>
+      </div>
+
+      <div class="grid-productPrice">
+        <label for="productPrice" class="productInput-label"><span>* </span>상품가격</label>
+        <div class="productInputs-class">
+          <input type="text" name="productPrice" class="productInputs" id="productPrice" inputNumbersOnly koreanCurrency placeholder="상품가격을 입력해주세요.">
+        </div>
+      </div>
+
+      <div class="grid-productDisplay">
+        <label for="productDisplayInputs" class="productInput-label"><span>* </span>상품노출여부</label>
+        <div class="productDisplayInputs" id="productDisplayInputs">
+          <input type="radio" id="displayBtn1" name="isProductDisplayed" value="true" checked>
+          <label for="displayBtn1" class="displayBtn1">노출</label>
+          <input type="radio" id="displayBtn2" name="isProductDisplayed" value="false">
+          <label for="displayBtn2" class="displayBtn2">비노출</label>
+        </div>
+      </div>
+
+      <div class="grid-productDescription">
+        <label for="productDescription" class="productInput-label2"><span>* </span>상품설명</label>
+        <div class="productDescription-class">
+          <textarea name="productDescription" id="productDescription" placeholder="상품설명을 입력해주세요."></textarea>
+        </div>
+      </div>
+      
+      <div class="grid-productSubmit">
+        <div class="productSubmitBtn">
+          <input type="submit" value="판매글작성" class="productSubmit" id="productSubmit">
+        </div>
+      </div>
+      
+      <input type="text" name="productWriter" value="1" style="display: none;">
+      
   </form>
 </div>
 </body>
