@@ -36,8 +36,8 @@ html{
   position: fixed;
   bottom: 6rem;
   right: 2rem;
-  width: 40px;
-  height: 60px;
+  width: 30px;
+  height: 65px;
 
   border: 2px solid #E5E0FF;
   border-radius: 10%;
@@ -49,6 +49,7 @@ html{
    #BAADFF 0px 15px 30px -15px,
     #BAADFF 0px -1px 3px 0px inset;
 }
+/* header버튼 */
 .moveBtn .top{
   width: 100%;
   display: flex;
@@ -76,7 +77,7 @@ html{
   justify-content: center;
   text-align: center;
 }
-.moveBtn .top .topBtn a .moveBtnTop{
+.moveBtn .top .topBtn .moveBtnTop{
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -84,12 +85,24 @@ html{
   justify-content: center;
   text-align: center;
 }
-.moveBtn .top .topBtn a:hover{
+/* header 마우스 올릴 경우 */
+.moveBtn .top .topBtn:hover{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-shadow: 0px 0px 2px #644BDE;
   background-color: #C8BEFF;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  color: white;
-  border: none;
+  border: 2px solid #4f429071;
+  box-shadow: white 0px 1px 3px, white 0px 1px 2px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
+.moveBtn .top .topBtn a:hover{
+  color: white;
+  text-shadow: 0px 0px 2px #644BDE;
+}
+/* footer 버튼 */
 .moveBtn .bottom{
   width: 100%;
   display: flex;
@@ -104,8 +117,7 @@ html{
   justify-content: center;
   border-radius: 50%;
   border: 2px solid #C8BEFF;
-  box-shadow: #CDD4EF 0px 1px 3px,
-   #CDD4EF 0px 1px 2px;
+  box-shadow: #CDD4EF 0px 1px 3px,#CDD4EF 0px 1px 2px;
   text-align: center;
   transition: all 0.3s;
 }
@@ -117,18 +129,26 @@ html{
   justify-content: center;
   text-align: center;
 }
-.moveBtn .bottom .bottomBtn a .moveBtnBotton{
+.moveBtn .bottom .bottomBtn .moveBtnBotton{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+/* footer 마우스 올릴경우 */
+.moveBtn .bottom .bottomBtn:hover{
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  text-shadow: 0px 0px 2px #644BDE;
+  background-color: #C8BEFF;
+  border: 2px solid #4f429071;
+  box-shadow: white 0px 1px 3px, white 0px 1px 2px;
   display: flex;
   justify-content: center;
   text-align: center;
 }
 .moveBtn .bottom .bottomBtn a:hover{
-  background-color: #C8BEFF;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  border: none;
+  text-shadow: 0px 0px 2px #644BDE;
   color: white;
 }
 
