@@ -1,14 +1,17 @@
 package org.project.dev.cartNew.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.cartNew.service.SemiCartService;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.SemiMemberService;
+import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.service.ProductService;
+import org.project.dev.product.service.ProductUtilService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cart")
@@ -27,6 +32,7 @@ public class SemiCartController {
     private final SemiCartService semiCartService;
     private final SemiMemberService semiMemberService;
     private final ProductService productService;
+    private final ProductUtilService productUtilService;
 
     // 장바구니에 물건 담기
     @PostMapping("/semiMember/{semiMemberId}/{id}")
@@ -63,10 +69,19 @@ public class SemiCartController {
                 totalPrice += cartItem.getCartItemCount() * cartItem.getProduct().getProductPrice();
             }
 
+            // 상품 이미지를 가져와서 모델에 추가
+            List<ProductImgDTO> productImages = new ArrayList<>();
+            for (CartItemEntity cartItem : cartItemEntityList) {
+                Long productId = cartItem.getProduct().getId();
+                List<ProductImgDTO> productImgs = productUtilService.getProductImagesByProductId(productId);
+                productImages.addAll(productImgs);
+            }
+
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("totalCount", semiMemberCart.getCartCount());
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("semiMember", semiMemberService.findSemiMember(semiMemberId));
+            model.addAttribute("productImages", productImages);
 
             return "/semiMember/cart";
         }else {

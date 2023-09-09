@@ -1,14 +1,18 @@
 package org.project.dev.cartNew.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.cartNew.service.CartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.service.MemberService;
+import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
+import org.project.dev.product.entity.ProductImgEntity;
 import org.project.dev.product.service.ProductService;
+import org.project.dev.product.service.ProductUtilService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cart")
@@ -27,6 +33,7 @@ public class CartController {
     private final CartService cartService;
     private final MemberService memberService;
     private final ProductService productService;
+    private final ProductUtilService productUtilService;
 
     // 장바구니에 물건 담기
     @PostMapping("/member/{memberId}/{id}")
@@ -43,11 +50,43 @@ public class CartController {
     }
 
     // 장바구니 페이지
+//    @GetMapping("/member/{memberId}")
+//    public String getCartView(@PathVariable("memberId") Long memberId, Model model,
+//                              @AuthenticationPrincipal MyUserDetails myUserDetails){
+//        // 로그인 되어있는 유저의 id와 장바구니에 접속하는 id가 같아야함
+//        if (myUserDetails.getMemberEntity().getMemberId()==memberId) {
+//            MemberEntity member=memberService.findMember(memberId);
+//            // 로그인 되어있는 유저에 해당하는 장바구니 가져오기
+//            CartEntity memberCart=member.getCart();
+//
+//            // 장바구니에 들어있는 상품 모두 가져오기
+//            List<CartItemEntity> cartItemEntityList=cartService.allMemberCartView(memberCart);
+//
+//            // 장바구니에 들어있는 상품들의 총 가격
+//            int totalPrice=0;
+//            for(CartItemEntity cartItem: cartItemEntityList){
+//                totalPrice += cartItem.getCartItemCount() * cartItem.getProduct().getProductPrice();
+//            }
+//
+//            model.addAttribute("totalPrice", totalPrice);
+//            model.addAttribute("totalCount", memberCart.getCartCount());
+//            model.addAttribute("cartItems", cartItemEntityList);
+//            model.addAttribute("member", memberService.findMember(memberId));
+//
+//            return "/member/cart";
+//        }else {
+//            // 로그인 id와 장바구니 접속 id가 같지 않은 경우
+//            return "redirect:/";
+//        }
+//    }
+
+    // 장바구니 페이지
     @GetMapping("/member/{memberId}")
     public String getCartView(@PathVariable("memberId") Long memberId, Model model,
                               @AuthenticationPrincipal MyUserDetails myUserDetails){
         // 로그인 되어있는 유저의 id와 장바구니에 접속하는 id가 같아야함
         if (myUserDetails.getMemberEntity().getMemberId()==memberId) {
+
             MemberEntity member=memberService.findMember(memberId);
             // 로그인 되어있는 유저에 해당하는 장바구니 가져오기
             CartEntity memberCart=member.getCart();
@@ -61,10 +100,19 @@ public class CartController {
                 totalPrice += cartItem.getCartItemCount() * cartItem.getProduct().getProductPrice();
             }
 
+            // 상품 이미지를 가져와서 모델에 추가
+            List<ProductImgDTO> productImages = new ArrayList<>();
+            for (CartItemEntity cartItem : cartItemEntityList) {
+                Long productId = cartItem.getProduct().getId();
+                List<ProductImgDTO> productImgs = productUtilService.getProductImagesByProductId(productId);
+                productImages.addAll(productImgs);
+            }
+
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("totalCount", memberCart.getCartCount());
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("member", memberService.findMember(memberId));
+            model.addAttribute("productImages", productImages);
 
             return "/member/cart";
         }else {
@@ -72,6 +120,7 @@ public class CartController {
             return "redirect:/";
         }
     }
+
     // 장바구니에서 상품 삭제
     // 삭제하고 남은 상품의 총 갯수
     @GetMapping("/member/{memberId}/{cartItemId}/delete")

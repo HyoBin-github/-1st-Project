@@ -4,10 +4,13 @@ import lombok.*;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.dto.SemiMemberDto;
+import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.utils.BaseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -34,6 +37,10 @@ public class SemiMemberEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "semiMember", cascade = CascadeType.REMOVE)
     private CartEntity cart;
+
+    // 연관 관계
+    @OneToMany(mappedBy = "semiMember")
+    private List<ProductEntity> products = new ArrayList<>();
 
     public static SemiMemberEntity toSemiMemberEntityInsert(SemiMemberDto semimemberDto, PasswordEncoder passwordEncoder) {
 

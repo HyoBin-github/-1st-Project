@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.category.CategoryEntity;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.utils.BaseEntity;
@@ -83,6 +84,12 @@ public class ProductEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
+    // 송원철 / semiMember와 연관관계 설정
+    @ManyToOne
+    @JoinColumn(name = "semiMember_id")
+    private SemiMemberEntity semiMember;
+
+
     // Dto to Entity
     public static ProductEntity toEntity(ProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();
@@ -96,7 +103,7 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductPrice(productDTO.getProductPrice());
         productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
 
-        // 송원철 / memberId 가져오기
+        // 송원철 / 상품 등록 시 memberId 가져오기
         if (productDTO.getMember() != null) {
             MemberEntity memberEntity = new MemberEntity();
             memberEntity.setMemberId(productDTO.getMember().getMemberId());
