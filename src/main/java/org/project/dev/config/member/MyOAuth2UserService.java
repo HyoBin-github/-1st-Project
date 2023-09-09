@@ -52,6 +52,7 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
         String memberNickName = "";
         String memberPhone="";
         String memberBirth="";
+        String memberPostCode="";
 
 
         if (registrationId.equals("google")) {
@@ -108,6 +109,7 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
                 .memberNickName(memberNickName)
                 .memberPhone(memberPhone)
                 .memberBirth(memberBirth)
+                .memberPostCode(memberPostCode)
                 .role(Role.MEMBER)
                 .build());
 

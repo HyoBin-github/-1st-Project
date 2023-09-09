@@ -71,18 +71,53 @@ public class ProductController {
 
     // WRITE (INSERT)
     // 게시물 작성 페이지
+//    @GetMapping("/write")
+//    public String getProductWrite() {
+//        return "/product/write";
+//    }
+//
+//
+//    // WRITE PROCESS (INSERT)
+//    // 게시물 작성 처리 시
+//    @PostMapping("/write")
+//    public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
+//                                                  @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages) throws IOException {
+//        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO); // 상품글 작성
+//        productUtilService.saveProductImages(productEntityWritePro, productImages); // 이미지 저장
+//        System.out.println("productImages: " + productImages);
+//        Map<String,Object> response = new HashMap<>();
+//        response.put("status","success");
+//        response.put("redirectUrl","/product/index");
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+
+    // 송원철 / write에 로그인한 memberId 담기
     @GetMapping("/write")
-    public String getProductWrite() {
+    public String getProductWrite(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+
+        MemberEntity member=myUserDetails.getMemberEntity();
+
+        if (member != null) {
+            model.addAttribute("member", member);
+            log.info("Member: {}", member.getMemberId());
+        }else {
+            log.info("member is null");
+        }
         return "/product/write";
     }
 
-
-    // WRITE PROCESS (INSERT)
-    // 게시물 작성 처리 시
+    // 송원철 / write 시 로그인한 memberId 저장
     @PostMapping("/write")
     public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
-                                                  @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages) throws IOException {
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO); // 상품글 작성
+                                                               @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
+                                                               @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
+        MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
+
+        if (member == null) {
+            // 사용자 정보가 없는 경우 로그를 남깁니다.
+            log.info("사용자 정보가 없습니다.");
+        }
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, member); // 상품글 작성
         productUtilService.saveProductImages(productEntityWritePro, productImages); // 이미지 저장
         System.out.println("productImages: " + productImages);
         Map<String,Object> response = new HashMap<>();
@@ -90,6 +125,8 @@ public class ProductController {
         response.put("redirectUrl","/product/index");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
