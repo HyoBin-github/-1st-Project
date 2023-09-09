@@ -9,7 +9,7 @@
 <body>
 <!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
 <div class="detail">
-  <h1 class="title"><span th:text="${member.memberName}" ></span>님 상세정보</h1>
+  <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 상세정보</h1>
   <!--  아이디 : <span th:text="${member.memberId}"></span> <br>-->
   <span th:if="${false}" th:text="${member.memberId}"></span> <br> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
   <span th:if="${false}" :text="${member.memberPassword}"></span> <br>
