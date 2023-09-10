@@ -8,20 +8,20 @@
 /* .container >.join */
 .container .join{
     width: 100%;
-    height: 1000px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     box-sizing: border-box;
 }
 .container .join .join-con{
-    flex-basis: 800px;
+    flex-basis: 1300px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.container .join .join-con .join-title{
+/* title */
+.container .join .join-con .title{
     padding: 20px;
     gap: 10px;
     box-sizing: border-box;
@@ -34,7 +34,8 @@
     box-sizing: border-box;
     justify-content: center;
 }
-.container .join .join-con .join-form form{
+/* 회원가입  form */
+.container .join .join-con .join-form .form{
     margin: auto;
     text-align: center;
     width: 700px;

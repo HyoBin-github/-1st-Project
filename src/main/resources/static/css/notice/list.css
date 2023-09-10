@@ -99,6 +99,15 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    transition: all 0.3s;
+}
+.List .List-con .type >ul>li:hover{
+    background-color: #A6B2E3;
+    box-shadow: 0 0 0 1px #4B64C7 inset,
+          0 0 0 2px #8C9CDB inset,
+          0 4px 0 0 #8C9CDB,
+          0 4px 0 1px #4B64C7,
+          0 4px 4px 1px #4B64C7;
 }
 .List .List-con .type >ul>li span{
     gap: 5px;
@@ -111,6 +120,8 @@
 .List .List-con .type >ul>li a{
   font-size:20px;
   align-items: center;
+  display: block;
+  padding: 30px;
 }
 table, th, td{
     border-collapse: collapse;

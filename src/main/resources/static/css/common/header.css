@@ -1,3 +1,4 @@
+@import url(/css/common/reset.css);
 /* header */
 .header{
     width: 100%;
@@ -110,8 +111,15 @@
     width: 30px;
     height: 30px;
 }
+.header .nav .middle-nav .middle-menu ul>li:last-child form button .zoom{
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+    cursor: pointer;
+    background-color: transparent;
+}
 .header .nav .middle-nav .middle-menu ul>li:last-child form input{
-   background-color: none;
+   background-color: transparent;
 }
 .header .nav .middle-nav .middle-menu ul >li:nth-child(1) a{  
   font-weight: bold;
@@ -168,7 +176,7 @@
     font-weight: bold;
  }
  /* 마우스 올리면 밑줄 생성 */
-.header .nav .bottom-nav .gnb >ul>li>a::after:not(.main){
+.header .nav .bottom-nav .gnb >ul>li>a::after{
     content: '';
     display: block;
     width: 100%;
@@ -181,7 +189,7 @@
     opacity: 0;
     transition: all 0.1s;
 }
-.header .nav .bottom-nav .gnb >ul>li>a:hover::after:not(.main){
+.header .nav .bottom-nav .gnb >ul>li>a:hover::after{
     height: 2px;
     position: absolute;
     left: 0;
@@ -189,4 +197,8 @@
     visibility: visible;
     opacity: 1;
     color: #cccccc;
+}
+/* 마우스 올렸을 경우 밑줄 없애기 */
+.header .nav .bottom-nav .gnb >ul>li .main::after{
+    content: none;
 }

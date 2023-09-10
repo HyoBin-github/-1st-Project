@@ -6,12 +6,12 @@
     <title>로그인</title>
 </th:block>
 <th:block layout:fragment="css">
-<!--    <link rel="stylesheet" th:href="@{/css/login.css}">-->
+    <link rel="stylesheet" th:href="@{/css/semiMember/login.css}">
 </th:block>
 <th:block layout:fragment="javascript">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </th:block>
-<!--<div th:replace="~{fragments/header :: headerFragment}"></div>-->
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <th:block layout:fragment="container">
     <div class="container">
         <div class="semiLogin">
@@ -39,4 +39,5 @@
         </div>
     </div>
 </th:block>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </html>
