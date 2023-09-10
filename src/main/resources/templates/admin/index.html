@@ -1,29 +1,130 @@
+
+<!--
+/* fragments 안했어요 그냥 통  html 파일입니다 */
+
+/*catfather49@gmail.com*/
+-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout/baseLayout}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>어드민 메인 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/admin/index.css}">
+    <title>Document</title>
 </head>
+
 <body>
-    <div class="header">
-        <div class="nav">
-            <div class="gnb">
+<div class="header">
+    <div class="top-nav">
+        <div class="logo">
+            <h1>로고</h1>
+        </div>
+
+        <ul>
+            <li>로그 아웃</li>
+            <li>상품 관리</li>
+            <li>상품 생성</li>
+            <li>고객 관리</li>
+        </ul>
+    </div>
+</div>
+<div class="sideBar">
+    <div class="sideBarTitle">
+        <span> 사이드바 </span>
+    </div>
+    <div class="loginInfo">
+        <form action="admin/login">
+            <input type="text" name="id" class="id">
+            <input type="password" name="pw" class="pw">
+            <button type="submit" class="loginBtn">login</button>
+        </form>
+    </div>
+    <div class="sideBar-sec">
+        <ul>
+            <li>
+                상품 생성
                 <ul>
                     <li>
-                        <a th:href="@{/productList}">나의 상품 리스트 보기</a>
-                    </li>
-                    <li>
-                        내 정보
+                        <a href="#">상품생성</a>
                     </li>
                 </ul>
-            </div>
+            </li>
+            <li>
+                상품 관리
+                <ul>
+                    <li>
+                        <a href="#">상품생성</a>
+                    </li>
+                    <li>
+                        <a href="#">상품 리스트</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                고객 문의
+                <ul>
+                    <li>
+                        <a href="#">내 문의</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                주문 목록
+                <ul>
+                    <li>
+                        <a href="#">내 주문</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main">
+    <div class="container">
+        <div class="main-section1">
+            <ul>
+                <li>
+                    내 상품 문의 사항
+                </li>
+                <li>
+                    상품 관리
+                </li>
+                <li>
+                    상품 생성
+                </li>
+                <li>
+                    주문 목록
+                </li>
+            </ul>
         </div>
     </div>
-    <h1>login 페이지에서 로그인을 성공 했다면 넘어오는 페이지 입니다.</h1>
-    <p>이 페이지는 판매자가 자신이 등록한 상품 리스트 혹은 상품 등록 삭제 등등을 할수있는 페이지 입니다!</p>
+</div>
 
-
+<div class="footer">
+    <div class="nav">
+        <a th:href="@{/}">
+            <h2>CLOTH KEEPER</h2>
+        </a>
+        <ul class="menu">
+            <li>개인정보처리방침</li>
+            <li>영상정보처리기기 운영관리 방침</li>
+            <li>홈페이지 이용약관</li>
+            <li>위치정보 이용약관</li>
+            <li>윤리경영</li>
+        </ul>
+        <div class="info">
+            <span>주소: 서울특별시 노원구 OO동 OO로 OO길</span>
+            <span>(주)Cloth Keeper 대표☆☆☆</span>
+            <span>TEL: 02) 0000 - 1111 / FAX: 02) 0000 - 1112</span>
+            <span><a th:href="@{/notice/list}">공지사항</a></span>
+        </div>
+        <p class="copyroight">
+            &copy; <span class="this-year"></span> Cloth Keeper Company. All Rights Reseved.
+        </p>
+        <img th:src="@{/images/logo.png}" alt="" class="logo">
+    </div>
+</div>
 </body>
+
 </html>

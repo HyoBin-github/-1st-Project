@@ -19,7 +19,7 @@ ex) 문의상태 알림 = 사이트에 항의가 들어왔는데 3일이나 지�
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/signal")
+@RequestMapping("api/signal")
 public class AdminSignalController {
 
     private final AdminMainService adminMainService;
