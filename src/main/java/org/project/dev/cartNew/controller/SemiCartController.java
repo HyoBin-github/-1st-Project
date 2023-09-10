@@ -124,7 +124,7 @@ public class SemiCartController {
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("semiMember", semiMemberService.findSemiMember(semiMemberId));
 
-            return "/semiMember/cart";
+            return "redirect:/cart/semiMember/" + semiMyUserDetails.getSemiMemberEntity().getSemiMemberId();
 
         }else {
             // 로그인id와 장바구니 삭제하려는 멤버id가 같지 않은 경우

@@ -155,7 +155,7 @@ public class CartController {
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("member", memberService.findMember(memberId));
 
-            return "/member/cart";
+            return "redirect:/cart/member/" + myUserDetails.getMemberEntity().getMemberId();
 
         }else {
             // 로그인id와 장바구니 삭제하려는 멤버id가 같지 않은 경우
