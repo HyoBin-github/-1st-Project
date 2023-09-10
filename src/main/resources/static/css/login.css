@@ -33,62 +33,73 @@
 }
 /* login-form */
 .container .login .login-con .login-form{
-    height: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+}
+/*  일반 회원가입 버튼 */
+.container .login .login-con .login-form .loginBtn{
     display: flex;
     justify-content: center;
     padding: 30px;
     box-sizing: border-box;
     align-items: center;
-}
-/*  일반 로그인 버튼 */
-.container .login .login-con .login-form .loginA{
-    position: relative;
-    display: inline-block;
-    font-size: 22px;
-    padding: 20px 60px;
-    color: white;
-    margin: 20px 10px 10px;
-    border-radius:10px;
     text-align: center;
-    transition: top .01s linear;
-    text-shadow: 0 1px 0 #19244F;  
-
-    background-color: #5870CB;
-    box-shadow: 0 0 0 1px #1d2a5ca9 inset,
-          0 0 0 2px #3E5AC3 inset,
-          0 8px 0 0 #7286D3,
-          0 8px 0 1px #111835,
-          0 8px 8px 1px #111835;
 }
-.container .login .login-con .login-form .loginA:hover{
-    background-color: #7285d3;
-}
-.container .login .login-con .login-form .loginA:active{
-    top: 9px;
-}
-/* 간편 로그인 버튼 */
-.container .login .login-con .login-form .semilogin{
-    position: relative;
-    display: inline-block;
-    font-size: 22px;
-    padding: 20px 60px;
-    color: white;
-    margin: 20px 10px 10px;
-    border-radius: 10px;
+.container .login .login-con .login-form .loginBtn .loginA{
+    width: 120px;
+    height: 30px;
+    flex: 1;
+    padding: 30px ;
+    box-sizing: border-box;
+    align-items: center;
     text-align: center;
-    transition: top .01s linear;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.15);  
-
-    background-color: #5870CB;
-    box-shadow: 0 0 0 1px #1d2a5ca9 inset,
-          0 0 0 2px #3E5AC3 inset,
-          0 8px 0 0 #7286D3,
-          0 8px 0 1px #111835,
-          0 8px 8px 1px #111835;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 15px;
+    border-top: 1px solid #7285d3;
+    border-right: 1px solid #7285d3;
+    border-left: 30px solid #7285d3;
+    border-bottom: 1px solid #7285d3;
+    transition: all 0.3s;
+    background: transparent;
 }
-.container .login .login-con .login-form .semilogin:hover{
-    background-color: #7285d3;
+.container .login .login-con .login-form .loginBtn .loginA:hover{
+    border-left-width: 4px;
 }
-.container .login .login-con .login-form .semilogin:active{
-    top: 9px;
+/* 간편 회원가입 버튼 */
+.container .login .login-con .login-form .semiBtn {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+}
+.container .login .login-con .login-form .semiBtn  .semilogin{
+    width: 120px;
+    height: 30px;
+    flex: 1;
+    padding: 30px ;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 15px;
+    border-top: 1px solid #7285d3;
+    border-right: 1px solid #7285d3;
+    border-left: 30px solid #7285d3;
+    border-bottom: 1px solid #7285d3;
+    transition: all 0.3s;
+    background: transparent;
+}
+.container .login .login-con .login-form .semiBtn .semilogin:hover{
+    border-left-width: 4px;
 }

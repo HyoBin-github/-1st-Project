@@ -101,22 +101,12 @@
     border: none;
     /* padding: 0 0 0 10px; */
 }
-.header .nav .middle-nav .middle-menu ul>li:last-child form input:nth-child(2){
-    flex: 1;
-    border: 2px solid red;
-    /* padding: 0 10px; */
-    border-radius: 10%;
-    /* background-image: url('/static/images/main/mainIcon/search.png'); */
-    background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
-}
 .header .nav .middle-nav .middle-menu ul>li:last-child form button .zoom{
     height: 25px;
     width: 25px;
     object-fit: cover;
     cursor: pointer;
-    background-color: transparent;
+    background: transparent;
 }
 .header .nav .middle-nav .middle-menu ul>li:last-child form input{
    background-color: transparent;

@@ -23,9 +23,10 @@
                         <option th:value="noticeTitle" th:selected="${#strings.equals(param.select, 'noticeTitle')}">제목</option>
                         <option th:value="noticeContent" th:selected="${#strings.equals(param.select, 'noticeContent')}">내용</option>
                     </select>
-                    <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요.">
-<!--                    <input type="image" onclick="alert('검색')" th:src="@{/images/zoom.png}" value="검색">-->
-                    <input type="submit" value="검색">
+                    <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요." class="input">
+                    <button type="submit">
+                        <img th:src="@{/images/zoom.png}" alt="검색" class="zoom">
+                    </button>
                 </form>
             </div>
         </div>
