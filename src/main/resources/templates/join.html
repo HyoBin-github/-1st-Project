@@ -16,9 +16,13 @@
             </div>
             <div class="button">
                 <!-- 일반 회원가입 버튼 -->
-                <button th:onclick="window.location.href='/member/join'" class="joinBtn">일반 회원가입</button>
+                <div class="joinBtn">
+                    <button th:onclick="window.location.href='/member/join'" class="jBtn">일반 회원가입</button>
+                </div>
                 <!-- 간편 회원가입 버튼 -->
-                <button th:onclick="window.location.href='/semiMember/join'" class="semijoinBtn">간편 회원가입</button>    
+                <div class="semiBtn">
+                    <button th:onclick="window.location.href='/semiMember/join'" class="sBtn">간편 회원가입</button>    
+                </div>
             </div>
         </div>
     </div>

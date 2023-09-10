@@ -55,22 +55,20 @@
 .List .List-con .search form .select:focus{
 
 }
-.List .List-con .search form input:focus{
+.List .List-con .search form .input:focus{
     outline: none;
 }
-.List .List-con .search form input:nth-child(1){
-    flex: 5;
-    border: 0;
+.List .List-con .search form .input{
+    width: 475px;
+    border: none;
     padding: 0 0 0 10px;
 }
-.List .List-con .search form input:nth-child(2){
-    background-image: url(/static/images/zoom.png);
-    flex: 1;
-    border: 0;
-    padding: 0 10px;
-    border-radius: 10%;
-    width: 25px;
+.List .List-con .search form button .zoom{
     height: 25px;
+    width: 25px;
+    object-fit: cover;
+    cursor: pointer;
+    background: transparent;
 }
 .List .List-con .type{
     display: flex;
@@ -102,12 +100,8 @@
     transition: all 0.3s;
 }
 .List .List-con .type >ul>li:hover{
-    background-color: #A6B2E3;
-    box-shadow: 0 0 0 1px #4B64C7 inset,
-          0 0 0 2px #8C9CDB inset,
-          0 4px 0 0 #8C9CDB,
-          0 4px 0 1px #4B64C7,
-          0 4px 4px 1px #4B64C7;
+    background-color: #DADFF3;
+    color: white;
 }
 .List .List-con .type >ul>li span{
     gap: 5px;
@@ -122,6 +116,9 @@
   align-items: center;
   display: block;
   padding: 30px;
+}
+.List .List-con .type >ul>li a:hover{
+    color: white;
 }
 table, th, td{
     border-collapse: collapse;

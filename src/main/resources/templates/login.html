@@ -22,8 +22,12 @@
                     <h1>로그인</h1>
                 </div>
                 <div class="login-form">
-                    <a th:href="@{/member/login}" class="loginA">일반회원 로그인</a>
-                    <a th:href="@{/semiMember/login}" class="semilogin">간편회원 로그인</a>
+                    <div class="loginBtn">
+                        <a th:href="@{/member/login}" class="loginA">일반회원 로그인</a>
+                    </div>
+                    <div class="semiBtn">
+                        <a th:href="@{/semiMember/login}" class="semilogin">간편회원 로그인</a>
+                    </div>
                 </div>
             </div>
         </div>
