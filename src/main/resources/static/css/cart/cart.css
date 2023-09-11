@@ -1,0 +1,38 @@
+@import url(/css/common/reset.css);
+
+button{
+  border: 0;
+  background-color: transparent;
+}
+
+.contianer{
+
+  background-color: #F0F2F5;
+}
+
+
+table {
+  width: 70%;
+  text-align: center;
+  border: 1px solid #fff;
+  border-spacing: 1px;
+  font-family: 'Cairo', sans-serif;
+  margin: 20px auto;
+}
+
+table td {
+  padding: 10px;
+  background-color: #CDD4EF
+}
+
+table th {
+  background-color: #7286D3;
+  color: #fff;
+  padding: 10px;
+}
+
+img {
+  width: 90px;
+  height: 90px;
+}
+
