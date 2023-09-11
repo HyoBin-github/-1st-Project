@@ -48,19 +48,36 @@
 .container .join .join-con .join-form form>ul{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; 가운데 정렬 */
+    text-align: center;
+    border: 2px solid #ffe6e6;
+    border-left: none;
+    border-right: none;
+    border-radius: 10px;
+    box-shadow: 0px 1px 1px 0px #FFF2F2, inset 0px -2px 4px -1px #FFF2F2;
 }
-.container .join .join-con .join-form form>ul>li:not(.nopeli){
+/* 회원가입 버튼 제외 li 설정 */
+.container .join .join-con .join-form form>ul>li:not(.submitLi){
     width: inherit;
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
     text-align: center;
     align-items: center;
-    border-bottom: 2px solid #cccccc;
+    /* border-bottom: 2px solid #cccccc; */
+    /* gap: 5px; */
 }
-.container .join .join-con .join-form form>ul>li button:not(.nopeBtn){
-    width: inherit;
+.container .join .join-con .join-form form>ul>li .valid-feedback{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+    color: green;
+}
+/* button 설정 */
+.container .join .join-con .join-form form>ul>li button{
+    /* width: inherit; */
     display: flex;
     text-align: center;
     border-bottom: 1px solid #8C9CDB;
@@ -71,10 +88,11 @@
     justify-content: center;
     transition: all 0.3s;
 }
-.container .join .join-con .join-form form>ul>li button:hover:not(.nopeBtn){
+.container .join .join-con .join-form form>ul>li button:hover{
     background-color: #DADFF3;
     color: ivory;
 }
+/* label 넓이 고정 */
 .container .join .join-con .join-form form>ul>li label{
     width: 100px;
 }
@@ -83,22 +101,58 @@
     width: 800px; 
     height: 30px; 
     padding: 10px;
+    /* border: 2px solid red; */
+    /* border-radius: 10px;
+    border-right: none; */
+    border: none;
+    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+}
+
+/* email 작성 */
+.container .join .join-con .join-form form>ul>li .email{
+    width: inherit;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+    border: 2px solid red;
+    /* position: relative; */
+}
+.container .join .join-con .join-form form>ul>li .email .email-text{
+    width: 800px;
+    display: flex;
+    /* justify-content: space-between; */
+    box-sizing: border-box;
+    align-items: center;
+    border: 2px solid yellow;
+    position: relative;
+}
+/* 이메일 아이디 입력 */
+.container .join .join-con .join-form form>ul>li .emailbox{
+    width: 300px; 
+    height: 30px; 
+    padding: 10px;
     /* border: 2px solid 7285d3a4;
     border-radius: 10px;
     border-right: none; */
     border: none;
     box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
 }
-.container .join .join-con .join-form form>ul>li .email label{
-    box-sizing: border-box;
+/* 도메인 입력 */
+.container .join .join-con .join-form form>ul>li .domainbox{
+    width: 300px; 
+    height: 30px; 
+    padding: 10px;
+    /* gap: 10px; */
+    border: none;
+    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
 }
-/* email 작성 */
-.container .join .join-con .join-form form>ul>li .email{
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
-    align-items: center;
-    position: relative;
+.container .join .join-con .join-form form>ul>li .email label{
+    /* box-sizing: border-box; */
+}
+.container .join .join-con .join-form form>ul>li .email select{
+    width: 100px;
+    height: 30px;
 }
 .container .join .join-con .join-form form>ul>li .email button{
     position: absolute;
@@ -111,6 +165,7 @@
     border-radius: 3px;
     cursor: pointer;
 }
+
 /* 인증번호 확인 */
 .container .join .join-con .join-form form>ul>li .code{
     display: flex;
@@ -130,7 +185,26 @@
     border-radius: 3px;
     cursor: pointer;
 }
-/* .container .join .join-con .join-form form>ul>li .code button.submitBtn{
+.container .join .join-con .join-form form>ul>li .code button.submitBtn{
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    top: 0;
+    bottom: 0;
+    right: 110px;
+    margin: auto 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+/* 닉네임 확인 */
+.container .join .join-con .join-form form>ul>li .nickName{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+    position: relative;
+}
+.container .join .join-con .join-form form>ul>li .nickName button{
     position: absolute;
     width: 100px;
     height: 30px;
@@ -140,7 +214,23 @@
     margin: auto 0;
     border-radius: 3px;
     cursor: pointer;
-} */
-.hidden{
-    display: none;
+}
+/* 휴대전화 확인 */
+.container .join .join-con .join-form form>ul>li .phone{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+    position: relative;
+}
+.container .join .join-con .join-form form>ul>li .phone button{
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    top: 0;
+    bottom: 0;
+    right: 5px;
+    margin: auto 0;
+    border-radius: 3px;
+    cursor: pointer;
 }

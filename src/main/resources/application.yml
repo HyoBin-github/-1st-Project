@@ -92,9 +92,9 @@ file:
 #  reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\
 
 #  songwc3@gmail.com
-  productImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-  reviewImgUploadDir: C:\Users\SSONG\Desktop\Project\imgUploadTest\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
+#  productImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+#  reviewImgUploadDir: C:\Users\SSONG\Desktop\Project\imgUploadTest\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
 ##rladpwls1843@gmail.com
-#  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-#  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)

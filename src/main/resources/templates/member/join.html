@@ -27,36 +27,24 @@
             <div class="join-form">
                 <form th:action="@{/member/join}" method="post" id="signupForm" th:object="${memberDto}">
                     <ul>
-                        <!--                    <li>-->
-                        <!--                        <label th:for="memberEmail">이메일</label>-->
-                        <!--                        <input type="email" th:field="*{memberEmail}" required="required" placeholder="이메일 입력">-->
-                        <!--                        <button type="button" id="emailCheckButton">이메일 중복 확인</button>-->
-                        <!--                    </li>-->
-                        <!--                    <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" class="error"></p>-->
-                        <!--                    <li>-->
-                        <!--                        <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>-->
-                        <!--                        <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>-->
-                        <!--                    </li>-->
                         <li>
-                            <div class="input-group">
+                            <div class="email">
                                 <label>이메일</label>
-                                <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력"><span> @ </span>
-                                <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력">
-                                <select id="domainList" required="required">
-                                    <option value="custom">직접 입력</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="nate.com">nate.com</option>
-                                    <option value="daum.net">daum.net</option>
-                                </select>
-                                <input type="hidden" id="memberEmail" name="memberEmail" value="">
-                                <button type="button" id="emailCheckButton">이메일 중복 확인</button>
+                                <div class="email-text">
+                                    <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력" class="emailbox">
+                                    <span> @ </span>
+                                    <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력" class="domainbox">
+                                    <select id="domainList" required="required">
+                                        <option value="custom">직접 입력</option>
+                                        <option value="gmail.com">gmail.com</option>
+                                        <option value="naver.com">naver.com</option>
+                                        <option value="nate.com">nate.com</option>
+                                        <option value="daum.net">daum.net</option>
+                                    </select>
+                                    <input type="hidden" id="memberEmail" name="memberEmail" value="">
+                                    <button type="button" id="emailCheckButton">이메일 중복 확인</button>
+                                </div>
                             </div>
-                            <!--                        <div class="email">-->
-                            <!--                            <label th:for="memberEmail">이메일</label>-->
-                            <!--                            <input type="email" th:field="*{memberEmail}" required="required" placeholder="이메일 입력" class="box">-->
-                            <!--                            <button type="button" id="emailCheckButton">이메일 중복 확인</button>-->
-                            <!--                        </div>-->
                         </li>
                         <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" class="error"></p>
                         <!-- 인증번호 입력란 -->
@@ -69,7 +57,6 @@
                                 <button type="button" id="verifyEmailButton" class="checkBtn">인증번호 확인</button>
                             </div>
                         </li>
-
                         <li>
                             <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
                             <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>
@@ -78,6 +65,8 @@
                             <!-- 인증 결과 메시지 영역 -->
                             <div id="certifyEmailMessage" class="valid-feedback" style="display: none;"></div>
                         </li>
+
+                        <!-- 비밀번호 -->
                         <li>
                             <label th:for="memberPassword">비밀번호</label>
                             <input type="password" th:field="*{memberPassword}" required="required" placeholder="최소 하나의 특수문자, 알파벳, 숫자를 포함해야 합니다" class="box">
@@ -89,12 +78,15 @@
                         </li>
                         <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error"></p>
                         <font id="checkMessage" size="2"></font>
+
+                        <!-- 이름 -->
                         <li>
                             <label th:for="memberName">이름</label>
                             <input type="text" th:field="*{memberName}" required="required" placeholder="한글과 영문만 입력 가능합니다" class="box">
                         </li>
                         <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" class="error"></p>
-
+                        
+                        <!-- 닉네임 -->
                         <li>
                             <div class="nickName">
                                 <label th:for="memberNickName">닉네임</label>
@@ -109,7 +101,8 @@
                             <d id="nickNameAvailable" class="valid-feedback" style="display: none;"></d>
                             <d id="nickNameNotAvailable" class="invalid-feedback" style="display: none;"></d>
                         </li>
-
+                        
+                        <!-- 휴대전화 -->
                         <li>
                             <div class="phone">
                                 <label th:for="memberPhone">휴대전화</label>
@@ -124,6 +117,8 @@
                             <d id="phoneAvailable" class="valid-feedback" style="display: none;"></d>
                             <d id="phoneNotAvailable" class="invalid-feedback" style="display: none;"></d>
                         </li>
+                        
+                        <!-- 생년월일 -->
                         <li>
                             <label>생년월일</label>
                             <select th:field="*{birthYear}" required="required">
@@ -138,9 +133,9 @@
                                 <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
                             </select>
                             일
-                            <label th:for="memberBirth">생년월일</label>
-                            <input type="text" th:field="*{memberBirth}" required="required" placeholder="ex)21001031" class="box">
                         </li>
+                        
+                        <!-- 주소 -->
                         <div class="form-group">
                             <label th:for="memberPostCode">우편번호</label>
                             <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호 필수로 입력해주세요" name="memberPostCode" id="memberPostCode" type="text" readonly="readonly" >
