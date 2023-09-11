@@ -3,13 +3,14 @@ server:
 
 spring:
   datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/springdb
-#    username: root
-#    password: '1234'
-    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-    username: admin
-    password: '00000000'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test2
+    username: root
+    password: '1234'
+#    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+#    username: admin
+#    password: '00000000'
+
   mail:
     # google smtp server 사용
     host: smtp.gmail.com
@@ -35,7 +36,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update  # DDL?? ??
+      ddl-auto: update # DDL?? ??
     properties:
       hibernate:
         show_sql: true
@@ -86,8 +87,8 @@ file:
 #  reviewImgUploadDir:  C:\Users\bin77\Desktop\새 폴더\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
 #  code.aiaru@gmail.com
-#  productImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-#  reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
+  productImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\productImg\
+  reviewImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\reviewImg\
 
 #  songwc3@gmail.com
 #  productImgUploadDir: C:\Users\SSONG\Desktop\Project\imgUploadTest\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)

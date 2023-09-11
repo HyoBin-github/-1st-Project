@@ -12,17 +12,31 @@
 <div class="container">
   <form action="/product/write" id="product-form" method="post" enctype="multipart/form-data">
 
+    <!-- 송원철 -->
+    <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
+    <script th:inline="javascript">
+        /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
+        var memberId = /*[[${member?.memberId}]]*/ null;
+
+        /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
+        if (memberId !== null) {
+            console.log('Member ID:', memberId);
+        }else {
+            console.log('Member ID: null');
+        }
+    </script>
+    <!----------->
 
     <div class="grid-wrapper">
 
       <div class="gridWrapper-prev-drop">
 
-        <div class="imagePreviewExpand-wrapper">  
+        <div class="imagePreviewExpand-wrapper">
           <div class="imagePreviewExpand-box" id="imagePreviewExpand-box">
             <img src="/images/product/iconmonstr-photo-camera-13.svg" alt="미리보기 화면" class="imagePreviewExpand-alt" id="imagePreviewExpand">
           </div>
         </div>
-        
+
         <div class="imageDrop-wrapper">
           <input type="file" id="fileInput" style="display: none;" multiple>
           <div class="image-container" id="image-container">
@@ -33,21 +47,14 @@
           </div>
         </div>
 
-        <!-- 송원철 -->
-        <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
-        <script th:inline="javascript">
-            /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
-            var memberId = /*[[${member?.memberId}]]*/ null;
+      </div>
 
-            /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
-            if (memberId !== null) {
-                console.log('Member ID:', memberId);
-            }else {
-                console.log('Member ID: null');
-            }
-        </script>
-        <!----------->
-
+      <div class="grid-productBrandName">
+        <label for="productBrandName" class="productInput-label"><span>* </span>브랜드명</label>
+        <div class="productInputs-class">
+          <input type="text" name="productBrandName" class="productInputs" id="productBrandName" placeholder="브랜드명을 입력해주세요.">
+          <input type="text" name="productBrandName" class="productInputs" id="productBrandName" placeholder="브랜드명을 입력해주세요.">
+        </div>
       </div>
 
       <div class="grid-productName">
@@ -122,8 +129,10 @@
         </div>
       </div>
       
-      <input type="text" name="productWriter" value="1" style="display: none;">
-      
+<!--       <input type="text" name="productWriter" value="1" style="display: none;">-->
+
+    </div>
+
   </form>
 </div>
 </body>

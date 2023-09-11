@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# yml 파일 이그노어.
+*.yml
+
 ### STS ###
 .apt_generated
 .classpath

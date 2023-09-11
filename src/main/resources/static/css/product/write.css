@@ -253,26 +253,29 @@ input[type="radio"] {
   position: relative;
   top: 30px;
 }
-.grid-productName {
+.grid-productBrandName {
   grid-area: 2 / 4 / 3 / 5;
 }
-.grid-productColor {
+.grid-productName {
   grid-area: 3 / 4 / 4 / 5;
 }
-.grid-productSize {
+.grid-productColor {
   grid-area: 4 / 4 / 5 / 5;
 }
-.grid-productPrice {
+.grid-productSize {
   grid-area: 5 / 4 / 6 / 5;
 }
-.grid-productDisplay {
+.grid-productPrice {
   grid-area: 6 / 4 / 7 / 5;
 }
+.grid-productDisplay {
+  grid-area: 7 / 4 / 8 / 5;
+}
 .grid-productDescription {
-  grid-area: 7 / 4 / 10 / 5;
+  grid-area: 8 / 4 / 11 / 5;
 }
 .grid-productSubmit {
-  grid-area: 10 / 4 / 11 / 5;
+  grid-area: 11 / 4 / 12 / 5;
 }
 
 

@@ -5,19 +5,19 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
+import org.project.dev.product.dto.ProductBrandDTO;
 import org.project.dev.product.dto.ProductDTO;
+import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductEntity;
+import org.project.dev.product.repository.ProductBrandRepository;
 import org.project.dev.product.repository.ProductRepository;
-import org.project.dev.product.repository.ProductSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +33,7 @@ public class ProductService {
 
 
     private final ProductRepository productRepository;
+    private final ProductBrandRepository productBrandRepository;
     private final ProductPaginationService productPaginationService;
     private final MemberRepository memberRepository; // 송원철
 
@@ -47,13 +48,29 @@ public class ProductService {
 
     // 송원철 / write 시 memberId 저장
     @Transactional
-    public ProductEntity productWriteDetail(ProductDTO productDTO, MemberEntity memberEntity){
+    public ProductEntity productWriteDetail(ProductDTO productDTO, ProductBrandEntity productBrandEntity, MemberEntity memberEntity){
         productDTO.setProductHits(0); // productHits 초기화
         ProductEntity productEntity = ProductEntity.toEntity(productDTO);
+        productEntity.setProductBrandEntity(productBrandEntity);
         productEntity.setMember(memberEntity); // 현재 로그인한 사용자의 MemberEntity 설정
         return productRepository.save(productEntity);
     }
 
+    // brand write
+    @Transactional
+    public ProductBrandEntity productBrandWriteDetail(ProductBrandDTO productBrandDTO){
+        Optional<ProductBrandEntity> existingBrand =
+                productBrandRepository.findByProductBrandName(productBrandDTO.getProductBrandName());
+
+        if (existingBrand.isPresent()) {
+            // 이미 존재하는 BrandId 값을 반환
+            return existingBrand.get();
+        } else {
+            // 존재하지 않으면 새로운 브랜드 명을 생성
+            ProductBrandEntity productBrandEntity = ProductBrandEntity.toEntity(productBrandDTO);
+            return productBrandRepository.save(productBrandEntity);
+        }
+    }
 
     // LIST (READ)
     public ProductListResponse getProductList(int page, Pageable pageable, String searchType, String searchKeyword) {

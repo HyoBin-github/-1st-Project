@@ -11,7 +11,7 @@
     <th class="table_id">번호</th>
     <th class="table_img">썸네일</th>
     <th class="table_title">제목</th>
-    <th class="table_writer">작성자</th>
+<!--    <th class="table_writer">작성자</th>-->
     <th class="table_date">날짜</th>
     <th class="table_hits">조회수</th>
   </tr>
@@ -21,7 +21,7 @@
     <td th:text="${product.id}"></td>
     <td><img th:src="@{/images/{filename}(filename=${productImages[stat.index].productImgSavedName})}" alt="" height="50"/></td>
     <td><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}"></a></td>
-    <td th:text="${product.productWriter}"></td>
+<!--    <td th:text="${product.productWriter}"></td>-->
     <td th:text="${#temporals.format(product.productCreateTime, 'yy/MM/dd HH:mm')}"></td>
     <td th:text="${product.productHits}"></td>
   </tr>
