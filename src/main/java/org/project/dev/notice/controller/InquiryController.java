@@ -43,35 +43,39 @@ public class InquiryController {
         }
         int rs = inquiryService.InquiryInsert(inquiryDto);
         if(rs==1){
-            return "redirect:/inquiry/list";
+            return "redirect:/inquiry/list?page=0&select=&search=";
         }
         return "index";
     }
     /*
    Todo
     1. rladpwls1843@gamil.com
-    2. 문의사항 목록페이지로 이동
-    3.
+    2. 문의사항 목록 페이지로 이동
+    3. 문의사항 목록 & 페이징 & 검색
     4.
     */
     @GetMapping("/list")
-    public String getInquiryList(@PageableDefault(page=0, size=5, sort = "inqId",
-            direction = Sort.Direction.DESC) Pageable pageable, Model model){
+    public String getInquiryList(
+            @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model,
+            @RequestParam(value = "select", required = false) String inquirySelect,
+            @RequestParam(value = "search", required = false) String inquirySearch
+            ){
 
-        Page<InquiryDto> pagingInquiryList = inquiryService.InquiryList(pageable);
+        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
 
-        Long totalCount = pagingInquiryList.getTotalElements();
-        int totalPage = pagingInquiryList.getTotalPages();
-        int pageSize = pagingInquiryList.getSize();
-        int nowPage = pagingInquiryList.getNumber();
-        int blockNum = 5;
+        Long totalCount = inquiryList.getTotalElements();
+        int totalPage = inquiryList.getTotalPages();
+        int pageSize = inquiryList.getSize();
+        int nowPage = inquiryList.getNumber();
+        int blockNum = 10;
 
         int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
                 (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if(!pagingInquiryList.isEmpty()){
-            model.addAttribute("inquiryList", pagingInquiryList);
+        if(!inquiryList.isEmpty()){
+            model.addAttribute("inquiryList", inquiryList);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
             return "inquiry/list";
@@ -80,38 +84,21 @@ public class InquiryController {
 
         return "inquiry/list";
     }
-    /*
-     Todo
-      1. rladpwls1843@gamil.com
-      2. 문의사항 검색 페이지로 이동
-      3.
-      4.
-      */
-    @GetMapping("/searchList")
-    public String getInquirySearchList(Model model){
-        List<InquiryDto> inquiryDtoList = inquiryService.findAllList();
-
-        if(!inquiryDtoList.isEmpty()){
-            model.addAttribute("inquiryList", inquiryDtoList);
-            return "inquiry/searchlist";
-        }
-        return "redirect:inquiry/list";
-    }
-    @GetMapping("/search")
-    public String getInquirySearch(
-            @RequestParam(value = "select", required = false) String inquirySelect,
-            @RequestParam(value = "search", required = false) String inquirySearch,
-            Model model){
-
-        List<InquiryDto> inquiryDtoList = inquiryService.InquiryListSearch(inquirySelect,inquirySearch);
-        // thymeleaf-paging에서 컨트롤러에서 뷰로 넘길 때 list형태로 model에 담아 오류 발생
-
-        if(!inquiryDtoList.isEmpty()){
-            model.addAttribute("inquiryList", inquiryDtoList);
-            return "inquiry/searchlist";
-        }
-        return "redirect:inquiry/list";
-    }
+//    @GetMapping("/search")
+//    public String getInquirySearch(
+//            @RequestParam(value = "select", required = false) String inquirySelect,
+//            @RequestParam(value = "search", required = false) String inquirySearch,
+//            Model model){
+//
+//        List<InquiryDto> inquiryDtoList = inquiryService.InquiryListSearch(inquirySelect,inquirySearch);
+//        // thymeleaf-paging에서 컨트롤러에서 뷰로 넘길 때 list형태로 model에 담아 오류 발생
+//
+//        if(!inquiryDtoList.isEmpty()){
+//            model.addAttribute("inquiryList", inquiryDtoList);
+//            return "inquiry/searchlist";
+//        }
+//        return "redirect:inquiry/list";
+//    }
 
     /*
            Todo

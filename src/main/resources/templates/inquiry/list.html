@@ -15,11 +15,12 @@
             </div>
         </div>
         <div class="search">
-            <form th:action="@{/inquiry/search}" method="get">
+            <form th:action="@{/inquiry/list(page=0 ,search=${param.search} ,select=${param.select})}" method="get">
                 <select name="select" id="select">
-                    <option th:value="''">전체</option>
-                    <option th:value="title">제목</option>
-                    <option th:value="writer">작성자</option>
+                    <option th:value="''" th:selected="${#strings.isEmpty(param.select)}">전체</option>
+                    <option th:value="inquiryTitle" th:selected="${#strings.equals(param.select, 'inquiryTitle')}">제목</option>
+                    <option th:value="inquiryContent" th:selected="${#strings.equals(param.select, 'inquiryContent')}">내용</option>
+                    <option th:value="inquiryWriter"  th:selected="${#strings.equals(param.select, 'inquiryWriter')}">작성자</option>
                 </select>
                 <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요">
                 <input type="submit" value="검색">
@@ -54,14 +55,14 @@
                 <li>
                     <span th:if="${1 == inquiryList.pageable.pageNumber+1}" style="font-weight:bold" class="span0"></span>
                     <span th:unless="${1 == inquiryList.pageable.pageNumber+1}">
-                        <a th:href="@{/inquiry/list(page=0)}" class="span1">처음</a>
+                        <a th:href="@{/inquiry/list(page=0, search=${param.search}, select=${param.select})}" class="span1">처음</a>
                         <!--처음으로 이동-->
                     </span>
                 </li>
                 <li>
                     <span th:if="${1 == inquiryList.pageable.pageNumber+1}" style="font-weight:bold" class="span0"></span>
                     <span th:unless="${1 == inquiryList.pageable.pageNumber+1}">
-                        <a th:href="@{/inquiry/list(page=${inquiryList.pageable.pageNumber-1})}" class="=span1">이전</a>
+                        <a th:href="@{/inquiry/list(page=${inquiryList.pageable.pageNumber-1}, search=${param.search}, select=${param.select})}" class="=span1">이전</a>
                         <!--이전페이지로 이동-->
                     </span>
                 </li>
@@ -69,20 +70,20 @@
                     <!--블럭 처리-->
                     <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
                         <span th:if="${i == inquiryList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
-                        <a th:unless="${i == inquiryList.pageable.pageNumber+1}" th:href="@{/inquiry/list(page=${i - 1})}" th:text="${i}"></a>
+                        <a th:unless="${i == inquiryList.pageable.pageNumber+1}" th:href="@{/inquiry/list(page=${i - 1}, search=${param.search}, select=${param.select})}" th:text="${i}"></a>
                     </li>
                 </li>
                 <li>
                     <span th:if="${inquiryList.totalPages == inquiryList.pageable.pageNumber + 1}" class="span0">끝</span>
                     <span th:unless="${inquiryList.totalPages == inquiryList.pageable.pageNumber + 1}">
-                        <a th:href="@{/inquiry/list(page=${inquiryList.pageable.pageNumber + 1})}" classa="span1">다음</a>
+                        <a th:href="@{/inquiry/list(page=${inquiryList.pageable.pageNumber + 1}, search=${param.search}, select=${param.select})}" classa="span1">다음</a>
                     </span>
                 </li>
                 <li>
                     <!--현재 페이지가 마지막 페이지이면 span표시-->
                     <span th:if="${inquiryList.totalPages == inquiryList.pageable.pageNumber + 1}" class="span0">END</span>
                     <span th:unless="${inquiryList.totalPages == inquiryList.pageable.pageNumber + 1}">
-                        <a th:href="@{/inquiry/list(page=${inquiryList.totalPages-1})}" class="span1">마지막</a>
+                        <a th:href="@{/inquiry/list(page=${inquiryList.totalPages-1}, search=${param.search}, select=${param.select})}" class="span1">마지막</a>
                     </span>
                 </li>
             </ul>
