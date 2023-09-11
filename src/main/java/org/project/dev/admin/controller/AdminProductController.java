@@ -34,35 +34,4 @@ public class AdminProductController {
         return response;
     }
 
-    /*
-    TODO
-    상품 1개의 디테일한 정보를 표시합니다
-    가격 활성화 기타 등등 정보
-     */
-    @GetMapping("/detail")
-    public Map<String,Object> getProductDetail(@RequestParam("id")Long productId) {
-        Map<String,Object> response = new HashMap<String,Object>();
-        AdminProductDto adminProductDto = productService.getProductDetail(productId);
-        response.put("productList",adminProductDto);
-        return response;
-    }
-
-    @PostMapping("/insert")
-    public Map<String,Object> postProductInsert(@RequestBody AdminProductDto productDto) {
-        Map<String,Object> response = new HashMap<>();
-        response.put("responseCode",productService.productInsert(productDto));
-        return response;
-    }
-
-    /*
-    TODO
-    업데이트
-     */
-    @PostMapping("/update")
-    public Map<String,Object> postProductUpdate(@RequestBody AdminProductDto productDto) {
-        Map<String,Object> response = new HashMap<>();
-        response.put("responseCode",productService.productInsert(productDto));
-        return response;
-    }
-
 }
