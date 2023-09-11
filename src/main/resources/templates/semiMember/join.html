@@ -22,16 +22,6 @@
             <div class="join-form">
                 <form th:action="@{/semiMember/join}" method="post" id="signupForm" th:object="${semiMemberDto}">
                     <ul>
-<!--                        <li>-->
-<!--                            <label th:for="semiMemberEmail">이메일</label>-->
-<!--                            <input type="email" th:field="*{semiMemberEmail}" required="required" placeholder="이메일 입력">-->
-<!--                            <button type="button" id="emailCheckButton">이메일 중복 확인</button>-->
-<!--                        </li>-->
-<!--                        <p th:if="${#fields.hasErrors('semiMemberEmail')}" th:errors="*{semiMemberEmail}" class="error"></p>-->
-<!--                        <li>-->
-<!--                            <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>-->
-<!--                            <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>-->
-<!--                        </li>-->
                         <li>
                             <div class="input-group">
                                 <label>이메일</label>
@@ -44,7 +34,7 @@
                                     <option value="nate.com">nate.com</option>
                                     <option value="daum.net">daum.net</option>
                                 </select>
-                                <input type="text" id="semiMemberEmail" name="semiMemberEmail" value="">
+                                <input type="hidden" id="semiMemberEmail" name="semiMemberEmail" value="">
                                 <button type="button" id="emailCheckButton">이메일 중복 확인</button>
                             </div>
                             <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>

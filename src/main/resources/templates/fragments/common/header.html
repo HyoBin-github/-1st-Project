@@ -16,7 +16,7 @@
                         <li><a th:href="@{/join}">회원가입</a></li>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('ADMIN')">
-                        <li><a th:href="@{/admin/detail}">관리자페이지</a></li>
+                        <li><a th:href="@{/admin/index}">관리자페이지</a></li>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SELLER')">
                         <li><a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.memberId})}">마이페이지</a></li>

@@ -42,7 +42,9 @@ public class ProductDTO {
     // 송원철 / 장바구니 관련
     private MemberEntity member;
 
-
+    // 송원철 / memberNickName 출력 용도
+    private String memberNickName;
+    
     public static ProductDTO toDTO(ProductEntity productEntity){
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(productEntity.getId());
@@ -51,20 +53,11 @@ public class ProductDTO {
         productDTO.setProductSize(productEntity.getProductSize());
         productDTO.setProductDescription(productEntity.getProductDescription());
         productDTO.setProductHits(productEntity.getProductHits());
-
-//        productDTO.setProductWriter(productEntity.getProductWriter()); // 추후 수정 요망
         productDTO.setProductPrice(productEntity.getProductPrice());
-//        productDTO.setProductWriter(productEntity.getProductWriter());
         productDTO.setIsProductDisplayed(productEntity.getIsProductDisplayed());
         productDTO.setProductCreateTime(productEntity.getCreateTime());
         productDTO.setProductUpdateTime(productEntity.getUpdateTime());
-
-        // 송원철 / 상품 등록 시 memberId 가져오기
-        if (productEntity.getMember() != null) {
-            MemberEntity memberEntity = new MemberEntity();
-            memberEntity.setMemberNickName(productDTO.getMember().getMemberNickName());
-            productDTO.setMember(memberEntity);
-        }
+        productDTO.setMemberNickName(productEntity.getMember().getMemberNickName());
 
         return productDTO;
     }

@@ -12,21 +12,6 @@
 <div class="container">
   <form action="/product/write" id="product-form" method="post" enctype="multipart/form-data">
 
-    <!-- 송원철 -->
-    <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
-    <script th:inline="javascript">
-        /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
-        var memberId = /*[[${member?.memberId}]]*/ null;
-
-        /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
-        if (memberId !== null) {
-            console.log('Member ID:', memberId);
-        }else {
-            console.log('Member ID: null');
-        }
-    </script>
-    <!----------->
-
     <div class="grid-wrapper">
 
       <div class="gridWrapper-prev-drop">
@@ -47,10 +32,8 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- 송원철 -->
         <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
-        <span th:if="${false}" th:text="${member.memberNickName}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
         <script th:inline="javascript">
             /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
             var memberId = /*[[${member?.memberId}]]*/ null;
@@ -61,23 +44,14 @@
             }else {
                 console.log('MemberId: null');
             }
-
-            /* memberNickName가 null이 아닌 경우에만 console에 출력합니다. */
-            if (memberNickName !== null) {
-                console.log('MemberNickName:', memberNickName);
-            } else {
-                console.log('MemberNickName: null');
-            }
         </script>
         <!----------->
-=======
+
       </div>
->>>>>>> 668271f95af554bf331429f65ea5a3866184c3bc
 
       <div class="grid-productBrandName">
         <label for="productBrandName" class="productInput-label"><span>* </span>브랜드명</label>
         <div class="productInputs-class">
-          <input type="text" name="productBrandName" class="productInputs" id="productBrandName" placeholder="브랜드명을 입력해주세요.">
           <input type="text" name="productBrandName" class="productInputs" id="productBrandName" placeholder="브랜드명을 입력해주세요.">
         </div>
       </div>
@@ -153,18 +127,7 @@
           <input type="submit" value="판매글작성" class="productSubmit" id="productSubmit">
         </div>
       </div>
-<<<<<<< HEAD
-
-<!--      <input type="text" id="memberNickName" name="memberNickName" th:value="${member.memberNickName}">-->
-<!--      <input type="text" name="productWriter" value="1" style="display: none;">-->
     </div>
-=======
-      
-<!--       <input type="text" name="productWriter" value="1" style="display: none;">-->
-
-    </div>
-
->>>>>>> 668271f95af554bf331429f65ea5a3866184c3bc
   </form>
 </div>
 </body>
