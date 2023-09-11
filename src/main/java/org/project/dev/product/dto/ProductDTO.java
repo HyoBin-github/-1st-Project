@@ -2,6 +2,7 @@ package org.project.dev.product.dto;
 
 import lombok.*;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductEntity;
 import java.time.LocalDateTime;
 
@@ -31,9 +32,12 @@ public class ProductDTO {
     // 이 부분을 나중에 member 쪽에 연결(?) 하면 될 것 같습니다.
 //    private String productWriter;
     private Long productPrice;
+//    private String productWriter;
     private Boolean isProductDisplayed;
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
+
+    private ProductBrandEntity productBrandEntity;
 
     // 송원철 / 장바구니 관련
     private MemberEntity member;
@@ -47,8 +51,10 @@ public class ProductDTO {
         productDTO.setProductSize(productEntity.getProductSize());
         productDTO.setProductDescription(productEntity.getProductDescription());
         productDTO.setProductHits(productEntity.getProductHits());
+
 //        productDTO.setProductWriter(productEntity.getProductWriter()); // 추후 수정 요망
         productDTO.setProductPrice(productEntity.getProductPrice());
+//        productDTO.setProductWriter(productEntity.getProductWriter());
         productDTO.setIsProductDisplayed(productEntity.getIsProductDisplayed());
         productDTO.setProductCreateTime(productEntity.getCreateTime());
         productDTO.setProductUpdateTime(productEntity.getUpdateTime());

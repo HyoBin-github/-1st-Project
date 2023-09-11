@@ -29,7 +29,6 @@ public class ProductImgDTO {
     private String productImgSavedName;
     private String productImgSavedPath;
     private int productImgOrder;
-    private Boolean isProductImgMain;
     private Boolean isProductImgDisplayed;
 
     private LocalDateTime productImgCreateTime;
@@ -44,7 +43,6 @@ public class ProductImgDTO {
         productImgDTO.setProductImgSavedName(productImgEntity.getProductImgSavedName());
         productImgDTO.setProductImgSavedPath(productImgEntity.getProductImgSavedPath());
         productImgDTO.setProductImgOrder(productImgEntity.getProductImgOrder());
-//        productImgDTO.setIsProductImgMain(productImgEntity.getIsProductImgMain());
         productImgDTO.setIsProductImgDisplayed(productImgEntity.getIsProductImgDisplayed());
         productImgDTO.setProductImgCreateTime(productImgEntity.getCreateTime());
         productImgDTO.setProductImgUpdateTime(productImgEntity.getUpdateTime());

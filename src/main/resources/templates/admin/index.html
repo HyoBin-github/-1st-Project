@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/admin/index.css}">
+    <link rel="stylesheet" href="maincss.css">
     <title>Document</title>
 </head>
 
@@ -23,7 +24,7 @@
         <ul>
             <li>로그 아웃</li>
             <li>상품 관리</li>
-            <li>상품 생성</li>
+            <li><a href="/product/write">상품생성</a></li>
             <li>고객 관리</li>
         </ul>
     </div>
@@ -45,7 +46,7 @@
                 상품 생성
                 <ul>
                     <li>
-                        <a href="#">상품생성</a>
+                        <a href="product/write">상품생성</a>
                     </li>
                 </ul>
             </li>
@@ -53,7 +54,7 @@
                 상품 관리
                 <ul>
                     <li>
-                        <a href="#">상품생성</a>
+                        <a href="/product/write">상품생성</a>
                     </li>
                     <li>
                         <a href="#">상품 리스트</a>
@@ -91,7 +92,7 @@
                     상품 관리
                 </li>
                 <li>
-                    상품 생성
+                    <a href="/product/write">상품생성</a>
                 </li>
                 <li>
                     주문 목록
