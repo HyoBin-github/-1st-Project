@@ -85,6 +85,14 @@ html{
   justify-content: center;
   text-align: center;
 }
+.moveBtn .top .topBtn .moveBtnTop .img{
+    width: 20px;
+    height: 20px;
+}
+.moveBtn .top .topBtn .moveBtnBotton .img{
+    width: 20px;
+    height: 20px;
+}
 /* header 마우스 올릴 경우 */
 .moveBtn .top .topBtn:hover{
   width: 20px;
