@@ -9,6 +9,7 @@
   <script th:src="@{/js/member/updateValid.js}" defer="defer"></script>
   <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
   <script th:src="@{/js/member/addressApi.js}" defer="defer"></script>
+  <script th:src="@{/js/member/update_birth.js}" defer="defer"></script>
 </head>
 <body>
 <!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
@@ -32,19 +33,34 @@
       <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" class="error"></p>
       <li>
         <label th:for="memberNickName">닉네임</label>
-        <input type="text" th:field="*{memberNickName}" th:value="${memberDto.memberNickName}" required="required" placeholder="이름을 입력하세요" th:data-original-value="${memberDto.memberNickName}"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
+        <input type="text" th:field="*{memberNickName}" th:value="${memberDto.memberNickName}" required="required" placeholder="닉네임을 입력하세요" th:data-original-value="${memberDto.memberNickName}"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
       </li>
       <p th:if="${#fields.hasErrors('memberNickName')}" th:errors="*{memberNickName}" class="error"></p>
       <li>
         <label th:for="memberPhone">휴대전화</label>
-        <input type="text" th:field="*{memberPhone}" th:value="${memberDto.memberPhone}" required="required" placeholder="이름을 입력하세요"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
+        <input type="text" th:field="*{memberPhone}" th:value="${memberDto.memberPhone}" required="required" placeholder="휴대전화를 입력하세요"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
       </li>
       <p th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}" class="error"></p>
       <li>
         <label th:for="memberBirth">생년월일</label>
-        <input type="text" th:field="*{memberBirth}" th:value="${memberDto.memberBirth}" required="required" placeholder="이름을 입력하세요"> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
+        <input type="text" th:field="*{memberBirth}" th:value="${memberDto.memberBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns()" readonly> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
       </li>
       <p th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}" class="error"></p>
+      <!-- 드롭다운 선택 영역 -->
+      <div id="birthDropdowns" style="display: none;">
+        <select th:field="*{birthYear}" required="required" onchange="updateBirthInput()">
+          <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
+        </select>
+        년
+        <select th:field="*{birthMonth}" required="required" onchange="updateBirthInput()">
+          <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
+        </select>
+        월
+        <select th:field="*{birthDay}" required="required" onchange="updateBirthInput()">
+          <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
+        </select>
+        일
+      </div>
       <li>
         <label th:for="memberPostCode">우편번호</label>
         <input type="text" th:field="*{memberPostCode}" th:value="${memberDto.memberPostCode}" required="required" readonly="readonly"> <br>

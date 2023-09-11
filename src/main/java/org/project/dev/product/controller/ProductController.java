@@ -8,11 +8,14 @@ import org.project.dev.cartNew.service.CartService;
 import org.project.dev.cartNew.service.SemiCartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
+import org.project.dev.product.dto.ProductBrandDTO;
 import org.project.dev.product.dto.ProductImgDTO;
+import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
@@ -99,16 +102,18 @@ public class ProductController {
 
         if (member != null) {
             model.addAttribute("member", member);
-            log.info("Member: {}", member.getMemberId());
+            log.info("MemberId: {}", member.getMemberId());
+            log.info("MemberNickName: {}", member.getMemberNickName());
         }else {
             log.info("member is null");
         }
         return "/product/write";
     }
 
-    // 송원철 / write 시 로그인한 memberId 저장
+    // 송원철 / write 시 로그인한 memberId, memberNickName 저장
     @PostMapping("/write")
     public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
+                                                               @ModelAttribute ProductBrandDTO productBrandDTO,
                                                                @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
                                                                @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
         MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
@@ -117,17 +122,21 @@ public class ProductController {
             // 사용자 정보가 없는 경우 로그를 남깁니다.
             log.info("사용자 정보가 없습니다.");
         }
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, member); // 상품글 작성
+
+        // 브랜드 정보 작성 또는 가져오기
+        ProductBrandEntity productBrandEntity = productService.productBrandWriteDetail(productBrandDTO);
+
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productBrandEntity, member); // 상품글 작성
         productUtilService.saveProductImages(productEntityWritePro, productImages); // 이미지 저장
-        System.out.println("productImages: " + productImages);
+
+        Long productId = productEntityWritePro.getId(); // 작성한 글의 productId를 가져옴.
+
         Map<String,Object> response = new HashMap<>();
         response.put("status","success");
-        response.put("redirectUrl","/product/index");
+        response.put("redirectUrl","/product/"+productId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
-    // 어드민 페이지
     @GetMapping("/list")
     public String list(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,

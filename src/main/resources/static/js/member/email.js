@@ -80,6 +80,15 @@ $(document).ready(function() {
             $('#certifyEmailMessage').hide();
     });
 
+    // select 엘리먼트 변경 시 이메일 중복 확인 및 인증번호 확인 여부 초기화
+    $('#domainList').on('change', function() {
+            isEmailAvailable = false;
+            isVerified = false;
+            $('#emailAvailable').hide();
+            $('#emailNotAvailable').hide();
+            $('#certifyEmailMessage').hide();
+    });
+
     $("#signupForm").submit(function(event) {
             if ($("#emailVerificationCode").val() !== sentVerificationCode) {
                 event.preventDefault(); // 인증번호 확인이 되지 않으면 제출을 막음

@@ -44,7 +44,7 @@ public class MemberEntity extends BaseEntity {
     private String memberPhone;
 
     // 생년월일
-    @Column(name = "member_birth", nullable = false)
+    @Column(name = "member_birth")
     private String memberBirth;
 
     // 우편번호(주소 api 이용 위해 필요)

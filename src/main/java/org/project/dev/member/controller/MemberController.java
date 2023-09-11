@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,31 @@ public class MemberController {
 
     // Create
     @GetMapping("/join")
-    public String getJoin(MemberDto memberDto){
+    public String getJoin(MemberDto memberDto, Model model){
+
+        // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
+        List<Integer> birthYears = new ArrayList<>();
+        for (int year = 2023; year >= 1900; year--) { // 2023부터 1900까지 역순으로 추가
+            birthYears.add(year);
+        }
+        List<Integer> birthMonths = new ArrayList<>();
+        for (int month = 1; month <= 12; month++) {
+            birthMonths.add(month);
+        }
+        List<Integer> birthDays = new ArrayList<>();
+        for (int day = 1; day <= 31; day++) {
+            birthDays.add(day);
+        }
+
+        model.addAttribute("birthYears", birthYears);
+        model.addAttribute("birthMonths", birthMonths);
+        model.addAttribute("birthDays", birthDays);
+
         return "member/join";
     }
 
     @PostMapping("/join")
-    public String postJoin(@Valid MemberDto memberDto, BindingResult bindingResult){
+    public String postJoin(@Valid @ModelAttribute MemberDto memberDto, BindingResult bindingResult){
 
         if (bindingResult.hasErrors()) {
             return "member/join";
@@ -41,6 +61,12 @@ public class MemberController {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "비밀번호가 일치하지않습니다");
             return "member/join";
         }
+
+        // 생년월일 정보를 조합하여 하나의 문자열로 만듭니다.
+        String birthDate = String.format("%04d%02d%02d", memberDto.getBirthYear(), memberDto.getBirthMonth(), memberDto.getBirthDay());
+
+        // MemberDto에 생년월일을 설정합니다.
+        memberDto.setMemberBirth(birthDate);
 
         memberService.insertMember(memberDto);
         return "login";
@@ -79,6 +105,24 @@ public class MemberController {
     @GetMapping("/update/{memberId}")
     public String getUpdate(@PathVariable("memberId") Long memberId, MemberDto memberDto, Model model){
 
+        // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
+        List<Integer> birthYears = new ArrayList<>();
+        for (int year = 2023; year >= 1900; year--) { // 2023부터 1900까지 역순으로 추가
+            birthYears.add(year);
+        }
+        List<Integer> birthMonths = new ArrayList<>();
+        for (int month = 1; month <= 12; month++) {
+            birthMonths.add(month);
+        }
+        List<Integer> birthDays = new ArrayList<>();
+        for (int day = 1; day <= 31; day++) {
+            birthDays.add(day);
+        }
+
+        model.addAttribute("birthYears", birthYears);
+        model.addAttribute("birthMonths", birthMonths);
+        model.addAttribute("birthDays", birthDays);
+
         memberDto=memberService.updateViewMember(memberId);
         model.addAttribute("memberDto", memberDto);
 
@@ -93,6 +137,12 @@ public class MemberController {
             System.out.println("유효성 검증 관련 오류 발생");
             return "redirect:/";
         }
+
+        // 생년월일 정보를 조합하여 하나의 문자열로 만듭니다.
+        String birthDate = String.format("%04d%02d%02d", memberDto.getBirthYear(), memberDto.getBirthMonth(), memberDto.getBirthDay());
+
+        // MemberDto에 생년월일을 설정합니다.
+        memberDto.setMemberBirth(birthDate);
 
         int rs = memberService.updateMember(memberDto);
 

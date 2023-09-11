@@ -2,6 +2,7 @@ package org.project.dev.product.dto;
 
 import lombok.*;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductEntity;
 import java.time.LocalDateTime;
 
@@ -29,11 +30,14 @@ public class ProductDTO {
     private String productDescription;
     private int productHits;
     // 이 부분을 나중에 member 쪽에 연결(?) 하면 될 것 같습니다.
-    private String productWriter;
+//    private String productWriter;
     private Long productPrice;
+//    private String productWriter;
     private Boolean isProductDisplayed;
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
+
+    private ProductBrandEntity productBrandEntity;
 
     // 송원철 / 장바구니 관련
     private MemberEntity member;
@@ -47,11 +51,21 @@ public class ProductDTO {
         productDTO.setProductSize(productEntity.getProductSize());
         productDTO.setProductDescription(productEntity.getProductDescription());
         productDTO.setProductHits(productEntity.getProductHits());
-        productDTO.setProductWriter(productEntity.getProductWriter()); // 추후 수정 요망
+
+//        productDTO.setProductWriter(productEntity.getProductWriter()); // 추후 수정 요망
         productDTO.setProductPrice(productEntity.getProductPrice());
+//        productDTO.setProductWriter(productEntity.getProductWriter());
         productDTO.setIsProductDisplayed(productEntity.getIsProductDisplayed());
         productDTO.setProductCreateTime(productEntity.getCreateTime());
         productDTO.setProductUpdateTime(productEntity.getUpdateTime());
+
+        // 송원철 / 상품 등록 시 memberId 가져오기
+        if (productEntity.getMember() != null) {
+            MemberEntity memberEntity = new MemberEntity();
+            memberEntity.setMemberNickName(productDTO.getMember().getMemberNickName());
+            productDTO.setMember(memberEntity);
+        }
+
         return productDTO;
     }
 

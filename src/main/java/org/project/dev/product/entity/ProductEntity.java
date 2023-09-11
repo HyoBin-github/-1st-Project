@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.project.dev.cartNew.entity.CartItemEntity;
-import org.project.dev.category.CategoryEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.product.dto.ProductDTO;
@@ -13,7 +12,6 @@ import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_table")
+@Table(name = "product_table2")
 public class ProductEntity extends BaseEntity {
 
     /*
@@ -55,11 +53,14 @@ public class ProductEntity extends BaseEntity {
     private int productHits;
 
     // 이 부분을 나중에 member_id로 바꾸면 될 것 같습니다.
-    @Column(name = "product_writer", length = 20, nullable = false)
-    private String productWriter;
+//    @Column(name = "product_writer", length = 20, nullable = false)
+//    private String productWriter;
 
     @Column(name = "product_price")
     private Long productPrice;
+
+//    @Column(name = "product_writer")
+//    private String productWriter;
 
     @Column(name = "is_product_displayed")
     @ColumnDefault("true")
@@ -74,6 +75,14 @@ public class ProductEntity extends BaseEntity {
     // DB 연관관계 설정 -> ReviewEntity
     @OneToMany(mappedBy = "productEntity",cascade = CascadeType.REMOVE)
     private List<ReviewEntity> reviewEntityList = new ArrayList<>();
+
+    // DB 연관관계 설정 -> ProductBrandEntity
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_brand_id") // Foreign Key
+    private ProductBrandEntity productBrandEntity;
+
+
+
 
     // 송원철 / cartItem과 연관관계 설정
     @OneToMany(mappedBy = "product")
@@ -90,6 +99,7 @@ public class ProductEntity extends BaseEntity {
     private SemiMemberEntity semiMember;
 
 
+
     // Dto to Entity
     public static ProductEntity toEntity(ProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();
@@ -99,7 +109,8 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductSize(productDTO.getProductSize());
         productEntity.setProductDescription(productDTO.getProductDescription());
         productEntity.setProductHits(productDTO.getProductHits());
-        productEntity.setProductWriter(productDTO.getProductWriter());
+//        productEntity.setProductWriter(productDTO.getProductWriter());
+
         productEntity.setProductPrice(productDTO.getProductPrice());
         productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
 
@@ -114,12 +125,12 @@ public class ProductEntity extends BaseEntity {
     }
 
     // 송원철 / productWriter를 memberNickName으로 설정하는 메서드
-    public String getProductWriter(){
-        if(member != null){
-            return member.getMemberNickName();
-        }
-        return null;
-    }
+//    public String getProductWriter(){
+//        if(member != null){
+//            return member.getMemberNickName();
+//        }
+//        return null;
+//    }
 
 
 }
