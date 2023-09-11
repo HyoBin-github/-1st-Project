@@ -100,6 +100,14 @@
     position: relative;
   }
 
+  .sideBar > .sideBar-sec > ul > li:after {
+          content: "";
+          display: block;
+          width: 60px;
+          border-bottom: 1px solid #bcbcbc;
+          margin: 20px auto;
+        }
+
   .sideBar > .sideBar-sec > ul{
     padding: 10px;
   }
@@ -109,7 +117,7 @@
   }
 
   .sideBar > .sideBar-sec > ul li{
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
 
   .sideBar > .sideBar-sec > ul > li:hover > ul  {

@@ -126,6 +126,8 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    // 어드민 페이지
     @GetMapping("/list")
     public String list(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
@@ -279,7 +281,6 @@ public class ProductController {
     public String getProductManage(){
         return "/product/manage";
     }
-
 
 }
 

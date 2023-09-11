@@ -5,7 +5,9 @@
 /*catfather49@gmail.com*/
 -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +24,9 @@
         </div>
 
         <ul>
-            <li>로그 아웃</li>
+            <th:block sec:authorize="hasAnyRole('ADMIN', 'SELLER')">
+                <li><a href="/member/logout">로그아웃</a></li>
+            </th:block>
             <li>상품 관리</li>
             <li><a href="/product/write">상품생성</a></li>
             <li>고객 관리</li>
@@ -33,17 +37,32 @@
     <div class="sideBarTitle">
         <span> 사이드바 </span>
     </div>
-    <div class="loginInfo">
-        <form action="admin/login">
-            <input type="text" name="id" class="id">
-            <input type="password" name="pw" class="pw">
-            <button type="submit" class="loginBtn">login</button>
-        </form>
-    </div>
+
+    <th:block sec:authorize="isAnonymous()">
+        <div class="loginInfo">
+            <form action="admin/login">
+                <input type="text" name="id" class="id">
+                <input type="password" name="pw" class="pw">
+                <button type="submit" class="loginBtn">login</button>
+            </form>
+        </div>
+    </th:block>
+
+    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
+        <div class="loginInfo">
+            <ul>
+                <li>
+                    <span th:text="${#authentication.principal.memberEntity.memberNickName}" class="data1 span"></span>님
+                </li>
+            </ul>
+        </div>
+
+    </th:block>
+
     <div class="sideBar-sec">
         <ul>
             <li>
-                상품 생성
+                <a href="#">상품 생성</a>
                 <ul>
                     <li>
                         <a href="product/write">상품생성</a>
@@ -51,7 +70,7 @@
                 </ul>
             </li>
             <li>
-                상품 관리
+                <a href="#">상품 관리</a>
                 <ul>
                     <li>
                         <a href="/product/write">상품생성</a>
@@ -62,7 +81,7 @@
                 </ul>
             </li>
             <li>
-                고객 문의
+                <a href="#">고객 문의</a>
                 <ul>
                     <li>
                         <a href="#">내 문의</a>
@@ -70,7 +89,7 @@
                 </ul>
             </li>
             <li>
-                주문 목록
+                <a href="#">주문 목록</a>
                 <ul>
                     <li>
                         <a href="#">내 주문</a>
@@ -86,16 +105,16 @@
         <div class="main-section1">
             <ul>
                 <li>
-                    내 상품 문의 사항
+                    <a href="#">내 상품 문의 사항</a>
                 </li>
                 <li>
-                    상품 관리
+                    <a href="#">상품 관리</a>
                 </li>
                 <li>
                     <a href="/product/write">상품생성</a>
                 </li>
                 <li>
-                    주문 목록
+                    <a href="#">주문 목록</a>
                 </li>
             </ul>
         </div>
