@@ -103,7 +103,6 @@ public class ProductController {
         if (member != null) {
             model.addAttribute("member", member);
             log.info("MemberId: {}", member.getMemberId());
-            log.info("MemberNickName: {}", member.getMemberNickName());
         }else {
             log.info("member is null");
         }

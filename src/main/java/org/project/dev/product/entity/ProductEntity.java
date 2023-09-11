@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_table2")
+@Table(name = "product_table1")
 public class ProductEntity extends BaseEntity {
 
     /*
@@ -99,7 +99,6 @@ public class ProductEntity extends BaseEntity {
     private SemiMemberEntity semiMember;
 
 
-
     // Dto to Entity
     public static ProductEntity toEntity(ProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();
@@ -109,8 +108,6 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductSize(productDTO.getProductSize());
         productEntity.setProductDescription(productDTO.getProductDescription());
         productEntity.setProductHits(productDTO.getProductHits());
-//        productEntity.setProductWriter(productDTO.getProductWriter());
-
         productEntity.setProductPrice(productDTO.getProductPrice());
         productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
 

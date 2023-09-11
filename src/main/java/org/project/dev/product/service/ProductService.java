@@ -134,28 +134,6 @@ public class ProductService {
         }
     }
 
-    // 송원철 / memberNickName 가져오기 위해 필요함
-//    @Transactional(readOnly = true)
-//    public ProductDTO productViewDetail(Long id, MemberEntity memberEntity) {
-//        // 게시물의 ID를 이용하여 해당 게시물을 데이터베이스에서 찾음
-//        Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
-//        // 만약 해당 ID에 해당하는 게시물이 존재한다면,
-//        if(optionalProductEntity.isPresent()){
-//            // Optional 객체에서 실제 ProductEntity 객체를 가져옴
-//            ProductEntity productEntity = optionalProductEntity.get();
-//            // 가져온 ProductEntity 객체를 ProductDTO 객체로 변환
-//            ProductDTO productDTO = ProductDTO.toDTO(productEntity);
-//            // MemberEntity 정보를 ProductDTO에 할당
-//            productDTO.setMember(memberEntity);
-//
-//            // 변환된 ProductDTO 객체를 반환
-//            return productDTO;
-//        }else{
-//            // 해당 ID에 해당하는 게시물이 존재하지 않을 경우 null 반환
-//            return null;
-//        }
-//    }
-
     // UPDATE PROCESS (UPDATE)
     @Transactional
     public ProductDTO productUpdateDetail(ProductDTO productDTO) {
