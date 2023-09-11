@@ -52,8 +52,20 @@ public class InquiryService {
   3.
   4.
   */
-    public Page<InquiryDto> InquiryList(Pageable pageable) {
-        Page<InquiryEntity> inquiryEntities = inquiryRepository.findAll(pageable);
+    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch) {
+
+       Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
+
+        if(inquirySelect.equals("title")){
+            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
+        }else if(inquirySelect.equals("content")){
+            inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
+        }else if(inquirySelect.equals("writer")){
+            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(pageable,inquirySearch);
+        }else{
+            inquiryEntities = inquiryRepository.findAll(pageable);
+        }
+
 
         inquiryEntities.getNumber();
         inquiryEntities.getTotalElements();
@@ -62,18 +74,23 @@ public class InquiryService {
 
         Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
 
+//        if(!inquiryEntities.isEmpty()){
+//            for(InquiryEntity inquiryEntity : inquiryEntities){
+//                InquiryDto inquiryDto = InquiryDto.builder()
+//                        .inqId(inquiryEntity.getInqId())
+//                        .inqType(inquiryEntity.getInqType())
+//                        .inquiryTitle(inquiryEntity.getInquiryTitle())
+//                        .inquiryContent(inquiryEntity.getInquiryContent())
+//                        .inquiryWriter(inquiryEntity.getInquiryWriter())
+//                        .CreateTime(inquiryEntity.getCreateTime())
+//                        .UpdateTime(inquiryEntity.getUpdateTime())
+//                        .inqHit(inquiryEntity.getInqHit())
+//                        .build();
+//                inquiryDtoPage.add(inquiryDtoPage);
+//            }
+//        }
+
         return inquiryDtoPage;
-    }
-    public List<InquiryDto> findAllList() {
-        List<InquiryDto> inquiryDtos = new ArrayList<>();
-        List<InquiryEntity> inquiryEntities = inquiryRepository.findAll();
-        if(!inquiryEntities.isEmpty()){
-            for(InquiryEntity inquiryEntity: inquiryEntities){
-                InquiryDto inquiryDto = InquiryDto.toinquiryDto(inquiryEntity);
-                inquiryDtos.add(inquiryDto);
-            }
-        }
-        return inquiryDtos;
     }
     /*
  Todo
@@ -82,37 +99,37 @@ public class InquiryService {
   3.
   4. 검색과정에서 타임리프 페이징이 들어갈 경우 오류가 발생하여 페이징이 없는 경로 추가 설정
   */
-    public List<InquiryDto> InquiryListSearch(@NotNull String inquirySelect, String inquirySearch) {
-        List<InquiryDto> inquiryDtoList = new ArrayList<>();
-        List<InquiryEntity> inquiryEntities = new ArrayList<>();
-
-        if(inquirySelect.equals("title")){
-            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(inquirySearch);
-        }else if(inquirySelect.equals("content")){
-            inquiryEntities = inquiryRepository.findByInquiryContentContaining(inquirySearch);
-        }else if(inquirySelect.equals("writer")){
-            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(inquirySearch);
-        }else{
-            inquiryEntities = inquiryRepository.findAll();
-        }
-
-        if(!inquiryEntities.isEmpty()){
-            for(InquiryEntity inquiryEntity : inquiryEntities){
-                InquiryDto inquiryDto = InquiryDto.builder()
-                        .inqId(inquiryEntity.getInqId())
-                        .inqType(inquiryEntity.getInqType())
-                        .inquiryTitle(inquiryEntity.getInquiryTitle())
-                        .inquiryContent(inquiryEntity.getInquiryContent())
-                        .inquiryWriter(inquiryEntity.getInquiryWriter())
-                        .CreateTime(inquiryEntity.getCreateTime())
-                        .UpdateTime(inquiryEntity.getUpdateTime())
-                        .inqHit(inquiryEntity.getInqHit())
-                        .build();
-                inquiryDtoList.add(inquiryDto);
-            }
-        }
-        return inquiryDtoList;
-    }
+//    public List<InquiryDto> InquiryListSearch(@NotNull String inquirySelect, String inquirySearch) {
+//        List<InquiryDto> inquiryDtoList = new ArrayList<>();
+//        List<InquiryEntity> inquiryEntities = new ArrayList<>();
+//
+//        if(inquirySelect.equals("title")){
+//            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(inquirySearch);
+//        }else if(inquirySelect.equals("content")){
+//            inquiryEntities = inquiryRepository.findByInquiryContentContaining(inquirySearch);
+//        }else if(inquirySelect.equals("writer")){
+//            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(inquirySearch);
+//        }else{
+//            inquiryEntities = inquiryRepository.findAll();
+//        }
+//
+//        if(!inquiryEntities.isEmpty()){
+//            for(InquiryEntity inquiryEntity : inquiryEntities){
+//                InquiryDto inquiryDto = InquiryDto.builder()
+//                        .inqId(inquiryEntity.getInqId())
+//                        .inqType(inquiryEntity.getInqType())
+//                        .inquiryTitle(inquiryEntity.getInquiryTitle())
+//                        .inquiryContent(inquiryEntity.getInquiryContent())
+//                        .inquiryWriter(inquiryEntity.getInquiryWriter())
+//                        .CreateTime(inquiryEntity.getCreateTime())
+//                        .UpdateTime(inquiryEntity.getUpdateTime())
+//                        .inqHit(inquiryEntity.getInqHit())
+//                        .build();
+//                inquiryDtoList.add(inquiryDto);
+//            }
+//        }
+//        return inquiryDtoList;
+//    }
 
     /*
            Todo
@@ -183,7 +200,13 @@ public class InquiryService {
         return 0;
     }
 
-
+    /*
+               Todo
+                1. rladpwls1843@gamil.com
+                2. 문의사항 삭제 서비스
+                3.
+                4.
+                */
     public int InquiryDelete(Long id) {
         Optional<InquiryEntity> optionalInquiryEntity
                 = Optional.ofNullable(inquiryRepository.findById(id).orElseThrow(() -> {

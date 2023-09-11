@@ -1,7 +1,7 @@
 @import url(/css/common/reset.css);
-@import url(/css/common/cream_header.css);
+@import url(/css/common/header.css);
 @import url(/css/common/footer.css);
-container write write-con h1,ul
+
 .container{
     width: 100%;
 }
