@@ -215,5 +215,27 @@ public class MemberService {
         return memberRepository.findById(memberId).get();
     }
 
+    // 휴대전화번호 db에 저장될때 해당 형식으로 저장되도록 하는 메서드
+    public void savePhoneNumber(MemberDto memberDto){
+        // 휴대전화번호 데이터 형식 변환
+        String formattedPhoneNumber = transformPhoneNumber(memberDto.getMemberPhone());
+
+        // JPA Entity 생성
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberPhone(formattedPhoneNumber);
+        memberRepository.save(memberEntity);
+    }
+
+    // 휴대전화번호 db에 저장될때 해당 형식으로 저장되도록 하는 메서드
+    private String transformPhoneNumber(String memberPhone) {
+        // 입력된 휴대전화번호에서 "-" 문자를 제거
+        String cleanedPhoneNumber = memberPhone.replaceAll("-", "");
+
+        return cleanedPhoneNumber;
+    }
+
 }
+
+
+
 

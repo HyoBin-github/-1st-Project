@@ -35,15 +35,23 @@
 
         <!-- 송원철 -->
         <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
+        <span th:if="${false}" th:text="${member.memberNickName}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
         <script th:inline="javascript">
             /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
             var memberId = /*[[${member?.memberId}]]*/ null;
 
             /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
             if (memberId !== null) {
-                console.log('Member ID:', memberId);
+                console.log('MemberId:', memberId);
             }else {
-                console.log('Member ID: null');
+                console.log('MemberId: null');
+            }
+
+            /* memberNickName가 null이 아닌 경우에만 console에 출력합니다. */
+            if (memberNickName !== null) {
+                console.log('MemberNickName:', memberNickName);
+            } else {
+                console.log('MemberNickName: null');
             }
         </script>
         <!----------->
@@ -121,9 +129,10 @@
           <input type="submit" value="판매글작성" class="productSubmit" id="productSubmit">
         </div>
       </div>
-      
-      <input type="text" name="productWriter" value="1" style="display: none;">
-      
+
+<!--      <input type="text" id="memberNickName" name="memberNickName" th:value="${member.memberNickName}">-->
+<!--      <input type="text" name="productWriter" value="1" style="display: none;">-->
+    </div>
   </form>
 </div>
 </body>

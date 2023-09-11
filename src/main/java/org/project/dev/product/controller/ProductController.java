@@ -8,6 +8,7 @@ import org.project.dev.cartNew.service.CartService;
 import org.project.dev.cartNew.service.SemiCartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.MemberService;
@@ -99,14 +100,15 @@ public class ProductController {
 
         if (member != null) {
             model.addAttribute("member", member);
-            log.info("Member: {}", member.getMemberId());
+            log.info("MemberId: {}", member.getMemberId());
+            log.info("MemberNickName: {}", member.getMemberNickName());
         }else {
             log.info("member is null");
         }
         return "/product/write";
     }
 
-    // 송원철 / write 시 로그인한 memberId 저장
+    // 송원철 / write 시 로그인한 memberId, memberNickName 저장
     @PostMapping("/write")
     public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
                                                                @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,

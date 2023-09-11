@@ -55,8 +55,8 @@ public class ProductEntity extends BaseEntity {
     private int productHits;
 
     // 이 부분을 나중에 member_id로 바꾸면 될 것 같습니다.
-    @Column(name = "product_writer", length = 20, nullable = false)
-    private String productWriter;
+//    @Column(name = "product_writer", length = 20, nullable = false)
+//    private String productWriter;
 
     @Column(name = "product_price")
     private Long productPrice;
@@ -99,7 +99,7 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductSize(productDTO.getProductSize());
         productEntity.setProductDescription(productDTO.getProductDescription());
         productEntity.setProductHits(productDTO.getProductHits());
-        productEntity.setProductWriter(productDTO.getProductWriter());
+//        productEntity.setProductWriter(productDTO.getProductWriter());
         productEntity.setProductPrice(productDTO.getProductPrice());
         productEntity.setIsProductDisplayed(productDTO.getIsProductDisplayed());
 
@@ -114,12 +114,12 @@ public class ProductEntity extends BaseEntity {
     }
 
     // 송원철 / productWriter를 memberNickName으로 설정하는 메서드
-    public String getProductWriter(){
-        if(member != null){
-            return member.getMemberNickName();
-        }
-        return null;
-    }
+//    public String getProductWriter(){
+//        if(member != null){
+//            return member.getMemberNickName();
+//        }
+//        return null;
+//    }
 
 
 }

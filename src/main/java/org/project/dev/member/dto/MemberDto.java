@@ -4,6 +4,7 @@ import lombok.*;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.entity.MemberEntity;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -23,6 +24,11 @@ public class MemberDto {
     @Size(min = 10, max = 255)
     @Email
     private String memberEmail;
+
+    // emailId, domailCustom 합쳐서 저장
+    private String emailId;
+
+    private String domainCustom;
 
     @NotBlank
     @Size(min = 8, max = 255)
@@ -46,9 +52,18 @@ public class MemberDto {
     @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대전화번호를 입력해주세요")
     private String memberPhone;
 
-    @NotBlank
-    @Size(min = 8, max = 8)
+//    @NotBlank
+//    @Size(min = 8, max = 8)
+//    private String memberBirth;
+
+    // 생년월일(birthYear, birthMonth, birthDay 합쳐서 저장)
     private String memberBirth;
+
+    private int birthYear;
+
+    private int birthMonth;
+
+    private int birthDay;
 
     @NotBlank(message = "우편번호를 입력해주세요")
     private String memberPostCode;
@@ -70,7 +85,6 @@ public class MemberDto {
     public boolean isMatching(){ // 부에서 해당 멤버 변수 값을 읽을 수 있는 인터페이스를 제공하기 위해 사용
         return matching;
     }
-
 
     private LocalDateTime createTime;
 

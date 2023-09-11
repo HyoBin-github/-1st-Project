@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/member/checkDuplicate_semi.js}" defer="defer"></script>
     <script th:src="@{/js/member/email_semi.js}" defer="defer"></script>
+    <script th:src="@{/js/member/join_semiEmail.js}" defer="defer"></script>
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -21,13 +22,31 @@
             <div class="join-form">
                 <form th:action="@{/semiMember/join}" method="post" id="signupForm" th:object="${semiMemberDto}">
                     <ul>
+<!--                        <li>-->
+<!--                            <label th:for="semiMemberEmail">이메일</label>-->
+<!--                            <input type="email" th:field="*{semiMemberEmail}" required="required" placeholder="이메일 입력">-->
+<!--                            <button type="button" id="emailCheckButton">이메일 중복 확인</button>-->
+<!--                        </li>-->
+<!--                        <p th:if="${#fields.hasErrors('semiMemberEmail')}" th:errors="*{semiMemberEmail}" class="error"></p>-->
+<!--                        <li>-->
+<!--                            <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>-->
+<!--                            <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>-->
+<!--                        </li>-->
                         <li>
-                            <label th:for="semiMemberEmail">이메일</label>
-                            <input type="email" th:field="*{semiMemberEmail}" required="required" placeholder="이메일 입력">
-                            <button type="button" id="emailCheckButton">이메일 중복 확인</button>
-                        </li>
-                        <p th:if="${#fields.hasErrors('semiMemberEmail')}" th:errors="*{semiMemberEmail}" class="error"></p>
-                        <li>
+                            <div class="input-group">
+                                <label>이메일</label>
+                                <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력"><span> @ </span>
+                                <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력">
+                                <select id="domainList" required="required">
+                                    <option value="custom">직접 입력</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="nate.com">nate.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                </select>
+                                <input type="text" id="semiMemberEmail" name="semiMemberEmail" value="">
+                                <button type="button" id="emailCheckButton">이메일 중복 확인</button>
+                            </div>
                             <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
                             <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>
                         </li>

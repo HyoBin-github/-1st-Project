@@ -69,7 +69,9 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
             memberEmail = (String) response.get("email");
             memberName= (String) response.get("name");
             memberNickName = (String) response.get("nickname");
-            memberPhone=(String) response.get("mobile");
+//            memberPhone=(String) response.get("mobile");
+            // 휴대전화번호 데이터 형식 변환
+            memberPhone = transformPhoneNumber((String) response.get("mobile"));
             memberBirth=(String) response.get("birthday");
 //            birth=(String) response.get("profile_image"); // 프로필 URL
 //            birthYear=(String)response.get("birthyear");
@@ -115,4 +117,13 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
 
         return new MyUserDetails(memberEntity, attributes);
     }
+
+    // 휴대전화번호 db에 저장될때 해당 형식으로 저장되도록 하는 메서드
+    private String transformPhoneNumber(String memberPhone) {
+        // 입력된 휴대전화번호에서 "-" 문자를 제거
+        String cleanedPhoneNumber = memberPhone.replaceAll("-", "");
+
+        return cleanedPhoneNumber;
+    }
+
 }
