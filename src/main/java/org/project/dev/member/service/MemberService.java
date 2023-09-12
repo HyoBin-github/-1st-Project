@@ -36,7 +36,7 @@ public class MemberService {
 
         // 이미지 생성 및 저장
         ImageEntity imageEntity = new ImageEntity();
-        imageEntity.setImageUrl("/profileImages/anonymous.png");
+        imageEntity.setImageUrl("/profileImages/default.png");
         imageEntity.setMember(memberEntity);
 
         // ImageEntity를 db에 저장

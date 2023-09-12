@@ -268,6 +268,21 @@ public class MemberController {
         return "member/confirmEmail";
     }
 
+    // 프로필 이미지 변경 페이지
+    @GetMapping("/updateImage/{memberId}")
+    public String getUpdateImage(@PathVariable("memberId") Long memberId, Model model){
+
+        MemberDto member=memberService.detailMember(memberId);
+
+        // 이미지 url을 db에서 가져오기
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+        model.addAttribute("member", member);
+        model.addAttribute("memberImageUrl", memberImageUrl); // 이미지 url 모델에 추가
+
+        return "member/updateImage";
+    }
+
 
 
 

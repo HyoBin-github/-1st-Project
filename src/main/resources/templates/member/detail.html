@@ -5,6 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <title>detail</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:src="@{/js/member/detail.js}" defer="defer"></script>
   <style>
     /* 미리보기 이미지 스타일 */
     #image-preview {
@@ -17,15 +19,9 @@
 <body>
 <div class="detail">
   <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 상세정보</h1>
-
-  <!-- 이미지 미리보기 영역 -->
+<!--  &lt;!&ndash; 이미지 미리보기 영역 &ndash;&gt;-->
   <div id="image-preview"><img id="preview-image" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
-  <!-- 버튼을 클릭하면 /image/upload로 POST 요청 보내기 -->
-  <form method="post" action="/image/upload" enctype="multipart/form-data">
-    <input type="file" name="file" id="file-input"> <!-- 파일 업로드 필드 -->
-    <button type="submit">이미지 업로드</button>
-  </form>
-
+  <button onclick="redirectToURL()">프로필 이미지 수정</button>
   <span th:if="${false}" th:text="${member.memberId}"></span> <br> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
   <span th:if="${false}" :text="${member.memberPassword}"></span> <br>
   이메일 : <span th:text="${member.memberEmail}"></span> <br>
@@ -43,41 +39,18 @@
   <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
   <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
 </div>
+<!-- Thymeleaf 표현식을 사용하여 memberId를 JavaScript 변수에 할당 -->
+<script th:inline="javascript">
+    var memberId = /*[[${member.memberId}]]*/ null;
+</script>
+<!-- 이동 버튼 클릭 시 지정된 URL로 이동 -->
 <script>
-  // 파일 선택 시 이미지 미리보기 함수
- document.getElementById('file-input').addEventListener('change', function() {
-   var preview = document.getElementById('image-preview');
-   var file = this.files[0];
-   var reader = new FileReader();
-
-   reader.onload = function(e) {
-     // 이전 이미지 삭제
-     while (preview.firstChild) {
-       preview.removeChild(preview.firstChild);
+function redirectToURL() {
+     if (memberId !== null) {
+       var dynamicURL = "/member/updateImage/" + memberId;
+       window.location.href = dynamicURL;
      }
-
-     var img = new Image();
-     img.src = e.target.result;
-     img.style.maxWidth = '100%';
-     img.style.maxHeight = '100%';
-     preview.appendChild(img);
-   };
-
-   reader.readAsDataURL(file);
- });
-
- // 생년월일 유효성 검사 함수
- function validateBirth() {
-     var birth = document.getElementById('memberBirthSpan').textContent;
-
-     if (!/^[0-9]{8}$/.test(birth)) {
-         document.getElementById('birthErrorMessage').textContent = "올바른 형식으로 입력해주세요 (8자리 숫자)";
-     } else {
-         document.getElementById('birthErrorMessage').textContent = "";
-     }
- }
- // 페이지 로드 시 유효성 검사 수행
- window.onload = validateBirth;
+}
 </script>
 </body>
 </html>

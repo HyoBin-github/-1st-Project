@@ -21,6 +21,7 @@ public class ImageController {
     private final ImageServiceImpl imageService;
     private final ImageRepository imageRepository;
 
+    // 이미지 등록
     @PostMapping("/upload")
     public String upload(@ModelAttribute ImageUploadDto imageUploadDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
 
@@ -31,7 +32,15 @@ public class ImageController {
         model.addAttribute("memberImageUrl", "/profileImages/" + imageUploadDto.getFile().getOriginalFilename());
 
         return "redirect:/member/detail/" + myUserDetails.getMemberEntity().getMemberId();
+    }
 
+    // 이미지 삭제
+    @PostMapping("/delete")
+    public String deleteImage(@AuthenticationPrincipal MyUserDetails myUserDetails) {
+
+        String memberEmail = myUserDetails.getUsername();
+        imageService.deleteImage(memberEmail);
+        return "redirect:/member/detail/" + myUserDetails.getMemberEntity().getMemberId();
     }
 
 }
