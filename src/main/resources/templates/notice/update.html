@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>공지사항 수정 페이지</title>
     <link rel="stylesheet" th:href="@{/css/notice/update.css}">
-   <script th:src="@{/js/notice/write.js}" defer="defer"></script>
+<!--   <script th:src="@{/js/notice/write.js}" defer="defer"></script>-->
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -41,7 +41,7 @@
                         </li>
                         <li class="contentLi">
                             <div class="content">
-                                <label th:for="content" class="contentLabel">내용</label>
+                                <label th:for="noticeContent" class="contentLabel">내용</label>
                             </div>
                            <textarea th:text="${noticeDto.noticeContent}" th:value="${noticeDto.noticeContent}" id="contentText" class="writeInput"></textarea>
                         </li>
@@ -49,12 +49,17 @@
                             <label th:for="notHit">조회수</label>
                             <input type="text" name="notHit" th:value="${noticeDto.notHit}" readonly>
                         </li>
+<!--                        <li>-->
+<!--                            <label th:for="CreateTime">작성시간</label>-->
+<!--                            <input type="text" name="CreateTime" th:value="${noticeDto.CreateTime}" readonly>-->
+<!--                        </li>-->
                     </ul>
                     <ul>
                         <li class="Btn">
                             <div class="button">
-                                <input type="submit" value="작성">
+                                <input type="submit" value="수정하기">
                                 <input type="reset" value="취소">
+                                <input type="hidden" name="notId" th:value="${noticeDto.notId}" readonly>
                             </div>
                         </li>
                     </ul>
