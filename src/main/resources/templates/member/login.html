@@ -17,8 +17,10 @@
     <div class="container">
         <div class="login">
             <div class="login-con">
-                <div class="login-form">
+                <div class="title">
                     <h1>일반 회원 로그인</h1>
+                </div>
+                <div class="login-form">
                     <!-- enctype="multipart/form-data" 뭔지 자세히 알아보기 -->
                     <form th:action="@{/member/login/post}" enctype="multipart/form-data" method="post">
                         <ul>
@@ -30,20 +32,30 @@
                                 <label for="memberPassword">비밀번호</label>
                                 <input type="password" name="memberPassword" id="memberPassword" required="required" placeholder="비밀번호 입력">
                             </li>
-                            <li>
-                                <input type="submit" value="로그인">
+                            <li class="submit">
+                                <input type="submit" value="로그인" class="Btn">
                             </li>
+                        </ul>
+                        <ul>
+                        <div class="find">
+                            <div class="email">
                             <li>
                                 <a th:href="@{/forgot-email}">이메일 찾기</a>
                             </li>
+                            </div>
+                            <div class="pw">
                             <li>
                                 <a th:href="@{/tempPassword}">비밀번호 찾기</a>
                             </li>
+                            </div>
+                        </div>
+                        <div class="sns-con">
                             <li class="sns">
                                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/google.jpg}" alt="google"></a>
                                 <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/images/naver.jpg}" alt="naver"></a>
                                 <a th:href="@{/oauth2/authorization/kakao}"><img th:src="@{/images/kakao.jpg}" alt="kakao"></a>
                             </li>
+                        </div>
                         </ul>
                     </form>
                 </div>
