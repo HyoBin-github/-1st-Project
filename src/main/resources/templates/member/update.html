@@ -43,7 +43,9 @@
       <p th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}" class="error"></p>
       <li>
         <label th:for="memberBirth">생년월일</label>
-        <input type="text" th:field="*{memberBirth}" th:value="${memberDto.memberBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns()" readonly> <br> <!-- required 추가 시 값 꼭 입력해야함 -->
+        <input type="text" th:field="*{memberBirth}" th:value="${memberDto.memberBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns(); validateBirth(this);" readonly> <!-- required 추가 시 값 꼭 입력해야함 -->
+        <!-- 오류 메시지를 표시할 영역 -->
+        <span id="birthErrorMessage" style="color: red;"></span> <br>
       </li>
       <p th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}" class="error"></p>
       <!-- 드롭다운 선택 영역 -->
@@ -73,7 +75,7 @@
       </li>
       <li>
         <label th:for="memberDetailAddress">상세주소</label>
-        <input type="text" th:field="*{memberDetailAddress}" th:value="${memberDto.memberDetailAddress}" placeholder="상세주소를 입력하세요"> <br>
+        <input type="text" th:field="*{memberDetailAddress}" th:value="${memberDto.memberDetailAddress}" required="required" placeholder="상세주소를 입력하세요"> <br>
       </li>
       <li>
         <label th:for="role">권한</label>
@@ -85,6 +87,20 @@
   <a href="javascript:history.back()">수정취소</a>
   <a th:href="@{/member/confirmPassword/{memberId}(memberId=${memberDto.memberId})}">비밀번호 변경</a>
 </div>
+<script>
+  // 생년월일 유효성 검사 함수
+  function validateBirth() {
+      var birth = document.getElementById('memberBirth').textContent;
+
+      if (!/^[0-9]{8}$/.test(birth)) {
+          document.getElementById('birthErrorMessage').textContent = "올바른 형식으로 입력해주세요 (8자리 숫자)";
+      } else {
+          document.getElementById('birthErrorMessage').textContent = "";
+      }
+  }
+  // 페이지 로드 시 유효성 검사 수행
+  window.onload = validateBirth;
+</script>
 </body>
 </html>
 

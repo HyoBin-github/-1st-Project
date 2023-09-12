@@ -24,7 +24,7 @@
         </thead>
         <tbody>
         <tr th:each="cartItem, i: ${cartItems}">
-            <td th:text="${i.count}">1</td>
+            <td th:text="${i.count}">장바구니상품 번호</td>
             <td th:text="${cartItem.getProduct().getId()}">상품ID</td>
             <td>
                 <th:block th:each="img : ${productImages}">

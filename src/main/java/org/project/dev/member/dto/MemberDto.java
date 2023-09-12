@@ -40,7 +40,7 @@ public class MemberDto {
 
     @NotBlank
     @Size(min = 2, max = 50)
-    @Pattern(regexp = "^[가-힣a-zA-Z]*$", message = "한글과 영문만 입력 가능합니다" )
+//    @Pattern(regexp = "^[가-힣a-zA-Z]*$", message = "한글과 영문만 입력 가능합니다" )  // 자바스크립트로 처리
     private String memberName;
 
     @NotBlank
@@ -49,7 +49,7 @@ public class MemberDto {
 
     @NotBlank
     @Size(min = 10, max = 11)
-    @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대전화번호를 입력해주세요")
+//    @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대전화번호를 입력해주세요") 자바스크립트로 처리
     private String memberPhone;
 
 //    @NotBlank

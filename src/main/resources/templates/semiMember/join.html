@@ -10,6 +10,7 @@
     <script th:src="@{/js/member/checkDuplicate_semi.js}" defer="defer"></script>
     <script th:src="@{/js/member/email_semi.js}" defer="defer"></script>
     <script th:src="@{/js/member/join_semiEmail.js}" defer="defer"></script>
+    <script th:src="@{/js/member/join_semiValidation.js}" defer="defer"></script>
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -40,6 +41,7 @@
                             <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
                             <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>
                         </li>
+                        <span id="emailIdErrorMessage" style="color: red;"></span> <!-- 이메일 유효성 검사 오류 메시지를 표시할 영역 -->
                         <!-- 인증번호 입력란 -->
                         <li>
                             <label th:for="emailVerificationCode">인증번호</label>
@@ -59,6 +61,7 @@
                             <input type="text" th:field="*{semiMemberPhone}" required="required" placeholder="- 제외하고 입력해주세요">
                         </li>
                         <p th:if="${#fields.hasErrors('semiMemberPhone')}" th:errors="*{semiMemberPhone}" class="error"></p>
+                        <span id="semiMemberPhoneErrorMessage" style="color: red;"></span> <!-- 휴대전화번호 유효성 검사 오류 메시지를 표시할 영역 -->
                         <!-- 닉네임 중복 확인 버튼 -->
                         <li>
                             <button type="button" id="phoneCheckButton">휴대전화 중복 확인</button>

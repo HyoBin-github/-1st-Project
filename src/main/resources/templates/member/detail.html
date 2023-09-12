@@ -7,23 +7,38 @@
   <title>detail</title>
 </head>
 <body>
-<!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
 <div class="detail">
   <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 상세정보</h1>
-  <!--  아이디 : <span th:text="${member.memberId}"></span> <br>-->
   <span th:if="${false}" th:text="${member.memberId}"></span> <br> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
   <span th:if="${false}" :text="${member.memberPassword}"></span> <br>
   이메일 : <span th:text="${member.memberEmail}"></span> <br>
   이름 : <span th:text="${member.memberName}"></span> <br>
   닉네임 : <span th:text="${member.memberNickName}"></span> <br>
   휴대전화 : <span th:text="${member.memberPhone}"></span> <br>
-  생년월일 : <span th:text="${member.memberBirth}"></span> <br>
-  주소 : <span th:text="${member.memberStreetAddress + ', ' + member.memberDetailAddress}"></span> <br>
+  생년월일 : <span th:text="${member.memberBirth}" id="memberBirthSpan"></span>
+  <!-- 오류 메시지를 표시할 영역 -->
+  <span id="birthErrorMessage" style="color: red;"></span> <br>
+<!--  주소 : <span th:text="${member.memberStreetAddress + ', ' + member.memberDetailAddress}"></span> <br>-->
+  주소 : <span th:text="${member.memberStreetAddress + ', ' + member.memberDetailAddress}" th:class="${member.memberStreetAddress == null ? 'error' : ''}"></span>
+  <span th:if="${member.memberStreetAddress == null}" style="color: red;">주소를 입력해주세요</span> <br>
   권한 : <span th:text="${member.role}"></span> <br>
   가입일 : <span th:text="${#temporals.format(member.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span> <br>
   <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
   <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
-  <!--  <a th:href="@{/member/delete/{memberId}(memberId=${member.memberId})}">삭제</a>-->
 </div>
+<script>
+  // 생년월일 유효성 검사 함수
+  function validateBirth() {
+      var birth = document.getElementById('memberBirthSpan').textContent;
+
+      if (!/^[0-9]{8}$/.test(birth)) {
+          document.getElementById('birthErrorMessage').textContent = "올바른 형식으로 입력해주세요 (8자리 숫자)";
+      } else {
+          document.getElementById('birthErrorMessage').textContent = "";
+      }
+  }
+  // 페이지 로드 시 유효성 검사 수행
+  window.onload = validateBirth;
+</script>
 </body>
 </html>
