@@ -52,6 +52,7 @@ public class NoticeEntity extends BaseEntity {
         noticeEntity.setNoticeContent(noticeDto.getNoticeContent());
         noticeEntity.setNotWriter(noticeDto.getNotWriter());
         noticeEntity.setNotHit(noticeDto.getNotHit());
+        noticeEntity.setCreateTime(noticeDto.getCreateTime());
         noticeEntity.setUpdateTime(noticeDto.getUpdateTime());
         return noticeEntity;
     }

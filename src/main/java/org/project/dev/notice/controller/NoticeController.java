@@ -162,18 +162,21 @@ public class NoticeController {
         return "redirect:/notice/list?page=0&select=&search=";
     }
     @PostMapping("/update/{id}")
-    public String postNoticeUpdate(@PathVariable("id") Long id, NoticeDto noticeDto){
+    public String postNoticeUpdate(@PathVariable("id") Long id, NoticeDto noticeDto, Model model){
+//        int rs = noticeService.noticeUpdateOk(noticeDto, id);
+//        if(rs == 1){
+//            System.out.println("수정 성공");
+//        }else{
+//            System.out.println("수정 실패");
+//        }
+//        return "redirect:/notice/detail/"+id;
 
-//        NoticeDto noticeDto1 = noticeService.NoticeDetail(id);
+        NoticeDto noticeDto1 = noticeService.noticeUpdateOk1(noticeDto, id);
+        model.addAttribute("noticeDto", noticeDto1); // update한 값을 model객체에 받는다.
 
-        int rs = noticeService.noticeUpdateOk(noticeDto, id);
+        return "notice/detail";
+        // 기존의 redirec로 갈 경우 조회수가 증가하므로 html문으로 보낸다.
 
-        if(rs == 1){
-            System.out.println("수정 성공");
-        }else{
-            System.out.println("수정 실패");
-        }
-        return "redirect:/notice/detail/"+id;
     }
 
 

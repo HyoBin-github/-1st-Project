@@ -157,6 +157,7 @@ public class NoticeService {
         }
         return null;
     }
+//    수정 중
     public int noticeUpdateOk(NoticeDto noticeDto, Long id) {
 
         Optional<NoticeEntity> optionalNoticeEntity
@@ -174,11 +175,28 @@ public class NoticeService {
                 = Optional.ofNullable(noticeRepository.findById(noticeDto.getNotId()).orElseThrow(() -> {
             return new IllegalArgumentException("수정한 공지사항이 없습니다.");
         })); //
-        if(optionalNoticeEntity1.isPresent()){
+        if (optionalNoticeEntity1.isPresent()) {
             return 1;
         }
         return 0;
     }
+//    수정 중
+    @Transactional
+    public NoticeDto noticeUpdateOk1(NoticeDto noticeDto, Long id) {
+        // errer throw 처리
+        NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(()->{
+            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
+        });
+//        noticeDto.setNotId(id);
+
+        Long noticeId = noticeRepository.save(NoticeEntity.toNoticeEntityUpdate(noticeDto)).getNotId(); // 수정을 위한 jparepository
+
+        NoticeEntity noticeEntity1 = noticeRepository.findById(noticeId).orElseThrow(()->{
+            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
+        });
+        return NoticeDto.tonoticeDto(noticeEntity1);
+    }
+
     /*
            Todo
             1. rladpwls1843@gamil.com
@@ -201,6 +219,5 @@ public class NoticeService {
         }
         return 0;
     }
-
 
 }

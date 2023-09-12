@@ -27,7 +27,7 @@
             <div class="join-form">
                 <form th:action="@{/member/join}" method="post" id="signupForm" th:object="${memberDto}">
                     <ul>
-                        <li>
+                        <li class="emailLi">
                             <div class="email">
                                 <label>이메일</label>
                                 <div class="email-text">
@@ -58,6 +58,7 @@
                                 <button type="button" id="certifyEmailButton" class="submitBtn">인증번호 전송</button>
                                 <button type="button" id="verifyEmailButton" class="checkBtn">인증번호 확인</button>
                             </div>
+                            <!-- <button type="button" id="verifyEmailButton" class="checkBtn">인증번호 확인</button> -->
                         </li>
                         <li>
                             <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
@@ -115,6 +116,7 @@
                             </div>
                         </li>
                         <p th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}" class="error"></p>
+                        <font id="checkMessage" size="2"></font>
                         <span id="memberPhoneErrorMessage" style="color: red;"></span> <!-- 휴대전화번호 유효성 검사 오류 메시지를 표시할 영역 -->
                         <!-- 중복 확인 결과 메시지 영역 -->
                         <li>

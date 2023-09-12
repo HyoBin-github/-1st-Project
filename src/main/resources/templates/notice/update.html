@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>공지사항 수정 페이지</title>
     <link rel="stylesheet" th:href="@{/css/notice/update.css}">
-<!--   <script th:src="@{/js/notice/write.js}" defer="defer"></script>-->
+   <script th:src="@{/js/notice/write.js}" defer="defer"></script>
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -43,7 +43,7 @@
                             <div class="content">
                                 <label th:for="noticeContent" class="contentLabel">내용</label>
                             </div>
-                           <textarea th:text="${noticeDto.noticeContent}" th:value="${noticeDto.noticeContent}" id="contentText" class="writeInput"></textarea>
+                           <textarea th:text="${noticeDto.noticeContent}" th:value="${noticeDto.noticeContent}" name="noticeContent" id="contentText" class="writeInput"></textarea>
                         </li>
                         <li>
                             <label th:for="notHit">조회수</label>
@@ -51,7 +51,7 @@
                         </li>
 <!--                        <li>-->
 <!--                            <label th:for="CreateTime">작성시간</label>-->
-<!--                            <input type="text" name="CreateTime" th:value="${noticeDto.CreateTime}" readonly>-->
+<!--                            <input type="text" name="CreateTime" th:value=""${#temporals.format(noticeDto.CreateTime,'yyyy년 MM월 dd일 hh시 mm분')}"" readonly>-->
 <!--                        </li>-->
                     </ul>
                     <ul>

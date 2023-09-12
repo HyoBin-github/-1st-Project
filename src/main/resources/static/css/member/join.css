@@ -35,6 +35,9 @@
     padding: 10px;
     box-sizing: border-box;
     justify-content: center;
+    border: 2px solid #FFF2F2;
+    box-shadow: 0px 1px 1px 0px #f9e3e3, inset 0px -2px 4px -1px #FFF2F2;
+    /* box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98; */
 }
 .container .join .join-con .join-form form{
     margin: auto;
@@ -50,21 +53,20 @@
     flex-direction: column;
     /* align-items: center; 가운데 정렬 */
     text-align: center;
-    border: 2px solid #ffe6e6;
+    /* border: 2px solid #ffe6e6; */
     border-left: none;
     border-right: none;
     border-radius: 10px;
-    box-shadow: 0px 1px 1px 0px #FFF2F2, inset 0px -2px 4px -1px #FFF2F2;
+    /* box-shadow: 0px 1px 1px 0px #FFF2F2, inset 0px -2px 4px -1px #FFF2F2; */
 }
 /* 회원가입 버튼 제외 li 설정 */
-.container .join .join-con .join-form form>ul>li:not(.submitLi){
+.container .join .join-con .join-form form>ul>li:not(.submitLi .emailLi){
     width: inherit;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: center; */
     margin-bottom: 15px;
     text-align: center;
     align-items: center;
-    /* border-bottom: 2px solid #cccccc; */
     /* gap: 5px; */
 }
 .container .join .join-con .join-form form>ul>li .valid-feedback{
@@ -101,11 +103,11 @@
     width: 800px; 
     height: 30px; 
     padding: 10px;
-    /* border: 2px solid red; */
+    border: 2px solid #DADFF3;
     /* border-radius: 10px;
     border-right: none; */
-    border: none;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+    /* border: none; */
+    /* box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98; */
 }
 
 /* email 작성 */
@@ -115,7 +117,6 @@
     justify-content: space-between;
     box-sizing: border-box;
     align-items: center;
-    border: 2px solid red;
     /* position: relative; */
 }
 .container .join .join-con .join-form form>ul>li .email .email-text{
@@ -124,35 +125,36 @@
     /* justify-content: space-between; */
     box-sizing: border-box;
     align-items: center;
-    border: 2px solid yellow;
     position: relative;
 }
 /* 이메일 아이디 입력 */
 .container .join .join-con .join-form form>ul>li .emailbox{
-    width: 300px; 
+    width: 250px; 
     height: 30px; 
     padding: 10px;
-    /* border: 2px solid 7285d3a4;
-    border-radius: 10px;
+    border: 2px solid #DADFF3;
+    /* border-radius: 10px;
     border-right: none; */
-    border: none;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+    /* border: none; */
+    /* box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98; */
 }
 /* 도메인 입력 */
 .container .join .join-con .join-form form>ul>li .domainbox{
-    width: 300px; 
+    width: 250px; 
     height: 30px; 
     padding: 10px;
     /* gap: 10px; */
-    border: none;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+    border: 2px solid #DADFF3;
+    /* box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98; */
 }
 .container .join .join-con .join-form form>ul>li .email label{
     /* box-sizing: border-box; */
 }
 .container .join .join-con .join-form form>ul>li .email select{
-    width: 100px;
+    width: 130px;
     height: 30px;
+    text-align: center;
+
 }
 .container .join .join-con .join-form form>ul>li .email button{
     position: absolute;
@@ -233,4 +235,33 @@
     margin: auto 0;
     border-radius: 3px;
     cursor: pointer;
+}
+/* 회원가입 버튼 */
+.container .join .join-con .join-form form>ul>li.submitLi{
+    width: 1000px;
+    display: flex; 
+    justify-content: end;
+}
+.container .join .join-con .join-form form>ul>li.submitLi .joinBtn{
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+.container .join .join-con .join-form form>ul>li.submitLi .joinBtn input{
+    width: 200px;
+    height: 30px;
+    /* border-radius: 10px; */
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+    transition: all 0.3s;
+    border-top: 1px solid #7285d3;
+    border-right: 1px solid #7285d3;
+    border-left: 15px solid #7285d3;
+    border-bottom: 1px solid #7285d3;
+    background: transparent;
+ }
+ .container .join .join-con .join-form form>ul>li.submitLi .joinBtn input:hover{
+    border-left-width: 4px;
 }
