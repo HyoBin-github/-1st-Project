@@ -80,7 +80,7 @@
                             <input type="password" th:field="*{confirmPassword}" required="required" placeholder="위와 동일한 비밀번호 입력" class="box">
                         </li>
                         <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error"></p>
-                        <font id="checkMessage" size="2"></font>
+                        <li><font id="checkMessage" size="2"></font></li>
 
                         <!-- 이름 -->
                         <li>
@@ -89,6 +89,7 @@
                         </li>
                         <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" class="error"></p>
                         <span id="memberNameErrorMessage" style="color: red;"></span> <!-- 이름 유효성 검사 오류 메시지를 표시할 영역 -->
+
                         <!-- 닉네임 -->
                         <li>
                             <div class="nickName">
@@ -116,7 +117,6 @@
                             </div>
                         </li>
                         <p th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}" class="error"></p>
-                        <font id="checkMessage" size="2"></font>
                         <span id="memberPhoneErrorMessage" style="color: red;"></span> <!-- 휴대전화번호 유효성 검사 오류 메시지를 표시할 영역 -->
                         <!-- 중복 확인 결과 메시지 영역 -->
                         <li>
