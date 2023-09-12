@@ -21,6 +21,15 @@
   /* background-color: #f0f2f5; */
 }
 
+.--displayFalse {
+  display: none;
+}
+
+.autocomplete-active{
+  background-color: #7286d3;
+  color: #ffffff;
+}
+
 .image-container {
   margin: 0 auto;
   margin-top: 20px;
@@ -140,7 +149,27 @@ li .delete-btn {
   object-fit: cover;
 }
 
+#autocomplete-list {
+  position: relative;
+  bottom: 8px;  
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  z-index: 1;
+}
 
+.autocomplete-text-li {
+  font-size: 8px;
+  /* left: 8px; */
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.autocomplete-text-ul {
+  padding: 10px;
+}
 
 
 .productInputs-class {

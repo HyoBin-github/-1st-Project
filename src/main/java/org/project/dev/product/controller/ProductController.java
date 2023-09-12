@@ -124,9 +124,10 @@ public class ProductController {
 
         // 브랜드 정보 작성 또는 가져오기
         ProductBrandEntity productBrandEntity = productService.productBrandWriteDetail(productBrandDTO);
-
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productBrandEntity, member); // 상품글 작성
-        productUtilService.saveProductImages(productEntityWritePro, productImages); // 이미지 저장
+        // 상품글 작성
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productBrandEntity, member);
+        // 이미지 저장
+        productUtilService.saveProductImages(productEntityWritePro, productImages);
 
         Long productId = productEntityWritePro.getId(); // 작성한 글의 productId를 가져옴.
 
@@ -206,7 +207,9 @@ public class ProductController {
     // 송원철 - member, semiMember 추가
     // 로그인 안한 사람, member, semiMember 모두 접근 가능
     @GetMapping("/{id}")
-    public String getProductDetail(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails, SemiMyUserDetails semiMyUserDetails) {
+    public String getProductDetail(@PathVariable Long id, Model model,
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
+                                   SemiMyUserDetails semiMyUserDetails) {
         // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
         productUtilService.updateHits(id);
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);

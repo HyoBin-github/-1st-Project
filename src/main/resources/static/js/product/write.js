@@ -310,6 +310,123 @@ document.addEventListener("DOMContentLoaded", function() {
       $(this).val( $(this).val().replace("￦", ""));
     });
 
+
+
+    // 브랜드명 자동완성 =========================================================
+
+    let suggestions = [];
+    let currentFocus; // 현재 포커스된 li 인덱스
+    const autocompleteList = document.getElementById("autocomplete-list");
+    const ulElement = document.getElementById("autocomplete-text-ul");
+    const inputElement = document.getElementById("productBrandName");
+
+
+    $(inputElement).keyup(function(e) {
+        let keyword = $(this).val();
+
+        // 키보드 위/아래 화살표 키는 무시.
+        const ignoredKeys = ["ArrowUp", "ArrowDown"];
+      
+        if (ignoredKeys.includes(e.key)) {
+            return
+        }
+
+        if (keyword.length >= 1) {
+          console.log("About to make AJAX call with keyword: ", keyword);
+          $.get("/search", { keyword: keyword })
+
+          .done(function(data) {
+            console.log("AJAX call succeeded with data: ", data);
+            suggestions = data.map(item => item.productBrandName);
+            updateAutocompleteList(suggestions);
+          })
+          
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            console.log("AJAX call failed with jqXHR: ", jqXHR, " status: ", textStatus, " and error: ", errorThrown);
+            console.log("HTTP Status Code: ", jqXHR.status);
+            console.error("Error: ", textStatus, errorThrown);
+          });
+        } else if (keyword.length < 1) {
+          autocompleteList.classList.add("--displayFalse");
+        }
+    });
+  
+
+    function updateAutocompleteList(suggestions) {
+      console.log("Updating autocomplete with: ", suggestions);
+  
+      // 기존 목록을 비운다
+      ulElement.innerHTML = "";
+      autocompleteList.innerHTML = "";
+      autocompleteList.classList.remove("--displayFalse");
+      currentFocus = 0;
+      
+
+      // 만약 제안이 없다면,
+      if (suggestions.length === 0) {
+        const liElement = document.createElement("li");
+        liElement.className = "autocomplete-text-li";
+        liElement.textContent = "새로운 브랜드 명을 추가합니다.";
+        ulElement.appendChild(liElement);
+      // 그 외에는,
+      } else {
+        // 각각의 제안에 대해 li 엘리먼트를 생성하고 ul에 추가한다
+        for (let i = 0; i < suggestions.length; i++) {
+          const liElement = document.createElement("li");
+          liElement.className = "autocomplete-text-li";
+          liElement.textContent = suggestions[i];
+          ulElement.appendChild(liElement);
+
+          // 첫 번째 li에만 'autocomplete-active' 클래스를 추가
+          if (i === 0) {
+            liElement.classList.add("autocomplete-active");
+          }
+        }
+      }
+
+      // 생성한 ul 엘리먼트를 #autocomplete-list에 추가한다
+      autocompleteList.appendChild(ulElement);
+    }
+
+    // 키보드 이벤트 리스너 추가
+    $(inputElement).keydown(function(e) {
+      let items = ulElement.getElementsByTagName("li");
+
+      if (suggestions.length >= 1){
+
+        if (e.keyCode === 40) { // 아래 화살표
+          currentFocus++;
+          addActive(items);
+        } else if (e.keyCode === 38) { // 위 화살표
+          currentFocus--;
+          addActive(items);
+        } else if (e.keyCode === 13) { // Enter 키
+          e.preventDefault();
+          inputElement.value = items[currentFocus].textContent; // inputElement에 해당 item 텍스트를 삽입.
+          inputElement.blur();  // 포커스 아웃 시키기.
+        }
+      }
+    });
+
+    function addActive(items) {
+      if (!items) return false;
+      removeActive(items);
+      if (currentFocus >= items.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = (items.length - 1);
+      items[currentFocus].classList.add("autocomplete-active");
+    }
+
+    function removeActive(items) {
+      for (let i = 0; i < items.length; i++) {
+          items[i].classList.remove("autocomplete-active");
+      }
+    }
+
+    $("#productBrandName").focusout(function() {
+      autocompleteList.classList.add("--displayFalse");
+    });
+
+
 });
 
 

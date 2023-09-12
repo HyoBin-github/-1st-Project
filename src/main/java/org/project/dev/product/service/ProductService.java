@@ -48,7 +48,9 @@ public class ProductService {
 
     // 송원철 / write 시 memberId 저장
     @Transactional
-    public ProductEntity productWriteDetail(ProductDTO productDTO, ProductBrandEntity productBrandEntity, MemberEntity memberEntity){
+    public ProductEntity productWriteDetail(ProductDTO productDTO,
+                                            ProductBrandEntity productBrandEntity,
+                                            MemberEntity memberEntity){
         productDTO.setProductHits(0); // productHits 초기화
         ProductEntity productEntity = ProductEntity.toEntity(productDTO);
         productEntity.setProductBrandEntity(productBrandEntity);
@@ -62,19 +64,23 @@ public class ProductService {
         Optional<ProductBrandEntity> existingBrand =
                 productBrandRepository.findByProductBrandName(productBrandDTO.getProductBrandName());
 
+        // 만약 브랜드 명이 이미 존재한다면
         if (existingBrand.isPresent()) {
             // 이미 존재하는 BrandId 값을 반환
             return existingBrand.get();
+        // 그 외에는,
         } else {
-            // 존재하지 않으면 새로운 브랜드 명을 생성
+            // 브랜드 명을 생성
             ProductBrandEntity productBrandEntity = ProductBrandEntity.toEntity(productBrandDTO);
             return productBrandRepository.save(productBrandEntity);
         }
     }
 
     // LIST (READ)
-    public ProductListResponse getProductList(int page, Pageable pageable, String searchType, String searchKeyword) {
+    public ProductListResponse getProductList(int page, Pageable pageable,
+                                              String searchType, String searchKeyword) {
         Pageable adjustedPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
+
         Page<ProductDTO> productList;
 
         if (searchKeyword == null || searchType == null) {
@@ -92,16 +98,6 @@ public class ProductService {
     }
 
 
-    public List<ProductDTO> productCursorBasedList(Long lastId, int limit) {
-
-        return null;
-    }
-
-    // 송원철 / 상품 개별 불러오기
-    public ProductEntity productView(Long productId) {
-        return productRepository.findById(productId).get();
-    }
-
     @Data
     @AllArgsConstructor
     public class ProductListResponse {
@@ -112,6 +108,16 @@ public class ProductService {
         private int totalPage;
         private String searchType;
         private String searchKeyword;
+    }
+
+    public List<ProductDTO> productCursorBasedList(Long lastId, int limit) {
+
+        return null;
+    }
+
+    // 송원철 / 상품 개별 불러오기
+    public ProductEntity productView(Long productId) {
+        return productRepository.findById(productId).get();
     }
 
 
