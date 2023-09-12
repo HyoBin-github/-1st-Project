@@ -15,16 +15,20 @@
             </div>
         </div>
         <div class="search">
-            <form th:action="@{/inquiry/list(page=0 ,search=${param.search} ,select=${param.select})}" method="get">
-                <select name="select" id="select">
-                    <option th:value="''" th:selected="${#strings.isEmpty(param.select)}">전체</option>
-                    <option th:value="inquiryTitle" th:selected="${#strings.equals(param.select, 'inquiryTitle')}">제목</option>
-                    <option th:value="inquiryContent" th:selected="${#strings.equals(param.select, 'inquiryContent')}">내용</option>
-                    <option th:value="inquiryWriter"  th:selected="${#strings.equals(param.select, 'inquiryWriter')}">작성자</option>
-                </select>
-                <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요">
-                <input type="submit" value="검색">
-            </form>
+            <div class="form">
+                <form th:action="@{/inquiry/list(page=0 ,search=${param.search} ,select=${param.select})}" method="get">
+                    <select name="select" id="select" class="select">
+                        <option th:value="''" th:selected="${#strings.isEmpty(param.select)}">전체</option>
+                        <option th:value="inquiryTitle" th:selected="${#strings.equals(param.select, 'inquiryTitle')}">제목</option>
+                        <option th:value="inquiryContent" th:selected="${#strings.equals(param.select, 'inquiryContent')}">내용</option>
+                        <option th:value="inquiryWriter"  th:selected="${#strings.equals(param.select, 'inquiryWriter')}">작성자</option>
+                    </select>
+                    <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요" class="input">
+                    <button type="submit">
+                        <img th:src="@{/images/zoom.png}" alt="검색" class="zoom">
+                    </button>
+                </form>
+            </div>
         </div>
         <table>
             <thead>
@@ -35,7 +39,7 @@
                 <th>생성시간</th>
                 <th>수정시간</th>
                 <th>조회수</th>
-                <th>≖‿≖</th>
+                <th>보기</th>
             </tr>
             </thead>
             <tbody>
