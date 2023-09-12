@@ -7,7 +7,7 @@
     <script th:src="@{/js/member/findEmail.js}" defer="defer"></script>
 </head>
 <body>
-<!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
     <form th:action="@{/find-email}" method="post">
         <ul>
             <li>
@@ -23,3 +23,5 @@
     </form>
     <div id="foundEmail" style="display: none;"></div>
 </body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+</html>

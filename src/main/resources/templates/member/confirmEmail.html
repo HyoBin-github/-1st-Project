@@ -7,7 +7,7 @@
     <script th:src="@{/js/member/confirmEmail.js/}" defer="defer"></script>
 </head>
 <body>
-<!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <h1>이메일 인증</h1>
 <form th:action="@{/member/delete/{memberId}(memberId=${memberId})}" id="confirmEmailForm">
     <ul>
@@ -34,4 +34,5 @@
     <button type="submit" id="deleteBtn">삭제</button>
 </form>
 </body>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </html>
