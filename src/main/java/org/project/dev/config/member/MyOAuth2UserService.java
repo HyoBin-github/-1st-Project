@@ -1,4 +1,6 @@
 package org.project.dev.config.member;
+import org.project.dev.cartNew.entity.CartEntity;
+import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
@@ -19,6 +21,9 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -114,8 +119,17 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
                 .memberPostCode(memberPostCode)
                 .role(Role.MEMBER)
                 .build());
+        
+        // 회원가입 후 장바구니 생성
+        createCartForMember(memberEntity);
 
         return new MyUserDetails(memberEntity, attributes);
+    }
+    
+    // 장바구니 생성 메서드
+    private void createCartForMember(MemberEntity memberEntity) {
+        CartEntity cart = CartEntity.createCart(memberEntity);
+        cartRepository.save(cart);
     }
 
     // 휴대전화번호 db에 저장될때 해당 형식으로 저장되도록 하는 메서드

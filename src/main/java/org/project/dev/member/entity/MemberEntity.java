@@ -84,7 +84,7 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberPostCode(memberDto.getMemberPostCode());
         memberEntity.setMemberStreetAddress(memberDto.getMemberStreetAddress());
         memberEntity.setMemberDetailAddress(memberDto.getMemberDetailAddress());
-        memberEntity.setRole(Role.MEMBER);
+        memberEntity.setRole(Role.ADMIN);
 
         return memberEntity;
     }

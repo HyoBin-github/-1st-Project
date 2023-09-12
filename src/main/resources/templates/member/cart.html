@@ -16,7 +16,7 @@
 </th:block>
 <th:block layout:fragment="container">
     <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 장바구니</h1>
-    <h1 class="title1"><span th:text="${member.memberId}">회원번호</span></h1>
+    <h1 class="title1"><span th:text="${member.memberId}"></span>회원번호</h1>
     <div class="contianer">
         <div class="main">
             <table class="cartTable">
@@ -34,22 +34,24 @@
                 </thead>
                 <tbody>
                 <tr th:each="cartItem, i: ${cartItems}">
-                    <td th:text="${cartItem.getProduct().getId()}">3번상품</td>
+                    <td th:text="${cartItem.getProduct().getId()}">상품ID</td>
                     <td>
                         <th:block th:each="img : ${productImages}">
                             <!-- 상품 ID에 해당하는 이미지만 출력 -->
                             <th:block th:if="${cartItem.getProduct().getId()} == ${img.id}">
-                                <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt=""
-                                     height="50" />
+                                <a th:href="@{/product/{id}(id=${cartItem.getProduct().getId()})}"> <!-- 상세보기 페이지로 이동-->
+                                <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="50" />
                             </th:block>
                         </th:block>
                     </td>
-                    <td th:text="${cartItem.getProduct().getProductName()}">상품명</td>
+                    <td>
+                        <a th:href="@{/product/{id}(id=${cartItem.getProduct().getId()})}" th:text="${cartItem.getProduct().getProductName()}">상품명</a>
+                    </td>
                     <td th:text="${cartItem.getCartItemCount()}">수량</td>
                     <td th:text="${cartItem.getProduct().getProductPrice() * cartItem.getCartItemCount()}">가격</td>
                     <td th:text="${cartItem.getCart().getCreateTime()}">날짜</td>
                     <td class="btn btn-outline-dark"><a
-                            th:href="@{/cart/member/{memberId}/{cartItemId}/delete(memberId=${cartItem.getCart().getMember().getMemberId}, cartItemId=${cartItem.getCartItemId()})}"
+                            th:href="@{/cart/member/{memberId}/{cartItemId}/delete(memberId=${cartItem.getCart().getMember().getMemberId()}, cartItemId=${cartItem.getCartItemId()})}"
                             style="text-decoration: none">삭제</a></td>
                     <td><a href="#">결제</a></td>
                 </tr>

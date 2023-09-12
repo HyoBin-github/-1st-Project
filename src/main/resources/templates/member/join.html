@@ -11,7 +11,6 @@
     <script th:src="@{/js/member/confirmPw_join.js}" defer="defer"></script>
     <script th:src="@{/js/member/email.js}" defer="defer"></script>
     <script th:src="@{/js/member/join.js}" defer="defer"></script>
-    <script th:src="@{/js/member/join_birth.js}" defer="defer"></script>
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 카카오 주소 api -->
     <script th:src="@{/js/member/addressApi.js}" defer="defer"></script> <!-- 카카오 주소 api -->
     <script th:src="@{/js/member/join_email.js}" defer="defer"></script>
@@ -51,7 +50,7 @@
                         <li>
                             <div class="code">
                                 <label th:for="emailVerificationCode" >인증번호</label>
-                                <input type="text" id="emailVerificationCode" placeholder="인증번호 입력" class="box">
+                                <input type="text" id="emailVerificationCode" required=required placeholder="인증번호 입력" class="box">
                                 <!-- 이메일 인증 버튼 -->
                                 <button type="button" id="certifyEmailButton" class="submitBtn">인증번호 전송</button>
                                 <button type="button" id="verifyEmailButton" class="checkBtn">인증번호 확인</button>
