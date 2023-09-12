@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
+    private final ImageRepository imageRepository;
 
     // Create + 장바구니 생성
     @Transactional
@@ -30,6 +33,14 @@ public class MemberService {
 
         MemberEntity memberEntity=MemberEntity.toMemberEntityInsert(memberDto, passwordEncoder);
         Long memberId=memberRepository.save(memberEntity).getMemberId();
+
+        // 이미지 생성 및 저장
+        ImageEntity imageEntity = new ImageEntity();
+        imageEntity.setImageUrl("/profileImages/anonymous.png");
+        imageEntity.setMember(memberEntity);
+
+        // ImageEntity를 db에 저장
+        imageRepository.save(imageEntity);
 
         // 회원가입 이후 카트 생성
         createCartForMember(memberId);

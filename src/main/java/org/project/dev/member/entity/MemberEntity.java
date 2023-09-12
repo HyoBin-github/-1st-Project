@@ -65,8 +65,14 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "temporary_password")
     private String temporaryPassword;
 
+    // 연관 관계
     @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
     private CartEntity cart;
+
+    // 연관 관계
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private ImageEntity image;
+
     // 연관 관계
     @OneToMany(mappedBy = "member")
     private List<ProductEntity> products = new ArrayList<>();

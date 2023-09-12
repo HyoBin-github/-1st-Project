@@ -3,6 +3,8 @@ package org.project.dev.member.controller;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.member.service.ImageService;
+import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +26,7 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
+    private final ImageService imageService;
 
     // Create
     @GetMapping("/join")
@@ -72,7 +75,7 @@ public class MemberController {
         return "login";
     }
 
-    //  Login
+    // Login
     @GetMapping("/login")
     public String getLogin(){
         return "member/login";
@@ -95,8 +98,12 @@ public class MemberController {
 
         MemberDto member=memberService.detailMember(memberId);
 
+        // 이미지 url을 db에서 가져오기
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
         model.addAttribute("member", member);
         model.addAttribute("myUserDetails", myUserDetails);
+        model.addAttribute("memberImageUrl", memberImageUrl); // 이미지 url 모델에 추가
 
         return "member/detail";
     }
