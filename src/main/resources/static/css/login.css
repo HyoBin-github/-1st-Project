@@ -15,7 +15,6 @@
 }
 .container .login .login-con{
     flex-basis: 800px;
-
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
