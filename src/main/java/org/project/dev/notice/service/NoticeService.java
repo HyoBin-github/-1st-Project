@@ -158,32 +158,9 @@ public class NoticeService {
         }
         return null;
     }
-//    수정 중
-    public int noticeUpdateOk(NoticeDto noticeDto, Long id) {
 
-        Optional<NoticeEntity> optionalNoticeEntity
-                = Optional.ofNullable(noticeRepository.findById(noticeDto.getNotId()).orElseThrow(() -> {
-            return new IllegalArgumentException("수정할 공지사항이 없습니다."); // id 확인해
-        }));
-
-        noticeDto.setNotId(id); // dto에 id 들어감
-
-        Long noticeId = noticeRepository.save(NoticeEntity.toNoticeEntityUpdate(noticeDto)).getNotId(); // 수정을 위한 jparepository.save
-
-        NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityUpdate(noticeDto); // dto->entity
-
-        Optional<NoticeEntity> optionalNoticeEntity1
-                = Optional.ofNullable(noticeRepository.findById(noticeDto.getNotId()).orElseThrow(() -> {
-            return new IllegalArgumentException("수정한 공지사항이 없습니다.");
-        })); //
-        if (optionalNoticeEntity1.isPresent()) {
-            return 1;
-        }
-        return 0;
-    }
-//    수정 중
     @Transactional
-    public NoticeDto noticeUpdateOk1(NoticeDto noticeDto, Long id) {
+    public NoticeDto noticeUpdateOk(NoticeDto noticeDto, Long id) {
         // errer throw 처리
         NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(()->{
             throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");

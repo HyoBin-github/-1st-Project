@@ -38,7 +38,7 @@
                             <div class="content">
                                 <label th:for="content" class="contentLabel">내용</label>
                             </div>
-                           <textarea th:text="${inquiryDto.inquiryContent}" th:value="${inquiryDto.inquiryContent}" id="contentText" class="writeInput"></textarea>
+                           <textarea th:text="${inquiryDto.inquiryContent}" th:value="${inquiryDto.inquiryContent}" name="inquiryContent" id="contentText" class="writeInput"></textarea>
                         </li>
                         <li>
                             <label th:for="inqHit">조회수</label>
@@ -50,6 +50,7 @@
                             <div class="button">
                                 <input type="submit" value="수정하기">
                                 <input type="reset" value="취소">
+                                <input type="hidden" name="inqId" th:value="${inquiryDto.inqId}" readonly>
                             </div>
                         </li>
                     </ul>

@@ -22,8 +22,15 @@
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
+    border-bottom: 2px solid #7285d3a4;
 }
-
+.List .List-con .List-title h1 img{
+    padding-top: 10px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    align-items: center;
+}
 /* search */
 .List .List-con .search{
     padding: 10px 0 0 10px;

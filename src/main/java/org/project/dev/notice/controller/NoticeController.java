@@ -163,15 +163,8 @@ public class NoticeController {
     }
     @PostMapping("/update/{id}")
     public String postNoticeUpdate(@PathVariable("id") Long id, NoticeDto noticeDto, Model model){
-//        int rs = noticeService.noticeUpdateOk(noticeDto, id);
-//        if(rs == 1){
-//            System.out.println("수정 성공");
-//        }else{
-//            System.out.println("수정 실패");
-//        }
-//        return "redirect:/notice/detail/"+id;
 
-        NoticeDto noticeDto1 = noticeService.noticeUpdateOk1(noticeDto, id);
+        NoticeDto noticeDto1 = noticeService.noticeUpdateOk(noticeDto, id);
         model.addAttribute("noticeDto", noticeDto1); // update한 값을 model객체에 받는다.
 
         return "notice/detail";

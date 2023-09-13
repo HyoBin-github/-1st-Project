@@ -84,21 +84,6 @@ public class InquiryController {
 
         return "inquiry/list";
     }
-//    @GetMapping("/search")
-//    public String getInquirySearch(
-//            @RequestParam(value = "select", required = false) String inquirySelect,
-//            @RequestParam(value = "search", required = false) String inquirySearch,
-//            Model model){
-//
-//        List<InquiryDto> inquiryDtoList = inquiryService.InquiryListSearch(inquirySelect,inquirySearch);
-//        // thymeleaf-paging에서 컨트롤러에서 뷰로 넘길 때 list형태로 model에 담아 오류 발생
-//
-//        if(!inquiryDtoList.isEmpty()){
-//            model.addAttribute("inquiryList", inquiryDtoList);
-//            return "inquiry/searchlist";
-//        }
-//        return "redirect:inquiry/list";
-//    }
 
     /*
            Todo
@@ -117,7 +102,7 @@ public class InquiryController {
 //            model.addAttribute("replyDtoList", replyDtoList);
             return "inquiry/detail";
         }
-        return "redirect:/inquiry/list";
+        return "redirect:/inquiry/list?page=0&select=&search=";
     }
 
     /*
@@ -133,18 +118,15 @@ public class InquiryController {
             model.addAttribute("inquiryDto",inquiryDto);
             return "inquiry/update";
         }
-        return "redirect:/inquiry/list";
+        return "redirect:/inquiry/list?page=0&select=&search=";
     }
     @PostMapping("/update/{id}")
-    public String postInquiryUpdate(@PathVariable("id") Long id, InquiryDto inquiryDto){
-        int rs = inquiryService.InquiryUpdateOk(inquiryDto, id);
+    public String postInquiryUpdate(@PathVariable("id") Long id, InquiryDto inquiryDto, Model model){
 
-        if(rs == 1){
-            System.out.println("수정 성공");
-        }else{
-            System.out.println("수정 실패");
-        }
-        return "redirect:/inquiry/detail/"+id;
+        InquiryDto inquiryDto1 = inquiryService.inquiryUpdateOk(inquiryDto,id);
+        model.addAttribute("inquiryDto", inquiryDto1);
+
+        return "inquiry/detail";
     }
     /*
     TODO
@@ -158,6 +140,6 @@ public class InquiryController {
         }else{
             System.out.println("문의사항 삭제 실패");
         }
-        return "redirect:/inquiry/";
+        return "redirect:/inquiry/list?page=0&select=&search=";
     }
 }

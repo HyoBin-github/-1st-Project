@@ -2,7 +2,9 @@ package org.project.dev.notice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.notice.dto.InquiryDto;
+import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.InquiryEntity;
+import org.project.dev.notice.entity.NoticeEntity;
 import org.project.dev.notice.repository.InquiryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -74,70 +76,10 @@ public class InquiryService {
 
         Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
 
-//        if(!inquiryEntities.isEmpty()){
-//            for(InquiryEntity inquiryEntity : inquiryEntities){
-//                InquiryDto inquiryDto = InquiryDto.builder()
-//                        .inqId(inquiryEntity.getInqId())
-//                        .inqType(inquiryEntity.getInqType())
-//                        .inquiryTitle(inquiryEntity.getInquiryTitle())
-//                        .inquiryContent(inquiryEntity.getInquiryContent())
-//                        .inquiryWriter(inquiryEntity.getInquiryWriter())
-//                        .CreateTime(inquiryEntity.getCreateTime())
-//                        .UpdateTime(inquiryEntity.getUpdateTime())
-//                        .inqHit(inquiryEntity.getInqHit())
-//                        .build();
-//                inquiryDtoPage.add(inquiryDtoPage);
-//            }
-//        }
 
         return inquiryDtoPage;
     }
-    /*
- Todo
-  1. rladpwls1843@gamil.com
-  2. 문의사항 검색 시 목록 서비스
-  3.
-  4. 검색과정에서 타임리프 페이징이 들어갈 경우 오류가 발생하여 페이징이 없는 경로 추가 설정
-  */
-//    public List<InquiryDto> InquiryListSearch(@NotNull String inquirySelect, String inquirySearch) {
-//        List<InquiryDto> inquiryDtoList = new ArrayList<>();
-//        List<InquiryEntity> inquiryEntities = new ArrayList<>();
-//
-//        if(inquirySelect.equals("title")){
-//            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(inquirySearch);
-//        }else if(inquirySelect.equals("content")){
-//            inquiryEntities = inquiryRepository.findByInquiryContentContaining(inquirySearch);
-//        }else if(inquirySelect.equals("writer")){
-//            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(inquirySearch);
-//        }else{
-//            inquiryEntities = inquiryRepository.findAll();
-//        }
-//
-//        if(!inquiryEntities.isEmpty()){
-//            for(InquiryEntity inquiryEntity : inquiryEntities){
-//                InquiryDto inquiryDto = InquiryDto.builder()
-//                        .inqId(inquiryEntity.getInqId())
-//                        .inqType(inquiryEntity.getInqType())
-//                        .inquiryTitle(inquiryEntity.getInquiryTitle())
-//                        .inquiryContent(inquiryEntity.getInquiryContent())
-//                        .inquiryWriter(inquiryEntity.getInquiryWriter())
-//                        .CreateTime(inquiryEntity.getCreateTime())
-//                        .UpdateTime(inquiryEntity.getUpdateTime())
-//                        .inqHit(inquiryEntity.getInqHit())
-//                        .build();
-//                inquiryDtoList.add(inquiryDto);
-//            }
-//        }
-//        return inquiryDtoList;
-//    }
 
-    /*
-           Todo
-            1. rladpwls1843@gamil.com
-            2. 문의사 상세페이지로 이동
-            3.
-            4.
-            */
     @Transactional
     public InquiryDto InquiryDetail(Long id) {
 
@@ -149,6 +91,7 @@ public class InquiryService {
                 .inqId(inquiryEntity.getInqId())
                 .inquiryTitle(inquiryEntity.getInquiryTitle())
                 .inquiryContent(inquiryEntity.getInquiryContent())
+                .inqType(inquiryEntity.getInqType())
                 .inquiryWriter(inquiryEntity.getInquiryWriter())
                 .CreateTime(inquiryEntity.getCreateTime())
                 .UpdateTime(inquiryEntity.getUpdateTime())
@@ -157,6 +100,13 @@ public class InquiryService {
 
     }
 
+    /*
+       Todo
+        1. rladpwls1843@gamil.com
+        2. 상세페이지 선택할 떄마다 조회수 올라감
+        3.
+        4.
+        */
     @Transactional
     private void InquiryHit(Long id) {
         inquiryRepository.InquiryHit(id);
@@ -177,27 +127,19 @@ public class InquiryService {
         }
         return null;
     }
-    public int InquiryUpdateOk(InquiryDto inquiryDto, Long id) {
+    @Transactional
+    public InquiryDto inquiryUpdateOk(InquiryDto inquiryDto, Long id) {
 
-        Optional<InquiryEntity> optionalInquiryEntity
-                = Optional.ofNullable(inquiryRepository.findById(inquiryDto.getInqId()).orElseThrow(() ->{
-            return new IllegalArgumentException("수정할 문의사항이 없습니다.");
-        }));
+        InquiryEntity inquiryEntity = inquiryRepository.findById(id).orElseThrow(()->{
+            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
+        });
 
-        inquiryDto.setInqId(id);
+        Long inquiryId = inquiryRepository.save(InquiryEntity.toInquiryEntityUpdate(inquiryDto)).getInqId(); // 수정을 위한 jparepository
 
-        Long inquiryId = inquiryRepository.save(InquiryEntity.toInquiryEntityUpdate(inquiryDto)).getInqId(); // 수정을 위한 jparepository.save
-
-        InquiryEntity inquiryEntity = InquiryEntity.toInquiryEntityUpdate(inquiryDto); // dto -> entity
-
-        Optional<InquiryEntity> optionalInquiryEntity1
-                = Optional.ofNullable(inquiryRepository.findById(inquiryId).orElseThrow(() ->{
-            return new IllegalArgumentException("수정할 문의사항이 없습니다.");
-        }));
-        if(optionalInquiryEntity1.isPresent()){
-            return 1;
-        }
-        return 0;
+        InquiryEntity inquiryEntity1 = inquiryRepository.findById(inquiryId).orElseThrow(()->{
+            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
+        });
+        return InquiryDto.toinquiryDto(inquiryEntity1);
     }
 
     /*
