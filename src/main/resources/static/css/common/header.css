@@ -192,3 +192,11 @@
 .header .nav .bottom-nav .gnb >ul>li .main::after{
     content: none;
 }
+
+#image-preview {
+    max-width: 35px;
+    max-height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 50%; /* 50%로 설정하여 원형 모양으로 만듭니다. */
+    overflow: hidden; /* 넘치는 부분은 숨깁니다. */
+}

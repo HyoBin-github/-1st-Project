@@ -1,6 +1,7 @@
 package org.project.dev.cartNew.repository;
 
 import org.project.dev.cartNew.entity.CartItemEntity;
+import org.project.dev.product.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,7 @@ public interface CartItemRepository extends JpaRepository<CartItemEntity, Long> 
     List<CartItemEntity> findListCartItemByCartItemId(Long cartItemId);
 
     void deleteByCartItemId(Long cartItemId);
+
+    // 회원 삭제 시 필요
+    void deleteByProduct(ProductEntity product);
 }

@@ -2,9 +2,12 @@ package org.project.dev.config.member;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.constrant.Role;
+import org.project.dev.member.dto.ImageUploadDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
+import org.project.dev.member.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -12,7 +15,11 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,6 +31,9 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private ImageServiceImpl imageService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -106,9 +116,11 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
 
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
         if (optionalMemberEntity.isPresent()) {
+
 //            OAuthUser → DB 비교, 있으면
             return new MyUserDetails(optionalMemberEntity.get());
         }
+
         MemberEntity memberEntity = memberRepository.save(MemberEntity.builder()
                 .memberEmail(memberEmail)
                 .memberPassword(passwordEncoder.encode(memberPassword))
@@ -125,7 +137,7 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
 
         return new MyUserDetails(memberEntity, attributes);
     }
-    
+
     // 장바구니 생성 메서드
     private void createCartForMember(MemberEntity memberEntity) {
         CartEntity cart = CartEntity.createCart(memberEntity);

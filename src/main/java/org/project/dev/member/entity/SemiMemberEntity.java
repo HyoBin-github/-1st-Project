@@ -39,7 +39,7 @@ public class SemiMemberEntity extends BaseEntity {
     private CartEntity cart;
 
     // 연관 관계
-    @OneToMany(mappedBy = "semiMember")
+    @OneToMany(mappedBy = "semiMember", cascade = CascadeType.REMOVE)
     private List<ProductEntity> products = new ArrayList<>();
 
     public static SemiMemberEntity toSemiMemberEntityInsert(SemiMemberDto semimemberDto, PasswordEncoder passwordEncoder) {

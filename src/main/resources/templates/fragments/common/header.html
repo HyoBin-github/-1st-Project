@@ -31,8 +31,13 @@
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SELLER')">
                         <li><a th:href="@{/member/logout}">로그아웃</a></li>
-                        <!--                        <span sec:authentication="name" class="data1 span"></span>님--> <!-- 일반, 간편회원 모두 이메일 출력 -->
                         <span th:text="${#authentication.principal.memberEntity.memberNickName}" class="data1 span"></span>님 <!-- 일반회원 닉네임 출력 -->
+                        <!--프로필 이미지 출력-->
+                        <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.memberId})}">
+                            <div id="image-preview">
+                                <img id="preview-image" th:src="${#authentication.principal.memberEntity.image.imageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
+                            </div>
+                        </a>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('SEMIMEMBER')">
                         <li><a th:href="@{/member/logout}">로그아웃</a></li>

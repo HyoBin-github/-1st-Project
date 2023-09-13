@@ -74,7 +74,7 @@ public class MemberEntity extends BaseEntity {
     private ImageEntity image;
 
     // 연관 관계
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<ProductEntity> products = new ArrayList<>();
 
     public static MemberEntity toMemberEntityInsert(MemberDto memberDto, PasswordEncoder passwordEncoder) {
@@ -114,7 +114,5 @@ public class MemberEntity extends BaseEntity {
 
         return memberEntity;
     }
-
-
 
 }

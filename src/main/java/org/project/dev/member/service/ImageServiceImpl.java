@@ -2,8 +2,11 @@ package org.project.dev.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.config.member.UserDetailsServiceImpl;
 import org.project.dev.member.dto.ImageResponseDto;
 import org.project.dev.member.dto.ImageUploadDto;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.ImageRepository;
@@ -11,12 +14,17 @@ import org.project.dev.member.repository.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -26,6 +34,7 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
     private final MemberRepository memberRepository;
+    private final UserDetailsServiceImpl userDetailsService;
 
     // 이미지 URL 기본값 설정(이미지 없을 경우 기본 이미지로 설정)
     private final String defaultImageUrl = "/profileImages/default.png";
@@ -119,4 +128,5 @@ public class ImageServiceImpl implements ImageService {
                     .build();
         }
     }
+
 }

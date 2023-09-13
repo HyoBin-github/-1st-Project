@@ -90,6 +90,8 @@ public class MemberDto {
 
     private LocalDateTime updateTime;
 
+    private String imageUrl;
+
     public static MemberDto toMemberDto(MemberEntity memberEntity) {
         MemberDto memberDto=new MemberDto();
             memberDto.setMemberId(memberEntity.getMemberId());

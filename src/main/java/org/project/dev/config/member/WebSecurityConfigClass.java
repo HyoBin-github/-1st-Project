@@ -26,7 +26,7 @@ public class WebSecurityConfigClass{
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
                     .antMatchers("/", "/member/join", "/member/login").permitAll()
-                    .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/delete/**", "/board/**", "/cart/**").authenticated()
+                    .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**", "/board/**", "/cart/**").authenticated()
                     .antMatchers("/product/manage").hasAnyRole("SELLER", "ADMIN")
                     .antMatchers("/admin/**").hasAnyRole("SELLER", "ADMIN")
 
@@ -92,6 +92,7 @@ public class WebSecurityConfigClass{
             http.antMatcher("/semiMember/**")
                     .authorizeHttpRequests()
                     .antMatchers("/", "/login").permitAll()
+                    .antMatchers("/semiMember/detail/**").hasAnyRole("SEMIMEMBER")
 //            http.authorizeHttpRequests()
 //                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
 //                    .antMatchers("/member/logout", "/board/**").authenticated()

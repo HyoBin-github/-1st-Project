@@ -1,5 +1,6 @@
 package org.project.dev.product.repository;
 
+import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,4 +46,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>, J
     // 송원철 / 장바구니 관련
     ProductEntity findProductById(Long id);
 
+    // 송원철 / 회원 삭제 시 조회 
+    List<ProductEntity> findByMember(MemberEntity member);
 }

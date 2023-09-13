@@ -1,17 +1,27 @@
 package org.project.dev.member.service;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
+import org.project.dev.cartNew.entity.CartItemEntity;
+import org.project.dev.cartNew.repository.CartItemRepository;
 import org.project.dev.cartNew.repository.CartRepository;
+import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
+import org.project.dev.product.entity.ProductEntity;
+import org.project.dev.product.repository.ProductRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +36,9 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final ImageRepository imageRepository;
+    private final ProductRepository productRepository;
+    private final CartItemRepository cartItemRepository;
+    private final EntityManager entityManager;
 
     // Create + 장바구니 생성
     @Transactional
@@ -108,6 +121,14 @@ public class MemberService {
 
         if (optionalMemberEntity1.isPresent()) {
             System.out.println("회원정보 수정 성공");
+
+            // 업데이트된 정보를 가져와서 현재 사용자의 세션 정보를 업데이트
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails) {
+                MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+                myUserDetails.setMemberNickName(memberDto.getMemberNickName()); // 현재 사용자의 닉네임 업데이트
+                myUserDetails.setImageUrl(memberDto.getImageUrl()); // 현재 사용자의 이미지 업데이트
+            }
             return 1;
         }else{
             System.out.println("회원정보 수정 실패");
@@ -116,23 +137,81 @@ public class MemberService {
     }
 
     // Delete
+//    @Transactional
+//    public int deleteMember(Long memberId){
+//
+//        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+//            return new IllegalArgumentException("삭제할 아이디가 없습니다");
+//        }));
+//
+//        memberRepository.delete(optionalMemberEntity.get());
+//
+//        Optional<MemberEntity> optionalMemberEntity1=memberRepository.findById(memberId);
+//
+//        if(!optionalMemberEntity1.isPresent()){
+//            return 1;
+//        }else{
+//            return 0;
+//        }
+//    }
+
     @Transactional
-    public int deleteMember(Long memberId){
+    public int deleteMember(Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
 
-        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
-            return new IllegalArgumentException("삭제할 아이디가 없습니다");
-        }));
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity member = optionalMemberEntity.get();
 
-        memberRepository.delete(optionalMemberEntity.get());
+            // CartEntity를 영속 상태로 만듭니다.
+            CartEntity cart = member.getCart();
+            if (cart != null) {
+                entityManager.merge(cart);
 
-        Optional<MemberEntity> optionalMemberEntity1=memberRepository.findById(memberId);
+                // CartItemEntity와의 연관 관계 삭제
+                List<CartItemEntity> cartItems = cart.getCartItems();
+                if (cartItems != null && !cartItems.isEmpty()) {
+                    for (CartItemEntity cartItem : cartItems) {
+                        cartItemRepository.delete(cartItem);
+                    }
+                }
 
-        if(!optionalMemberEntity1.isPresent()){
+                // CartEntity 삭제
+                cartRepository.delete(cart);
+            }
+
+            // ProductEntity와의 연관 관계에 대한 삭제 로직
+            List<ProductEntity> products = member.getProducts();
+            if (products != null && !products.isEmpty()) {
+                for (ProductEntity product : products) {
+                    // 나머지 연관 관계 삭제 로직을 수행하고, 예를 들어 ReviewEntity를 삭제할 경우:
+                    // List<ReviewEntity> reviews = product.getReviewEntityList();
+                    // if (reviews != null && !reviews.isEmpty()) {
+                    //     reviewRepository.deleteAll(reviews);
+                    // }
+                    // 나머지 연관 관계 삭제 로직을 수행합니다.
+                    // ...
+
+                    // ProductEntity 삭제
+                    productRepository.delete(product);
+                }
+            }
+
+            // 다른 연관 관계에 대한 삭제 로직을 수행합니다.
+            // ...
+
+            // MemberEntity 삭제
+            memberRepository.delete(member);
+
             return 1;
-        }else{
-            return 0;
+        } else {
+            throw new IllegalArgumentException("삭제할 아이디가 없습니다");
         }
     }
+
+
+
+
+
 
     // 이메일 중복 확인 메서드, CheckDuplicateController에서 두 테이블 직접 조회해 사용하면 이 메서드 필요 없음
 //    @Transactional
@@ -244,6 +323,7 @@ public class MemberService {
 
         return cleanedPhoneNumber;
     }
+
 
 }
 

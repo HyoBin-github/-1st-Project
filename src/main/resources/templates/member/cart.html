@@ -43,6 +43,7 @@
                             <th:block th:if="${cartItem.getProduct().getId()} == ${img.id}">
                                 <a th:href="@{/product/{id}(id=${cartItem.getProduct().getId()})}"> <!-- 상세보기 페이지로 이동-->
                                 <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="50" />
+                                </a>
                             </th:block>
                         </th:block>
                     </td>
