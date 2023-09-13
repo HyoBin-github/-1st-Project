@@ -33,6 +33,8 @@ public class ImageServiceImpl implements ImageService {
     @Value("${file.productImgUploadDir}")
     private String uploadFolder;
 
+    // 이미지 등록
+    @Override
     public void upload(ImageUploadDto imageUploadDto, String memberEmail){
 
         MemberEntity member = memberRepository.findByMemberEmail(memberEmail).orElseThrow(()->
@@ -63,6 +65,32 @@ public class ImageServiceImpl implements ImageService {
         }catch (Exception e){
             log.info("이미지 업로드 중 오류 발생", e);
             throw new RuntimeException("이미지 저장 실패", e);
+        }
+    }
+    
+    // 이미지 삭제
+    @Override
+    public void deleteImage(String memberEmail) {
+        MemberEntity member = memberRepository.findByMemberEmail(memberEmail).orElseThrow(() ->
+                new UsernameNotFoundException("이메일이 존재하지 않습니다"));
+
+        ImageEntity image = imageRepository.findByMember(member);
+        if (image != null) {
+            // 이미지가 존재하면 삭제
+            try {
+                if (!image.getImageUrl().equals("/profileImages/default.png")) {
+                    // 기본 이미지가 아닌 경우에만 삭제
+                    File imageFile = new File(uploadFolder + image.getImageUrl());
+                    if (imageFile.exists()) {
+                        imageFile.delete();
+                    }
+                }
+            } catch (Exception e) {
+                log.error("이미지 삭제 중 오류 발생", e);
+                throw new RuntimeException("이미지 삭제 실패", e);
+            }
+            imageRepository.delete(image);
+            log.info("이미지 삭제 성공");
         }
     }
 

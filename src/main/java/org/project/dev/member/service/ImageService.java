@@ -7,5 +7,7 @@ import org.springframework.stereotype.Service;
 public interface ImageService {
 
     void upload(ImageUploadDto imageUploadDto, String memberEmail);
+
+    void deleteImage(String memberEmail);
     ImageResponseDto findImage(String memberEmail);
 }
