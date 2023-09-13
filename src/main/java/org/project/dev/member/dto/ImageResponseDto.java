@@ -13,5 +13,4 @@ public class ImageResponseDto {
     public ImageResponseDto(String imageUrl){
         this.imageUrl=imageUrl;
     }
-
 }

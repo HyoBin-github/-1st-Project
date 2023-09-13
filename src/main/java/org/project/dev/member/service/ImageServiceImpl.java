@@ -28,46 +28,53 @@ public class ImageServiceImpl implements ImageService {
     private final MemberRepository memberRepository;
 
     // 이미지 URL 기본값 설정(이미지 없을 경우 기본 이미지로 설정)
-    private final String defaultImageUrl = "/profileImages/anonymous.png";
+    private final String defaultImageUrl = "/profileImages/default.png";
 
     @Value("${file.productImgUploadDir}")
     private String uploadFolder;
 
     // 이미지 등록
     @Override
-    public void upload(ImageUploadDto imageUploadDto, String memberEmail){
+    public void upload(ImageUploadDto imageUploadDto, String memberEmail) {
+        MemberEntity member = memberRepository.findByMemberEmail(memberEmail).orElseThrow(() ->
+                new UsernameNotFoundException("이메일이 존재하지 않습니다"));
 
-        MemberEntity member = memberRepository.findByMemberEmail(memberEmail).orElseThrow(()->
-            new UsernameNotFoundException("이메일이 존재하지않습니다"));
         MultipartFile file = imageUploadDto.getFile();
+        String imageFileName;
 
-        UUID uuid = UUID.randomUUID();
-        String imageFileName = uuid + "_" + file.getOriginalFilename();
+        if (file.isEmpty()) {
+            // 파일이 업로드되지 않은 경우 기본 이미지 이름을 사용
+            imageFileName = "default.png";
+        } else {
+            UUID uuid = UUID.randomUUID();
+            imageFileName = uuid + "_" + file.getOriginalFilename();
 
-        File destinationFile = new File(uploadFolder + imageFileName);
+            File destinationFile = new File(uploadFolder + imageFileName);
 
-        try {
-            file.transferTo(destinationFile);
-
-            ImageEntity image = imageRepository.findByMember(member);
-            if (image != null) {
-                // 이미지가 이미 존재하면 url 업데이트
-                image.updateUrl("/profileImages/" + imageFileName);
-            }else{
-                // 이미지가 없으면 객체 생성 후 저장
-                image = ImageEntity.builder()
-                        .member(member)
-                        .imageUrl("/profileImages/" + imageFileName)
-                        .build();
-                log.info("이미지 업로드 및 저장 성공");
+            try {
+                file.transferTo(destinationFile);
+            } catch (IOException e) {
+                log.info("이미지 업로드 중 오류 발생", e);
+                throw new RuntimeException("이미지 저장 실패", e);
             }
-            imageRepository.save(image);
-        }catch (Exception e){
-            log.info("이미지 업로드 중 오류 발생", e);
-            throw new RuntimeException("이미지 저장 실패", e);
         }
+
+        ImageEntity image = imageRepository.findByMember(member);
+        if (image != null) {
+            // 이미지가 이미 존재하면 URL 업데이트
+            image.updateUrl("/profileImages/" + imageFileName);
+        } else {
+            // 이미지가 없으면 객체 생성 후 저장
+            image = ImageEntity.builder()
+                    .member(member)
+                    .imageUrl("/profileImages/" + imageFileName)
+                    .build();
+            log.info("이미지 업로드 및 저장 성공");
+        }
+        imageRepository.save(image);
     }
-    
+
+
     // 이미지 삭제
     @Override
     public void deleteImage(String memberEmail) {
@@ -93,13 +100,14 @@ public class ImageServiceImpl implements ImageService {
             log.info("이미지 삭제 성공");
         }
     }
-
+    
+    // 회원 프로필 이미지 조회
     public ImageResponseDto findImage(String memberEmail){
         MemberEntity member =memberRepository.findByMemberEmail(memberEmail).orElseThrow(()->
                 new UsernameNotFoundException("이메일이 존재하지않습니다"));
         ImageEntity image = imageRepository.findByMember(member);
 
-        String defaultImageUrl = "/profileImages/anonymous.png";
+        String defaultImageUrl = "/profileImages/default.png";
 
         if (image == null) {
             return ImageResponseDto.builder()

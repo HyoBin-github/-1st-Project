@@ -18,10 +18,10 @@
 
       // 이미지가 선택되면 업로드 버튼 활성화
       document.getElementById('upload-button').disabled = false;
-    };
-
-    reader.readAsDataURL(file);
+      };
+      reader.readAsDataURL(file);
   });
+
   // 파일이 선택되지 않았을 때 업로드 버튼 비활성화
   function enableUploadButton() {
     var fileInput = document.getElementById('file-input');
@@ -32,6 +32,23 @@
     } else {
       uploadButton.disabled = true;
     }
+  }
+
+  // 이미지 변경 확인 팝업 함수
+  function showConfirmationPopup() {
+    return confirm("이미지가 변경됩니다. 적용하시겠습니까?");
+  }
+  // 적용 버튼 클릭 시 확인 팝업 띄우고 확인을 선택한 경우에만 폼 제출
+  document.getElementById('upload-button').addEventListener('click', function(event) {
+      if (!showConfirmationPopup()) {
+          event.preventDefault(); // 확인을 선택하지 않은 경우 폼 제출을 막음
+        }
+      });
+
+  // 이미지가 삭제되었는지 확인하는 함수
+  function isImageDeleted() {
+    var imagePreview = document.getElementById('preview-image');
+    return !imagePreview.src; // 이미지가 존재하지 않으면 true를 반환
   }
 
  // 생년월일 유효성 검사 함수
@@ -47,50 +64,58 @@
  // 페이지 로드 시 유효성 검사 수행
  window.onload = validateBirth;
 
-// 이미지 삭제 버튼 클릭 시 프로필 이미지 삭제 및 기본 이미지 업로드
-function deleteImage() {
-  // 프로필 이미지 삭제 요청 보내기
-  fetch('/image/delete', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  .then(response => {
-    if (response.ok) {
-      // 이미지 삭제 성공 시
-      // 이미지 미리보기 영역 초기화
-      var preview = document.getElementById('image-preview');
-      while (preview.firstChild) {
-        preview.removeChild(preview.firstChild);
+// 이미지 삭제 버튼 클릭 시 프로필 이미지 삭제 확인 팝업 띄우기, 기본 이미지로 변경
+document.getElementById('delete-button').addEventListener('click', function() {
+  if (confirm("기존 이미지가 삭제됩니다. 삭제하시겠습니까?\n(삭제 후, 취소 버튼 눌러도 복구 안됨)")) {
+    // '확인'을 선택한 경우에만 이미지 삭제 요청 보내고 폼 제출
+    // 프로필 이미지 삭제 요청 보내기
+    fetch('/image/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      if (response.ok) {
+        // 이미지 삭제 성공 시
+        // 이미지를 기본 이미지로 설정
+        loadDefaultImage();
+
+        // 이미지 업로드 버튼(적용) 활성화
+        document.getElementById('upload-button').disabled = false;
+
+        // 프로필 이미지가 기본 이미지인 경우
+        if (isDefaultImage()) {
+          // 프로필 삭제 버튼 비활성화
+          document.getElementById('delete-button').disabled = true;
+        }
+      } else {
+        // 이미지 삭제 실패 시 처리
+        console.error('이미지 삭제 실패');
       }
-
-      // 이미지 업로드 버튼 활성화
-      document.getElementById('upload-button').disabled = false;
-
-      // 프로필 이미지가 기본 이미지인 경우
-      if (isDefaultImage()) {
-        // 프로필 삭제 버튼 비활성화
-        document.getElementById('delete-button').disabled = true;
-      }
-    } else {
-      // 이미지 삭제 실패 시 처리
-      console.error('이미지 삭제 실패');
-
-      // 이미지 삭제 실패 시에도 기본 이미지를 다시 로드
-      loadDefaultImage();
-    }
-  })
-  .catch(error => {
-    console.error('이미지 삭제 중 오류 발생:', error);
-  });
-}
+    })
+    .catch(error => {
+      console.error('이미지 삭제 중 오류 발생:', error);
+    });
+  } else {
+    // '취소'를 선택한 경우 아무 작업도 수행하지 않음
+  }
+});
 
 // 현재 이미지가 기본 이미지(default.png)인지 확인하는 함수
 function isDefaultImage() {
   var imagePreview = document.getElementById('preview-image');
-  return imagePreview && imagePreview.src && imagePreview.src.endsWith('/profileImages/default.png');
+  var imageUrl = imagePreview.src;
+
+  return imageUrl.endsWith('/profileImages/default.png');
 }
+
+// 페이지 로드 시 이미지가 기본 이미지인 경우 삭제 버튼 비활성화
+window.onload = function() {
+  if (isDefaultImage()) {
+    document.getElementById('delete-button').disabled = true;
+  }
+};
 // 기본 이미지를 다시 로드하는 함수
 function loadDefaultImage() {
   var imagePreview = document.getElementById('preview-image');

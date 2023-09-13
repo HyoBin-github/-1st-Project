@@ -22,25 +22,27 @@
     <!-- 이미지 미리보기 영역 -->
     <div id="image-preview"><img id="preview-image" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
     <!-- 버튼을 클릭하면 /image/upload로 POST 요청 보내기 -->
-    <form method="post" action="/image/upload" enctype="multipart/form-data">
+    <form action="/image/upload" method="post" enctype="multipart/form-data">
         <ul>
             <li>
                 <input type="file" name="file" id="file-input" onchange="enableUploadButton()"> <!-- 파일 업로드 필드 -->
-                <button type="button" onclick="deleteImage()">프로필 이미지 삭제</button>
+                <button type="button" id="delete-button">프로필 이미지 삭제</button>
             </li>
             <li>
                 <button type="submit" id="upload-button" disabled>적용</button>
-                <button onclick="cancelChanges()">취소</button>
+                <button type="button" onclick="goBack()">취소</button>
             </li>
         </ul>
     </form>
 </div>
 <!-- Thymeleaf 표현식을 사용하여 memberId를 JavaScript 변수에 할당 -->
-<script th:inline="javascript">
-    var memberId = /*[[${member.memberId}]]*/ null;
-</script>
+<!--<script th:inline="javascript">-->
+<!--    var memberId = /*[[${member.memberId}]]*/ null;-->
+<!--</script>-->
 <script>
-
+    function goBack() {
+      window.history.back();
+    }
 </script>
 </body>
 </html>
