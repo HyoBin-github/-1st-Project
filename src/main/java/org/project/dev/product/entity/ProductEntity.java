@@ -85,7 +85,7 @@ public class ProductEntity extends BaseEntity {
 
 
     // 송원철 / cartItem과 연관관계 설정
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<CartItemEntity> cartItems = new ArrayList<>();
 
     // 송원철 / member와 연관관계 설정

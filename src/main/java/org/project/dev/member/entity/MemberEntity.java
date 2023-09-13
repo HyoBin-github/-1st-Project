@@ -66,15 +66,15 @@ public class MemberEntity extends BaseEntity {
     private String temporaryPassword;
 
     // 연관 관계
-    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private CartEntity cart;
 
     // 연관 관계
-    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private ImageEntity image;
 
     // 연관 관계
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
 
     public static MemberEntity toMemberEntityInsert(MemberDto memberDto, PasswordEncoder passwordEncoder) {

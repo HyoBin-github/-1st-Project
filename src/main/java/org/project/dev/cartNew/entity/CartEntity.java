@@ -37,7 +37,7 @@ public class CartEntity extends BaseEntity {
     @JoinColumn(name = "semiMember_id")
     private SemiMemberEntity semiMember;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartItemEntity> cartItems = new ArrayList<>();
 
     public static CartEntity createCart(MemberEntity member){

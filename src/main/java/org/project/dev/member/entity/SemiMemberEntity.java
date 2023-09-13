@@ -35,11 +35,11 @@ public class SemiMemberEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "semiMember", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "semiMember", cascade = CascadeType.ALL)
     private CartEntity cart;
 
     // 연관 관계
-    @OneToMany(mappedBy = "semiMember", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "semiMember", cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
 
     public static SemiMemberEntity toSemiMemberEntityInsert(SemiMemberDto semimemberDto, PasswordEncoder passwordEncoder) {

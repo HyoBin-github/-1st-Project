@@ -36,9 +36,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final ImageRepository imageRepository;
-    private final ProductRepository productRepository;
-    private final CartItemRepository cartItemRepository;
-    private final EntityManager entityManager;
 
     // Create + 장바구니 생성
     @Transactional
@@ -137,81 +134,23 @@ public class MemberService {
     }
 
     // Delete
-//    @Transactional
-//    public int deleteMember(Long memberId){
-//
-//        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
-//            return new IllegalArgumentException("삭제할 아이디가 없습니다");
-//        }));
-//
-//        memberRepository.delete(optionalMemberEntity.get());
-//
-//        Optional<MemberEntity> optionalMemberEntity1=memberRepository.findById(memberId);
-//
-//        if(!optionalMemberEntity1.isPresent()){
-//            return 1;
-//        }else{
-//            return 0;
-//        }
-//    }
-
     @Transactional
-    public int deleteMember(Long memberId) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+    public int deleteMember(Long memberId){
 
-        if (optionalMemberEntity.isPresent()) {
-            MemberEntity member = optionalMemberEntity.get();
+        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+            return new IllegalArgumentException("삭제할 아이디가 없습니다");
+        }));
 
-            // CartEntity를 영속 상태로 만듭니다.
-            CartEntity cart = member.getCart();
-            if (cart != null) {
-                entityManager.merge(cart);
+        memberRepository.delete(optionalMemberEntity.get());
 
-                // CartItemEntity와의 연관 관계 삭제
-                List<CartItemEntity> cartItems = cart.getCartItems();
-                if (cartItems != null && !cartItems.isEmpty()) {
-                    for (CartItemEntity cartItem : cartItems) {
-                        cartItemRepository.delete(cartItem);
-                    }
-                }
+        Optional<MemberEntity> optionalMemberEntity1=memberRepository.findById(memberId);
 
-                // CartEntity 삭제
-                cartRepository.delete(cart);
-            }
-
-            // ProductEntity와의 연관 관계에 대한 삭제 로직
-            List<ProductEntity> products = member.getProducts();
-            if (products != null && !products.isEmpty()) {
-                for (ProductEntity product : products) {
-                    // 나머지 연관 관계 삭제 로직을 수행하고, 예를 들어 ReviewEntity를 삭제할 경우:
-                    // List<ReviewEntity> reviews = product.getReviewEntityList();
-                    // if (reviews != null && !reviews.isEmpty()) {
-                    //     reviewRepository.deleteAll(reviews);
-                    // }
-                    // 나머지 연관 관계 삭제 로직을 수행합니다.
-                    // ...
-
-                    // ProductEntity 삭제
-                    productRepository.delete(product);
-                }
-            }
-
-            // 다른 연관 관계에 대한 삭제 로직을 수행합니다.
-            // ...
-
-            // MemberEntity 삭제
-            memberRepository.delete(member);
-
+        if(!optionalMemberEntity1.isPresent()){
             return 1;
-        } else {
-            throw new IllegalArgumentException("삭제할 아이디가 없습니다");
+        }else{
+            return 0;
         }
     }
-
-
-
-
-
 
     // 이메일 중복 확인 메서드, CheckDuplicateController에서 두 테이블 직접 조회해 사용하면 이 메서드 필요 없음
 //    @Transactional

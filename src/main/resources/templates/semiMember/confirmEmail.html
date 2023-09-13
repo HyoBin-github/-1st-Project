@@ -8,7 +8,7 @@
     <script th:src="@{/js/member/semiConfirmEmail.js/}" defer="defer"></script>
 </head>
 <body>
-<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <h1>이메일 인증</h1>
 <form th:action="@{/semiMember/delete/{semiMemberId}(semiMemberId=${semiMemberId})}" id="confirmEmailForm">
     <ul>
