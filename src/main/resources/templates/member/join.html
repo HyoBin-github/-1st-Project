@@ -125,20 +125,22 @@
                         </li>
                         
                         <!-- 생년월일 -->
-                        <li>
+                        <li class="birthLi">
                             <label>생년월일</label>
-                            <select th:field="*{birthYear}" required="required">
-                                <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
-                            </select>
-                            년
-                            <select th:field="*{birthMonth}" required="required">
-                                <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
-                            </select>
-                            월
-                            <select th:field="*{birthDay}" required="required">
-                                <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
-                            </select>
-                            일
+                            <div class="birth-select">
+                                <select th:field="*{birthYear}" required="required">
+                                    <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
+                                </select>
+                                년
+                                <select th:field="*{birthMonth}" required="required">
+                                    <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
+                                </select>
+                                월
+                                <select th:field="*{birthDay}" required="required">
+                                    <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
+                                </select>
+                                일
+                            </div>
                         </li>
                         
                         <!-- 주소 -->
@@ -155,6 +157,8 @@
                             <label th:for="memberDetailAddress">상세주소</label>
                             <input class="form-control" placeholder="상세주소" name="memberDetailAddress" id="memberDetailAddress" type="text"  />
                         </div>
+
+                        <!-- 회원가입 버튼 -->
                         <li class="submitLi">
                             <div class="joinBtn">
                                 <input type="submit" value="회원가입" onclick="validateAndSubmit();">

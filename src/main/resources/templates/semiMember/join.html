@@ -28,8 +28,10 @@
                             <div class="input-group">
                                 <label>이메일</label>
                                 <div class="inputD">
-                                    <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력"><span> @ </span>
-                                    <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력">
+                                    <div class="inputColor">
+                                        <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력"><span> @ </span>
+                                        <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력">
+                                    </div>
                                     <select id="domainList" required="required">
                                         <option value="custom">직접 입력</option>
                                         <option value="gmail.com">gmail.com</option>
@@ -38,10 +40,10 @@
                                         <option value="daum.net">daum.net</option>
                                     </select>
                                     <input type="hidden" id="semiMemberEmail" name="semiMemberEmail" value="">
+                                    <button type="button" id="emailCheckButton">이메일 중복 확인</button>
                                 </div>
                             </div>
                             <div class="email-feedback">
-                                <button type="button" id="emailCheckButton">이메일 중복 확인</button>
                                 <d id="emailAvailable" class="valid-feedback" style="display: none;"></d>
                                 <d id="emailNotAvailable" class="invalid-feedback" style="display: none;"></d>
                             </div>
@@ -55,10 +57,10 @@
                                 <div class="numInput">
                                     <input type="text" id="emailVerificationCode" placeholder="인증번호 입력">
                                     <button type="button" id="certifyEmailButton">인증번호 전송</button>
+                                    <button type="button" id="verifyEmailButton">인증번호 확인</button>
                                 </div>
                             </div>
                             <div class="num-feedback">
-                                <button type="button" id="verifyEmailButton">인증번호 확인</button>
                                 <div id="certifyEmailMessage" class="valid-feedback" style="display: none;"></div>
                             </div>
                         </li>
@@ -70,10 +72,10 @@
                                 <div class="phoneInput">
                                     <input type="text" th:field="*{semiMemberPhone}" required="required" placeholder="- 제외하고 입력해주세요">
                                     <!-- 휴대전화 중복 확인 버튼 -->
+                                    <button type="button" id="phoneCheckButton">휴대전화 중복 확인</button>
                                 </div>
                             </div>
                             <div class="phone-feedback">
-                                <button type="button" id="phoneCheckButton">휴대전화 중복 확인</button>
                                  <!-- 중복 확인 결과 메시지 영역 -->
                                 <d id="phoneAvailable" class="valid-feedback" style="display: none;"></d>
                                 <d id="phoneNotAvailable" class="invalid-feedback" style="display: none;"></d>    
