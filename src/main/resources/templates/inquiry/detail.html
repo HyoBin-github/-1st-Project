@@ -37,7 +37,7 @@
                 <div class="bottom">
                     <div class="bottom-top">
                         <div class="delete">
-<!--                            <th:block sec:authorize="hasAnyRole('ADMIN')">-->
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
                             <a th:href="@{/inquiry/delete/{id}(id=${inquiryDto.inqId})}">삭제하기</a>
                         </div>
                         <div class="list">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="bottom-bottom">
                         <div class="update">
-<!--                            <th:block sec:authorize="hasAnyRole('ADMIN')">-->
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
                             <a th:href="@{/inquiry/update/{id}(id=${inquiryDto.inqId})}">수정하기</a>
                         </div>
                     </div>
