@@ -33,10 +33,10 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
     private CartRepository cartRepository;
 
     @Autowired
-    private ImageServiceImpl imageService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private ImageServiceImpl imageService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -134,6 +134,11 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
         
         // 회원가입 후 장바구니 생성
         createCartForMember(memberEntity);
+
+        // OAuth 로그인 후 이미지를 업로드합니다.
+        ImageUploadDto imageUploadDto = new ImageUploadDto();
+        imageService.upload(imageUploadDto, memberEmail);
+
 
         return new MyUserDetails(memberEntity, attributes);
     }
