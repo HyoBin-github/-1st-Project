@@ -119,6 +119,7 @@ public class NoticeService {
                 .notId(noticeEntity.getNotId())
                 .noticeTitle(noticeEntity.getNoticeTitle())
                 .noticeContent(noticeEntity.getNoticeContent())
+                .notType(noticeEntity.getNotType())
                 .CreateTime(noticeEntity.getCreateTime())
                 .UpdateTime(noticeEntity.getUpdateTime())
                 .notWriter(noticeEntity.getNotWriter())

@@ -10,12 +10,14 @@
 <div class="container">
     <div class="detail">
         <div class="detail-con">
-            <div class="board-con">
+            <div class="title">
                 <h1>공지사항</h1>
+            </div>
+            <div class="board-con">
                 <ul>
-                    <li>
-                        <span>제목</span>
-                        <span th:text = "${noticeDto.noticeTitle}"></span>
+                    <li class="titleLi">
+                        <span th:text = "${noticeDto.notType}" class="type"></span>
+                        <span th:text = "${noticeDto.noticeTitle}" class="title"></span>
                     </li>
                     <li>
                         <span>작성자</span>
