@@ -68,14 +68,14 @@
 }
 /* left */
 .container .detail .detail-con .board-con .top .top-bottom .left{
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 /* riight */
 .container .detail .detail-con .board-con .top .top-bottom .right{
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -93,6 +93,7 @@
     resize: none;
     background: transparent;
     outline: none;
+    font-size: 18px;
 }
 /* botttom -> delete, update, list */
 .container .detail .detail-con .board-con .bottom{

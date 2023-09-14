@@ -28,7 +28,6 @@
     width: 1000px;
     border-bottom: 4px solid #7285d3;
     text-align: start;
-    /* font-size: 25px; */
     padding: 5px;
 }
 .container .detail .detail-con .board-con{
@@ -37,7 +36,6 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    /* border: 2px solid red; */
 }
 .container .detail .detail-con .board-con .top{
     display: flex;
@@ -45,12 +43,12 @@
     /* border: 2px solid yellow; */
 }
 .container .detail .detail-con .board-con .top .top-title{
-    /* width: 900px; */
     border-bottom: 2px solid #7285d3a4;
     display: flex;
     justify-content: start;
     padding: 10px 0 20px 0;
     gap: 10px;
+    font-size: 20px;
 }
 .container .detail .detail-con .board-con .top .top-title span.titleSpan{
     font-weight: bold;
@@ -67,13 +65,13 @@
     padding: 10px;
 }
 .container .detail .detail-con .board-con .top .top-bottom .left{
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 .container .detail .detail-con .board-con .top .top-bottom .right{
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -90,6 +88,7 @@
     resize: none;
     background: transparent;
     outline: none;
+    font-size: 18px;
 }
 .container .detail .detail-con .board-con .bottom{
     display: flex;
@@ -182,4 +181,75 @@
 }
 .container .detail .detail-con .board-con .bottom .bottom-bottom .update a:hover{
     border-left-width: 1px;
+}
+
+/* reply */
+.container .detail .detail-con .reply-con{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.container .detail .detail-con .reply-con .title{
+    width: 1000px;
+    border-bottom: 4px solid #7285d3;
+    text-align: start;
+    padding: 5px;
+}
+.container .detail .detail-con .reply-con .reply-write{
+    padding: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+.container .detail .detail-con .reply-con .reply-write form{
+    margin: auto;
+    text-align: center;
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    box-sizing: border-box;
+}
+.container .detail .detail-con .reply-con .reply-write form>ul{
+    width: inherit;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.container .detail .detail-con .reply-con .reply-write form>ul>li:not(.Btn){
+    display: flex;
+    justify-content: start;
+    margin-bottom: 15px;
+    /* text-align: center;
+    align-items: center; */
+    box-sizing: border-box;
+}
+.container .detail .detail-con .reply-con .reply-write form>ul>li:not(.Btn) textarea{
+    width: 780px;
+    height: 300px;
+    padding: 10px;
+    box-shadow: inset 0px -2px 4px -1px #8c9cdb;
+    border: none;
+    resize: none;
+}
+.container .detail .detail-con .reply-con .reply-write form>ul>li.Btn input{
+    width: 400px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 10px;
+    background: #4b66c79e;
+    border: none;
+    color: white;
+    outline: none;
+    gap: 10px;
+    cursor: pointer;
+}
+.container .detail .detail-con .reply-con .reply-write form>ul>li.Btn input:hover{
+    box-sizing: border-box;
+    background: #4b66c7;
+    box-shadow: 0 10px 10px 0 #cccccc;
 }
