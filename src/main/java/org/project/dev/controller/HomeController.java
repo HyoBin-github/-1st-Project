@@ -8,7 +8,9 @@ import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.service.ImageService;
 import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -35,8 +37,24 @@ public class HomeController {
      4. 기타
      */
 
+
+     /*
+    Todo
+     1. songwc3@gmail.com
+     2. 회원가입, 로그인 View
+     3. 없음
+     4. 없음
+     */
+
     @GetMapping({"","/index"})
-    public String index(Model model) {
+    public String index(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+
+        if (myUserDetails != null) {
+            String imageUrl = myUserDetails.getMemberEntity().getImage().getImageUrl();
+
+            System.out.println("imageUrl in index : " + imageUrl);
+            System.out.println("imageEntity in index : " + myUserDetails.getMemberEntity().getImage().getImageUrl());
+        }
         return "index";
     }
 

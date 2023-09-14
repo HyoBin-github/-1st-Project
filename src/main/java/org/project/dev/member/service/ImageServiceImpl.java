@@ -81,6 +81,9 @@ public class ImageServiceImpl implements ImageService {
             log.info("이미지 업로드 및 저장 성공");
         }
         imageRepository.save(image);
+
+        // 이미지 URL을 로그로 출력
+        log.info("이미지 URL: " + image.getImageUrl());
     }
 
 

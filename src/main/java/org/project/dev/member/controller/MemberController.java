@@ -133,12 +133,14 @@ public class MemberController {
         memberDto=memberService.updateViewMember(memberId);
         model.addAttribute("memberDto", memberDto);
 
+        System.out.println("imageUrl : " + memberDto.getImageUrl()); // 오류 발견 목적으로 써놓음, 지워도 됨
+
         return "member/update";
     }
 
     // Update - 실제 실행
     @PostMapping("/update")
-    public String postUpdate(@Valid MemberDto memberDto, BindingResult bindingResult) {
+    public String postUpdate(@Valid MemberDto memberDto, BindingResult bindingResult, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         if (bindingResult.hasErrors()) {
             System.out.println("유효성 검증 관련 오류 발생");
@@ -155,6 +157,12 @@ public class MemberController {
 
         if (rs == 1) {
             System.out.println("회원정보 수정 성공");
+
+            // imageUrl 업데이트
+            myUserDetails.setImageUrl(memberDto.getImageUrl());
+
+            System.out.println("imageUrl : " + memberDto.getImageUrl()); // 오류 발견 목적으로 써놓음, 지워도 됨
+
             return "redirect:/member/detail/" + memberDto.getMemberId(); // 수정된 정보를 보여주는 상세 페이지로 이동
         } else {
             System.out.println("회원정보 수정 실패");

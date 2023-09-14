@@ -86,9 +86,10 @@ public class MemberService {
 
         if (optionalMemberEntity.isPresent()) {
 
-            // 무시해도 됨
-//            MemberDto memberDto=MemberDto.toMemberDto(optionalMemberEntity.get());
-//            return memberDto;
+            // imageUrl 값을 로그에 출력
+            ImageEntity imageEntity = optionalMemberEntity.get().getImage();
+            System.out.println("imageUrl: " + imageEntity.getImageUrl());
+
             return MemberDto.toMemberDto(optionalMemberEntity.get());
         }
         return null;
@@ -125,6 +126,13 @@ public class MemberService {
                 MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
                 myUserDetails.setMemberNickName(memberDto.getMemberNickName()); // 현재 사용자의 닉네임 업데이트
                 myUserDetails.setImageUrl(memberDto.getImageUrl()); // 현재 사용자의 이미지 업데이트
+
+                // imageUrl 값을 로그에 출력
+                ImageEntity imageEntity = myUserDetails.getMemberEntity().getImage();
+                System.out.println("imageUrl: " + imageEntity.getImageUrl());
+
+                // imageUrl 값을 로그로 출력
+                System.out.println("imageUrl: " + memberDto.getImageUrl());
             }
             return 1;
         }else{
