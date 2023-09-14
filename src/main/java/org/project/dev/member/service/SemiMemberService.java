@@ -8,6 +8,8 @@ import org.project.dev.member.dto.SemiMemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.SemiMemberRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +98,31 @@ public class SemiMemberService {
 
     public SemiMemberEntity findSemiMember(Long semiMemberId) {
         return semiMemberRepository.findById(semiMemberId).get();
+    }
+
+    // 페이징
+    public Page<SemiMemberDto> SemiMemberPagingList(Pageable pageable) {
+        Page<SemiMemberEntity> semiMemberEntities = semiMemberRepository.findAll(pageable);
+        //    boardEntities.map(board ->new BoardDto(board.getId(),board.getBoardContent(),))
+
+        int nowPage = semiMemberEntities.getNumber();// 요청 페이지 번호
+        long totalCount = semiMemberEntities.getTotalElements();// 전체게시글수
+        int totalPage = semiMemberEntities.getTotalPages();// 전체 페이지갯수
+        int pageSize = semiMemberEntities.getSize();    // 한페이지에 보이는 개수
+        semiMemberEntities.isFirst(); // 첫번째 페이지인지?
+        semiMemberEntities.isLast(); // 마지막 페이지인지?
+        semiMemberEntities.hasPrevious(); // 이전 페이지 있는지?
+        semiMemberEntities.hasNext(); // 다음 페이지 있는지?
+
+        System.out.println(totalCount + " 총 글수");
+        System.out.println(totalPage + " 총 페이지");
+        System.out.println(pageSize + " 페이지 당 글수");
+        System.out.println(nowPage + " 현재 페이지");
+
+        // Entity → Dto
+        Page<SemiMemberDto> semiMemberDtos = semiMemberEntities.map(SemiMemberDto::toSemiMemberDto);
+        return semiMemberDtos;
+        //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
     }
 
 

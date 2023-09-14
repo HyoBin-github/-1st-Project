@@ -209,7 +209,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public String getProductDetail(@PathVariable Long id, Model model,
                                    @AuthenticationPrincipal MyUserDetails myUserDetails,
-                                   SemiMyUserDetails semiMyUserDetails) {
+                                   @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails) {
         // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
         productUtilService.updateHits(id);
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);

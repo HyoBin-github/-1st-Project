@@ -45,11 +45,9 @@ public class SemiMemberEntity extends BaseEntity {
     public static SemiMemberEntity toSemiMemberEntityInsert(SemiMemberDto semimemberDto, PasswordEncoder passwordEncoder) {
 
         SemiMemberEntity semiMemberEntity=new SemiMemberEntity();
-
         semiMemberEntity.setSemiMemberEmail(semimemberDto.getSemiMemberEmail());
         semiMemberEntity.setSemiMemberPhone(passwordEncoder.encode(semimemberDto.getSemiMemberPhone()));
         semiMemberEntity.setRole(Role.SEMIMEMBER);
-
         return semiMemberEntity;
     }
 
