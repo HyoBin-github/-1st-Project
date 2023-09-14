@@ -47,14 +47,7 @@ public class HomeController {
      */
 
     @GetMapping({"","/index"})
-    public String index(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
-
-        if (myUserDetails != null) {
-            String imageUrl = myUserDetails.getMemberEntity().getImage().getImageUrl();
-
-            System.out.println("imageUrl in index : " + imageUrl);
-            System.out.println("imageEntity in index : " + myUserDetails.getMemberEntity().getImage().getImageUrl());
-        }
+    public String index() {
         return "index";
     }
 

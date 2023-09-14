@@ -46,6 +46,22 @@ public class SemiMemberService {
         return semiMemberRepository.existsBySemiMemberEmail(semiMemberEmail);
     }
 
+    // Read - 간편회원목록
+    public List<SemiMemberDto> listSemiMember(){
+
+        List<SemiMemberDto> semiMemberDtoList=new ArrayList<>();
+        List<SemiMemberEntity> semiMemberEntityList=semiMemberRepository.findAll();
+
+        if (!semiMemberEntityList.isEmpty()) {
+            for(SemiMemberEntity semiMemberEntity: semiMemberEntityList){
+
+                SemiMemberDto semiMemberDto=SemiMemberDto.toSemiMemberDto(semiMemberEntity);
+                semiMemberDtoList.add(semiMemberDto);
+            }
+        }
+        return semiMemberDtoList;
+    }
+
     //  Detail
     public SemiMemberDto detailSemiMember(Long semiMemberId){
 
@@ -82,18 +98,5 @@ public class SemiMemberService {
         return semiMemberRepository.findById(semiMemberId).get();
     }
 
-    public List<SemiMemberDto> listSemiMember(){
 
-        List<SemiMemberDto> semiMemberDtoList=new ArrayList<>();
-        List<SemiMemberEntity> semiMemberEntityList=semiMemberRepository.findAll();
-
-        if (!semiMemberEntityList.isEmpty()) {
-            for(SemiMemberEntity semiMemberEntity: semiMemberEntityList){
-
-                SemiMemberDto semiMemberDto=SemiMemberDto.toSemiMemberDto(semiMemberEntity);
-                semiMemberDtoList.add(semiMemberDto);
-            }
-        }
-        return semiMemberDtoList;
-    }
 }

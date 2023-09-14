@@ -159,7 +159,6 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
         ImageUploadDto imageUploadDto = new ImageUploadDto();
         upload(imageUploadDto, memberEmail);
 
-
         return new MyUserDetails(memberEntity, attributes);
     }
 

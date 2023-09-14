@@ -1,14 +1,10 @@
 package org.project.dev.member.service;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
-import org.project.dev.cartNew.entity.CartItemEntity;
-import org.project.dev.cartNew.repository.CartItemRepository;
 import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.config.member.MyUserDetails;
-import org.project.dev.member.dto.CombinedMemberDto;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
@@ -16,17 +12,13 @@ import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.repository.SemiMemberRepository;
-import org.project.dev.product.entity.ProductEntity;
-import org.project.dev.product.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -303,54 +295,6 @@ public class MemberService {
         //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
     }
 
-
-    // member, semiMember 목록 통합 조회
-    public List<CombinedMemberDto> listCombinedMembers() {
-        List<MemberEntity> members = memberRepository.findAll();
-        List<SemiMemberEntity> semiMembers = semiMemberRepository.findAll();
-
-        List<CombinedMemberDto> combinedMembers = new ArrayList<>();
-
-        for (MemberEntity member : members) {
-            CombinedMemberDto combinedMemberDto = mapToCombinedMemberDto(member);
-            combinedMembers.add(combinedMemberDto);
-        }
-
-        for (SemiMemberEntity semiMember : semiMembers) {
-            CombinedMemberDto combinedMemberDto = mapToCombinedSemiMemberDto(semiMember);
-            combinedMembers.add(combinedMemberDto);
-        }
-
-        return combinedMembers;
-    }
-
-    private CombinedMemberDto mapToCombinedMemberDto(MemberEntity member) {
-        CombinedMemberDto combinedMemberDto = new CombinedMemberDto();
-        combinedMemberDto.setMemberId(member.getMemberId());
-        combinedMemberDto.setMemberEmail(member.getMemberEmail());
-        combinedMemberDto.setMemberName(member.getMemberName();
-        combinedMemberDto.setMemberNickName(member.getMemberNickName());
-        combinedMemberDto.setMemberPhone(member.getMemberPhone());
-        combinedMemberDto.setMemberBirth(member.getMemberBirth());
-        combinedMemberDto.setMemberStreetAddress(member.getMemberStreetAddress());
-        combinedMemberDto.setMemberDetailAddress(member.getMemberDetailAddress());
-        combinedMemberDto.setRole(member.getRole());
-        combinedMemberDto.setCreateTime(member.getCreateTime());
-        combinedMemberDto.setUpdateTime(member.getUpdateTime());
-        combinedMemberDto.setImageUrl(member.getImage().getImageUrl());
-
-        return combinedMemberDto;
-    }
-
-    private CombinedMemberDto mapToCombinedSemiMemberDto(SemiMemberEntity semiMember) {
-        CombinedMemberDto combinedMemberDto = new CombinedMemberDto();
-        combinedMemberDto.setSemiMemberId(semiMember.getSemiMemberId());
-        combinedMemberDto.setSemiMemberEmail(semiMember.getSemiMemberEmail());
-        combinedMemberDto.setSemiMemberPhone(semiMember.getSemiMemberPhone());
-        combinedMemberDto.setRole(semiMember.getRole());
-
-        return combinedMemberDto;
-    }
 
 
 }

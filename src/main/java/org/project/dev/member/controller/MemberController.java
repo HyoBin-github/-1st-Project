@@ -2,12 +2,8 @@ package org.project.dev.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.member.MyUserDetails;
-import org.project.dev.member.dto.CombinedMemberDto;
 import org.project.dev.member.dto.MemberDto;
-import org.project.dev.member.dto.SemiMemberDto;
-import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.service.ImageService;
-import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
 import org.springframework.data.domain.Page;
@@ -90,27 +86,22 @@ public class MemberController {
         return "member/login";
     }
 
+    // 회원목록, 간편회원목록 선택 페이지 이동
+    @GetMapping("/list")
+    public String getListPage(){
+        return "member/list";
+    }
+
     // Read - 회원 목록 조회
-//    @GetMapping("/memberList")
-//    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-//        List<MemberDto> memberDtoList=memberService.listMember();
-//
-//        model.addAttribute("memberDtoList", memberDtoList);
-//        model.addAttribute("myUserDetails", myUserDetails);
-//
-//        return "member/memberList";
-//    }
-
     @GetMapping("/memberList")
-    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
-        List<CombinedMemberDto> combinedMembers = memberService.listCombinedMembers();
+    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+        List<MemberDto> memberDtoList=memberService.listMember();
 
-        model.addAttribute("combinedMembers", combinedMembers);
+        model.addAttribute("memberDtoList", memberDtoList);
         model.addAttribute("myUserDetails", myUserDetails);
 
         return "member/memberList";
     }
-
 
     // Read_paging - 회원 목록 조회
     @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬

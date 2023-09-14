@@ -1,7 +1,9 @@
 package org.project.dev.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.dto.SemiMemberDto;
 import org.project.dev.member.service.SemiMemberService;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/semiMember")
@@ -39,6 +42,19 @@ public class SemiMemberController {
 
         semiMemberService.insertSemiMember(semiMemberDto);
         return "login";
+    }
+
+    // Read - 간편회원목록 조회
+    @GetMapping("/semiMemberList")
+    public String getSemiMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, SemiMyUserDetails semiMyUserDetails, Model model){
+        List<SemiMemberDto> semiMemberDtoList=semiMemberService.listSemiMember();
+
+
+        model.addAttribute("semiMemberDtoList", semiMemberDtoList);
+        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
+        model.addAttribute("myUserDetails", myUserDetails);
+
+        return "semiMember/semiMemberList";
     }
 
     @GetMapping("/login")
