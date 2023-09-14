@@ -4,6 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+<<<<<<< HEAD
     url: jdbc:mysql://localhost:3306/qweqqwe
     #    url: jdbc:mysql://localhost:3306/test2
     username: root
@@ -11,6 +12,15 @@ spring:
 #    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
 #    username: admin
 #    password: '00000000'
+=======
+#    url: jdbc:mysql://localhost:3306/springdb
+#    url: jdbc:mysql://localhost:3306/test2
+#    username: root
+#    password: '1234'
+    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+    username: admin
+    password: '00000000'
+>>>>>>> 67784d91f39d6643e4f2c346e193501ad8b70f87
 
   mail:
     # google smtp server 사용
