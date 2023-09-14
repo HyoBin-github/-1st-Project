@@ -3,13 +3,17 @@ package org.project.dev.member.service;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.repository.CartRepository;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.dto.SemiMemberDto;
+import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.SemiMemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -78,4 +82,18 @@ public class SemiMemberService {
         return semiMemberRepository.findById(semiMemberId).get();
     }
 
+    public List<SemiMemberDto> listSemiMember(){
+
+        List<SemiMemberDto> semiMemberDtoList=new ArrayList<>();
+        List<SemiMemberEntity> semiMemberEntityList=semiMemberRepository.findAll();
+
+        if (!semiMemberEntityList.isEmpty()) {
+            for(SemiMemberEntity semiMemberEntity: semiMemberEntityList){
+
+                SemiMemberDto semiMemberDto=SemiMemberDto.toSemiMemberDto(semiMemberEntity);
+                semiMemberDtoList.add(semiMemberDto);
+            }
+        }
+        return semiMemberDtoList;
+    }
 }

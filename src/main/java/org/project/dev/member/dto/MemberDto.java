@@ -107,6 +107,9 @@ public class MemberDto {
             memberDto.setRole(memberEntity.getRole());
             memberDto.setCreateTime(memberEntity.getCreateTime());
             memberDto.setUpdateTime(memberEntity.getUpdateTime());
+
+            memberDto.setImageUrl(memberEntity.getImage().getImageUrl());
+
             return memberDto;
     }
 

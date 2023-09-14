@@ -13,12 +13,13 @@
         <thead>
         <tr>
             <th colspan="11">
-                현재 로그인 사용자 : <span th:text="${myUserDetails.memberEntity.email}"></span> ,
+                현재 로그인 사용자 : <span th:text="${myUserDetails.memberEntity.memberEmail}"></span> ,
                 권한 : <span th:text="${myUserDetails.memberEntity.role}"></span>
             </th>
         </tr>
         <tr>
-            <th>아이디</th>
+<!--            <th>이미지</th>-->
+            <th>회원번호</th>
             <th>이메일</th>
             <th>이름</th>
             <th>닉네임</th>
@@ -28,21 +29,23 @@
             <th>권한</th>
             <th>가입일</th>
             <th>정보수정일</th>
+            <th>회원구분</th> <!--일반회원 / 간편회원-->
             <th>상세보기</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="member : ${memberDtoList}">
+        <tr th:each="combinedMembers : ${combinedMembers}"> <!--아래 수정해야함-->
             <td th:text="${member.memberId}"></td>
             <td th:text="${member.memberEmail}"></td>
             <td th:text="${member.memberName}"></td>
             <td th:text="${member.memberNickName}"></td>
             <td th:text="${member.memberPhone}"></td>
             <td th:text="${member.memberBirth}"></td>
-            <td th:text="${member.memberAddress}"></td>
+            <td th:text="${member.memberStreetAddress + ', ' + member.memberDetailAddress}"></td>
             <td th:text="${member.role}"></td>
             <td th:text="${#temporals.format(member.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${#temporals.format(member.updateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${member.role}"></td>
             <td>
                 <a th:href="@{/member/detail/{memberId}(memberId=${member.memberId})}">보기</a> <!-- /id=member.id -->
             </td>

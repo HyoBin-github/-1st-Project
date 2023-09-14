@@ -28,7 +28,7 @@ public class WebSecurityConfigClass{
                     .antMatchers("/", "/member/join", "/member/login").permitAll()
                     .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**", "/board/**", "/cart/**").authenticated()
                     .antMatchers("/product/manage").hasAnyRole("SELLER", "ADMIN")
-                    .antMatchers("/admin/**").hasAnyRole("SELLER", "ADMIN")
+                    .antMatchers("/admin/**", "/member/memberList").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin()

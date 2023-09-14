@@ -8,13 +8,18 @@ import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.cartNew.repository.CartItemRepository;
 import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.member.dto.CombinedMemberDto;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
+import org.project.dev.member.repository.SemiMemberRepository;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +41,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final ImageRepository imageRepository;
+    private final SemiMemberRepository semiMemberRepository;
 
     // Create + 장바구니 생성
     @Transactional
@@ -77,7 +83,7 @@ public class MemberService {
         return memberDtoList;
     }
 
-//  Detail (to메서드)
+    //  Detail (to메서드)
     public MemberDto detailMember(Long memberId){
 
         Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
@@ -269,6 +275,81 @@ public class MemberService {
         String cleanedPhoneNumber = memberPhone.replaceAll("-", "");
 
         return cleanedPhoneNumber;
+    }
+
+    // 페이징
+    public Page<MemberDto> memberPagingList(Pageable pageable) {
+
+        Page<MemberEntity> memberEntities = memberRepository.findAll(pageable);
+        //    boardEntities.map(board ->new BoardDto(board.getId(),board.getBoardContent(),))
+
+        int nowPage= memberEntities.getNumber();// 요처 페이지 번호
+        long totalCount= memberEntities.getTotalElements();// 전체게시글수
+        int totalPage= memberEntities.getTotalPages();// 전체 페이지갯수
+        int pageSize=  memberEntities.getSize();    // 한페이지에 보이는 개수
+        memberEntities.isFirst(); // 첫번째 페이지인지?
+        memberEntities.isLast(); // 마지막 페이지인지?
+        memberEntities.hasPrevious(); // 이전 페이지 있는지?
+        memberEntities.hasNext(); // 다음 페이지 있는지?
+
+        System.out.println(totalCount+" 총 글수");
+        System.out.println(totalPage+" 총 페이지");
+        System.out.println(pageSize+" 페이지 당 글수");
+        System.out.println(nowPage+" 현재 페이지");
+
+        // Entity → Dto
+        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
+        return memberDtos;
+        //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
+    }
+
+
+    // member, semiMember 목록 통합 조회
+    public List<CombinedMemberDto> listCombinedMembers() {
+        List<MemberEntity> members = memberRepository.findAll();
+        List<SemiMemberEntity> semiMembers = semiMemberRepository.findAll();
+
+        List<CombinedMemberDto> combinedMembers = new ArrayList<>();
+
+        for (MemberEntity member : members) {
+            CombinedMemberDto combinedMemberDto = mapToCombinedMemberDto(member);
+            combinedMembers.add(combinedMemberDto);
+        }
+
+        for (SemiMemberEntity semiMember : semiMembers) {
+            CombinedMemberDto combinedMemberDto = mapToCombinedSemiMemberDto(semiMember);
+            combinedMembers.add(combinedMemberDto);
+        }
+
+        return combinedMembers;
+    }
+
+    private CombinedMemberDto mapToCombinedMemberDto(MemberEntity member) {
+        CombinedMemberDto combinedMemberDto = new CombinedMemberDto();
+        combinedMemberDto.setMemberId(member.getMemberId());
+        combinedMemberDto.setMemberEmail(member.getMemberEmail());
+        combinedMemberDto.setMemberName(member.getMemberName();
+        combinedMemberDto.setMemberNickName(member.getMemberNickName());
+        combinedMemberDto.setMemberPhone(member.getMemberPhone());
+        combinedMemberDto.setMemberBirth(member.getMemberBirth());
+        combinedMemberDto.setMemberStreetAddress(member.getMemberStreetAddress());
+        combinedMemberDto.setMemberDetailAddress(member.getMemberDetailAddress());
+        combinedMemberDto.setRole(member.getRole());
+        combinedMemberDto.setCreateTime(member.getCreateTime());
+        combinedMemberDto.setUpdateTime(member.getUpdateTime());
+        combinedMemberDto.setImageUrl(member.getImage().getImageUrl());
+
+        return combinedMemberDto;
+    }
+
+    private CombinedMemberDto mapToCombinedSemiMemberDto(SemiMemberEntity semiMember) {
+        CombinedMemberDto combinedMemberDto = new CombinedMemberDto();
+        combinedMemberDto.setSemiMemberId(semiMember.getSemiMemberId());
+        combinedMemberDto.setSemiMemberEmail(semiMember.getSemiMemberEmail());
+        combinedMemberDto.setSemiMemberPhone(semiMember.getSemiMemberPhone());
+        combinedMemberDto.setRole(semiMember.getRole());
+
+        return combinedMemberDto;
     }
 
 
