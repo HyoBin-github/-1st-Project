@@ -22,9 +22,14 @@ public class AdminProductService {
     검색조건 달아야함
     그냥 다 땡겨옴 null 처리 안함
      */
-    public List<AdminProductDto> getProductList() {
+    public List<AdminProductDto> getProductList(Long memberId) {
         List<AdminProductDto> productDtoList = new ArrayList<>();
-        List<AdminProductEntity> adminProductEntityList = adminProductRepository.findAll();
+        List<AdminProductEntity> adminProductEntityList = adminProductRepository.findByMemberId(memberId);
+
+        if (adminProductEntityList.isEmpty())
+        {
+            throw new IllegalArgumentException("가져올 상품이 없습니다");
+        }
 
         for (AdminProductEntity adminProductEntity : adminProductEntityList) {
             productDtoList.add(AdminProductDto.toDto(adminProductEntity));
