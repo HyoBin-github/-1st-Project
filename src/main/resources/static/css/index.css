@@ -36,8 +36,10 @@ html{
   position: fixed;
   bottom: 6rem;
   right: 2rem;
-  width: 30px;
-  height: 65px;
+  /* width: 30px;
+  height: 65px; */
+  width: 40px;
+  height: 80px;
 
   border: 2px solid #E5E0FF;
   border-radius: 10%;
@@ -58,8 +60,11 @@ html{
   padding-bottom: 3px;
 }
 .moveBtn .top .topBtn{
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
+  width: 30px;
+  height: 30px;
+
   display: flex;
   justify-content: center;
   border-radius: 50%;
@@ -70,33 +75,48 @@ html{
   transition: all 0.3s;
 }
 .moveBtn .top .topBtn a{
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
+  width: 30px;
+  height: 30px;
+  
   border-radius: 50%;
   display: flex;
   justify-content: center;
   text-align: center;
 }
 .moveBtn .top .topBtn .moveBtnTop{
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
+  width: 30px;
+  height: 30px;
+  
   border-radius: 50%;
   display: flex;
   justify-content: center;
   text-align: center;
 }
 .moveBtn .top .topBtn .moveBtnTop .img{
-    width: 20px;
-    height: 20px;
+    /* width: 20px;
+    height: 20px; */
+  
+    width: 30px;
+    height: 30px;  
 }
 .moveBtn .top .topBtn .moveBtnBotton .img{
-    width: 20px;
-    height: 20px;
+    /* width: 20px;
+    height: 20px; */
+
+    width: 30px;
+    height: 30px;
 }
 /* header 마우스 올릴 경우 */
 .moveBtn .top .topBtn:hover{
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
+  width: 30px;
+  height: 30px;
+
   border-radius: 50%;
   text-shadow: 0px 0px 2px #644BDE;
   background-color: #C8BEFF;
@@ -119,8 +139,8 @@ html{
   padding-top: 3px;
 }
 .moveBtn .bottom .bottomBtn{
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   border-radius: 50%;
@@ -130,8 +150,8 @@ html{
   transition: all 0.3s;
 }
 .moveBtn .bottom .bottomBtn a{
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -144,8 +164,8 @@ html{
 }
 /* footer 마우스 올릴경우 */
 .moveBtn .bottom .bottomBtn:hover{
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   text-shadow: 0px 0px 2px #644BDE;
   background-color: #C8BEFF;
@@ -159,6 +179,23 @@ html{
   text-shadow: 0px 0px 2px #644BDE;
   color: white;
 }
+/* chatbot 임시 설정*/
+.chatbot{
+  position: fixed;
+  bottom: 2.5rem;
+  right: 1.64rem;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #c5c5c5;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: #BAADFF 0px 25px 50px -10px,
+   #BAADFF 0px 15px 30px -15px,
+    #BAADFF 0px -1px 3px 0px inset;
+}
+
 
 .container{
     width: 100%;
