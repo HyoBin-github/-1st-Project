@@ -35,8 +35,8 @@
 .List .List-con .search{
     padding: 10px 0 0 10px;
     box-sizing: border-box;
-    justify-content: center;
-    /* line-height: 20px; */
+    height: 100px;
+    display: flex;
 }
 .List .List-con .search .form{
     margin: auto;
