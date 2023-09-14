@@ -55,9 +55,9 @@ function replyList(){
                 list+="</li>";
                 list+="</ul>";
 
+                $('#replyCon').append(list); // replyCon에 추가
             });
             }
-                $('#replyCon').append(list); // replyCon에 추가
         }
     });
 }
