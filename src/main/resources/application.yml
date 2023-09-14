@@ -8,9 +8,9 @@ spring:
     #    url: jdbc:mysql://localhost:3306/test2
 #    username: root
 #    password: '1234'
-  url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-  username: admin
-  password: '00000000'
+    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+    username: admin
+    password: '00000000'
 
   mail:
     # google smtp server 사용
@@ -93,5 +93,5 @@ file:
 #    reviewImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
   ##rladpwls1843@gmail.com
-#  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-#  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)

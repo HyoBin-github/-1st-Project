@@ -9,7 +9,6 @@
 }
 .List .List-con{
     flex-basis: 1300px;
-    min-height: 500px;
     padding: 20px;
     box-sizing: border-box;
     display: flex;
