@@ -30,9 +30,13 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    align-items: center;
 }
 .header .nav .top-nav .top-menu>ul>li{
     padding: 5px 10px;
+}
+.header .nav .top-nav .top-menu>ul>li span{
+    color: #8e7aff;
 }
 .header .nav .top-nav .top-menu>ul>Li>a{
     font-size: 13px;

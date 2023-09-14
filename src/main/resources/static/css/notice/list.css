@@ -9,7 +9,6 @@
 }
 .List .List-con{
     flex-basis: 1300px;
-    min-height: 500px;
     padding: 20px;
     box-sizing: border-box;
     display: flex;
@@ -33,10 +32,11 @@
 }
 /* search */
 .List .List-con .search{
+    height: 50px;
+    display: flex;
     padding: 10px 0 0 10px;
     box-sizing: border-box;
     justify-content: center;
-    /* line-height: 20px; */
 }
 .List .List-con .search .form{
     margin: auto;
@@ -85,6 +85,8 @@
     box-sizing: border-box;
     justify-content: space-between;
     padding: 10px;
+    height: 100px;
+    align-items: center;
 }
 .List .List-con .type ul{
     flex-basis: 1400px;
