@@ -27,7 +27,6 @@ public class MyUserDetails implements UserDetails, OAuth2User {
 
     private Map<String, Object> attributes;
 
-
     // 일반
     public MyUserDetails(MemberEntity memberEntity) {
         this.memberEntity = memberEntity;
@@ -92,12 +91,4 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         return true;
     }
 
-    // 회원 정보 수정 시 수정 내용 실시간으로 반영
-    public void setMemberNickName(String memberNickName) {
-        memberEntity.setMemberNickName(memberNickName); // MemberEntity에 저장된 사용자 닉네임을 업데이트
-    }
-
-    public void setImageUrl(String imageUrl) {
-        memberEntity.getImage().setImageUrl(imageUrl);
-    }
 }

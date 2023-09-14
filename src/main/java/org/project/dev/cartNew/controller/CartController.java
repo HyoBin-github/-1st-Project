@@ -6,7 +6,9 @@ import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.entity.CartItemEntity;
 import org.project.dev.cartNew.service.CartService;
 import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductEntity;
@@ -34,6 +36,7 @@ public class CartController {
     private final MemberService memberService;
     private final ProductService productService;
     private final ProductUtilService productUtilService;
+    private final ImageServiceImpl imageService;
 
     // 장바구니에 물건 담기
     @PostMapping("/member/{memberId}/{id}")
@@ -87,7 +90,10 @@ public class CartController {
         // 로그인 되어있는 유저의 id와 장바구니에 접속하는 id가 같아야함
         if (myUserDetails.getMemberEntity().getMemberId()==memberId) {
 
+            // 프로필 이미지 불러옴
             MemberEntity member=memberService.findMember(memberId);
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
             // 로그인 되어있는 유저에 해당하는 장바구니 가져오기
             CartEntity memberCart=member.getCart();
 
@@ -113,6 +119,7 @@ public class CartController {
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("member", memberService.findMember(memberId));
             model.addAttribute("productImages", productImages);
+            model.addAttribute("memberImageUrl", memberImageUrl); // 프로필 이미지 불러옴
 
             return "/member/cart";
         }else {

@@ -13,24 +13,24 @@ import java.util.Collection;
 
 @Data
 @NoArgsConstructor
-public class SemiMyUserDetails implements UserDetails{
+public class SemiMyUserDetails implements UserDetails {
 
-//    @Autowired
+    // @Autowired
     private SemiMemberEntity semiMemberEntity;
 
     // 간편회원
     public SemiMyUserDetails(SemiMemberEntity semiMemberEntity) {
-        this.semiMemberEntity=semiMemberEntity;
+        this.semiMemberEntity = semiMemberEntity;
     }
 
     // 권한
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collectRole=new ArrayList<>();
+        Collection<GrantedAuthority> collectRole = new ArrayList<>();
         collectRole.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return "ROLE_"+semiMemberEntity.getRole().toString(); // ROLE_
+                return "ROLE_" + semiMemberEntity.getRole().toString(); // ROLE_
             }
         });
         return collectRole;

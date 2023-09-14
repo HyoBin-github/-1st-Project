@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
@@ -9,16 +8,16 @@
 <body>
 <!--<div th:replace="~{fragments/common/header :: headerFragment}"></div>-->
 <div class="memberList">
-    <table style="width:600px;" border="1">
+    <table style="width:1700px;" align="center" border="1";>
         <thead>
         <tr>
             <th colspan="11">
-                현재 로그인 사용자 : <span th:text="${myUserDetails.memberEntity.memberEmail}"></span> ,
+                현재 로그인 사용자 : <span th:text="${myUserDetails.memberEntity.memberEmail}"></span>,
                 권한 : <span th:text="${myUserDetails.memberEntity.role}"></span>
             </th>
         </tr>
         <tr>
-<!--            <th>이미지</th>-->
+            <th>이미지</th>
             <th>회원번호</th>
             <th>이메일</th>
             <th>이름</th>
@@ -34,6 +33,7 @@
         </thead>
         <tbody>
         <tr th:each="member : ${memberDtoList}">
+            <td><div id="image-preview"><img th:src="${member.imageUrl}" alt="프로필 이미지" style="width: 50px; height: 50px;"></div></td>
             <td th:text="${member.memberId}"></td>
             <td th:text="${member.memberEmail}"></td>
             <td th:text="${member.memberName}"></td>

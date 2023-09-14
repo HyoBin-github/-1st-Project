@@ -42,6 +42,7 @@ public class ImageServiceImpl implements ImageService {
     @Value("${file.productImgUploadDir}")
     private String uploadFolder;
 
+
     // 이미지 등록
     @Override
     public void upload(ImageUploadDto imageUploadDto, String memberEmail) {

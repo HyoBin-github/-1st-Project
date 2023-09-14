@@ -37,10 +37,10 @@ public class MemberService {
 
     // Create + 장바구니 생성
     @Transactional
-    public void insertMember(MemberDto memberDto){
+    public void insertMember(MemberDto memberDto) {
 
-        MemberEntity memberEntity=MemberEntity.toMemberEntityInsert(memberDto, passwordEncoder);
-        Long memberId=memberRepository.save(memberEntity).getMemberId();
+        MemberEntity memberEntity = MemberEntity.toMemberEntityInsert(memberDto, passwordEncoder);
+        Long memberId = memberRepository.save(memberEntity).getMemberId();
 
         // 이미지 생성 및 저장
         ImageEntity imageEntity = new ImageEntity();
@@ -53,6 +53,7 @@ public class MemberService {
         // 회원가입 이후 카트 생성
         createCartForMember(memberId);
     }
+
     private void createCartForMember(Long memberId) {
         MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
         CartEntity cart = CartEntity.createCart(memberEntity);
@@ -60,15 +61,15 @@ public class MemberService {
     }
 
     // Read (to메서드)
-    public List<MemberDto> listMember(){
+    public List<MemberDto> listMember() {
 
-        List<MemberDto> memberDtoList=new ArrayList<>();
-        List<MemberEntity> memberEntityList=memberRepository.findAll();
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
 
         if (!memberEntityList.isEmpty()) {
-            for(MemberEntity memberEntity: memberEntityList){
+            for (MemberEntity memberEntity : memberEntityList) {
 
-                MemberDto memberDto=MemberDto.toMemberDto(memberEntity);
+                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
                 memberDtoList.add(memberDto);
             }
         }
@@ -76,9 +77,9 @@ public class MemberService {
     }
 
     //  Detail (to메서드)
-    public MemberDto detailMember(Long memberId){
+    public MemberDto detailMember(Long memberId) {
 
-        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+        Optional<MemberEntity> optionalMemberEntity = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(() -> {
             return new IllegalArgumentException("조회할 아이디가 없습니다");
         }));
 
@@ -94,46 +95,32 @@ public class MemberService {
     }
 
     // Update - 수정 화면
-    public MemberDto updateViewMember(Long memberId){
+    public MemberDto updateViewMember(Long memberId) {
 
-        MemberEntity memberEntity=memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
+        MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
         return MemberDto.toMemberDto(memberEntity);
     }
 
     // Update - 실제 실행(to메서드)
     @Transactional
-    public int updateMember(MemberDto memberDto){
+    public int updateMember(MemberDto memberDto) {
 
-        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberDto.getMemberId()).orElseThrow(()->{
+        Optional<MemberEntity> optionalMemberEntity = Optional.ofNullable(memberRepository.findById(memberDto.getMemberId()).orElseThrow(() -> {
             return new IllegalArgumentException("수정할 아이디가 없습니다");
         }));
 
-        MemberEntity memberEntity=MemberEntity.toMemberEntityUpdate(memberDto);
-        Long memberId=memberRepository.save(memberEntity).getMemberId();
+        MemberEntity memberEntity = MemberEntity.toMemberEntityUpdate(memberDto);
+        Long memberId = memberRepository.save(memberEntity).getMemberId();
 
-        Optional<MemberEntity> optionalMemberEntity1=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+        Optional<MemberEntity> optionalMemberEntity1 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(() -> {
             return new IllegalArgumentException("수정할 아이디가 없습니다");
         }));
 
         if (optionalMemberEntity1.isPresent()) {
             System.out.println("회원정보 수정 성공");
-
-            // 업데이트된 정보를 가져와서 현재 사용자의 세션 정보를 업데이트
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails) {
-                MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
-                myUserDetails.setMemberNickName(memberDto.getMemberNickName()); // 현재 사용자의 닉네임 업데이트
-                myUserDetails.setImageUrl(memberDto.getImageUrl()); // 현재 사용자의 이미지 업데이트
-
-                // imageUrl 값을 로그에 출력
-                ImageEntity imageEntity = myUserDetails.getMemberEntity().getImage();
-                System.out.println("imageUrl: " + imageEntity.getImageUrl());
-
-                // imageUrl 값을 로그로 출력
-                System.out.println("imageUrl: " + memberDto.getImageUrl());
-            }
             return 1;
-        }else{
+
+        } else {
             System.out.println("회원정보 수정 실패");
             return 0;
         }
@@ -141,19 +128,19 @@ public class MemberService {
 
     // Delete
     @Transactional
-    public int deleteMember(Long memberId){
+    public int deleteMember(Long memberId) {
 
-        Optional<MemberEntity> optionalMemberEntity=Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+        Optional<MemberEntity> optionalMemberEntity = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(() -> {
             return new IllegalArgumentException("삭제할 아이디가 없습니다");
         }));
 
         memberRepository.delete(optionalMemberEntity.get());
 
-        Optional<MemberEntity> optionalMemberEntity1=memberRepository.findById(memberId);
+        Optional<MemberEntity> optionalMemberEntity1 = memberRepository.findById(memberId);
 
-        if(!optionalMemberEntity1.isPresent()){
+        if (!optionalMemberEntity1.isPresent()) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
@@ -169,34 +156,34 @@ public class MemberService {
     public boolean existsByMemberNickName(String memberNickName) {
         return memberRepository.existsByMemberNickName(memberNickName);
     }
-    
+
     // 휴대전화번호 중복 확인 메서드, CheckDuplicateController에서 두 테이블 직접 조회해 사용하면 이 메서드 필요 없음
 //    @Transactional
 //    public boolean existsByMemberPhone(String memberPhone) {
 //        return memberRepository.existsByMemberPhone(memberPhone);
 //    }
-    
+
     // 임시 비밀번호 발급 관련 메서드
     public void SetTempPassword(String memberEmail, String tempPassword) {
 
-        Optional<MemberEntity> optionalMemberEntity=memberRepository.findByMemberEmail(memberEmail);
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
 
-        if(optionalMemberEntity.isPresent()){
-            MemberEntity memberEntity=optionalMemberEntity.get();
-            String encodedPassword=passwordEncoder.encode(tempPassword);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            String encodedPassword = passwordEncoder.encode(tempPassword);
             memberEntity.setMemberPassword(encodedPassword);
             memberRepository.save(memberEntity);
             log.info("이메일 주소에 임시 비밀번호가 설정되었습니다: {}", memberEmail);
-        }else{
+        } else {
             log.error("해당 이메일을 가진 회원을 찾을수없습니다: {}", memberEmail);
         }
     }
-    
+
     // 닉네임, 휴대전화번호 이용한 이메일 찾기 메서드
     public String findEmailByNicknameAndPhone(String memberNickName, String memberPhone) {
 
-        MemberEntity memberEntity=memberRepository.findByMemberNickNameAndMemberPhone(memberNickName, memberPhone);
-        if (memberEntity!=null) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickNameAndMemberPhone(memberNickName, memberPhone);
+        if (memberEntity != null) {
             return memberEntity.getMemberEmail();
         }
         return null;
@@ -205,8 +192,8 @@ public class MemberService {
     // 비밀번호 찾기 기능에서 이메일, 휴대전화번호 일치하는지 확인
     public boolean checkEmailPhoneMatching(String memberEmail, String memberPhone) {
 
-        MemberEntity memberEntity=memberRepository.findByMemberEmailAndMemberPhone(memberEmail, memberPhone);
-            return memberEntity!=null; // 이메일과 휴대전화번호가 일치하면 memberEntity 객체가 반환되어서 null이 아님
+        MemberEntity memberEntity = memberRepository.findByMemberEmailAndMemberPhone(memberEmail, memberPhone);
+        return memberEntity != null; // 이메일과 휴대전화번호가 일치하면 memberEntity 객체가 반환되어서 null이 아님
     }
 
     // 비밀번호 변경 메서드 // gpt
@@ -251,7 +238,7 @@ public class MemberService {
     }
 
     // 휴대전화번호 db에 저장될때 해당 형식으로 저장되도록 하는 메서드
-    public void savePhoneNumber(MemberDto memberDto){
+    public void savePhoneNumber(MemberDto memberDto) {
         // 휴대전화번호 데이터 형식 변환
         String formattedPhoneNumber = transformPhoneNumber(memberDto.getMemberPhone());
 
@@ -271,30 +258,28 @@ public class MemberService {
 
     // 페이징
     public Page<MemberDto> memberPagingList(Pageable pageable) {
-
         Page<MemberEntity> memberEntities = memberRepository.findAll(pageable);
         //    boardEntities.map(board ->new BoardDto(board.getId(),board.getBoardContent(),))
 
-        int nowPage= memberEntities.getNumber();// 요처 페이지 번호
-        long totalCount= memberEntities.getTotalElements();// 전체게시글수
-        int totalPage= memberEntities.getTotalPages();// 전체 페이지갯수
-        int pageSize=  memberEntities.getSize();    // 한페이지에 보이는 개수
+        int nowPage = memberEntities.getNumber();// 요청 페이지 번호
+        long totalCount = memberEntities.getTotalElements();// 전체게시글수
+        int totalPage = memberEntities.getTotalPages();// 전체 페이지갯수
+        int pageSize = memberEntities.getSize();    // 한페이지에 보이는 개수
         memberEntities.isFirst(); // 첫번째 페이지인지?
         memberEntities.isLast(); // 마지막 페이지인지?
         memberEntities.hasPrevious(); // 이전 페이지 있는지?
         memberEntities.hasNext(); // 다음 페이지 있는지?
 
-        System.out.println(totalCount+" 총 글수");
-        System.out.println(totalPage+" 총 페이지");
-        System.out.println(pageSize+" 페이지 당 글수");
-        System.out.println(nowPage+" 현재 페이지");
+        System.out.println(totalCount + " 총 글수");
+        System.out.println(totalPage + " 총 페이지");
+        System.out.println(pageSize + " 페이지 당 글수");
+        System.out.println(nowPage + " 현재 페이지");
 
         // Entity → Dto
         Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
         return memberDtos;
         //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
     }
-
 
 
 }

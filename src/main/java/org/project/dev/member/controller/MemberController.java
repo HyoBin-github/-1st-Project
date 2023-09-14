@@ -82,7 +82,13 @@ public class MemberController {
 
     // Login
     @GetMapping("/login")
-    public String getLogin(){
+    public String getLogin(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+
+        if (myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
         return "member/login";
     }
 
@@ -105,8 +111,10 @@ public class MemberController {
 
     // Read_paging - 회원 목록 조회
     @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬
-    public String getPagingList(@PageableDefault(page = 0, size = 5, sort = "id",
-                                direction = Sort.Direction.DESC) Pageable pageable, Model model){
+    public String getPagingList(@PageableDefault(page = 0, size = 2, sort = "memberId",
+                                direction = Sort.Direction.DESC) Pageable pageable, Model model,
+                                @AuthenticationPrincipal MyUserDetails myUserDetails){
+
         // *** Page<>  Pageable
         Page<MemberDto> memberList = memberService.memberPagingList(pageable);
 
@@ -139,16 +147,15 @@ public class MemberController {
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("memberList",memberList);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("myUserDetails", myUserDetails);
 
         return "member/pagingList";
-
     }
 
     // Detail - 회원 상세 보기
     @GetMapping("/detail/{memberId}")
-    public String getDetail(@PathVariable("memberId") Long memberId, Model model,
-                         @AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String getDetail(@PathVariable("memberId") Long memberId, Model model){
 
         MemberDto member=memberService.detailMember(memberId);
 
@@ -156,7 +163,7 @@ public class MemberController {
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         model.addAttribute("member", member);
-        model.addAttribute("myUserDetails", myUserDetails);
+//        model.addAttribute("myUserDetails", myUserDetails);
         model.addAttribute("memberImageUrl", memberImageUrl); // 이미지 url 모델에 추가
 
         return "member/detail";
@@ -211,9 +218,6 @@ public class MemberController {
 
         if (rs == 1) {
             System.out.println("회원정보 수정 성공");
-
-            // imageUrl 업데이트
-            myUserDetails.setImageUrl(memberDto.getImageUrl());
 
             System.out.println("imageUrl : " + memberDto.getImageUrl()); // 오류 발견 목적으로 써놓음, 지워도 됨
 

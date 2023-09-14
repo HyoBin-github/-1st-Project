@@ -3,6 +3,7 @@ package org.project.dev.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.member.controller.MemberController;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.service.ImageService;
@@ -46,8 +47,22 @@ public class HomeController {
      4. 없음
      */
 
+    private final ImageServiceImpl imageService;
+    private final MemberService memberService;
+
+    // 프로필 이미지 가져옴
     @GetMapping({"","/index"})
-    public String index() {
+    public String index(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+
+        if (myUserDetails != null) {
+            MemberDto member=memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+
+            // 이미지 url을 db에서 가져오기
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("memberImageUrl", memberImageUrl); // 이미지 url 모델에 추가
+            model.addAttribute("member", member);
+        }
         return "index";
     }
 

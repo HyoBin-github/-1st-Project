@@ -28,7 +28,7 @@ public class WebSecurityConfigClass{
                     .antMatchers("/", "/member/join", "/member/login").permitAll()
                     .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**", "/board/**", "/cart/**").authenticated()
                     .antMatchers("/product/manage").hasAnyRole("SELLER", "ADMIN")
-                    .antMatchers("/admin/**", "/member/memberList", "/semiMember/semiMemberList").hasAnyRole("ADMIN")
+                    .antMatchers("/admin/**", "/member/list", "/member/memberList", "/semiMember/semiMemberList").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin()
@@ -92,7 +92,7 @@ public class WebSecurityConfigClass{
             http.antMatcher("/semiMember/**")
                     .authorizeHttpRequests()
                     .antMatchers("/", "/login").permitAll()
-                    .antMatchers("/semiMember/detail/**").hasAnyRole("SEMIMEMBER")
+                    .antMatchers("/semiMember/detail/**").hasAnyRole("SEMIMEMBER", "ADMIN")
 //            http.authorizeHttpRequests()
 //                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
 //                    .antMatchers("/member/logout", "/board/**").authenticated()
