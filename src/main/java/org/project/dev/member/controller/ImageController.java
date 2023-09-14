@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ImageController {
 
     private final ImageServiceImpl imageService;
-    private final ImageRepository imageRepository;
 
     // 이미지 등록
     @PostMapping("/upload")

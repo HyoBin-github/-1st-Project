@@ -20,12 +20,12 @@ public class CartItemEntity extends BaseEntity {
     @Column(name = "cartItem_id")
     private Long cartItemId;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // 뜻 알아보기
+    @ManyToOne(fetch = FetchType.LAZY) // 뜻 알아보기
     @JoinColumn(name = "cart_id")
     private CartEntity cart;
 
     // 상품
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 

@@ -35,7 +35,8 @@
                         <!--프로필 이미지 출력-->
                         <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.memberId})}">
                             <div id="image-preview">
-                                <img id="preview-image" th:src="${#authentication.principal.memberEntity.image.imageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
+<!--                                <img id="preview-image" th:src="${#authentication.principal.memberEntity.image.imageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">-->
+                                <img id="preview-image" th:src="${#authentication.principal != null and #authentication.principal.memberEntity.image != null ? #authentication.principal.memberEntity.image.imageUrl : '/profileImages/default.png'}" alt="프로필 이미지" style="width: 35px; height: 35px;">
                             </div>
                         </a>
                     </th:block>

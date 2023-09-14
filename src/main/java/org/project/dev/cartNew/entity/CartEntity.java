@@ -28,12 +28,12 @@ public class CartEntity extends BaseEntity {
     private int cartCount;
 
     // 구매자, 일반회원
-    @OneToOne(fetch = FetchType.EAGER) // 뜻 알아보기
+    @OneToOne(fetch = FetchType.LAZY) // 뜻 알아보기
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
     // 간편회원
-    @OneToOne(fetch = FetchType.EAGER) // 뜻 알아보기
+    @OneToOne(fetch = FetchType.LAZY) // 뜻 알아보기
     @JoinColumn(name = "semiMember_id")
     private SemiMemberEntity semiMember;
 
