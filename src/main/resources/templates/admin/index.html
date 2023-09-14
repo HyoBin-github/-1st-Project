@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/admin/index.css}">
-    <link rel="stylesheet" href="maincss.css">
+    <link rel="stylesheet" href="index.css">
     <title>Document</title>
 </head>
 
@@ -27,15 +27,16 @@
             <th:block sec:authorize="hasAnyRole('ADMIN', 'SELLER')">
                 <li><a href="/member/logout">로그아웃</a></li>
             </th:block>
-            <li>상품 관리</li>
-            <li><a href="/product/write">상품생성</a></li>
-            <li>고객 관리</li>
+
+            <th:block sec:authorize="hasAnyRole('ADMIN')">
+                <li><a href="/member/logout">고객 관리</a></li>
+            </th:block>
         </ul>
     </div>
 </div>
 <div class="sideBar">
     <div class="sideBarTitle">
-        <span> 사이드바 </span>
+        <span>  </span>
     </div>
 
     <th:block sec:authorize="isAnonymous()">
@@ -62,15 +63,24 @@
     <div class="sideBar-sec">
         <ul>
             <li>
-                <a href="#">상품 생성</a>
+                <a href="#">문의사항</a>
                 <ul>
                     <li>
-                        <a href="product/write">상품생성</a>
+                        <a href="#">고객</a>
+                    </li>
+                    <li>
+                        <a href="#">배송</a>
+                    </li>
+                    <li>
+                        <a href="#">이벤트</a>
+                    </li>
+                    <li>
+                        <a href="#">비고</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#">상품 관리</a>
+                <a href="#">상품</a>
                 <ul>
                     <li>
                         <a href="/product/write">상품생성</a>
@@ -78,13 +88,11 @@
                     <li>
                         <a href="#">상품 리스트</a>
                     </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">고객 문의</a>
-                <ul>
                     <li>
-                        <a href="#">내 문의</a>
+                        <a href="#">비고</a>
+                    </li>
+                    <li>
+                        <a href="#">비고</a>
                     </li>
                 </ul>
             </li>
@@ -92,7 +100,24 @@
                 <a href="#">주문 목록</a>
                 <ul>
                     <li>
-                        <a href="#">내 주문</a>
+                        <a href="#">주문 목록</a>
+                    </li>
+                    <li>
+                        <a href="#">비고</a>
+                    </li>
+                    <li>
+                        <a href="#">비고</a>
+                    </li>
+                    <li>
+                        <a href="#">비고</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">배송</a>
+                <ul>
+                    <li>
+                        <a href="#">주문별 배송 상태</a>
                     </li>
                 </ul>
             </li>
@@ -105,18 +130,128 @@
         <div class="main-section1">
             <ul>
                 <li>
-                    <a href="#">내 상품 문의 사항</a>
+                    <div class="sec1-title">문의 사항</div>
+                    <ul class="sec1-item">
+                        <li>고객 문의 사항</li>
+                        <li>배송 상태 문의 사항</li>
+                        <li>이벤트 문의사항</li>
+                        <li>비고</li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="#">상품 관리</a>
+                    <div class="sec1-title">상품</div>
+                    <ul class="sec1-item">
+                        <li>상품 생성</li>
+                        <li>상품 리스트</li>
+                        <li>비고</li>
+                        <li>비고</li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="/product/write">상품생성</a>
+                    <div class="sec1-title">주문 목록</div>
+                    <ul class="sec1-item">
+                        <li>주문 목록 보기</li>
+                        <li>비고</li>
+                        <li>비고</li>
+                        <li>비고</li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="#">주문 목록</a>
+                    <div class="sec1-title">배송</div>
+                    <ul class="sec1-item">
+                        <li>주문별 배송 상태</li>
+                        <li>상품별 주문 상태</li>
+                        <li>배송 현황 보기</li>
+                        <li>비고</li>
+                    </ul>
                 </li>
             </ul>
+        </div>
+
+        <div class="main-section2">
+            <div class="workList">
+                <div class="workList-title">
+                    오늘 할일
+                </div>
+                <ul>
+                    <li>신규 주문<span class="workList-item-number">10</span></li>
+                    <li>반품 신청<span class="workList-item-number">1</span></li>
+                    <li>환불 처리<span class="workList-item-number">0</span></li>
+                    <li>입금 대기<span class="workList-item-number">5</span></li>
+                    <li>문의<span class="workList-item-number">3</span></li>
+                    <li>답변 대기 문의<span class="workList-item-number">2</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-section3">
+            <div class="productBest">
+                <div class="productBest-title">베스트 상품 Top 20</div>
+                <ul>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                    <li>테스트 상품1</li>
+                </ul>
+            </div>
+
+            <div class="byDateStatus">
+                <div class="byDateStatus-top">
+                    <div class="byDateStatus-title">일자별 요약</div>
+                </div>
+                <table class="byDateStatus-table">
+                    <th>일자</th>
+                    <th>주문수</th>
+                    <th>매출액</th>
+                    <th>방문자</th>
+                    <th>가입</th>
+                    <th>문의</th>
+                    <th>후기</th>
+                    <tr>
+                        <td>2022-00-15</td>
+                        <td>15</td>
+                        <td>5,000,000</td>
+                        <td>30</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>최근 7일 합계</td>
+                        <td>176</td>
+                        <td>18,000,000</td>
+                        <td>170</td>
+                        <td>66</td>
+                        <td>15</td>
+                        <td>74</td>
+                    </tr>
+                    <tr>
+                        <td>이번달 합계</td>
+                        <td>235</td>
+                        <td>168,000,000</td>
+                        <td>302</td>
+                        <td>33</td>
+                        <td>56</td>
+                        <td>41</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
