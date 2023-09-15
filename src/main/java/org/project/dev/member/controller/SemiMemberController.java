@@ -50,23 +50,23 @@ public class SemiMemberController {
         return "login";
     }
 
-    // Read - 간편회원목록 조회
-    @GetMapping("/semiMemberList")
-    public String getSemiMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, SemiMyUserDetails semiMyUserDetails, Model model){
-        List<SemiMemberDto> semiMemberDtoList=semiMemberService.listSemiMember();
-
-        model.addAttribute("semiMemberDtoList", semiMemberDtoList);
-        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
-        model.addAttribute("myUserDetails", myUserDetails);
-
-        return "semiMember/semiMemberList";
-    }
-
     @GetMapping("/login")
     public String getLogin(){
         return "semiMember/login";
     }
 
+
+    // Read - 간편회원목록 조회
+//    @GetMapping("/semiMemberList")
+//    public String getSemiMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, SemiMyUserDetails semiMyUserDetails, Model model){
+//        List<SemiMemberDto> semiMemberDtoList=semiMemberService.listSemiMember();
+//
+//        model.addAttribute("semiMemberDtoList", semiMemberDtoList);
+//        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
+//        model.addAttribute("myUserDetails", myUserDetails);
+//
+//        return "semiMember/semiMemberList";
+//    }
 
     // Read_paging - 회원 목록 조회
     @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬

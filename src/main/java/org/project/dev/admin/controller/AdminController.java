@@ -14,4 +14,10 @@ public class AdminController {
         return "admin/index";
     }
 
+    /* 송원철 */
+    @GetMapping("/login")
+    public String getLogin(){
+        return "admin/login";
+    }
+
 }

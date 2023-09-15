@@ -16,8 +16,68 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfigClass{
+public class WebSecurityConfigClass {
 
+    // 관리자
+    @Configuration
+    @Order(0)
+    public static class AdminConfig{
+
+        @Bean
+        public SecurityFilterChain filterChainApp0(HttpSecurity http) throws Exception {
+            http.antMatcher("/admin/**")
+                    .authorizeHttpRequests()
+                    .antMatchers("/", "/login").permitAll()
+//                    .antMatchers("/admin/**").hasAnyRole("ADMIN")
+//            http.authorizeHttpRequests()
+//                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
+//                    .antMatchers("/member/logout", "/board/**").authenticated()
+
+                    .and()
+                    .formLogin()
+                    .loginPage("/admin/login")
+                    .usernameParameter("memberEmail")
+                    .passwordParameter("memberPassword")
+                    .loginProcessingUrl("/admin/login/post")
+                    .failureUrl("/login")
+                    .defaultSuccessUrl("/admin/index")
+
+                    .and()
+                    .logout()
+                    .logoutUrl("/admin/logout")
+                    .logoutSuccessUrl("/")
+
+//                    .and()
+//                    .exceptionHandling()
+//                    .accessDeniedPage("/403")
+
+                    .and()
+                    .csrf().disable()
+                    .authenticationProvider(adminAuthenticationProvider());
+            return http.build();
+        }
+
+        @Bean
+        public PasswordEncoder adminPasswordEncoder() {
+            return new BCryptPasswordEncoder();
+        }
+
+
+        @Bean
+        public UserDetailsServiceImpl adminDetailsService(){
+            return new UserDetailsServiceImpl();
+        }
+
+        @Bean
+        public DaoAuthenticationProvider adminAuthenticationProvider(){
+            DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
+            provider.setUserDetailsService(adminDetailsService());
+            provider.setPasswordEncoder(adminPasswordEncoder());
+            return provider;
+        }
+    }
+
+    // 일반 회원
     @Configuration
     @Order(1)
     public static class UserConfig{
@@ -83,6 +143,7 @@ public class WebSecurityConfigClass{
         }
     }
 
+    // 간편회원
     @Configuration
     @Order(2)
     public static class SemiUserConfig {

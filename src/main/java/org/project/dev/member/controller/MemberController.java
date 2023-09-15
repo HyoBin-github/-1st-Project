@@ -100,15 +100,15 @@ public class MemberController {
     }
 
     // Read - 회원 목록 조회
-    @GetMapping("/memberList")
-    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-        List<MemberDto> memberDtoList=memberService.listMember();
-
-        model.addAttribute("memberDtoList", memberDtoList);
-        model.addAttribute("myUserDetails", myUserDetails);
-
-        return "member/memberList";
-    }
+//    @GetMapping("/memberList")
+//    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+//        List<MemberDto> memberDtoList=memberService.listMember();
+//
+//        model.addAttribute("memberDtoList", memberDtoList);
+//        model.addAttribute("myUserDetails", myUserDetails);
+//
+//        return "member/memberList";
+//    }
 
     // Read_paging - 회원 목록 조회
     @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬
