@@ -8,7 +8,7 @@
             <div class="top-menu">
                 <ul>
                     <li><a th:href="@{/notice/list(page=0 ,search=${param.search} ,select=${param.select})}">공지사항</a></li>
-                    <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SEMIMEMBER', 'SELLER')">
+                    <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SELLER')">
                         <li><a th:href="@{/inquiry/write}">문의사항</a></li>
                     </th:block>
 <!--                    <th:block sec:authorize="hasAnyRole('MEMBER, 'SEMIMEMBER')">-->

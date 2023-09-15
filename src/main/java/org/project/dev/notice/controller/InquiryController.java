@@ -3,10 +3,14 @@ package org.project.dev.notice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.member.dto.SemiMemberDto;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
+import org.project.dev.member.service.SemiMemberService;
 import org.project.dev.notice.dto.InquiryDto;
 import org.project.dev.notice.service.InquiryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,7 @@ public class InquiryController {
     private final InquiryService inquiryService;
     private final MemberService memberService; // 송원철, 헤더에 nickName, image 가져오기 위한 용도
     private final ImageServiceImpl imageService; // 송원철, 헤더에 nickName, image 가져오기 위한 용도
+    private final SemiMemberService semiMemberService;
 
     /*
    Todo
@@ -49,14 +54,21 @@ public class InquiryController {
 
     /*송원철*/ // 헤더에 nickName, image 가져오기 위한 용도
     @GetMapping("/write")
-    public String getInquiryWrite(InquiryDto inquiryDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+    public String getInquiryWrite(InquiryDto inquiryDto, @AuthenticationPrincipal MyUserDetails myUserDetails,
+                                  @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails, Model model){
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        if(myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        model.addAttribute("member", member);
-        log.info("MemberId: {}", member.getMemberId());
-        model.addAttribute("memberImageUrl", memberImageUrl);
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        } else {
+            log.info("member is null");
+            log.info("semiMemberId : " + semiMyUserDetails.getSemiMemberEntity().getSemiMemberId());
+        }
+
+        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
 
         return "inquiry/write";
     }
@@ -74,13 +86,16 @@ public class InquiryController {
 //    }
     // 송원철
     @PostMapping("/write")
-    public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
+    public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model,
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
+                                   @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails) throws IOException {
         if(bindingResult.hasErrors()){
             return "inquiry/write";
         }
         MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
+        SemiMemberEntity semiMember = semiMyUserDetails.getSemiMemberEntity(); // 현재 로그인한 사용자의 SemiMemberEntity 가져오기
 
-        int rs = inquiryService.InquiryInsert(inquiryDto, member);
+        int rs = inquiryService.InquiryInsert(inquiryDto, member, semiMember);
         if(rs==1){
             return "redirect:/inquiry/list?page=0&select=&search=";
         }
@@ -131,8 +146,10 @@ public class InquiryController {
             Model model,
             @RequestParam(value = "select", required = false) String inquirySelect,
             @RequestParam(value = "search", required = false) String inquirySearch,
-            @AuthenticationPrincipal MyUserDetails myUserDetails
+            @AuthenticationPrincipal MyUserDetails myUserDetails, @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails
     ){
+        if (myUserDetails != null) {
+
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
@@ -157,6 +174,9 @@ public class InquiryController {
             return "inquiry/list";
         }
         System.out.println("조회할 문의사항이 없다.");
+        }
+        SemiMemberDto semiMember = semiMemberService.detailSemiMember(semiMyUserDetails.getSemiMemberEntity().getSemiMemberId());
+        model.addAttribute("semiMember", semiMember);
 
         return "inquiry/list";
     }

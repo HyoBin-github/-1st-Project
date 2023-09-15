@@ -43,10 +43,6 @@ public class SemiMemberEntity extends BaseEntity {
     @OneToMany(mappedBy = "semiMember", cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
 
-    // 연관 관계
-    @OneToMany(mappedBy = "semiMember", cascade = CascadeType.ALL)
-    private List<InquiryEntity> inquiry = new ArrayList<>();
-
     public static SemiMemberEntity toSemiMemberEntityInsert(SemiMemberDto semimemberDto, PasswordEncoder passwordEncoder) {
 
         SemiMemberEntity semiMemberEntity=new SemiMemberEntity();

@@ -2,6 +2,7 @@ package org.project.dev.notice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.dto.InquiryDto;
 import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.InquiryEntity;
@@ -50,9 +51,10 @@ public class InquiryService {
 
     // 송원철 / write 시 memberId 저장
     @Transactional
-    public int InquiryInsert(InquiryDto inquiryDto, MemberEntity memberEntity) throws IOException {
+    public int InquiryInsert(InquiryDto inquiryDto, MemberEntity memberEntity, SemiMemberEntity semiMemberEntity) throws IOException {
         // file 을 위한 throws
         InquiryEntity inquiryEntity = InquiryEntity.toInquiryEntityInsert(inquiryDto);
+
         inquiryEntity.setMember(memberEntity); // 현재 로그인한 사용자의 MemberEntity 설정
 
         Long inquiryId = inquiryRepository.save(inquiryEntity).getInqId();
