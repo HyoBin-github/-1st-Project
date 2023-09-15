@@ -1,6 +1,7 @@
 package org.project.dev.inquiryReply.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.inquiryReply.dto.ReplyDto;
 import org.project.dev.inquiryReply.entity.ReplyEntity;
 import org.project.dev.inquiryReply.repository.ReplyRepository;
@@ -20,7 +21,7 @@ public class ReplyService {
 
     private final InquiryRepository inquiryRepository;
 
-    public ReplyDto replyWrite(ReplyDto replyDto) {
+    public ReplyDto replyWrite(ReplyDto replyDto, MyUserDetails myUserDetails) {
 
         InquiryEntity inquiryEntity
                 = inquiryRepository.findById(replyDto.getInqId()).orElseThrow(() -> new IllegalArgumentException("X"));
@@ -81,7 +82,7 @@ public class ReplyService {
     }
 
 
-    public int replyUp(ReplyDto replyDto) {
+    public int replyUp(ReplyDto replyDto, MyUserDetails myUserDetails) {
 
         InquiryEntity inquiryEntity
                 = inquiryRepository.findById(replyDto.getInqId()).orElseThrow(()->{

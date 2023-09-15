@@ -21,7 +21,7 @@ public class ReplyController {
     public @ResponseBody ReplyDto replyWrite(@ModelAttribute ReplyDto replyDto,
                                         @AuthenticationPrincipal MyUserDetails myUserDetails){
 
-        ReplyDto replyDto1 = replyService.replyWrite(replyDto);
+        ReplyDto replyDto1 = replyService.replyWrite(replyDto, myUserDetails);
 
         return  replyDto1;
     }
@@ -39,8 +39,9 @@ public class ReplyController {
     }
 
     @PostMapping("/up")
-    public int replyUp(@ModelAttribute ReplyDto replyDto){
-        int rs = replyService.replyUp(replyDto);
+    public int replyUp(@ModelAttribute ReplyDto replyDto,
+                       @AuthenticationPrincipal MyUserDetails myUserDetails){
+        int rs = replyService.replyUp(replyDto, myUserDetails);
 
         return rs;
     }
