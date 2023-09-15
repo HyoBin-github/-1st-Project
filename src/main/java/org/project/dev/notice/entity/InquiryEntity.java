@@ -48,11 +48,6 @@ public class InquiryEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
-    // 연관관계 / 송원철
-    @ManyToOne
-    @JoinColumn(name = "semiMember_id")
-    private SemiMemberEntity semiMember;
-
     public static InquiryEntity toInquiryEntityInsert(InquiryDto inquiryDto) {
         InquiryEntity inquiryEntity = new InquiryEntity();
         inquiryEntity.setInqType(inquiryDto.getInqType());
@@ -67,6 +62,7 @@ public class InquiryEntity extends BaseEntity {
             memberEntity.setMemberId(inquiryDto.getMember().getMemberId());
             inquiryEntity.setMember(memberEntity);
         }
+
         return inquiryEntity;
     }
 

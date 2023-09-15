@@ -3,10 +3,14 @@ package org.project.dev.notice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.member.dto.SemiMemberDto;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
+import org.project.dev.member.service.SemiMemberService;
 import org.project.dev.notice.dto.InquiryDto;
 import org.project.dev.notice.service.InquiryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,7 @@ public class InquiryController {
     private final InquiryService inquiryService;
     private final MemberService memberService; // 송원철, 헤더에 nickName, image 가져오기 위한 용도
     private final ImageServiceImpl imageService; // 송원철, 헤더에 nickName, image 가져오기 위한 용도
+    private final SemiMemberService semiMemberService;
 
     /*
    Todo
@@ -49,14 +54,21 @@ public class InquiryController {
 
     /*송원철*/ // 헤더에 nickName, image 가져오기 위한 용도
     @GetMapping("/write")
-    public String getInquiryWrite(InquiryDto inquiryDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+    public String getInquiryWrite(InquiryDto inquiryDto, @AuthenticationPrincipal MyUserDetails myUserDetails,
+                                  @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails, Model model){
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        if(myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        model.addAttribute("member", member);
-        log.info("MemberId: {}", member.getMemberId());
-        model.addAttribute("memberImageUrl", memberImageUrl);
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        } else {
+            log.info("member is null");
+            log.info("semiMemberId : " + semiMyUserDetails.getSemiMemberEntity().getSemiMemberId());
+        }
+
+        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
 
         return "inquiry/write";
     }
@@ -74,7 +86,8 @@ public class InquiryController {
 //    }
     // 송원철
     @PostMapping("/write")
-    public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
+    public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model,
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
         if(bindingResult.hasErrors()){
             return "inquiry/write";
         }
@@ -132,34 +145,35 @@ public class InquiryController {
             @RequestParam(value = "select", required = false) String inquirySelect,
             @RequestParam(value = "search", required = false) String inquirySearch,
             @AuthenticationPrincipal MyUserDetails myUserDetails
-    ){
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+    ) {
 
-        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        Long totalCount = inquiryList.getTotalElements();
-        int totalPage = inquiryList.getTotalPages();
-        int pageSize = inquiryList.getSize();
-        int nowPage = inquiryList.getNumber();
-        int blockNum = 10;
+            Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
 
-        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
-                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
-        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+            Long totalCount = inquiryList.getTotalElements();
+            int totalPage = inquiryList.getTotalPages();
+            int pageSize = inquiryList.getSize();
+            int nowPage = inquiryList.getNumber();
+            int blockNum = 10;
 
-        if(!inquiryList.isEmpty()){
-            model.addAttribute("inquiryList", inquiryList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("member", member);
-            model.addAttribute("memberImageUrl", memberImageUrl);
+            int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                    (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+            int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+            if (!inquiryList.isEmpty()) {
+                model.addAttribute("inquiryList", inquiryList);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+                model.addAttribute("member", member);
+                model.addAttribute("memberImageUrl", memberImageUrl);
+                return "inquiry/list";
+            }
+            System.out.println("조회할 문의사항이 없다.");
+
             return "inquiry/list";
         }
-        System.out.println("조회할 문의사항이 없다.");
-
-        return "inquiry/list";
-    }
 
     /*
            Todo

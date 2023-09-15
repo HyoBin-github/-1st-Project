@@ -2,6 +2,7 @@ package org.project.dev.notice.dto;
 
 import lombok.*;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.entity.InquiryEntity;
 
 import java.time.LocalDateTime;
@@ -21,8 +22,10 @@ public class InquiryDto {
     private LocalDateTime CreateTime; // 공지사항 생성시간
     private LocalDateTime UpdateTime; // 공지사항 수정시간
 
-    // 송원철 / 장바구니 관련
+    // 송원철 / 연관관계
     private MemberEntity member;
+    // 송원철 / 연관관계
+    private SemiMemberEntity semiMember;
     // 송원철 / memberEmail 출력 용도
     private String memberEmail;
 

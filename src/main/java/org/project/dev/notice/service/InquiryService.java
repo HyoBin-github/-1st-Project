@@ -2,6 +2,7 @@ package org.project.dev.notice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.member.entity.MemberEntity;
+import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.dto.InquiryDto;
 import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.InquiryEntity;
@@ -53,6 +54,7 @@ public class InquiryService {
     public int InquiryInsert(InquiryDto inquiryDto, MemberEntity memberEntity) throws IOException {
         // file 을 위한 throws
         InquiryEntity inquiryEntity = InquiryEntity.toInquiryEntityInsert(inquiryDto);
+
         inquiryEntity.setMember(memberEntity); // 현재 로그인한 사용자의 MemberEntity 설정
 
         Long inquiryId = inquiryRepository.save(inquiryEntity).getInqId();
@@ -82,8 +84,8 @@ public class InquiryService {
             inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
         }else if(inquirySelect.equals("content")){
             inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
-//        }else if(inquirySelect.equals("writer")){
-//            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(pageable,inquirySearch); // 송원철, 주석처리함
+        }else if(inquirySelect.equals("writer")){
+            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
         }else{
             inquiryEntities = inquiryRepository.findAll(pageable);
         }
