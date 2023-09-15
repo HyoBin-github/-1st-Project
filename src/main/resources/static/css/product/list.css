@@ -2,16 +2,51 @@
 /* @import url(/css/common/header.css);
 @import url(/css/common/footer.css); */
 
-table,th,td{
+
+html{
+      background-color: #F0F2F5;
+}
+
+/* table,th,td{
     border-collapse: collapse;
     border: 1px solid #cccccc;
     text-align: center;
+} */
+
+
+.main_wrap{
+  width: 70%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+table {
+  width: 100%;
+  border-top: 1px solid white;
+  border-collapse: collapse;
+}
+th, td {
+  border-bottom: 1px solid white;
+  padding: 10px;
+  text-align: center;
+}
+th{
+  background-color: #4b66c7;
+}
+
+tbody tr:nth-child(2n) {
+  background-color: #bbdefb;
+}
+tbody tr:nth-child(2n+1) {
+  background-color: #e3f2fd;
 }
 tr{
     height: 30px;
 }
+
 .product {
-    width: 1000px;
+    width: 100%;
     height: auto;
     margin-top: 30px;
     margin-left: auto;
@@ -38,6 +73,52 @@ tr{
 .product .table_hits {
     width: 10%;
     text-align: center;
+}
+
+.main_wrap .searchBar_wrap{
+  width: 100%;
+  margin: 10px 0;
+}
+
+.main_wrap .searchBar_wrap .searchBar{
+}
+
+.main_wrap .searchBar_wrap .searchBar > input{
+ margin: 10px 0;
+}
+
+.main_wrap .searchBar_wrap .searchBar > input:focus{
+
+    border: 1.5px solid #7285d3;
+    outline: none;
+}
+
+.searchBar_wrap .searchBar .searchBarBtn{
+
+  width: 92px;
+    height: 30px;
+    flex: 1;
+    /* padding: 30px; */
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 15px;
+    border-top: 1px solid #7285d3;
+    border-right: 1px solid #7285d3;
+    border-left: 20px solid #7285d3;
+    border-bottom: 1px solid #7285d3;
+    transition: all 0.3s;
+    background: transparent;
+    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+
+}
+
+
+.searchBar_wrap .searchBar .searchBarBtn:hover{
+  border-left-width: 4px;
 }
 
 /* 이 밑으로는 페이징 처리 로직이 포함되어 있으니 작업전에 물어봐주세요. */

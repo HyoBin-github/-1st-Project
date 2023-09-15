@@ -78,13 +78,13 @@ public class ProductService {
 
     // LIST (READ)
     public ProductListResponse getProductList(int page, Pageable pageable,
-                                              String searchType, String searchKeyword) {
+                                              String searchType, String searchKeyword,Long memberId) {
         Pageable adjustedPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
 
         Page<ProductDTO> productList;
 
         if (searchKeyword == null || searchType == null) {
-            productList = productPaginationService.productNoSearchList(adjustedPageable);
+            productList = productPaginationService.productNoSearchList(adjustedPageable, memberId);
         } else {
             productList = productPaginationService.productSearchList(searchType, searchKeyword, adjustedPageable);
         }
