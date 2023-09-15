@@ -15,12 +15,12 @@ public class AdminProductController {
     private final AdminProductService adminProductService;
 
     @GetMapping("{id}/list")
-    public String getAdminProductList(@PathVariable("id") Long memberId) {
+    public String getAdminProductList(@PathVariable("id") int memberId) {
 
         adminProductService.getProductList(memberId);
 
-        return "admin/index";
-
+        return "admin/product/list";
     }
+
 
 }

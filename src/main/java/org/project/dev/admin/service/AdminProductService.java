@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.project.dev.admin.dto.AdminProductDto;
 import org.project.dev.admin.entity.AdminProductEntity;
 import org.project.dev.admin.repository.AdminProductRepository;
+import org.project.dev.product.dto.ProductDTO;
+import org.project.dev.product.entity.ProductEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,17 +24,17 @@ public class AdminProductService {
     검색조건 달아야함
     그냥 다 땡겨옴 null 처리 안함
      */
-    public List<AdminProductDto> getProductList(Long memberId) {
-        List<AdminProductDto> productDtoList = new ArrayList<>();
-        List<AdminProductEntity> adminProductEntityList = adminProductRepository.findByMemberId(memberId);
+    public List<ProductDTO> getProductList(int memberId) {
+        List<ProductDTO> productDtoList = new ArrayList<>();
+        List<ProductEntity> productEntityList = adminProductRepository.getMemberIdProductList(memberId);
 
-        if (adminProductEntityList.isEmpty())
-        {
+        if (productEntityList.isEmpty()) {
             throw new IllegalArgumentException("가져올 상품이 없습니다");
         }
 
-        for (AdminProductEntity adminProductEntity : adminProductEntityList) {
-            productDtoList.add(AdminProductDto.toDto(adminProductEntity));
+        for (ProductEntity productEntity : productEntityList) {
+            productDtoList.add(ProductDTO.toDTO(productEntity));
+
         }
         return productDtoList;
     }
@@ -42,43 +44,13 @@ public class AdminProductService {
     TODO
     단일조회
     */
-    public AdminProductDto getProductDetail(Long productId) {
-        Optional<AdminProductEntity> adminProductEntity = Optional.ofNullable(adminProductRepository.findById(productId).orElseThrow(() -> {
-            throw new IllegalArgumentException("찾는 해당 아이디가 없습니다");
+    public ProductDTO getProductDetail(Long productId) {
+        Optional<ProductEntity> productEntity = Optional.ofNullable(adminProductRepository.findById(productId).orElseThrow(() -> {
+            throw new IllegalArgumentException("가져올 항목이 없습니다");
         }));
 
-        return AdminProductDto.toDto(adminProductEntity.get());
+        return ProductDTO.toDTO(productEntity.get());
 
 
-    }
-
-    /*
-
-    TODO
-    product 생성 간단함 
-     */
-    public String productInsert(AdminProductDto productDto) {
-
-        AdminProductEntity productEntity = AdminProductEntity.toEntity(productDto);
-        Long result = adminProductRepository.save(productEntity).getId();
-        if (result == null){
-            throw new RuntimeException("product생성중 id 가 null로 반환됨!");
-        }
-        return "ok";
-    }
-
-    
-    /*
-    TODO
-    상품 수정
-     */
-    public String productUpdate(AdminProductDto productDto) {
-
-        AdminProductEntity productEntity = AdminProductEntity.toEntity(productDto);
-        Long result = adminProductRepository.save(productEntity).getId();
-        if (result == null){
-            throw new RuntimeException("product업데이트중 id 가 null로 반환됨!");
-        }
-        return "ok";
     }
 }
