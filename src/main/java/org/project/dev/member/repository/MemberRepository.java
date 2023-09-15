@@ -1,6 +1,6 @@
 package org.project.dev.member.repository;
 
-import org.project.dev.member.dto.CombineDto;
+
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,12 +1,15 @@
 package org.project.dev.notice.entity;
 
 import lombok.*;
+import org.project.dev.inquiryReply.entity.ReplyEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.dto.InquiryDto;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
