@@ -25,7 +25,17 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     
     // 비밀번호 찾기
     MemberEntity findByMemberEmailAndMemberPhone(String memberEmail, String memberPhone);
-    
+
+    // 회원목록 내 검색
+    List<MemberEntity> findByMemberEmailContaining(String search);
+    List<MemberEntity> findByMemberNameContaining(String search);
+    List<MemberEntity> findByMemberNickNameContaining(String search);
+    List<MemberEntity> findByMemberPhoneContaining(String search);
+    List<MemberEntity> findByMemberBirthContaining(String search);
+    List<MemberEntity> findByMemberStreetAddressContaining(String search);
+    List<MemberEntity> findByMemberDetailAddressContaining(String search);
+    List<MemberEntity> findByRoleContaining(String search);
+
     // 일반회원, 간편회원 한 테이블에 모두 출력, 값 없으면 null 처리
 //    @Query("SELECT 'member' AS member, m.memberEmail AS memberEmail, " +
 //            "m.memberNickName AS memberNickName, m.memberName AS memberName, " +

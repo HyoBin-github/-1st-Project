@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+@Configuration // 외부저장소(로컬) 접근 권한(허용할지 말지)
 public class ImageConfig implements WebMvcConfigurer {
 
     @Value("${file.productImgUploadDir}")

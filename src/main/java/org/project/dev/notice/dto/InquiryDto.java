@@ -24,11 +24,8 @@ public class InquiryDto {
 
     // 송원철 / 연관관계
     private MemberEntity member;
-    // 송원철 / 연관관계
-    private SemiMemberEntity semiMember;
     // 송원철 / memberEmail 출력 용도
     private String memberEmail;
-
     public static InquiryDto toinquiryDto(InquiryEntity inquiryEntity) {
         InquiryDto inquiryDto = new InquiryDto();
         inquiryDto.setInqId(inquiryEntity.getInqId());

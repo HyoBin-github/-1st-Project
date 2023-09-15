@@ -78,6 +78,7 @@ public class MemberEntity extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
 
+    // 연관 관계
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<InquiryEntity> inquiry = new ArrayList<>();
 

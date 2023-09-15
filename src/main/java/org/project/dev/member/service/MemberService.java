@@ -286,8 +286,51 @@ public class MemberService {
         //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
     }
 
+    // 회원목록 내 검색
+    public List<MemberDto> searchMemberList(String subject, String search) {
+
+        List<MemberDto> memberDtoList = new ArrayList<>();     // title 포함되어있다.
+        List<MemberEntity> memberEntityList = new ArrayList<>();
+
+        if (subject.equals("memberEmail")) {
+            memberEntityList = memberRepository.findByMemberEmailContaining(search); // 이메일
+        } else if (subject.equals("memberName")) {
+            memberEntityList = memberRepository.findByMemberNameContaining(search);
+        } else if (subject.equals("memberNickName")) {
+            memberEntityList = memberRepository.findByMemberNickNameContaining(search);
+        } else if (subject.equals("memberPhone")) {
+            memberEntityList = memberRepository.findByMemberPhoneContaining(search);
+        } else if (subject.equals("memberBirth")) {
+            memberEntityList = memberRepository.findByMemberBirthContaining(search);
+        } else if (subject.equals("memberStreetAddress")) {
+            memberEntityList = memberRepository.findByMemberStreetAddressContaining(search);
+        } else if (subject.equals("memberDetailAddress")) {
+            memberEntityList = memberRepository.findByMemberDetailAddressContaining(search);
+        } else if (subject.equals("role")) {
+            memberEntityList = memberRepository.findByRoleContaining(search);
+        } else {
+            memberEntityList = memberRepository.findAll();
+        }
+
+        if (!memberEntityList.isEmpty()) {
+            for (MemberEntity memberEntity : memberEntityList) {
+//                BoardDto boardDto=BoardDto.builder()
+//                        .id(boardEntity.getId())
+//                        .title(boardEntity.getTitle())
+//                        .content(boardEntity.getContent())
+//                        .writer(boardEntity.getWriter())
+//                        .createTime(boardEntity.getCreateTime())
+//                        .hit(boardEntity.getHit())
+//                        .build();
+                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+                memberDtoList.add(memberDto);
+            }
+        }
+        return memberDtoList;
+    }
 
 }
+
 
 
 

@@ -163,6 +163,25 @@ public class MemberController {
         return "member/pagingList";
     }
 
+    // 검색
+    @GetMapping("/search")                             // 요청 정보 없으면 그냥 실행
+    public String search(
+            @RequestParam(value = "subject", required = false) String subject,
+            @RequestParam(value = "search", required = false) String search,
+            @AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+
+        List<MemberDto> memberList=memberService.searchMemberList(subject, search);
+
+        if(!memberList.isEmpty()){
+            model.addAttribute("memberList",memberList);
+            model.addAttribute("myUserDetails",myUserDetails);
+
+            return "member/pagingList";
+        }
+        System.out.println("조회할 목록이 없다");
+        return "redirect:/member/pagingList";
+    }
+
     // Detail - 회원 상세 보기
     @GetMapping("/detail/{memberId}")
     public String getDetail(@PathVariable("memberId") Long memberId, Model model){
