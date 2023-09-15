@@ -88,6 +88,7 @@ public class MemberController {
             MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
             String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
             model.addAttribute("memberImageUrl", memberImageUrl);
+            model.addAttribute("member", member);
         }
         return "member/login";
     }

@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_table2")
+@Table(name = "product_table")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class AdminProductEntity extends BaseEntity {
     /*
     Todo
      1. catfather49@gmail.com
-     2. admin 페이지 분리 예정이라서 어쩔수 없이 entity 중복되긴하지만 만들었습니다. 분리되면 없어질 예정
+     2.
      3. 
      4. 
      */

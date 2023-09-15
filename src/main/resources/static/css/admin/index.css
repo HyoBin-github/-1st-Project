@@ -24,16 +24,25 @@
     color: #000;
   }
 
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
+
   button{
     border: 0;
     background-color: transparent;
   }
 
   .header{
-    width: 100%;
     height: 80px;
     padding: 20px;
-    background-color: #cdd4ef;
+    background-color: #4b66c7;
 
   }
 
@@ -51,7 +60,7 @@
 
   .header .top-nav ul{
     display: flex;
-    width: 40%;
+    width: 30%;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
@@ -66,8 +75,6 @@
     border: 1px solid #8C9CDB;
     border-radius: 10px;
     box-sizing: border-box;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
-
 
   }
 
@@ -75,7 +82,7 @@
 
   :root {
     --side-bar-width: 200px;
-    --side-bar-height: 50vh;
+    --side-bar-height: 70vh;
   }
 
 
@@ -85,9 +92,9 @@
     align-items: flex-start;
     justify-content: space-evenly;
     padding: 10px;
-    background-color: aqua;
-    border-radius: 20px;
-    transform: translate(calc(var(--side-bar-width) * -0.8), 0);  /* X축 이동, Y축 고정 */
+    background-color: #f5d4d4;
+
+    transform: translate(calc(var(--side-bar-width) * -0.9), 0);  /* X축 이동, Y축 고정 */
     transition: .5s;
     position: fixed;    /* 스크롤을 따라오도록 지정 */
     width: var(--side-bar-width); /*변수를 통해 사이드바 넒이 조정*/
@@ -123,7 +130,7 @@
   .sideBar > .sideBar-sec > ul > li:hover > ul  {
     display: block;
     position: absolute;
-    background-color: rgb(125, 255, 255);
+    background-color: #f5d4d4;
     top: 0;         /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
     left: 100%;     /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
     width: 150%;    /* 1차 메뉴의 너비를 상속 */
@@ -153,30 +160,118 @@
     margin: 0 auto;
 }
 
-.container .main-section1{
-    width: auto;
-    margin: 0 auto;
-}
-.container .main-section1 ul{
-    display: grid;
-    grid-template-columns: 600px 600px;
-    grid-template-rows: 400px 400px;
-    gap: 10px;
-    justify-content: center;
-    justify-items: center;
+
+.container .main-section1 > ul {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 
-.container .main-section1 ul li{
-    text-align: center;
-    line-height: 400px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 20px 10px;
-    background-color: white;
-    border: 1px solid #8C9CDB;
-    border-radius: 10px;
-    box-sizing: border-box;
-    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+.container .main-section1 > ul > li {
+  width: 200px;
+  text-align: left;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #bcbcbc;
+}
+
+.sec1-title{
+  font-weight: bold;
+}
+
+.sec1-item{
+  padding: 10px;
+}
+
+.sec1-item > li{
+  margin-bottom: 9px;
+}
+
+
+
+
+/* main-section2 */
+
+.main-section2 .workList {
+
+  margin: 30px auto;
+  background-color: white;
+  border: 1px solid #bcbcbc;
+  padding: 10px;
+}
+
+.main-section2 .workList .workList-title{
+ font-weight: bold;
+}
+
+.main-section2 .workList > ul{
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.main-section2 .workList > ul  .workList-item-number{
+  margin-left: 10px;
+  color: red;
+}
+
+
+/* main-section3  */
+
+.main-section3{
+  display: flex;
+  justify-content: space-between
+}
+
+
+/* main-sec3 > 베스트 상품 */
+.productBest{
+  width: 45%;
+  background-color: white;
+  border: 1px solid #bcbcbc;
+  padding: 10px;
+}
+
+.productBest .productBest-title{
+  font-weight: bold;
+}
+
+.productBest > ul{
+  padding: 10px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr;
+}
+
+.productBest > ul > li{
+  margin-bottom: 5px;
+}
+
+/* main-sec3 > 일자별 요약 */
+
+.byDateStatus{
+  width: 45%;
+  background-color: white;
+  border: 1px solid #bcbcbc;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.byDateStatus .byDateStatus-top{
+  padding: 10px;
+}
+.byDateStatus .byDateStatus-top .byDateStatus-title{
+  font-weight: bold;
+}
+
+.byDateStatus-table{
+  text-align: center;
 
 }
 

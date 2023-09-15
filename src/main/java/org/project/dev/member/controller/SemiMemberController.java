@@ -5,6 +5,7 @@ import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.dto.SemiMemberDto;
+import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ import java.util.List;
 public class SemiMemberController {
 
     private final SemiMemberService semiMemberService;
+    private final MemberService memberService; // 프로필 이미지 가져오기위함
 
     @GetMapping("/join")
     public String getJoin(SemiMemberDto semiMemberDto){
@@ -60,11 +62,18 @@ public class SemiMemberController {
         return "semiMember/semiMemberList";
     }
 
+    @GetMapping("/login")
+    public String getLogin(){
+        return "semiMember/login";
+    }
+
+
     // Read_paging - 회원 목록 조회
     @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬
     public String getPagingList(@PageableDefault(page = 0, size = 2, sort = "semiMemberId",
-            direction = Sort.Direction.DESC) Pageable pageable, Model model,
-                                @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails){
+                                direction = Sort.Direction.DESC) Pageable pageable, Model model,
+                                @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails,
+                                @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         // *** Page<>  Pageable
         Page<SemiMemberDto> semiMemberList = semiMemberService.SemiMemberPagingList(pageable);
@@ -100,23 +109,22 @@ public class SemiMemberController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("semiMemberList", semiMemberList);
         model.addAttribute("semiMyUserDetails", semiMyUserDetails);
+        model.addAttribute("myUserDetails", myUserDetails);
 
-        return "semiMember/semiPagingList";
-    }
-
-    @GetMapping("/login")
-    public String getLogin(){
-        return "semiMember/login";
+        return "semiMember/pagingList";
     }
 
     // Detail - 회원 상세 보기
     @GetMapping("/detail/{semiMemberId}")
     public String getDetail(@PathVariable("semiMemberId") Long semiMemberId, Model model,
-                            @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails){
+                            @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails,
+                            @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         SemiMemberDto semiMember=semiMemberService.detailSemiMember(semiMemberId);
+        MemberDto member=memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
 
         model.addAttribute("semiMember", semiMember);
+        model.addAttribute("member", member);
         model.addAttribute("semiMyUserDetails", semiMyUserDetails);
 
         return "semiMember/detail";
