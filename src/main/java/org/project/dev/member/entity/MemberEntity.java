@@ -4,6 +4,7 @@ import lombok.*;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.notice.entity.InquiryEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.utils.BaseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -76,6 +77,9 @@ public class MemberEntity extends BaseEntity {
     // 연관 관계
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<InquiryEntity> inquiry = new ArrayList<>();
 
     public static MemberEntity toMemberEntityInsert(MemberDto memberDto, PasswordEncoder passwordEncoder) {
 
