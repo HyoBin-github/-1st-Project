@@ -144,40 +144,36 @@ public class InquiryController {
             Model model,
             @RequestParam(value = "select", required = false) String inquirySelect,
             @RequestParam(value = "search", required = false) String inquirySearch,
-            @AuthenticationPrincipal MyUserDetails myUserDetails, @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails
-    ){
-        if (myUserDetails != null) {
+            @AuthenticationPrincipal MyUserDetails myUserDetails
+    ) {
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
+            Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
 
-        Long totalCount = inquiryList.getTotalElements();
-        int totalPage = inquiryList.getTotalPages();
-        int pageSize = inquiryList.getSize();
-        int nowPage = inquiryList.getNumber();
-        int blockNum = 10;
+            Long totalCount = inquiryList.getTotalElements();
+            int totalPage = inquiryList.getTotalPages();
+            int pageSize = inquiryList.getSize();
+            int nowPage = inquiryList.getNumber();
+            int blockNum = 10;
 
-        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
-                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
-        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+            int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                    (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+            int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if(!inquiryList.isEmpty()){
-            model.addAttribute("inquiryList", inquiryList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("member", member);
-            model.addAttribute("memberImageUrl", memberImageUrl);
+            if (!inquiryList.isEmpty()) {
+                model.addAttribute("inquiryList", inquiryList);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+                model.addAttribute("member", member);
+                model.addAttribute("memberImageUrl", memberImageUrl);
+                return "inquiry/list";
+            }
+            System.out.println("조회할 문의사항이 없다.");
+
             return "inquiry/list";
         }
-        System.out.println("조회할 문의사항이 없다.");
-        }
-        SemiMemberDto semiMember = semiMemberService.detailSemiMember(semiMyUserDetails.getSemiMemberEntity().getSemiMemberId());
-        model.addAttribute("semiMember", semiMember);
-
-        return "inquiry/list";
-    }
 
     /*
            Todo
