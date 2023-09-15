@@ -131,13 +131,15 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/list")
-    public String list(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
+    @GetMapping("{id}/list")
+    public String list(Model model,
+                       @PathVariable(name = "id") Long memberId,
+                       @RequestParam(name = "page", defaultValue = "1") int page,
                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                        @RequestParam(name = "searchType", required = false) String searchType,
                        @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
 
-        ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword);
+        ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword, memberId);
         model.addAttribute("productList", response.getProductList());
         model.addAttribute("nowPage", response.getNowPage());
         model.addAttribute("startPage", response.getStartPage());

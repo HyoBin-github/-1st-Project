@@ -86,7 +86,7 @@
                         <a href="/product/write">상품생성</a>
                     </li>
                     <li>
-                        <a href="#">상품 리스트</a>
+                        <a th:href="@{/admin/product/{memberId}/list(memberId=${#authentication.principal.memberEntity.memberId})}">상품 리스트</a>
                     </li>
                     <li>
                         <a href="#">비고</a>

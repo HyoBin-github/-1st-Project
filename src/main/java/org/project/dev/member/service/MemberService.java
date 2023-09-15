@@ -92,7 +92,7 @@ public class MemberService {
 
             // imageUrl 값을 로그에 출력
             ImageEntity imageEntity = optionalMemberEntity.get().getImage();
-            System.out.println("imageUrl: " + imageEntity.getImageUrl());
+//            System.out.println("imageUrl: " + imageEntity.getImageUrl());
 
             return MemberDto.toMemberDto(optionalMemberEntity.get());
         }

@@ -31,7 +31,7 @@ public class ReviewEntity extends BaseEntity {
     private String reviewWriter;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
 
 }

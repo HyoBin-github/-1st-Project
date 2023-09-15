@@ -1,6 +1,7 @@
-package org.project.dev.product.service;
+package org.project.dev.admin.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.admin.repository.AdminProductRepository;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductRepository;
@@ -10,18 +11,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
-public class ProductPaginationService {
-
-    private final ProductRepository productRepository;
+public class AdminProductPaginationService {
+    private final AdminProductRepository productRepository;
 
 
     // LIST with search & pagination (READ)
     // 검색어 없이 리스트 출력
-    public Page<ProductDTO> productNoSearchList(Pageable pageable, Long memberId) {
-        Specification<ProductEntity> entitySpecification = Specification.where(ProductSpecification.isDisplayTrue()
-                .and(ProductSpecification.isMember(memberId)));
+    public Page<ProductDTO> productNoSearchList(Pageable pageable, Long member) {
+        Specification<ProductEntity> entitySpecification = Specification.where(AdminProductSpecification.isDisplayTrue()
+                .and(ProductSpecification.isMember(member)));
         Page<ProductEntity> productEntities = productRepository.findAll(entitySpecification,pageable);
         return productEntities.map(ProductDTO::toDTO);
     }
@@ -64,6 +65,5 @@ public class ProductPaginationService {
         }
         return endPage;
     }
-
 
 }

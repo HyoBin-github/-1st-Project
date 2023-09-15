@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout/baseLayout}"
 >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script th:src="@{/js/chatbot/chatbot.js}" defer></script>
 <th:block layout:fragment="title">
     <title>Cloth Keeper</title>
 </th:block>
@@ -40,9 +42,7 @@
 <!-- chatBot -->
     <div class="chatbot">
         <div class="nav">
-            <a href="">
-                <img th:src="@{/images/chatbot.png}" alt="" class="chat">
-            </a>
+            <input type="image" th:src="@{/images/chatbot.png}" alt="" class="chat" id="thotbot" onclick="chatBotPop()">
         </div>
     </div>
 

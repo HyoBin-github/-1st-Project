@@ -81,8 +81,8 @@ spring:
 # code.aiaru@gmail.com
 # 파일 쪽 본인 이메일 쓰시고 디렉토리 설정해주시면 깔끔해질 것 같습니다. (깃 커밋 시 본인 설정 주석처리)
 file:
-#    productImgUploadDir: C:\Users\bin77\Desktop\새 폴더\ # 상품이미지 경로 (절대경로로 설정해주세요)
-#    reviewImgUploadDir:  C:\Users\bin77\Desktop\새 폴더\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+    productImgUploadDir: C:\Users\bin77\Desktop\새 폴더\ # 상품이미지 경로 (절대경로로 설정해주세요)
+    reviewImgUploadDir:  C:\Users\bin77\Desktop\새 폴더\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
   #  code.aiaru@gmail.com
   #  productImgUploadDir: C:\Users\code.aiaru\Desktop\coding\saveFiles\productImg\
@@ -93,5 +93,5 @@ file:
 #    reviewImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
   ##rladpwls1843@gmail.com
-  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+#  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+#  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)

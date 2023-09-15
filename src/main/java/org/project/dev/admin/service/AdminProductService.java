@@ -1,11 +1,14 @@
 package org.project.dev.admin.service;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.project.dev.admin.dto.AdminProductDto;
-import org.project.dev.admin.entity.AdminProductEntity;
 import org.project.dev.admin.repository.AdminProductRepository;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.entity.ProductEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +20,8 @@ import java.util.Optional;
 public class AdminProductService {
 
     private final AdminProductRepository adminProductRepository;
+
+    private final AdminProductPaginationService adminProductPaginationService;
 
 
     /*
@@ -51,6 +56,37 @@ public class AdminProductService {
 
         return ProductDTO.toDTO(productEntity.get());
 
+    }
 
+    public ProductListResponse getProductList(int page, Pageable pageable,
+                                                             String searchType, String searchKeyword, Long memberId) {
+        Pageable adjustedPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
+
+        Page<ProductDTO> productList;
+
+        if (searchKeyword == null || searchType == null) {
+            productList = adminProductPaginationService.productNoSearchList(adjustedPageable, memberId);
+        } else {
+            productList = adminProductPaginationService.productSearchList(searchType, searchKeyword, adjustedPageable);
+        }
+
+        int nowPage = productList.getPageable().getPageNumber() + 1;
+        int totalPage = productList.getTotalPages();
+        int startPage = adminProductPaginationService.calculateStartPage(nowPage, totalPage);
+        int endPage = adminProductPaginationService.calculateEndPage(nowPage, totalPage);
+
+        return new ProductListResponse(productList, nowPage, startPage, endPage, totalPage, searchType, searchKeyword);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public class ProductListResponse {
+        private Page<ProductDTO> productList;
+        private int nowPage;
+        private int startPage;
+        private int endPage;
+        private int totalPage;
+        private String searchType;
+        private String searchKeyword;
     }
 }
