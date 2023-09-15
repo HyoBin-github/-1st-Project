@@ -17,6 +17,7 @@ public class ReplyDto extends BaseEntity {
 
     private String reply;
 
+    // 닉네임
     private String replyWriter;
 
     // 문의사항 아이디
