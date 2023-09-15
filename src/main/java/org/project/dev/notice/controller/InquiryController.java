@@ -87,15 +87,13 @@ public class InquiryController {
     // 송원철
     @PostMapping("/write")
     public String postInquiryWrite(@Validated InquiryDto inquiryDto, BindingResult bindingResult, Model model,
-                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
-                                   @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails) throws IOException {
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
         if(bindingResult.hasErrors()){
             return "inquiry/write";
         }
         MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
-        SemiMemberEntity semiMember = semiMyUserDetails.getSemiMemberEntity(); // 현재 로그인한 사용자의 SemiMemberEntity 가져오기
 
-        int rs = inquiryService.InquiryInsert(inquiryDto, member, semiMember);
+        int rs = inquiryService.InquiryInsert(inquiryDto, member);
         if(rs==1){
             return "redirect:/inquiry/list?page=0&select=&search=";
         }

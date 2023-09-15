@@ -51,7 +51,7 @@ public class InquiryService {
 
     // 송원철 / write 시 memberId 저장
     @Transactional
-    public int InquiryInsert(InquiryDto inquiryDto, MemberEntity memberEntity, SemiMemberEntity semiMemberEntity) throws IOException {
+    public int InquiryInsert(InquiryDto inquiryDto, MemberEntity memberEntity) throws IOException {
         // file 을 위한 throws
         InquiryEntity inquiryEntity = InquiryEntity.toInquiryEntityInsert(inquiryDto);
 
@@ -84,8 +84,8 @@ public class InquiryService {
             inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
         }else if(inquirySelect.equals("content")){
             inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
-//        }else if(inquirySelect.equals("writer")){
-//            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(pageable,inquirySearch); // 송원철, 주석처리함
+        }else if(inquirySelect.equals("writer")){
+            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
         }else{
             inquiryEntities = inquiryRepository.findAll(pageable);
         }
