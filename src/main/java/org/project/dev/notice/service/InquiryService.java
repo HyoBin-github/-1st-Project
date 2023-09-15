@@ -80,11 +80,11 @@ public class InquiryService {
 
        Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
 
-        if(inquirySelect.equals("title")){
+        if(inquirySelect.equals("inquiryTitle")){
             inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
-        }else if(inquirySelect.equals("content")){
+        }else if(inquirySelect.equals("inquiryContent")){
             inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
-        }else if(inquirySelect.equals("writer")){
+        }else if(inquirySelect.equals("memberEmail")){
             inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
         }else{
             inquiryEntities = inquiryRepository.findAll(pageable);
