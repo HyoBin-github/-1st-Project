@@ -19,6 +19,7 @@ public class ReplyDto extends BaseEntity {
 
     private String replyWriter;
 
+    // 문의사항 아이디
     private Long inqId;
 
     private LocalDateTime createTime;

@@ -200,12 +200,12 @@ html{
 .chatbot .nav{
     align-items: center;
 }
-.chatbot .nav a{
+.chatbot .nav button{
     display: flex;
     align-items: center;
     border: 2px red;
 }
-.chatbot .nav a img.chat{
+.chatbot .nav button img.chat{
   width: 85px;
   height: 75px;
 }
