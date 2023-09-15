@@ -120,11 +120,13 @@ public class SemiMemberController {
                             @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails,
                             @AuthenticationPrincipal MyUserDetails myUserDetails){
 
+        if (myUserDetails != null) {
+            MemberDto member=memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            model.addAttribute("member", member);
+        }
         SemiMemberDto semiMember=semiMemberService.detailSemiMember(semiMemberId);
-        MemberDto member=memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
 
         model.addAttribute("semiMember", semiMember);
-        model.addAttribute("member", member);
         model.addAttribute("semiMyUserDetails", semiMyUserDetails);
 
         return "semiMember/detail";

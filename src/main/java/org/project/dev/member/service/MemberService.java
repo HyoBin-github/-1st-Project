@@ -61,20 +61,25 @@ public class MemberService {
     }
 
     // Read (to메서드)
-    public List<MemberDto> listMember() {
+//    public List<MemberDto> listMember() {
+//
+//        List<MemberDto> memberDtoList = new ArrayList<>();
+//        List<MemberEntity> memberEntityList = memberRepository.findAll();
+//
+//        if (!memberEntityList.isEmpty()) {
+//            for (MemberEntity memberEntity : memberEntityList) {
+//
+//                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+//                memberDtoList.add(memberDto);
+//            }
+//        }
+//        return memberDtoList;
+//    }
 
-        List<MemberDto> memberDtoList = new ArrayList<>();
-        List<MemberEntity> memberEntityList = memberRepository.findAll();
-
-        if (!memberEntityList.isEmpty()) {
-            for (MemberEntity memberEntity : memberEntityList) {
-
-                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
-                memberDtoList.add(memberDto);
-            }
-        }
-        return memberDtoList;
-    }
+    // 일반, 간편 통합 목록
+//    public List<CombineDto> getCombinedMemberAndSemiMemberInfo() {
+//        return memberRepository.getCombinedMemberAndSemiMemberInfo();
+//    }
 
     //  Detail (to메서드)
     public MemberDto detailMember(Long memberId) {

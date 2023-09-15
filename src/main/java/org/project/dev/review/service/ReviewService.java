@@ -1,24 +1,20 @@
 package org.project.dev.review.service;
 
 import lombok.RequiredArgsConstructor;
-import org.project.dev.member.repository.MemberRepository;
+import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.inquiryReply.dto.ReplyDto;
+import org.project.dev.inquiryReply.entity.ReplyEntity;
+import org.project.dev.notice.entity.InquiryEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductRepository;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
-import org.project.dev.review.entity.ReviewFileEntity;
-import org.project.dev.review.repository.ReviewFileRepository;
 import org.project.dev.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,122 +22,94 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    // BoardRepository
     private final ProductRepository productRepository;
 
-    private final MemberRepository memberRepository;
+    public ReviewDto reviewWrite(ReviewDto replyDto, MyUserDetails myUserDetails) {
 
-    private final ReviewFileRepository reviewFileRepository;
+        ProductEntity productEntity
+                = productRepository.findById(replyDto.getProductId()).orElseThrow(() -> new IllegalArgumentException("X"));
+        String replyName = "m1";
+        ReviewEntity reviewEntity = ReviewEntity.builder()
+                .review(replyDto.getReview())
+//                .replyWriter(replyDto.getReplyWriter())
+                .reviewWriter(replyName)
+                .productEntity(productEntity)
+                .build();
+        Long reviewId = reviewRepository.save(reviewEntity).getId();
 
-    @Transactional
-    public ReviewDto reviewAjaxCreate(ReviewDto reviewDto, String memberNickName) throws IOException {
+        ReviewEntity reviewEntity1 = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("X"));
 
-//        Optional<MemberEntity> optionalMemberEntity =
-//                Optional.ofNullable(memberRepository.findByMemberNickName(memberNickName));
-
-        Optional<ProductEntity> optionalProductEntity
-                = Optional.ofNullable(productRepository.findById(reviewDto.getProductId()).orElseThrow(IllegalArgumentException::new));
-
-        if (optionalProductEntity.isPresent()) {
-            if (reviewDto.getReviewFile().isEmpty()) {
-
-
-                ProductEntity productEntity = new ProductEntity();
-                productEntity.setId(reviewDto.getProductId());
-
-                ReviewDto reviewDto1 = new ReviewDto();
-                reviewDto1.setProductId(productEntity.getId());
-                reviewDto1.setReview(reviewDto.getReview());
-                reviewDto1.setReviewWriter(memberNickName);
-                reviewDto1.setReviewFile(reviewDto.getReviewFile());
-                reviewDto1.setProductEntity(productEntity);
-
-                ReviewEntity reviewEntity = ReviewEntity.toReviewEntity(reviewDto1);
-
-                Long reviewId = reviewRepository.save(reviewEntity).getId();
-
-                Optional<ReviewEntity> optionalReviewEntity =
-                        Optional.ofNullable(reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new));
-
-
-                return ReviewDto.toReviewDto(optionalReviewEntity.get());
-
-
-            } else {
-
-                MultipartFile reviewFile = reviewDto.getReviewFile();
-                String fileOldName = reviewFile.getOriginalFilename();
-                UUID uuid = UUID.randomUUID();
-                String fileNewName = uuid+"_"+fileOldName;
-                String savePath = "C:/Users/bin77/Desktop/새 폴더/" + fileNewName;
-                reviewFile.transferTo(new File(savePath));
-
-                ProductEntity productEntity = new ProductEntity();
-                productEntity.setId(reviewDto.getProductId());
-
-
-                ReviewDto reviewDto1 = new ReviewDto();
-                reviewDto1.setProductId(productEntity.getId());
-                reviewDto1.setReview(reviewDto.getReview());
-                reviewDto1.setReviewWriter(memberNickName);
-                reviewDto1.setReviewFile(reviewDto.getReviewFile());
-                reviewDto1.setReviewFileEntities(reviewDto.getReviewFileEntities());
-                reviewDto1.setIsFile(reviewDto.getIsFile());
-                reviewDto1.setProductEntity(productEntity);
-
-                ReviewEntity reviewEntity = ReviewEntity.toReviewFileEntity(reviewDto1);
-
-                Long reviewId = reviewRepository.save(reviewEntity).getId();
-
-                Optional<ReviewEntity> optionalReviewEntity =
-                        Optional.ofNullable(reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new));
-
-                ReviewFileEntity reviewFileEntity
-                        = ReviewFileEntity.toReviewFileEntity(reviewEntity,fileOldName,fileNewName);
-
-                Long fileId = reviewFileRepository.save(reviewFileEntity).getId();
-
-                reviewFileRepository.findById(fileId).orElseThrow(IllegalArgumentException::new);
-
-                return ReviewDto.toReviewDto(optionalReviewEntity.get());
-
-            }
-
-        }
-        return null;
-
+        return ReviewDto.builder()
+                .id(reviewEntity1.getId())
+                .review(reviewEntity1.getReview())
+                .reviewWriter(reviewEntity1.getReviewWriter())
+                .updateTime(reviewEntity1.getUpdateTime())
+                .createTime(reviewEntity1.getCreateTime())
+                .productId(reviewEntity1.getProductEntity().getId())
+                .build();
     }
 
-    @Transactional
-    public int reviewDelete(Long id) {
 
-        Optional<ReviewEntity> optionalReviewEntity
-                = Optional.ofNullable(reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+    public List<ReviewDto> reviewList(ReviewDto reviewDto) {
 
-        System.out.println("=============" + optionalReviewEntity.get().getId() + "===================");
-        if (optionalReviewEntity.isPresent()) {
-            System.out.println("=============" + optionalReviewEntity.get().getId() + "===================");
-            reviewRepository.deleteById(id);
+        ProductEntity productEntity
+                = productRepository.findById(reviewDto.getProductId()).orElseThrow(() -> {
+            throw new IllegalArgumentException("X");
+        });
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+        List<ReviewEntity> reviewEntities
+                = reviewRepository.findByProductId(reviewDto.getProductId());
 
+        for (ReviewEntity reviewEntity : reviewEntities) {
+
+            reviewDtos.add(ReviewDto.builder()
+                    .id(reviewEntity.getId())
+                    .review(reviewEntity.getReview())
+                    .reviewWriter(reviewEntity.getReviewWriter())
+                    .productId(reviewEntity.getProductEntity().getId())
+                    .createTime(reviewEntity.getCreateTime())
+                    .updateTime(reviewEntity.getUpdateTime())
+                    .build());
+        }
+        return reviewDtos;
+    }
+
+    public int replyDelete(Long id) {
+
+        Optional<ReviewEntity> reviewEntity
+                = Optional.ofNullable(reviewRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalArgumentException("X");
+        }));
+        if (reviewEntity.isPresent()) {
+            reviewRepository.delete(reviewEntity.get());
             return 1;
         }
         return 0;
-
-
     }
 
-    public List<ReviewDto> reviewList(Long id) {
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
-        ProductEntity productEntity = optionalProductEntity.get();
+    public int reviewUp(ReviewDto reviewDto, MyUserDetails myUserDetails) {
 
-        List<ReviewDto> reviewDtos = new ArrayList<>();
-        List<ReviewEntity> reviewEntityList = reviewRepository.findAllByProductEntity(productEntity);
+        ProductEntity productEntity
+                = productRepository.findById(reviewDto.getProductId()).orElseThrow(()->{
+                    throw new IllegalArgumentException("X");
+        });
+        reviewDto.setReviewWriter("m1");
+        ReviewEntity reviewEntity = ReviewEntity.builder()
+                .id(reviewDto.getId())
+                .review(reviewDto.getReview())
+                .reviewWriter(reviewDto.getReviewWriter())
+                .productEntity(productEntity)
+                .build();
+        Long saveId = reviewRepository.save(reviewEntity).getId();
 
-        for (ReviewEntity reviewEntity : reviewEntityList) {
-            ReviewDto reviewDto = ReviewDto.toReviewDto(reviewEntity);
-            reviewDtos.add(reviewDto);
+        Optional<ReviewEntity> optionalReviewEntity
+                = Optional.ofNullable(reviewRepository.findById(saveId).orElseThrow(()->{
+                    throw new IllegalArgumentException("X");
+        }));
+        if (optionalReviewEntity.isPresent()){
+            return 1;
         }
-        return reviewDtos;
+        return 0;
     }
 }

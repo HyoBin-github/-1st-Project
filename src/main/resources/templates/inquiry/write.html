@@ -16,6 +16,27 @@
                 </div>
                 <div class="write-form">
                  <form th:action="@{/inquiry/write}" method="post" accept-charset="utf-8" th:object="${inquiryDto}">
+                     <!-- 송원철 -->
+<!--                     <span th:if="${false}" th:text="${member.memberId}"></span> &lt;!&ndash; th:if="${false}" 입력 시 안보이게 처리 &ndash;&gt;-->
+                     <span th:if="${member != null}" style="display: none;">
+                         <span th:text="${member.memberId}"></span>
+                     </span>
+                     <span th:if="${member == null}" style="display: none;">
+                         <span th:text="${semiMyUserDetails.semiMemberEntity.semiMemberId}"></span>
+                     </span>
+                     <script th:inline="javascript">
+                         /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
+                         var memberId = /*[[${member?.memberId}]]*/ null;
+                         var semiMemberId = /*[[${semiMyUserDetails?.semiMemberEntity?.semiMemberId}]]*/ null;
+
+                         /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
+                         if (memberId !== null) {
+                             console.log('MemberId:', memberId);
+                         }else {
+                             console.log('SemiMemberId:', semiMemberId);
+                         }
+                     </script>
+                     <!----------->
                         <ul>
                             <li>
                                 <label>구분</label>
@@ -29,7 +50,7 @@
                             <li>
                                 <!-- membrId 자동설정 -->
                                 <label th:for="writer">글쓴이</label>
-                                <input type="text" th:field="*{inquiryWriter}">
+                                <input type="text" name="memberEmail" th:value="${member != null ? member.memberEmail : semiMyUserDetails.semiMemberEntity.semiMemberEmail}" readonly> <!--송원철-->
                             </li>
                             <li>
                                 <label th:for="title">제목</label>

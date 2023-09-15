@@ -8,7 +8,6 @@ import org.project.dev.cartNew.service.CartService;
 import org.project.dev.cartNew.service.SemiCartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
-import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.MemberService;
@@ -20,9 +19,6 @@ import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.repository.ReviewRepository;
-import org.project.dev.review.service.ReviewService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -39,7 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Slf4j // 송원철, log
@@ -65,7 +60,6 @@ public class ProductController {
     private final ProductService productService;
     private final ProductUtilService productUtilService;
     private final ReviewRepository reviewRepository;
-    private final ReviewService reviewService;
     private final MemberService memberService; // 송원철 / 장바구니 관련
     private final CartService cartService; // 송원철 / 장바구니 관련
     private final SemiMemberService semiMemberService; // 송원철 / 장바구니 관련
@@ -175,20 +169,6 @@ public class ProductController {
     }
 
 
-    @GetMapping("/review/{id}/{review}")
-    public @ResponseBody List<Map<String , String>> getReview(@PathVariable Long id){
-        List<ReviewEntity> reviewEntities = reviewRepository.findByProductId(id);
-
-        List<Map<String, String>> list = new ArrayList<>();
-
-        reviewEntities.forEach(v->
-            list.add( Map.of("내용",v.getReview(),
-                    "작성자",v.getReviewWriter().toString()) ));
-
-
-        return list;
-    }
-
     // DETAIL (SELECT)
 //    @GetMapping("/{id}")
 //    public String getProductDetail(@PathVariable Long id, Model model) {
@@ -218,14 +198,11 @@ public class ProductController {
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
 
 
-        List<ReviewDto> reviewDtos = reviewService.reviewList(productDTOViewDetail.getId());
-
         MemberEntity member = myUserDetails != null ? myUserDetails.getMemberEntity() : null;
         SemiMemberEntity semiMember = semiMyUserDetails != null ? semiMyUserDetails.getSemiMemberEntity() : null;
 
         model.addAttribute("product", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
-        model.addAttribute("reviews", reviewDtos);
 
         // 추가: member가 null이 아닌 경우에만 memberId를 model에 추가
         if (member != null) {

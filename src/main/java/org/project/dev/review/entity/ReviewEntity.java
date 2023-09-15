@@ -30,47 +30,8 @@ public class ReviewEntity extends BaseEntity {
     @Column(name = "product_review_writer", nullable = false)
     private String reviewWriter;
 
-    private Long productId;
-
-//    private Long likeCount;
-
-//    private Long reviewStar;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id")
     private ProductEntity productEntity;
 
-    @Column(nullable = false, length = 1)
-    private int isFile;
-
-    @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.REMOVE)
-    private List<ReviewFileEntity> reviewFileEntities = new ArrayList<>();
-
-
-    public static ReviewEntity toReviewEntity(ReviewDto reviewDto1) {
-
-        ReviewEntity reviewEntity = new ReviewEntity();
-        reviewEntity.setReview(reviewDto1.getReview());
-        reviewEntity.setReviewWriter(reviewDto1.getReviewWriter());
-        reviewEntity.setProductId(reviewDto1.getProductId());
-        reviewEntity.setIsFile(0);
-        reviewEntity.setProductEntity(reviewDto1.getProductEntity());
-
-        return reviewEntity;
-
-
-    }
-
-    public static ReviewEntity toReviewFileEntity(ReviewDto reviewDto1) {
-
-        ReviewEntity reviewEntity = new ReviewEntity();
-        reviewEntity.setReview(reviewDto1.getReview());
-        reviewEntity.setReviewWriter(reviewDto1.getReviewWriter());
-        reviewEntity.setProductId(reviewDto1.getProductId());
-        reviewEntity.setIsFile(1);
-        reviewEntity.setReviewFileEntities(reviewDto1.getReviewFileEntities());
-        reviewEntity.setProductEntity(reviewDto1.getProductEntity());
-
-        return reviewEntity;
-    }
 }

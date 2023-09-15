@@ -1,9 +1,12 @@
 package org.project.dev.member.repository;
 
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,7 +25,20 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     
     // 비밀번호 찾기
     MemberEntity findByMemberEmailAndMemberPhone(String memberEmail, String memberPhone);
-
+    
+    // 일반회원, 간편회원 한 테이블에 모두 출력, 값 없으면 null 처리
+//    @Query("SELECT 'member' AS member, m.memberEmail AS memberEmail, " +
+//            "m.memberNickName AS memberNickName, m.memberName AS memberName, " +
+//            "m.memberBirth AS memberBirth, m.memberPhone AS memberPhone, " +
+//            "m.memberDetailAddress AS memberDetailAddress, " +
+//            "m.memberStreetAddress AS memberStreetAddress " +
+//            "FROM MemberEntity m " +
+//            "UNION ALL " +
+//            "SELECT 'semiMember' AS member, s.semiMemberEmail AS memberEmail, " +
+//            "NULL AS memberNickName, NULL AS memberName, NULL AS memberBirth, " +
+//            "NULL AS memberPhone, NULL AS memberDetailAddress, NULL AS memberStreetAddress " +
+//            "FROM SemiMemberEntity s")
+//    List<CombineDto> getCombinedMemberAndSemiMemberInfo();
 }
 
 
