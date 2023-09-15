@@ -1,163 +1,130 @@
-$('#ajaxBtn').on('click', ajaxFn);
-//$('#produtId').val(),
+$('#reviewBtn').on('click', reviewFn);
 
-function ajaxFn(){
-
-       var formData = new FormData();
-
-        const productId = $('#productId').val();
-        const review = $('#review').val();
-        const reviewFile = $('#reviewFile')[0].files[0];
-
-        formData.append('productId', $('#productId').val());
-        formData.append('review', $('#review').val());
-        formData.append('reviewFile',$('#reviewFile')[0].files[0]);
-
-//     const data= {
-//         'productId':$('#productId').val(),
-//         'review':$('#review').val(),
-//         'reviewFile':$('#reviewFile')[0]
-//     }
-//        console.log(data);
-
-    console.log(formData);
-
-     $.ajax({
-        type:'POST',
-        url:"/review/ajaxWrite",
-        data: formData,
-        contentType: false, // 파일 업로드 시 false로 설정
-        processData: false,
-        success:function(res){
-            alert("댓글작성완료");
-            console.log(res);
-            let reData="<ul id="+ res.id+">";
-    		    reData+="<li>"+res.reviewWriter+"</li>";
-    		    reData+="<li>"+res.review+"</li>";
-                reData+="<li>"+res.createTime+"</li>";
-                reData+='<input type="button" value="삭제" onclick="onDelete('+res.id+')">'
-                reData+="</ul>";
-
-        $('#tData').append(reData);
-
-    },
-    error:()=>{
-    	alert("Faill!!");
-    }
+$(document).ready(function(){
+    replyList()
 });
-// 작성초기화
-$('#review').val("");
-}
 
+function reviewFn() {
 
-function reviewList(){
-    const prId = $('#prId').val();
-    console.log(prId)
-    const data= {
-            'productId':$('#productId').val()
-        }
+    const date = {
+        'productId': $('#productId').val(),
+        'review': $('#review').val()
+    }
 
     $.ajax({
-            url:"/review/reviewList/"+prId,
-            data:data,
-            type:"get",
-            success:function(res){
+        type: 'POST',
+        url: "/review/write",
+        data: date,
+        success(res) {
+            alert("작성완료");
+        replyList();
+        }
+    });
+}
 
-            var reviewBody = $('#tData'); // tData를 변수에 삽입
-            reviewBody.html(''); // tData 초기화
-            console.log(res);
-            let list ="";
-            $.each(res, function(i, content){ // res= return data, i= key, content= value
-                list="<ul id="+ content.id+">";
-                list+="<li>"+content.reviewWriter+"</li>";
-                list+="<li>"+content.review+"</li>";
-                list+="<li>"+content.createTime+"</li>";
-                list+='<input type="button" value="삭제" onclick="onDelete('+content.id+')">'
+function replyList(){
+    const productId = $('#productId').val();
+    const data = {
+        'productId':productId
+    }
+
+    $.ajax({
+        url:"/review/list",
+        data: data,
+        type:"get",
+        success:function(res){
+            var replyBody = $('#reviewCon'); // id가 reviewCon인 곳을 변수지정
+            replyBody.html(''); // replyCon 초기화
+            let list = "";
+            if(res.length<1){
+                list="등록된 댓글이 없습니다.";
+            }else{
+
+            $(res).each(function(){
+                list = "<ul>";
+                list+="<li>"+this.reviewWriter+"</li>";
+                list+="<li>"+this.createTime+"</li>";
+                list+="<li>";
+                list+="<div id='reCon"+this.id+"'>";
+                list+="<span>"+this.review+"</span>";
+                list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
+                list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+this.id+',"'+this.review+'",'+this.productId+")'>";
+                list+="</div>";
+                list+="<div id='showUp"+this.id+"'>";
+                list+="</div>";
+                list+="</li>";
                 list+="</ul>";
 
-
-              $('#tData').append(list);
+                $('#reviewCon').append(list); // replyCon에 추가
             });
+            }
+        }
+    });
+}
+
+function onDelete(id){
+    console.log(id)
+    var dData = {
+        'id':id
+    }
+    $.ajax({
+        url:"/review/delete",
+        type:'POST',
+        data:dData,
+        success:function(res){
+            if(res==1){
+                alert("삭제성공!");
+            }else{
+                alert("삭제실패!");
+            }
+            replyList();
+        },
+        error:()=>{
+            alert("Fail!!")
+        }
+    });
+}
+
+function showUpDate(id,review,productId){
+
+    console.log(review)
+    console.log(id)
+    console.log(productId)
+
+    const reId = $('#reCon'+id);
+    console.log(reId.hasClass('hidden'));
+    if(reId.hasClass('hidden')){
+        reId.removeClass('hidden')
+    }else{
+        reId.addClass('hidden')
+         $('#showUp'+id).html(
+             "<textarea id='review"+id+"'>"+review+"</textarea>"
+            +"<input type='button' class='replyUpBtn' value='완료' onclick='replyUpDate("+id+','+productId+")'>"
+            +"<input type='button' class='upXBtn' value='취소' onclick='upXDate("+productId+")'>"
+         );
+    };
+}
+
+function replyUpDate(id,productId){
+    const data ={
+        'review':$('#review'+id).val(),
+        'id':id,
+        'productId':productId
+    };
+    
+    $.ajax({
+        url:"/reply/up",
+        type:'POST',
+        data:data,
+        success:function(res){
+            if(res==1){
+                alert("수정성공")
+            }else{
+                alert("수정실패")
+            }
+            replyList();
+
         }
     });
 
 }
-
-
-
-
-function onDelete(id){
-    console.log(id)
-    console.log("delete")
-    var delData= id;
-    console.log(delData)
-    $.ajax({
-        url:"/review/delete/"+id,
-        type:'POST',
-        data:delData,
-        success:function(res){
-        if(res==1){
-            alert("삭제성공");
-        }else{
-            alert("삭제실패");
-        }
-        reviewList();
-        },
-        error:()=>{
-            	alert("Faill!!");
-        }
-
-    })
-
-}
-
-var comment = {
-    init:function(){``
-        var _this = this;
-const upBtn = document.querySelectorAll('.reviewUpBtn');
-
-upBtn.forEach(function(item){
-    item.addEventListener('click', function(){
-        var form = this.closest('form');
-        _this.update(form);
-            });
-
-        });
-    },
-    update: function(form){
-        var data= {
-            id: form.querySelector('#reviewId').value,
-            review: form.querySelector('#upRv').value,
-            reviewWriter: form.querySelector('#reviewWriter').value
-        };
-
-        var split = location.pathname.split('/');
-        var articleId = split[split.length - 1];
-
-        fetch('/review/up'+data.id, {
-            method: 'PUT', // PUT: 서버의 데이터를 갱신 작성
-            body: JSON.stringify(data),
-            headers:{
-                'Content-Type' : 'application/json'
-            }
-        }).ten(function(res){
-            if(res==1){
-                alert('댓글 수정완료')
-            }else{
-                alert('댓글 수정실패')
-            }
-            reviewList();
-        });
-    }
-};
-// 객체 초기화
-comment.init();
-
-
-
-
-
-
-
-
-
