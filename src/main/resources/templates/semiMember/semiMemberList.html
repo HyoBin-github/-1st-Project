@@ -18,7 +18,6 @@
             </th>
         </tr>
         <tr>
-<!--            <th>이미지</th>-->
             <th>회원번호</th>
             <th>이메일</th>
             <th>휴대전화번호</th>
@@ -28,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="semiMember : ${semiMemberDtoList}"> <!--아래 수정해야함-->
+        <tr th:each="semiMember : ${semiMemberDtoList}">
             <td th:text="${semiMember.semiMemberId}"></td>
             <td th:text="${semiMember.semiMemberEmail}"></td>
             <td th:text="${semiMember.semiMemberPhone}"></td>

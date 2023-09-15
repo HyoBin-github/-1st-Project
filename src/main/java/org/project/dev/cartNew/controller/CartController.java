@@ -53,37 +53,6 @@ public class CartController {
     }
 
     // 장바구니 페이지
-//    @GetMapping("/member/{memberId}")
-//    public String getCartView(@PathVariable("memberId") Long memberId, Model model,
-//                              @AuthenticationPrincipal MyUserDetails myUserDetails){
-//        // 로그인 되어있는 유저의 id와 장바구니에 접속하는 id가 같아야함
-//        if (myUserDetails.getMemberEntity().getMemberId()==memberId) {
-//            MemberEntity member=memberService.findMember(memberId);
-//            // 로그인 되어있는 유저에 해당하는 장바구니 가져오기
-//            CartEntity memberCart=member.getCart();
-//
-//            // 장바구니에 들어있는 상품 모두 가져오기
-//            List<CartItemEntity> cartItemEntityList=cartService.allMemberCartView(memberCart);
-//
-//            // 장바구니에 들어있는 상품들의 총 가격
-//            int totalPrice=0;
-//            for(CartItemEntity cartItem: cartItemEntityList){
-//                totalPrice += cartItem.getCartItemCount() * cartItem.getProduct().getProductPrice();
-//            }
-//
-//            model.addAttribute("totalPrice", totalPrice);
-//            model.addAttribute("totalCount", memberCart.getCartCount());
-//            model.addAttribute("cartItems", cartItemEntityList);
-//            model.addAttribute("member", memberService.findMember(memberId));
-//
-//            return "/member/cart";
-//        }else {
-//            // 로그인 id와 장바구니 접속 id가 같지 않은 경우
-//            return "redirect:/";
-//        }
-//    }
-
-    // 장바구니 페이지
     @GetMapping("/member/{memberId}")
     public String getCartView(@PathVariable("memberId") Long memberId, Model model,
                               @AuthenticationPrincipal MyUserDetails myUserDetails){
