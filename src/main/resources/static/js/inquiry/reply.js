@@ -20,6 +20,7 @@ function replyFn() {
         replyList();
         }
     });
+    $('#reply').val("");
 }
 
 function replyList(){

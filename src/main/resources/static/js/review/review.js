@@ -20,6 +20,7 @@ function reviewFn() {
         replyList();
         }
     });
+        $('#review').val("");
 }
 
 function replyList(){
