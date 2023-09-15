@@ -27,6 +27,7 @@
             <th class="table_writer">작성자</th>
             <th class="table_title">제목</th>
             <th class="table_date">날짜</th>
+            <th class="table_detail">상세보기</th>
         </tr>
         <!-- each -> 반복문 -->
         <!-- product -> 변수같은 개념 -->
@@ -37,6 +38,9 @@
             <td th:text="${product.memberNickName}"></td>
             <td th:text="${product.productName}"></td>
             <td th:text="${#temporals.format(product.productCreateTime, 'yy/MM/dd HH:mm')}"></td>
+            <td><a th:href="@{admin/product/${product.id}/detail}">상세보기</a></td>
+            <td><a th:href="@{admin/product/${product.id}/delete}">삭제</a></td>
+
         </tr>
     </table>
 </div>
