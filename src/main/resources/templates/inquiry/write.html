@@ -16,6 +16,20 @@
                 </div>
                 <div class="write-form">
                  <form th:action="@{/inquiry/write}" method="post" accept-charset="utf-8" th:object="${inquiryDto}">
+                     <!-- 송원철 -->
+                     <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
+                     <script th:inline="javascript">
+                         /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
+                         var memberId = /*[[${member?.memberId}]]*/ null;
+
+                         /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
+                         if (memberId !== null) {
+                             console.log('MemberId:', memberId);
+                         }else {
+                             console.log('MemberId: null');
+                         }
+                     </script>
+                     <!----------->
                         <ul>
                             <li>
                                 <label>구분</label>
@@ -29,7 +43,7 @@
                             <li>
                                 <!-- membrId 자동설정 -->
                                 <label th:for="writer">글쓴이</label>
-                                <input type="text" th:field="*{inquiryWriter}">
+                                <input type="text" name="memberEmail" th:value="${member.memberEmail}" readonly>
                             </li>
                             <li>
                                 <label th:for="title">제목</label>

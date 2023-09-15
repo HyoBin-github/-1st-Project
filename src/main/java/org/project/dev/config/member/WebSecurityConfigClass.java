@@ -86,7 +86,7 @@ public class WebSecurityConfigClass {
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
                     .antMatchers("/", "/member/join", "/member/login").permitAll()
-                    .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**", "/board/**", "/cart/**").authenticated()
+                    .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**", "/board/**", "/cart/**", "/inquiry/**").authenticated()
                     .antMatchers("/product/manage").hasAnyRole("SELLER", "ADMIN")
                     .antMatchers("/admin/**", "/member/list", "/member/memberList", "/semiMember/semiMemberList").hasAnyRole("ADMIN")
 

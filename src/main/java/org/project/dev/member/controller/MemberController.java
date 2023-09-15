@@ -2,7 +2,9 @@ package org.project.dev.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.member.dto.CombineDto;
 import org.project.dev.member.dto.MemberDto;
+import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.service.ImageService;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
@@ -32,6 +34,7 @@ public class MemberController {
     private final MemberService memberService;
     private final ImageService imageService;
     private final SemiMemberService semiMemberService;
+    private final MemberRepository memberRepository;
 
     // Create
     @GetMapping("/join")
@@ -108,6 +111,13 @@ public class MemberController {
 //        model.addAttribute("myUserDetails", myUserDetails);
 //
 //        return "member/memberList";
+//    }
+
+//    @GetMapping("/combine")
+//    public String getCombine(Model model) {
+//        List<CombineDto> combine = memberRepository.getCombinedMemberAndSemiMemberInfo();
+//        model.addAttribute("combine", combine);
+//        return "member/combine"; // Replace with your view name
 //    }
 
     // Read_paging - 회원 목록 조회

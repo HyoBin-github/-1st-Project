@@ -1,6 +1,7 @@
 package org.project.dev.notice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.notice.dto.InquiryDto;
 import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.InquiryEntity;
@@ -30,10 +31,29 @@ public class InquiryService {
     3.
     4.
     */
+//    @Transactional
+//    public int InquiryInsert(InquiryDto inquiryDto) throws IOException {
+//        // file 을 위한 throws
+//        InquiryEntity inquiryEntity = InquiryEntity.toInquiryEntityInsert(inquiryDto);
+//
+//        Long inquiryId = inquiryRepository.save(inquiryEntity).getInqId();
+//
+//        Optional<InquiryEntity> optionalInquiryEntity
+//                = Optional.ofNullable(inquiryRepository.findById(inquiryId).orElseThrow(() ->{
+//            return new IllegalArgumentException("문의사항을 찾을 수 없습니다.");
+//        }));
+//        if(!optionalInquiryEntity.isPresent()){
+//            return 0;
+//        }
+//        return 1;
+//    }
+
+    // 송원철 / write 시 memberId 저장
     @Transactional
-    public int InquiryInsert(InquiryDto inquiryDto) throws IOException {
+    public int InquiryInsert(InquiryDto inquiryDto, MemberEntity memberEntity) throws IOException {
         // file 을 위한 throws
         InquiryEntity inquiryEntity = InquiryEntity.toInquiryEntityInsert(inquiryDto);
+        inquiryEntity.setMember(memberEntity); // 현재 로그인한 사용자의 MemberEntity 설정
 
         Long inquiryId = inquiryRepository.save(inquiryEntity).getInqId();
 
@@ -62,8 +82,8 @@ public class InquiryService {
             inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
         }else if(inquirySelect.equals("content")){
             inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
-        }else if(inquirySelect.equals("writer")){
-            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(pageable,inquirySearch);
+//        }else if(inquirySelect.equals("writer")){
+//            inquiryEntities = inquiryRepository.findByInquiryWriterContaining(pageable,inquirySearch); // 송원철, 주석처리함
         }else{
             inquiryEntities = inquiryRepository.findAll(pageable);
         }
@@ -92,10 +112,11 @@ public class InquiryService {
                 .inquiryTitle(inquiryEntity.getInquiryTitle())
                 .inquiryContent(inquiryEntity.getInquiryContent())
                 .inqType(inquiryEntity.getInqType())
-                .inquiryWriter(inquiryEntity.getInquiryWriter())
+//                .inquiryWriter(inquiryEntity.getInquiryWriter())
                 .CreateTime(inquiryEntity.getCreateTime())
                 .UpdateTime(inquiryEntity.getUpdateTime())
                 .inqHit(inquiryEntity.getInqHit())
+                .memberEmail(inquiryEntity.getMember().getMemberEmail()) // 송원철 / memberEmail 추가
                 .build();
 
     }

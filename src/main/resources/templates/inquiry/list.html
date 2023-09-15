@@ -21,7 +21,7 @@
                         <option th:value="''" th:selected="${#strings.isEmpty(param.select)}">전체</option>
                         <option th:value="inquiryTitle" th:selected="${#strings.equals(param.select, 'inquiryTitle')}">제목</option>
                         <option th:value="inquiryContent" th:selected="${#strings.equals(param.select, 'inquiryContent')}">내용</option>
-                        <option th:value="inquiryWriter"  th:selected="${#strings.equals(param.select, 'inquiryWriter')}">작성자</option>
+                        <option th:value="inquiryWriter"  th:selected="${#strings.equals(param.select, 'memberEmail')}">작성자</option> <!--송원철-->
                     </select>
                     <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요" class="input">
                     <button type="submit">
@@ -46,7 +46,7 @@
             <tr th:each="inquiry: ${inquiryList}">
                 <td th:text="${inquiry.inqType}"></td>
                 <td th:text="${inquiry.inquiryTitle}"></td>
-                <td th:text="${inquiry.inquiryWriter}"></td>
+                <td th:text="${inquiry.memberEmail}"></td>
                 <td th:text="${#temporals.format(inquiry.CreateTime, 'yyyy.MM.dd')}"></td>
                 <td th:text="${#temporals.format(inquiry.UpdateTime, 'yyyy.MM.dd')}"></td>
                 <td th:text="${inquiry.inqHit}"></td>

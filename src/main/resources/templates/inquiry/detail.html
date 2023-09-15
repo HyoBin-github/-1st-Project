@@ -28,7 +28,8 @@
                             <span th:text="${#temporals.format(inquiryDto.UpdateTime,'yyyy년 MM월 dd일 hh:mm')}"></span>
                         </div>
                         <div class="right">
-                            <span th:text="${inquiryDto.inquiryWriter}"></span>
+<!--                            <span th:text="${inquiryDto.inquiryWriter}"></span>-->
+                            <span th:text="${inquiryDto.memberEmail}"></span> <!--송원철-->
                             <span th:text="${inquiryDto.inqHit}"></span>
                         </div>
                     </div>
