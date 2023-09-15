@@ -25,11 +25,11 @@ public class ReplyService {
 
         InquiryEntity inquiryEntity
                 = inquiryRepository.findById(replyDto.getInqId()).orElseThrow(() -> new IllegalArgumentException("X"));
-        String replyName = "m1";
+//        String replyName = "m1";
         ReplyEntity replyEntity = ReplyEntity.builder()
                 .reply(replyDto.getReply())
 //                .replyWriter(replyDto.getReplyWriter())
-                .replyWriter(replyName)
+                .replyWriter(myUserDetails.getMemberEntity().getMemberNickName())
                 .inquiryEntity(inquiryEntity)
                 .build();
         Long replyId = replyRepository.save(replyEntity).getId();
