@@ -1,12 +1,16 @@
 package org.project.dev.notice.entity;
 
 import lombok.*;
+import org.project.dev.inquiryReply.entity.ReplyEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.dto.InquiryDto;
+import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,6 +48,10 @@ public class InquiryEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private MemberEntity member;
+
+    // DB 연관관계 설정 -> ReviewEntity
+    @OneToMany(mappedBy = "inquiryEntity",cascade = CascadeType.REMOVE)
+    private List<ReplyEntity> replyEntityList = new ArrayList<>();
 
     public static InquiryEntity toInquiryEntityInsert(InquiryDto inquiryDto) {
         InquiryEntity inquiryEntity = new InquiryEntity();
