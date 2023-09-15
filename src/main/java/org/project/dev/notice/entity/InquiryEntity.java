@@ -38,6 +38,7 @@ public class InquiryEntity extends BaseEntity {
     @Column(nullable = false, length = 1)
     private int inquiryFile; // file이 존재하면 1, 없으면 0
 
+
     public static InquiryEntity toInquiryEntityInsert(InquiryDto inquiryDto) {
         InquiryEntity inquiryEntity = new InquiryEntity();
         inquiryEntity.setInqType(inquiryDto.getInqType());

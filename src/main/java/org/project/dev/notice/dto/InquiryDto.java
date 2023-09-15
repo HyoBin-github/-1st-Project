@@ -20,6 +20,7 @@ public class InquiryDto {
     private LocalDateTime CreateTime; // 공지사항 생성시간
     private LocalDateTime UpdateTime; // 공지사항 수정시간
 
+
     public static InquiryDto toinquiryDto(InquiryEntity inquiryEntity) {
         InquiryDto inquiryDto = new InquiryDto();
         inquiryDto.setInqId(inquiryEntity.getInqId());
