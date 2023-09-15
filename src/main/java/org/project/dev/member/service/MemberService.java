@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.repository.CartRepository;
 import org.project.dev.config.member.MyUserDetails;
-import org.project.dev.member.dto.CombineDto;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;

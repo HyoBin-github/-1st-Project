@@ -2,7 +2,6 @@ package org.project.dev.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.member.MyUserDetails;
-import org.project.dev.member.dto.CombineDto;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.service.ImageService;
