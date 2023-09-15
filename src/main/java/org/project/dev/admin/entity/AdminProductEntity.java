@@ -20,8 +20,8 @@ public class AdminProductEntity extends BaseEntity {
     Todo
      1. catfather49@gmail.com
      2.
-     3. 
-     4. 
+     3.
+     4.
      */
 
     @Id
