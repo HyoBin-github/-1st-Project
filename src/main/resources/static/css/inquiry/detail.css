@@ -253,3 +253,17 @@
     background: #4b66c7;
     box-shadow: 0 10px 10px 0 #cccccc;
 }
+.container .detail .detail-con .replyList{
+    width: inherit;
+    padding: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    border: 2px solid red;
+}
+.container .detail .detail-con .replyList .replyCon{
+    border: 2px solid yellow;
+}
+.container .detail .detail-con .replyList .replyCon>ul{
+    border: 2px solid green;
+}
+
