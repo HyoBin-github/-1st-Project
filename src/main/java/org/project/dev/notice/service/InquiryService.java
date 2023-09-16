@@ -1,6 +1,7 @@
 package org.project.dev.notice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.dto.InquiryDto;
@@ -76,9 +77,39 @@ public class InquiryService {
   3.
   4.
   */
-    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch) {
+//    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch) {
+//
+//       Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
+//
+//        if(inquirySelect.equals("inquiryTitle")){
+//            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
+//        }else if(inquirySelect.equals("inquiryContent")){
+//            inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
+//        }else if(inquirySelect.equals("memberEmail")){
+//            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
+//        }else{
+//            inquiryEntities = inquiryRepository.findAll(pageable);
+//        }
+//
+//
+//        inquiryEntities.getNumber();
+//        inquiryEntities.getTotalElements();
+//        inquiryEntities.getTotalPages();
+//        inquiryEntities.getSize();
+//
+//        Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
+//
+//
+//        return inquiryDtoPage;
+//    }
+    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch,
+                                        MyUserDetails myUserDetails) {
 
-       Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
+
+        myUserDetails.getMemberEntity();
+
+
+        Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
 
         if(inquirySelect.equals("inquiryTitle")){
             inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
@@ -114,7 +145,6 @@ public class InquiryService {
                 .inquiryTitle(inquiryEntity.getInquiryTitle())
                 .inquiryContent(inquiryEntity.getInquiryContent())
                 .inqType(inquiryEntity.getInqType())
-//                .inquiryWriter(inquiryEntity.getInquiryWriter())
                 .CreateTime(inquiryEntity.getCreateTime())
                 .UpdateTime(inquiryEntity.getUpdateTime())
                 .inqHit(inquiryEntity.getInqHit())
