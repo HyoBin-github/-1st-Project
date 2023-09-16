@@ -1,6 +1,8 @@
 package org.project.dev.notice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.NoticeEntity;
 import org.project.dev.notice.repository.NoticeRepository;
@@ -26,12 +28,9 @@ public class NoticeService {
     4.
     */
     @Transactional
-    public int noticeInsert(NoticeDto noticeDto) {
+    public int noticeInsert(NoticeDto noticeDto, MyUserDetails myUserDetails) {
 
-        System.out.println(noticeDto.getNoticeContent());
-        System.out.println(noticeDto.getNoticeTitle());
-        System.out.println(noticeDto.getNotType());
-        System.out.println(noticeDto.getNotWriter());
+        myUserDetails.getMemberEntity();
 
         NoticeEntity noticeEntity = NoticeEntity.toNoticeEntityInsert(noticeDto);
 
@@ -57,8 +56,10 @@ public class NoticeService {
     */
 
     @Transactional
-    public Page<NoticeDto> noticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
+    public Page<NoticeDto> noticeList(Pageable pageable, String noticeSelect, String noticeSearch,
+                                      MyUserDetails myUserDetails) {
 
+        myUserDetails.getMemberEntity();
         Page<NoticeEntity> noticeEntities = null; // 기본 null 값으로 설정
 
         if (noticeSelect.equals("noticeTitle")) {
@@ -87,7 +88,10 @@ public class NoticeService {
         4. type에 해당하는 목록으로 이동
         */
     @Transactional
-    public Page<NoticeDto> noticeList(String type, Pageable pageable) {
+    public Page<NoticeDto> noticeList(String type, Pageable pageable, MyUserDetails myUserDetails) {
+
+
+        myUserDetails.getMemberEntity();
 
         Page<NoticeEntity> noticeEntities = noticeRepository.findByNotType(type, pageable); // not_type에 해당하는 값만 출력
 
@@ -160,7 +164,7 @@ public class NoticeService {
     }
 
     @Transactional
-    public NoticeDto noticeUpdateOk(NoticeDto noticeDto, Long id) {
+    public NoticeDtogitffnoticeUpdateOk(NoticeDto noticeDto, Long id) {
         // errer throw 처리
         NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(()->{
             throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");

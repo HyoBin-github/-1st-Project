@@ -1,16 +1,16 @@
 server:
-  port: 8111
+  port: 8095
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/springdb
+    url: jdbc:mysql://localhost:3306/springdb
     #    url: jdbc:mysql://localhost:3306/test2
-#    username: root
-#    password: 1234
-    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-    username: admin
-    password: '00000000'
+    username: root
+    password: 1234
+#    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+#    username: admin
+#    password: '00000000'
 
   mail:
     # google smtp server 사용

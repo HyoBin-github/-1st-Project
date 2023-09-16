@@ -68,7 +68,7 @@ public class InquiryController {
             log.info("semiMemberId : " + semiMyUserDetails.getSemiMemberEntity().getSemiMemberId());
         }
 
-        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
+//        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
 
         return "inquiry/write";
     }
@@ -150,7 +150,7 @@ public class InquiryController {
             MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
             String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-            Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
+            Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
 
             Long totalCount = inquiryList.getTotalElements();
             int totalPage = inquiryList.getTotalPages();
@@ -208,8 +208,6 @@ public class InquiryController {
             model.addAttribute("inquiryDto", inquiryDto);
             model.addAttribute("member", member);
             model.addAttribute("memberImageUrl", memberImageUrl);
-//            List<ReplyDto> replyDtoList = replyService.relpyList(inquiryDto.getNotId());
-//            model.addAttribute("replyDtoList", replyDtoList);
             return "inquiry/detail";
         }
         return "redirect:/inquiry/list?page=0&select=&search=";
@@ -233,7 +231,8 @@ public class InquiryController {
 
     // 송원철 / 닉네임, 이미지 가져오기
     @GetMapping("/update/{id}")
-    public String getInquiryUpdate(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String getInquiryUpdate(@PathVariable("id") Long id, Model model,
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
@@ -249,10 +248,17 @@ public class InquiryController {
         return "redirect:/inquiry/list?page=0&select=&search=";
     }
     @PostMapping("/update/{id}")
-    public String postInquiryUpdate(@PathVariable("id") Long id, InquiryDto inquiryDto, Model model){
+    public String postInquiryUpdate(@PathVariable("id") Long id, InquiryDto inquiryDto, Model model,
+                                    @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         InquiryDto inquiryDto1 = inquiryService.inquiryUpdateOk(inquiryDto,id);
         model.addAttribute("inquiryDto", inquiryDto1);
+
+        model.addAttribute("member", member);
+        model.addAttribute("memberImageUrl", memberImageUrl);
 
         return "inquiry/detail";
     }
