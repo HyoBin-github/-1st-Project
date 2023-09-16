@@ -4,18 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.repository.CartRepository;
-import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
-import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.repository.SemiMemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +19,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j // log 객체 사용하기위함
 @Service
@@ -61,25 +58,20 @@ public class MemberService {
     }
 
     // Read (to메서드)
-//    public List<MemberDto> listMember() {
-//
-//        List<MemberDto> memberDtoList = new ArrayList<>();
-//        List<MemberEntity> memberEntityList = memberRepository.findAll();
-//
-//        if (!memberEntityList.isEmpty()) {
-//            for (MemberEntity memberEntity : memberEntityList) {
-//
-//                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
-//                memberDtoList.add(memberDto);
-//            }
-//        }
-//        return memberDtoList;
-//    }
+    public List<MemberDto> listMember() {
 
-    // 일반, 간편 통합 목록
-//    public List<CombineDto> getCombinedMemberAndSemiMemberInfo() {
-//        return memberRepository.getCombinedMemberAndSemiMemberInfo();
-//    }
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+
+        if (!memberEntityList.isEmpty()) {
+            for (MemberEntity memberEntity : memberEntityList) {
+
+                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+                memberDtoList.add(memberDto);
+            }
+        }
+        return memberDtoList;
+    }
 
     //  Detail (to메서드)
     public MemberDto detailMember(Long memberId) {
@@ -263,6 +255,7 @@ public class MemberService {
 
     // 페이징
     public Page<MemberDto> memberPagingList(Pageable pageable) {
+
         Page<MemberEntity> memberEntities = memberRepository.findAll(pageable);
         //    boardEntities.map(board ->new BoardDto(board.getId(),board.getBoardContent(),))
 
@@ -289,11 +282,11 @@ public class MemberService {
     // 회원목록 내 검색
     public List<MemberDto> searchMemberList(String subject, String search) {
 
-        List<MemberDto> memberDtoList = new ArrayList<>();     // title 포함되어있다.
+        List<MemberDto> memberDtoList = new ArrayList<>();
         List<MemberEntity> memberEntityList = new ArrayList<>();
 
         if (subject.equals("memberEmail")) {
-            memberEntityList = memberRepository.findByMemberEmailContaining(search); // 이메일
+            memberEntityList = memberRepository.findByMemberEmailContaining(search);
         } else if (subject.equals("memberName")) {
             memberEntityList = memberRepository.findByMemberNameContaining(search);
         } else if (subject.equals("memberNickName")) {
@@ -328,6 +321,7 @@ public class MemberService {
         }
         return memberDtoList;
     }
+
 
 }
 

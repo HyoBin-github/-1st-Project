@@ -1,10 +1,8 @@
 package org.project.dev.member.repository;
 
 
-import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

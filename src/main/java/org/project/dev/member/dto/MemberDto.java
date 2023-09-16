@@ -93,7 +93,7 @@ public class MemberDto {
     private String imageUrl;
 
     public static MemberDto toMemberDto(MemberEntity memberEntity) {
-        MemberDto memberDto=new MemberDto();
+            MemberDto memberDto=new MemberDto();
             memberDto.setMemberId(memberEntity.getMemberId());
             memberDto.setMemberEmail(memberEntity.getMemberEmail());
             memberDto.setMemberPassword(memberEntity.getMemberPassword());

@@ -7,7 +7,11 @@ import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.service.ImageService;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
+import org.project.dev.notice.dto.InquiryDto;
+import org.project.dev.notice.entity.InquiryEntity;
+import org.project.dev.notice.service.InquiryService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -34,6 +38,7 @@ public class MemberController {
     private final ImageService imageService;
     private final SemiMemberService semiMemberService;
     private final MemberRepository memberRepository;
+    private final InquiryService inquiryService;
 
     // Create
     @GetMapping("/join")
@@ -102,22 +107,15 @@ public class MemberController {
     }
 
     // Read - 회원 목록 조회
-//    @GetMapping("/memberList")
-//    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-//        List<MemberDto> memberDtoList=memberService.listMember();
-//
-//        model.addAttribute("memberDtoList", memberDtoList);
-//        model.addAttribute("myUserDetails", myUserDetails);
-//
-//        return "member/memberList";
-//    }
+    @GetMapping("/memberList")
+    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+        List<MemberDto> memberDtoList=memberService.listMember();
 
-//    @GetMapping("/combine")
-//    public String getCombine(Model model) {
-//        List<CombineDto> combine = memberRepository.getCombinedMemberAndSemiMemberInfo();
-//        model.addAttribute("combine", combine);
-//        return "member/combine"; // Replace with your view name
-//    }
+        model.addAttribute("memberDtoList", memberDtoList);
+        model.addAttribute("myUserDetails", myUserDetails);
+
+        return "member/memberList";
+    }
 
     // Read_paging - 회원 목록 조회
     @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬
@@ -157,15 +155,18 @@ public class MemberController {
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("memberList", memberList);
-        model.addAttribute("myUserDetails", myUserDetails);
 
+        if (!memberList.isEmpty()) {
+            model.addAttribute("memberList", memberList);
+            model.addAttribute("myUserDetails", myUserDetails);
+            return "member/pagingList";
+        }
         return "member/pagingList";
     }
 
-    // 검색
+//    // 검색
     @GetMapping("/search")                             // 요청 정보 없으면 그냥 실행
-    public String search(
+    public String getSearch(
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,
             @AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
@@ -176,10 +177,12 @@ public class MemberController {
             model.addAttribute("memberList",memberList);
             model.addAttribute("myUserDetails",myUserDetails);
 
-            return "member/pagingList";
+//            return "member/pagingList";
+            return "member/memberList";
         }
         System.out.println("조회할 목록이 없다");
-        return "redirect:/member/pagingList";
+//        return "redirect:/member/pagingList";
+        return "redirect:/member/memberList";
     }
 
     // Detail - 회원 상세 보기
@@ -376,6 +379,45 @@ public class MemberController {
         model.addAttribute("memberImageUrl", memberImageUrl); // 이미지 url 모델에 추가
 
         return "member/updateImage";
+    }
+
+    // 내가 작성한 문의사항만 출력
+    @GetMapping("/inquiry")
+    public String getInquiryList(
+            @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model,
+            @RequestParam(value = "select", required = false) String inquirySelect,
+            @RequestParam(value = "search", required = false) String inquirySearch,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
+    ) {
+
+        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+        Page<InquiryDto> inquiryList = inquiryService.myInquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
+
+        Long totalCount = inquiryList.getTotalElements();
+        int totalPage = inquiryList.getTotalPages();
+        int pageSize = inquiryList.getSize();
+        int nowPage = inquiryList.getNumber();
+        int blockNum = 10;
+
+        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        if (!inquiryList.isEmpty()) {
+            model.addAttribute("inquiryList", inquiryList);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+
+            return "member/inquiryList";
+        }
+        System.out.println("조회할 문의사항이 없다.");
+
+        return "redirect:/member/inquiry";
     }
 
 }
