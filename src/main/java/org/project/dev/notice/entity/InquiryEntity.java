@@ -58,7 +58,6 @@ public class InquiryEntity extends BaseEntity {
         inquiryEntity.setInqType(inquiryDto.getInqType());
         inquiryEntity.setInquiryTitle(inquiryDto.getInquiryTitle());
         inquiryEntity.setInquiryContent(inquiryDto.getInquiryContent());
-//        inquiryEntity.setInquiryWriter(inquiryDto.getInquiryWriter());
         inquiryEntity.setInqHit(0);
 
         // 송원철 / 문의사항 등록 시 memberId 가져오기

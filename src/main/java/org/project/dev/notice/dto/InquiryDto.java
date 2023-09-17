@@ -2,7 +2,6 @@ package org.project.dev.notice.dto;
 
 import lombok.*;
 import org.project.dev.member.entity.MemberEntity;
-import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.notice.entity.InquiryEntity;
 
 import java.time.LocalDateTime;

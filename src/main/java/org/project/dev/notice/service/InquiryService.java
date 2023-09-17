@@ -96,6 +96,7 @@ public class InquiryService {
 //
 //        return inquiryDtoPage;
 //    }
+    @Transactional
     public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch,
                                         MyUserDetails myUserDetails) {
 
@@ -184,8 +185,9 @@ public class InquiryService {
         Long inquiryId = inquiryRepository.save(InquiryEntity.toInquiryEntityUpdate(inquiryDto)).getInqId(); // 수정을 위한 jparepository
 
         InquiryEntity inquiryEntity1 = inquiryRepository.findById(inquiryId).orElseThrow(()->{
-            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
+            throw new IllegalArgumentException("수정한 공지사항이 존재하지 않습니다.");
         });
+
         return InquiryDto.toinquiryDto(inquiryEntity1);
     }
 

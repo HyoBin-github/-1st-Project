@@ -38,7 +38,7 @@
             <td th:text="${product.memberNickName}"></td>
             <td th:text="${product.productName}"></td>
             <td th:text="${#temporals.format(product.productCreateTime, 'yy/MM/dd HH:mm')}"></td>
-            <td><a th:href="@{admin/product/${product.id}/detail}">상세보기</a></td>
+            <td><a th:href="@{|/admin/product/${product.id}/detail|}" th:text="${product.productName}"></a></td>
             <td><a th:href="@{admin/product/${product.id}/delete}">삭제</a></td>
 
         </tr>

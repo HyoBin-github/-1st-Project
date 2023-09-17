@@ -146,6 +146,7 @@ public class InquiryController {
             @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
 
+            myUserDetails.getMemberEntity();
             MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
             String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
@@ -165,6 +166,8 @@ public class InquiryController {
                 model.addAttribute("inquiryList", inquiryList);
                 model.addAttribute("startPage", startPage);
                 model.addAttribute("endPage", endPage);
+
+                model.addAttribute("myUserDetails", myUserDetails);
                 model.addAttribute("member", member);
                 model.addAttribute("memberImageUrl", memberImageUrl);
                 return "inquiry/list";
@@ -233,6 +236,7 @@ public class InquiryController {
     public String getInquiryUpdate(@PathVariable("id") Long id, Model model,
                                    @AuthenticationPrincipal MyUserDetails myUserDetails){
 
+        myUserDetails.getMemberEntity();
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
@@ -244,12 +248,17 @@ public class InquiryController {
             model.addAttribute("memberImageUrl", memberImageUrl);
             return "inquiry/update";
         }
+
+        model.addAttribute("member", member);
+        model.addAttribute("memberImageUrl", memberImageUrl);
+
         return "redirect:/inquiry/list?page=0&select=&search=";
     }
     @PostMapping("/update/{id}")
     public String postInquiryUpdate(@PathVariable("id") Long id, InquiryDto inquiryDto, Model model,
                                     @AuthenticationPrincipal MyUserDetails myUserDetails){
 
+        myUserDetails.getMemberEntity();
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 

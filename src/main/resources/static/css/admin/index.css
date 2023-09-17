@@ -1,6 +1,5 @@
 @import url(/css/common/reset.css);
 
-
 /* fragments 안했어요 그냥 통  css 파일입니다 */
 
 /*catfather49@gmail.com*/
@@ -13,6 +12,7 @@
     padding: 0;
   }
   html,body{
+    background: #F0F2F5; /* footer 있던 곳*/
     width: 100%;
     min-height:100%;
   }
@@ -42,7 +42,7 @@
   .header{
     height: 80px;
     padding: 20px;
-    background-color: #4b66c7;
+    background-color: #4F6DE3;
 
   }
 
@@ -79,7 +79,7 @@
   }
 
   /* sideBar ========================================================== */
-
+ 
   :root {
     --side-bar-width: 200px;
     --side-bar-height: 70vh;
@@ -92,7 +92,7 @@
     align-items: flex-start;
     justify-content: space-evenly;
     padding: 10px;
-    background-color: #f5d4d4;
+    background-color: #7286D3;
 
     transform: translate(calc(var(--side-bar-width) * -0.9), 0);  /* X축 이동, Y축 고정 */
     transition: .5s;
@@ -100,6 +100,7 @@
     width: var(--side-bar-width); /*변수를 통해 사이드바 넒이 조정*/
     min-height: var(--side-bar-height);   /*사이드바 높이 조정*/
 
+    /* height: 1000px; 사이드바 길이 설정하기 */
 
   }
 
@@ -130,7 +131,7 @@
   .sideBar > .sideBar-sec > ul > li:hover > ul  {
     display: block;
     position: absolute;
-    background-color: #f5d4d4;
+    background-color: #E3BD4F;
     top: 0;         /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
     left: 100%;     /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
     width: 150%;    /* 1차 메뉴의 너비를 상속 */

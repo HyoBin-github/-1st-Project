@@ -5,6 +5,12 @@
 /*catfather49@gmail.com*/
 -->
 <!DOCTYPE html>
+
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"-->
+<!--      layout:decorate="~{admin/fragments/layout/baseLayout}">-->
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -16,6 +22,17 @@
     <title>Document</title>
 </head>
 
+
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0"> &lt;!&ndash;head.html에 사용해도 되는지?&ndash;&gt;-->
+<!--<th:block layout:fragment="title">-->
+<!--    <title>ADMIN</title>-->
+<!--</th:block>-->
+<!--<th:block layout:fragment="css">-->
+<!--    <link rel="stylesheet" th:href="@{/css/admin/index.css}">-->
+<!--</th:block>-->
+<!--<th:block layout:fragment="container">-->
+
+<!--</th:block>-->
 <body>
 <div class="header">
     <div class="top-nav">
@@ -256,30 +273,30 @@
     </div>
 </div>
 
-<div class="footer">
-    <div class="nav">
-        <a th:href="@{/}">
-            <h2>CLOTH KEEPER</h2>
-        </a>
-        <ul class="menu">
-            <li>개인정보처리방침</li>
-            <li>영상정보처리기기 운영관리 방침</li>
-            <li>홈페이지 이용약관</li>
-            <li>위치정보 이용약관</li>
-            <li>윤리경영</li>
-        </ul>
-        <div class="info">
-            <span>주소: 서울특별시 노원구 OO동 OO로 OO길</span>
-            <span>(주)Cloth Keeper 대표☆☆☆</span>
-            <span>TEL: 02) 0000 - 1111 / FAX: 02) 0000 - 1112</span>
-            <span><a th:href="@{/notice/list}">공지사항</a></span>
-        </div>
-        <p class="copyroight">
-            &copy; <span class="this-year"></span> Cloth Keeper Company. All Rights Reseved.
-        </p>
-        <img th:src="@{/images/logo.png}" alt="" class="logo">
-    </div>
-</div>
+<!--<div class="footer">-->
+<!--    <div class="nav">-->
+<!--        <a th:href="@{/}">-->
+<!--            <h2>CLOTH KEEPER</h2>-->
+<!--        </a>-->
+<!--        <ul class="menu">-->
+<!--            <li>개인정보처리방침</li>-->
+<!--            <li>영상정보처리기기 운영관리 방침</li>-->
+<!--            <li>홈페이지 이용약관</li>-->
+<!--            <li>위치정보 이용약관</li>-->
+<!--            <li>윤리경영</li>-->
+<!--        </ul>-->
+<!--        <div class="info">-->
+<!--            <span>주소: 서울특별시 노원구 OO동 OO로 OO길</span>-->
+<!--            <span>(주)Cloth Keeper 대표☆☆☆</span>-->
+<!--            <span>TEL: 02) 0000 - 1111 / FAX: 02) 0000 - 1112</span>-->
+<!--            <span><a th:href="@{/notice/list}">공지사항</a></span>-->
+<!--        </div>-->
+<!--        <p class="copyroight">-->
+<!--            &copy; <span class="this-year"></span> Cloth Keeper Company. All Rights Reseved.-->
+<!--        </p>-->
+<!--        <img th:src="@{/images/logo.png}" alt="" class="logo">-->
+<!--    </div>-->
+<!--</div>-->
 </body>
 
 </html>
