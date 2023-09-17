@@ -6,18 +6,26 @@ import lombok.RequiredArgsConstructor;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.product.dto.ProductBrandDTO;
+import org.project.dev.product.dto.ProductCategoryDTO;
 import org.project.dev.product.dto.ProductDTO;
+import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductBrandEntity;
+import org.project.dev.product.entity.ProductCategoryEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductBrandRepository;
+import org.project.dev.product.repository.ProductCategoryRepository;
 import org.project.dev.product.repository.ProductRepository;
+import org.project.dev.product.repository.ProductSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +41,10 @@ public class ProductService {
 
 
     private final ProductRepository productRepository;
+    private final ProductCategoryRepository productCategoryRepository;
     private final ProductBrandRepository productBrandRepository;
     private final ProductPaginationService productPaginationService;
+    private final ProductUtilService productUtilService;
     private final MemberRepository memberRepository; // 송원철
 
 
@@ -49,32 +59,19 @@ public class ProductService {
     // 송원철 / write 시 memberId 저장
     @Transactional
     public ProductEntity productWriteDetail(ProductDTO productDTO,
+                                            ProductCategoryEntity productCategoryEntity,
                                             ProductBrandEntity productBrandEntity,
                                             MemberEntity memberEntity){
         productDTO.setProductHits(0); // productHits 초기화
         ProductEntity productEntity = ProductEntity.toEntity(productDTO);
+        productEntity.setProductCategoryEntity(productCategoryEntity);
         productEntity.setProductBrandEntity(productBrandEntity);
         productEntity.setMember(memberEntity); // 현재 로그인한 사용자의 MemberEntity 설정
         return productRepository.save(productEntity);
     }
 
-    // brand write
-    @Transactional
-    public ProductBrandEntity productBrandWriteDetail(ProductBrandDTO productBrandDTO){
-        Optional<ProductBrandEntity> existingBrand =
-                productBrandRepository.findByProductBrandName(productBrandDTO.getProductBrandName());
 
-        // 만약 브랜드 명이 이미 존재한다면
-        if (existingBrand.isPresent()) {
-            // 이미 존재하는 BrandId 값을 반환
-            return existingBrand.get();
-        // 그 외에는,
-        } else {
-            // 브랜드 명을 생성
-            ProductBrandEntity productBrandEntity = ProductBrandEntity.toEntity(productBrandDTO);
-            return productBrandRepository.save(productBrandEntity);
-        }
-    }
+
 
     // LIST (READ)
     public ProductListResponse getProductList(int page, Pageable pageable,
@@ -97,7 +94,6 @@ public class ProductService {
         return new ProductListResponse(productList, nowPage, startPage, endPage, totalPage, searchType, searchKeyword);
     }
 
-
     @Data
     @AllArgsConstructor
     public class ProductListResponse {
@@ -110,10 +106,93 @@ public class ProductService {
         private String searchKeyword;
     }
 
-    public List<ProductDTO> productCursorBasedList(Long lastId, int limit) {
 
-        return null;
+    // 스크롤 페이징 처리 중 =======================================================
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProductInfoCollected(Long lastProductId, int limit,
+                                                    String searchKeyword,
+                                                    String[] categories,
+                                                    String[] brands,
+                                                    String[] colors) {
+
+        Specification<ProductEntity> spec = Specification
+                .where(ProductSpecification.isDisplayTrue())    // productDisplay 값이 true 인 경우
+                .and(ProductSpecification.isIdLessThan(lastProductId)); // lastProductId 보다 id 값이 작은 경우
+
+        // 여기에 필터 요소를 추가.
+        if(searchKeyword != null) {
+            spec = spec.and(ProductSpecification.productNameContains(searchKeyword));
+        }
+
+        // 필터 요소가 하나가 아닐 경우를 대비해서 반복문 사용.
+
+        // 카테고리 필터링
+        if(categories != null) {
+            Specification<ProductEntity> categorySpec = null;
+            for(String category : categories) {
+                if(categorySpec == null) {
+                    categorySpec = ProductSpecification.productCategoryContains(category);
+                } else {
+                    categorySpec = categorySpec.or(ProductSpecification.productCategoryContains(category));
+                }
+            }
+            if(categorySpec != null) {
+                spec = spec.and(categorySpec);
+            }
+        }
+        // 브랜드 필터링
+        if(brands != null) {
+            Specification<ProductEntity> brandSpec = null;
+            for(String brand : brands) {
+                if(brandSpec == null) {
+                    brandSpec = ProductSpecification.productBrandContains(brand);
+                } else {
+                    brandSpec = brandSpec.or(ProductSpecification.productBrandContains(brand));
+                }
+            }
+            if(brandSpec != null) {
+                spec = spec.and(brandSpec);
+            }
+        }
+        // 색상 필터링
+        if(colors != null) {
+            Specification<ProductEntity> colorSpec = null;
+            for(String color : colors) {
+                if(colorSpec == null) {
+                    colorSpec = ProductSpecification.productColorContains(color);
+                } else {
+                    colorSpec = colorSpec.or(ProductSpecification.productColorContains(color));
+                }
+            }
+            if(colorSpec != null) {
+                spec = spec.and(colorSpec);
+            }
+        }
+
+
+
+        Pageable pageable = PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "id"));
+        // lastProductId보다 작은 ID를 가진 제품을 찾아서 limit 개수만큼 반환
+        Page<ProductEntity> productEntityPage = productRepository.findAll(spec, pageable);
+        // Page 객체에서 List 객체를 가져옴
+        List<ProductEntity> productEntities = productEntityPage.getContent();
+
+//        System.out.println("Product Entities: " + productEntities);
+
+        // DTO로 변환
+        List<ProductDTO> productDTOs = productEntities.stream()
+                .map(ProductDTO::toDTO)
+                .collect(Collectors.toList());
+
+//        System.out.println("Product DTOs: " + productDTOs);
+//        System.out.println(brands);
+//        System.out.println(colors);
+
+        return productDTOs;
     }
+
+
+    // ==========================================================================
 
     // 송원철 / 상품 개별 불러오기
     public ProductEntity productView(Long productId) {

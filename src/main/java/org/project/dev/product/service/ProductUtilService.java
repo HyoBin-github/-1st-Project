@@ -1,14 +1,15 @@
 package org.project.dev.product.service;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dev.product.dto.ProductBrandDTO;
+import org.project.dev.product.dto.ProductCategoryDTO;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.dto.ProductImgDTO;
+import org.project.dev.product.entity.ProductBrandEntity;
+import org.project.dev.product.entity.ProductCategoryEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.entity.ProductImgEntity;
-import org.project.dev.product.repository.ProductImgRepository;
-import org.project.dev.product.repository.ProductImgSpecification;
-import org.project.dev.product.repository.ProductRepository;
-import org.project.dev.product.repository.ProductSpecification;
+import org.project.dev.product.repository.*;
 import org.project.dev.utils.FileStorageService;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +35,8 @@ public class ProductUtilService {
      */
 
     private final ProductRepository productRepository;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final ProductBrandRepository productBrandRepository;
     private final ProductImgRepository productImgRepository;
     private final FileStorageService fileStorageService;
 
@@ -46,6 +46,61 @@ public class ProductUtilService {
         // productRepository의 updateHits 메소드를 호출
         productRepository.updateHits(id);
     }
+
+    // list 호출 시 전달해야하는 첫 lastProductId 값(DB상 productId의 최댓값)을 계산하기 위한 로직.
+    public Optional<Long> findLastProductId() {
+        Optional<ProductEntity> lastProduct = productRepository.findTopByOrderByIdDesc();
+        return lastProduct.map(product -> product.getId() + 1); // lastProduct까지 포함시키기 위해 +1
+    }
+
+    // category write
+    @Transactional
+    public ProductCategoryEntity productCategoryWriteDetail(ProductCategoryDTO productCategoryDTO){
+        Optional<ProductCategoryEntity> existingCategory =
+                productCategoryRepository.findByProductCategoryName(productCategoryDTO.getProductCategoryName());
+
+        // 만약 브랜드 명이 이미 존재한다면
+        if (existingCategory.isPresent()) {
+            // 이미 존재하는 BrandId 값을 반환
+            return existingCategory.get();
+            // 그 외에는,
+        } else {
+            // 브랜드 명을 생성
+            ProductCategoryEntity productCategoryEntity = ProductCategoryEntity.toEntity(productCategoryDTO);
+            return productCategoryRepository.save(productCategoryEntity);
+        }
+    }
+
+    // brand write
+    @Transactional
+    public ProductBrandEntity productBrandWriteDetail(ProductBrandDTO productBrandDTO){
+        Optional<ProductBrandEntity> existingBrand =
+                productBrandRepository.findByProductBrandName(productBrandDTO.getProductBrandName());
+
+        // 만약 브랜드 명이 이미 존재한다면
+        if (existingBrand.isPresent()) {
+            // 이미 존재하는 BrandId 값을 반환
+            return existingBrand.get();
+            // 그 외에는,
+        } else {
+            // 브랜드 명을 생성
+            ProductBrandEntity productBrandEntity = ProductBrandEntity.toEntity(productBrandDTO);
+            return productBrandRepository.save(productBrandEntity);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void saveProductImages(ProductEntity savedProductEntity,
                                   List<MultipartFile> productImages) throws IOException {

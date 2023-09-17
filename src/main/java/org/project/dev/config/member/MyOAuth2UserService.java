@@ -149,7 +149,7 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
                 .memberPhone(memberPhone)
                 .memberBirth(memberBirth)
                 .memberPostCode(memberPostCode)
-                .role(Role.MEMBER)
+                .role(Role.ADMIN)
                 .build());
         
         // 회원가입 후 장바구니 생성

@@ -35,12 +35,40 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
+
+
     // 클릭 이벤트 설정 (imagePreviewBoxContainer)
     imgPreviewBoxContainer.addEventListener("click", function(event) {
       event.preventDefault();
+
+      // 'X' 아이콘을 클릭했을 경우
+      if (event.target && event.target.parentElement.className === "delete-icon") {
+        // 해당 이미지를 DOM에서 삭제
+        const parentLi = event.target.closest('.image-preview-box'); // 가장 가까운 li 요소를 찾습니다.
+        
+        if (parentLi) {
+          const index = Array.from(imgPreviewBoxContainer.children).indexOf(parentLi);
+          
+          if (index > -1) {
+            // 해당 이미지를 queuedFiles 배열에서도 삭제
+            queuedFiles.splice(index, 1);
+            // 해당 이미지를 DOM에서 삭제
+            parentLi.remove();
+          }
+          
+          console.log("Deleted index:", index);  // 로그 추가
+          console.log("Remaining files:", queuedFiles);  // 로그 추가
+        }
+        return;
+      }
+
+
+      // 클릭 이미지 첨부 로직
       const fileInput = document.getElementById("fileInput");
       fileInput.click(); // 프로그래밍적으로 파일 입력을 클릭합니다.
     });
+
+
 
     // 파일 입력 변경 이벤트 설정
     document.getElementById("fileInput").addEventListener("change", function(event) {
@@ -53,81 +81,75 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+
     // 이미지 처리 관련 로직 ====================================================
     
 
     let isFirstUpload = true;  // 첫 번째 이미지 첨부를 추적하기 위한 플래그 변수
 
-
-    // 비동기 함수로 선언하여 Promise와 async/await를 사용할 수 있게 합니다.
     async function handleUpdate(fileList) {
-      // 이미지 미리보기를 할 컨테이너를 DOM에서 가져옵니다.
       const imgPreviewBoxContainer = document.getElementById("image-preview-box-container");
-      
       queuedFiles = [...queuedFiles, ...Array.from(fileList)];
 
-      // FileReader를 Promise로 감싸는 함수를 선언합니다.
-      // 이 함수는 파일을 읽고 결과를 반환하는 Promise를 생성합니다.
       const loadFile = (file) => new Promise((resolve, reject) => {
-        // FileReader 인스턴스를 생성합니다.
         const reader = new FileReader();
         
-        // 파일 읽기가 성공적으로 완료되면 호출되는 이벤트 리스너를 추가합니다.
         reader.addEventListener("load", (event) => {
-          // 읽기가 성공적으로 완료되면 resolve 함수를 호출하여 Promise를 완료합니다.
-          // 파일과 읽은 결과를 객체로 묶어서 반환합니다.
           resolve({ file, result: event.target.result });
         });
-        
-        // 파일 읽기에 실패하면 호출되는 이벤트 리스너를 추가합니다.
+
         reader.addEventListener("error", reject);
-        
-        // 실제로 파일을 읽기 시작합니다. 데이터 URL 형식으로 읽습니다.
         reader.readAsDataURL(file);
       });
       
-      // 모든 파일을 읽기 위한 Promise 배열을 생성합니다.
-      // map 함수를 사용하여 각 파일에 대한 Promise를 생성하고 배열에 담습니다.
       const filePromises = fileList.map(loadFile);
-      
-      // Promise.all을 사용하여 모든 파일이 읽힐 때까지 기다립니다.
-      // 이후 loadedFiles 배열에 각 파일과 그 결과가 담깁니다.
       const loadedFiles = await Promise.all(filePromises);
       
-      // 모든 파일이 읽힌 후, 그 결과를 사용하여 DOM을 업데이트합니다.
       loadedFiles.forEach((loadedFile, index) => {
 
-        // 미리보기 이미지를 생성합니다.
         const imgPreview = document.createElement("img");
         imgPreview.className = "image-preview";
-        // imgPreview.id = "image-preview";
         imgPreview.src = loadedFile.result;
         imgPreview.source = "internal";
 
-        // 이미지를 담을 li 요소를 생성합니다.
         const imgPreviewBox = document.createElement("li");
         imgPreviewBox.className = "image-preview-box";
-        // imgPreviewBox.id = "draggable-container";
 
-        // 생성한 li 요소에 이미지를 추가합니다.
+        const deleteIcon = document.createElement("span");
+        deleteIcon.className = "delete-icon";
+
+        const deleteImg = document.createElement("img");
+        deleteImg.src = "/images/product/iconmonstr-x-mark-4.svg";
+        deleteImg.alt = "Delete";
+        deleteImg.className = "delete-img";
+
+        const deleteBackground = document.createElement("div");
+        deleteBackground.className = "delete-background";
+
+
+        deleteIcon.appendChild(deleteImg);
+        deleteIcon.appendChild(deleteBackground);
+        imgPreviewBox.appendChild(deleteIcon);
         imgPreviewBox.appendChild(imgPreview);
-
-        // 최종적으로 li 요소를 컨테이너에 추가합니다.
         imgPreviewBoxContainer.append(imgPreviewBox);
-
+    
       });
+
       // 첫번째 이미지 업로드 시에만 실행되는 로직.
       if (isFirstUpload = true) {
-        isFirstUpload = false;  // 플래그를 false로 설정하여 다시 실행되지 않게 합니다.
+        isFirstUpload = false;
         imagePreviewExpandInit();
       }
       
       console.log(queuedFiles);
       
-      
     }
 
+
+
     // 이미지 순서변경 로직 ======================================================
+
+
 
     // 배열 요소 교환 함수 (상대적인 순서)
     function moveElement(arr, oldIndex, newIndex) {
@@ -135,38 +157,52 @@ document.addEventListener("DOMContentLoaded", function() {
       arr.splice(newIndex, 0, movedElement);
     }
 
+
+
     // sortable.js 라이브러리 사용. 이미지 순서 변경 기능.
     new Sortable(imgPreviewBoxContainer, {
-      animation: 150, // 애니메이션 지속 시간.
-      filter: ".imgPreviewBox", // 필터링할 요소.
-      preventOnFilter: false, // 필터링된 요소가 preventDefault를 호출하지 않도록 설정.
+      animation: 150,
+      filter: ".imgPreviewBox",
+      preventOnFilter: false,
 
       onStart: function(evt) {
         console.log("Drag and drop operation started.");;
       },
-      onEnd: function(evt) { // 드래그 앤 드롭이 끝났을 때 호출될 함수.
+      onEnd: function(evt) { 
         console.log("Drag and drop operation ended.");
       },
       onAdd: function(evt) {
 
       },
       onUpdate: function(evt) {
-        // 배열에서 드래그 앤 드롭으로 순서가 변경된 요소의 인덱스를 찾아 위치를 바꿉니다.
         moveElement(queuedFiles, evt.oldIndex, evt.newIndex);
         console.log(queuedFiles);
         console.log("Item order changed.");
       }
 
-
     });
 
 
+
     // 폼 제출 ===================================================================
-
-
     document.getElementById("product-form").addEventListener("submit", async function(event) {
-      event.preventDefault(); // 폼 제출 중지
+      event.preventDefault();
   
+
+      // 입력 필드들이 비어 있는지 확인
+      const isProductCategoryName = document.getElementById("productCategoryName").value.trim();
+      const isProductBrandName = document.getElementById("productBrandName").value.trim();
+      const isProductName = document.getElementById("productName").value.trim();
+      const isProductSize = document.getElementById("productSize").value.trim();
+      const isProductPrice = document.getElementById("productPrice").value.trim();
+      const isProductDescription = document.getElementById("productDescription").value.trim();
+
+      if (!isProductCategoryName || !isProductBrandName || !isProductName || 
+        !isProductSize || !isProductPrice || !isProductDescription) {
+        alert("모든 필드를 채워주세요.");
+        return;
+      }
+
       const formData = new FormData(event.target); // 폼 요소로부터 FormData 객체 생성
 
       formData.delete("fileInput"); // queuedFiles에 fileInput 이미지가 포함되어 있으므로 중복방지를 위해 삭제.
@@ -182,26 +218,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // 이미지 파일 추가
       queuedFiles.forEach((file, index) => {
-          formData.append("productImages", file);
+        formData.append("productImages", file);
       });
   
       // 서버로 데이터 전송
       const response = await fetch(event.target.action, {
-          method: "POST",
-          body: formData
+        method: "POST",
+        body: formData
       });
   
       if (response.ok) {
-          const data = await response.json();
-          if (data.status === "success"){
-            console.log("Data sent successfully");
-            window.location.href = data.redirectUrl; // 서버에서 받은 URL로 이동
-          }
+        const data = await response.json();
+        if (data.status === "success"){
+          console.log("Data sent successfully");
+          window.location.href = data.redirectUrl; // 서버에서 받은 URL로 이동
+        }
       } else {
-          console.log("Error sending data");
+        console.log("Error sending data");
       }
-
-
     });
 
 
@@ -312,119 +346,129 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    // 브랜드명 자동완성 =========================================================
-
-    let suggestions = [];
-    let currentFocus; // 현재 포커스된 li 인덱스
-    const autocompleteList = document.getElementById("autocomplete-list");
-    const ulElement = document.getElementById("autocomplete-text-ul");
-    const inputElement = document.getElementById("productBrandName");
+    // 자동완성 ========================================================================
 
 
-    $(inputElement).keyup(function(e) {
+    // 카테고리
+    document.getElementById("productCategoryName").addEventListener("focus", function(event) {
+      setupAutocomplete("productCategoryName", "/categoryName", "category-autocomplete-div", "category-autocomplete-text-ul");
+    });
+    // 브랜드
+    document.getElementById("productBrandName").addEventListener("focus", function(event) {
+      setupAutocomplete("productBrandName", "/brandName", "brand-autocomplete-div", "brand-autocomplete-text-ul");
+    });
+
+
+
+    // 자동완성 로직
+    function setupAutocomplete(inputElementId, ajaxEndpoint, divElementId, ulElementId) {
+      let suggestions = [];
+      let currentFocus;
+      const autocompleteDiv = document.getElementById(divElementId);
+      const ulElement = document.getElementById(ulElementId);
+      const inputElement = document.getElementById(inputElementId);
+  
+
+
+      $(inputElement).keyup(function(e) {
         let keyword = $(this).val();
-
-        // 키보드 위/아래 화살표 키는 무시.
         const ignoredKeys = ["ArrowUp", "ArrowDown"];
-      
+        
         if (ignoredKeys.includes(e.key)) {
-            return
+          return;
         }
-
         if (keyword.length >= 1) {
-          console.log("About to make AJAX call with keyword: ", keyword);
-          $.get("/search", { keyword: keyword })
-
+          $.get(ajaxEndpoint, { keyword: keyword })
           .done(function(data) {
-            console.log("AJAX call succeeded with data: ", data);
-            suggestions = data.map(item => item.productBrandName);
+            suggestions = data.map(item => item[inputElementId]);
             updateAutocompleteList(suggestions);
           })
-          
           .fail(function(jqXHR, textStatus, errorThrown) {
-            console.log("AJAX call failed with jqXHR: ", jqXHR, " status: ", textStatus, " and error: ", errorThrown);
-            console.log("HTTP Status Code: ", jqXHR.status);
             console.error("Error: ", textStatus, errorThrown);
           });
         } else if (keyword.length < 1) {
-          autocompleteList.classList.add("--displayFalse");
+          autocompleteDiv.classList.add("--displayFalse");
         }
-    });
+      });
   
 
-    function updateAutocompleteList(suggestions) {
-      console.log("Updating autocomplete with: ", suggestions);
-  
-      // 기존 목록을 비운다
-      ulElement.innerHTML = "";
-      autocompleteList.innerHTML = "";
-      autocompleteList.classList.remove("--displayFalse");
-      currentFocus = 0;
-      
+      function updateAutocompleteList(suggestions) {
+        ulElement.innerHTML = "";
+        autocompleteDiv.innerHTML = "";
+        autocompleteDiv.classList.remove("--displayFalse");
+        currentFocus = 0;
+        let AddAnouncement;
 
-      // 만약 제안이 없다면,
-      if (suggestions.length === 0) {
-        const liElement = document.createElement("li");
-        liElement.className = "autocomplete-text-li";
-        liElement.textContent = "새로운 브랜드 명을 추가합니다.";
-        ulElement.appendChild(liElement);
-      // 그 외에는,
-      } else {
-        // 각각의 제안에 대해 li 엘리먼트를 생성하고 ul에 추가한다
-        for (let i = 0; i < suggestions.length; i++) {
+        // 새로운 항목 추가시 안내문
+        if (ulElement.id.includes("category")) {
+          AddAnouncement = "새로운 카테고리를 추가합니다.";
+        } else if (ulElement.id.includes("brand")) {
+          AddAnouncement = "새로운 브랜드를 추가합니다.";
+        }
+        if (suggestions.length === 0) {
           const liElement = document.createElement("li");
           liElement.className = "autocomplete-text-li";
-          liElement.textContent = suggestions[i];
+          liElement.textContent = `${AddAnouncement}`;
           ulElement.appendChild(liElement);
-
-          // 첫 번째 li에만 'autocomplete-active' 클래스를 추가
-          if (i === 0) {
-            liElement.classList.add("autocomplete-active");
+        } else {
+          for (let i = 0; i < suggestions.length; i++) {
+            const liElement = document.createElement("li");
+            liElement.className = "autocomplete-text-li";
+            liElement.textContent = suggestions[i];
+            ulElement.appendChild(liElement);
+            if (i === 0) {
+              liElement.classList.add("autocomplete-active");
+            }
           }
         }
+        autocompleteDiv.appendChild(ulElement);
       }
+  
 
-      // 생성한 ul 엘리먼트를 #autocomplete-list에 추가한다
-      autocompleteList.appendChild(ulElement);
-    }
 
-    // 키보드 이벤트 리스너 추가
-    $(inputElement).keydown(function(e) {
-      let items = ulElement.getElementsByTagName("li");
+      $(inputElement).keydown(function(e) {
+        let items = ulElement.getElementsByTagName("li");
+        if (suggestions.length >= 1) {
+          if (e.keyCode === 40) {
+            currentFocus++;
+            addActive(items);
+          } else if (e.keyCode === 38) {
+            currentFocus--;
+            addActive(items);
+          } else if (e.keyCode === 13) {
+            e.preventDefault();
+            inputElement.value = items[currentFocus].textContent;
+            inputElement.blur();
+          }
+        }
+      });
+  
 
-      if (suggestions.length >= 1){
 
-        if (e.keyCode === 40) { // 아래 화살표
-          currentFocus++;
-          addActive(items);
-        } else if (e.keyCode === 38) { // 위 화살표
-          currentFocus--;
-          addActive(items);
-        } else if (e.keyCode === 13) { // Enter 키
-          e.preventDefault();
-          inputElement.value = items[currentFocus].textContent; // inputElement에 해당 item 텍스트를 삽입.
-          inputElement.blur();  // 포커스 아웃 시키기.
+      function addActive(items) {
+        if (!items) return false;
+        removeActive(items);
+        if (currentFocus >= items.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (items.length - 1);
+        items[currentFocus].classList.add("autocomplete-active");
+      }
+  
+
+
+      function removeActive(items) {
+        for (let i = 0; i < items.length; i++) {
+          items[i].classList.remove("autocomplete-active");
         }
       }
-    });
+  
 
-    function addActive(items) {
-      if (!items) return false;
-      removeActive(items);
-      if (currentFocus >= items.length) currentFocus = 0;
-      if (currentFocus < 0) currentFocus = (items.length - 1);
-      items[currentFocus].classList.add("autocomplete-active");
+
+      $(inputElement).focusout(function() {
+        autocompleteDiv.classList.add("--displayFalse");
+      });
     }
 
-    function removeActive(items) {
-      for (let i = 0; i < items.length; i++) {
-          items[i].classList.remove("autocomplete-active");
-      }
-    }
-
-    $("#productBrandName").focusout(function() {
-      autocompleteList.classList.add("--displayFalse");
-    });
+  
 
 
 });

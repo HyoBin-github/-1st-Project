@@ -383,7 +383,7 @@ public class MemberController {
 
     // 내가 작성한 문의사항만 출력
     @GetMapping("/inquiry")
-    public String getInquiryList(
+    public String getMyInquiryList(
             @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "select", required = false) String inquirySelect,
@@ -394,7 +394,7 @@ public class MemberController {
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        Page<InquiryDto> inquiryList = inquiryService.myInquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
+        Page<InquiryDto> inquiryList = inquiryService.myInquiryList(pageable, inquirySelect, inquirySearch, myUserDetails.getMemberEntity());
 
         Long totalCount = inquiryList.getTotalElements();
         int totalPage = inquiryList.getTotalPages();

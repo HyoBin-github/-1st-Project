@@ -2,7 +2,9 @@ package org.project.dev.product.repository;
 
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.product.entity.ProductEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long>, JpaSpecificationExecutor<ProductEntity> {
@@ -37,11 +40,19 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>, J
     void softDelete(@Param("id") Long id);
 
     // Cursor-Based List
-    @Query(value = "SELECT p FROM ProductEntity p ORDER BY p.id DESC")
-    List<ProductEntity> findProductsByOrderByIdDesc(Pageable pageable);
+//    @Query(value = "SELECT p FROM ProductEntity p ORDER BY p.id DESC")
+//    List<ProductEntity> findProductsByOrderByIdDesc(Pageable pageable);
+//
+//    @Query(value = "SELECT p FROM ProductEntity p WHERE p.id < :lastId ORDER BY p.id DESC")
+//    List<ProductEntity> findProductsByIdLessThanOrderByIdDesc(@Param("lastId") Long lastId, Pageable pageable);
 
-    @Query(value = "SELECT p FROM ProductEntity p WHERE p.id < :lastId ORDER BY p.id DESC")
-    List<ProductEntity> findProductsByIdLessThanOrderByIdDesc(@Param("lastId") Long lastId, Pageable pageable);
+    // 가장 큰 id 값을 찾음.
+    Optional<ProductEntity> findTopByOrderByIdDesc();
+
+
+
+
+
 
     // 송원철 / 장바구니 관련
     ProductEntity findProductById(Long id);

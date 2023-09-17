@@ -50,26 +50,38 @@
 
       </div>
 
-      <div class="grid-productBrandName">
-        <label for="productBrandName" class="productInput-label"><span>* </span>브랜드명</label>
-        <div class="productInputs-class">
-          <input type="text" name="productBrandName" class="productInputs" id="productBrandName" placeholder="브랜드명을 입력해주세요." autocomplete="off">
+      <div class="grid-productCategoryName">
+        <div class="common_inputs">
+          <input type="text" name="productCategoryName" class="productInputs" id="productCategoryName" placeholder="카테고리명을 입력해주세요." autocomplete="off">
+          <label for="productCategoryName" class="productInput-label"><span>* </span>카테고리명</label>
+          <div class="productCategoryName-hole"></div>
+          <div id="category-autocomplete-div" class="--displayFalse">
+            <ul id="category-autocomplete-text-ul" class="autocomplete-text-ul"></ul>
+          </div>
         </div>
-        <div id="autocomplete-list" class="--displayFalse">
-          <ul id="autocomplete-text-ul" class="autocomplete-text-ul"></ul>
+      </div>
+
+      <div class="grid-productBrandName">
+        <div class="common_inputs">
+          <input type="text" name="productBrandName" class="productInputs" id="productBrandName" placeholder="브랜드명을 입력해주세요." autocomplete="off">
+          <label for="productBrandName" class="productInput-label"><span>* </span>브랜드명</label>
+          <div class="productBrandName-hole"></div>
+          <div id="brand-autocomplete-div" class="--displayFalse">
+            <ul id="brand-autocomplete-text-ul" class="autocomplete-text-ul"></ul>
+          </div>
         </div>
       </div>
 
       <div class="grid-productName">
-        <label for="productName" class="productInput-label"><span>* </span>상품명</label>
-        <div class="productInputs-class">
+        <div class="common_inputs">
           <input type="text" name="productName" class="productInputs" id="productName" placeholder="상품명을 입력해주세요.">
+          <label for="productName" class="productInput-label"><span>* </span>상품명</label>
+          <div class="productName-hole"></div>
         </div>
       </div>
 
       <div class="grid-productColor">
-        <label for="productColor" class="productInput-label"><span>* </span>상품색상</label>
-        <div class="productInputs-class">
+        <div class="common_inputs">
           <div class="productColorInputs" id="productColor">
             <input type="radio" name="productColor" id="colorRadioBtn1"  value="black" checked>
             <label for="colorRadioBtn1" class="colorRadioBtn --black"></label>
@@ -92,43 +104,50 @@
             <input type="radio" name="productColor" id="colorRadioBtn10"  value="white">
             <label for="colorRadioBtn10" class="colorRadioBtn --white"></label>
           </div>
+          <label for="productColor" class="productInput-label"><span>* </span>상품색상</label>
         </div>
+        <!-- <div class="productColor-hole"></div> -->
       </div>
 
       <div class="grid-productSize">
-        <label for="productSize" class="productInput-label"><span>* </span>상품사이즈</label>
-        <div class="productInputs-class">
+        <div class="common_inputs">
           <input type="text" name="productSize" class="productInputs" id="productSize" placeholder="상품사이즈를 입력해주세요.">
+          <label for="productSize" class="productInput-label"><span>* </span>상품사이즈</label>
+          <div class="productSize-hole"></div>
         </div>
       </div>
 
       <div class="grid-productPrice">
-        <label for="productPrice" class="productInput-label"><span>* </span>상품가격</label>
-        <div class="productInputs-class">
+        <div class="common_inputs">
           <input type="text" name="productPrice" class="productInputs" id="productPrice" inputNumbersOnly koreanCurrency placeholder="상품가격을 입력해주세요.">
+          <label for="productPrice" class="productInput-label"><span>* </span>상품가격</label>
+          <div class="productPrice-hole"></div>
         </div>
       </div>
 
       <div class="grid-productDisplay">
-        <label for="productDisplayInputs" class="productInput-label"><span>* </span>상품노출여부</label>
-        <div class="productDisplayInputs" id="productDisplayInputs">
+        <div class="common_inputs productDisplayInputs" id="productDisplayInputs">
           <input type="radio" id="displayBtn1" name="isProductDisplayed" value="true" checked>
           <label for="displayBtn1" class="displayBtn1">노출</label>
           <input type="radio" id="displayBtn2" name="isProductDisplayed" value="false">
           <label for="displayBtn2" class="displayBtn2">비노출</label>
+          <label for="productDisplayInputs" class="productInput-label"><span>* </span>상품노출여부</label>
         </div>
+        <!-- <div class="productDisplayInputs-hole"></div> -->
       </div>
 
       <div class="grid-productDescription">
-        <label for="productDescription" class="productInput-label2"><span>* </span>상품설명</label>
-        <div class="productDescription-class">
+        <div class="common_inputs productDescriptionInputs">
           <textarea name="productDescription" id="productDescription" placeholder="상품설명을 입력해주세요."></textarea>
+          <label for="productDescription" class="productInput-label"><span>* </span>상품설명</label>
+          <div class="productDescription-hole"></div>
         </div>
       </div>
       
       <div class="grid-productSubmit">
         <div class="productSubmitBtn">
           <input type="submit" value="판매글작성" class="productSubmit" id="productSubmit">
+          <label for="productSubmit" class="productSubmit-label">판매글 작성</label>
         </div>
       </div>
     </div>

@@ -52,15 +52,8 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_hits")
     private int productHits;
 
-    // 이 부분을 나중에 member_id로 바꾸면 될 것 같습니다.
-//    @Column(name = "product_writer", length = 20, nullable = false)
-//    private String productWriter;
-
     @Column(name = "product_price")
     private Long productPrice;
-
-//    @Column(name = "product_writer")
-//    private String productWriter;
 
     @Column(name = "is_product_displayed")
     @ColumnDefault("true")
@@ -81,6 +74,10 @@ public class ProductEntity extends BaseEntity {
     @JoinColumn(name = "product_brand_id") // Foreign Key
     private ProductBrandEntity productBrandEntity;
 
+    // DB 연관관계 설정 -> ProductCategoryEntity
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_category_id") // Foreign Key
+    private ProductCategoryEntity productCategoryEntity;
 
 
 

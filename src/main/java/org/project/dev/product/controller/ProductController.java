@@ -1,5 +1,6 @@
 package org.project.dev.product.controller;
 
+import com.sun.mail.imap.protocol.Item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.dev.cartNew.entity.CartEntity;
@@ -13,8 +14,10 @@ import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
 import org.project.dev.product.dto.ProductBrandDTO;
+import org.project.dev.product.dto.ProductCategoryDTO;
 import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductBrandEntity;
+import org.project.dev.product.entity.ProductCategoryEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.review.dto.ReviewDto;
 import org.project.dev.review.entity.ReviewEntity;
@@ -106,6 +109,7 @@ public class ProductController {
     // 송원철 / write 시 로그인한 memberId, memberNickName 저장
     @PostMapping("/write")
     public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
+                                                               @ModelAttribute ProductCategoryDTO productCategoryDTO,
                                                                @ModelAttribute ProductBrandDTO productBrandDTO,
                                                                @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
                                                                @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
@@ -116,10 +120,12 @@ public class ProductController {
             log.info("사용자 정보가 없습니다.");
         }
 
+        // 카테고리 정보 작성 또는 가져오기
+        ProductCategoryEntity productCategoryEntity = productUtilService.productCategoryWriteDetail(productCategoryDTO);
         // 브랜드 정보 작성 또는 가져오기
-        ProductBrandEntity productBrandEntity = productService.productBrandWriteDetail(productBrandDTO);
+        ProductBrandEntity productBrandEntity = productUtilService.productBrandWriteDetail(productBrandDTO);
         // 상품글 작성
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productBrandEntity, member);
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productCategoryEntity, productBrandEntity, member);
         // 이미지 저장
         productUtilService.saveProductImages(productEntityWritePro, productImages);
 
@@ -154,20 +160,15 @@ public class ProductController {
         return "/product/list";
     }
 
-    // Cursor-Based List
-    @GetMapping("/cursorBasedList")
-    public String cursorBasedList(@RequestParam(required = false) Long lastId, Model model) {
-        int limit = 10; // 페이지당 표시할 개수
-        List<ProductDTO> productDTOS = productService.productCursorBasedList(lastId, limit);
-        model.addAttribute("products", productDTOS);
-
-        if (!productDTOS.isEmpty()) {
-            model.addAttribute("nextCursor", productDTOS.get(productDTOS.size() - 1).getId());
-        }
-
-        return "/product/cursorBasedList";
+    // 스크롤 페이징 작업중 ==================================================================
+    @GetMapping("/list2")
+    public String list2(Model model){
+        Optional<Long> lastProductId = productUtilService.findLastProductId();
+        model.addAttribute("lastProductId_from_server", lastProductId.orElse(null));
+        return "/product/list2";
     }
 
+    // ===================================================================================
 
     // DETAIL (SELECT)
 //    @GetMapping("/{id}")
@@ -242,22 +243,72 @@ public class ProductController {
     }
 
     // UPDATE (UPDATE)
+//    @GetMapping("/update/{id}")
+//    public String getProductUpdate(@PathVariable Long id, Model model) {
+//        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+//        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
+//        model.addAttribute("productUpdate", productDTOViewDetail);
+//        model.addAttribute("productImages", productImgDTOS);
+//        return "/product/update";
+//    }
+//
+//    // UPDATE PROCESS (UPDATE)
+//    @PostMapping("/update")
+//    public String postProductUpdate(@ModelAttribute ProductDTO productDTO, Model model) {
+//        ProductDTO productDTOUpdatePro = productService.productUpdateDetail(productDTO);
+//        model.addAttribute("product", productDTOUpdatePro);
+//        return "/product/detail";
+//    }
+
+
+    // 수정 작업중 =================================================================================
+
     @GetMapping("/update/{id}")
-    public String getProductUpdate(@PathVariable Long id, Model model) {
-        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
-        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
-        model.addAttribute("productUpdate", productDTOViewDetail);
-        model.addAttribute("productImages", productImgDTOS);
-        return "/product/update";
+    public String getProductUpdate(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+
+        MemberEntity member=myUserDetails.getMemberEntity();
+
+        if (member != null) {
+            model.addAttribute("member", member);
+            log.info("MemberId: {}", member.getMemberId());
+        }else {
+            log.info("member is null");
+        }
+        return "/product/write";
     }
 
-    // UPDATE PROCESS (UPDATE)
     @PostMapping("/update")
-    public String postProductUpdate(@ModelAttribute ProductDTO productDTO, Model model) {
-        ProductDTO productDTOUpdatePro = productService.productUpdateDetail(productDTO);
-        model.addAttribute("product", productDTOUpdatePro);
-        return "/product/detail";
+    public ResponseEntity<Map<String,Object>> postProductUpdate(@ModelAttribute ProductDTO productDTO,
+                                                               @ModelAttribute ProductCategoryDTO productCategoryDTO,
+                                                               @ModelAttribute ProductBrandDTO productBrandDTO,
+                                                               @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
+                                                               @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
+        MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
+
+        if (member == null) {
+            // 사용자 정보가 없는 경우 로그를 남깁니다.
+            log.info("사용자 정보가 없습니다.");
+        }
+
+        // 카테고리 정보 작성 또는 가져오기
+        ProductCategoryEntity productCategoryEntity = productUtilService.productCategoryWriteDetail(productCategoryDTO);
+        // 브랜드 정보 작성 또는 가져오기
+        ProductBrandEntity productBrandEntity = productUtilService.productBrandWriteDetail(productBrandDTO);
+        // 상품글 작성
+        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productCategoryEntity, productBrandEntity, member);
+        // 이미지 저장
+        productUtilService.saveProductImages(productEntityWritePro, productImages);
+
+        Long productId = productEntityWritePro.getId(); // 작성한 글의 productId를 가져옴.
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("status","success");
+        response.put("redirectUrl","/product/"+productId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
+    // ===========================================================================================
 
     // DELETE (DELETE)
     @GetMapping("/delete/{id}")
