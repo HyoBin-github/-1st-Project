@@ -38,7 +38,6 @@ public class InquiryController {
     private final InquiryService inquiryService;
     private final MemberService memberService; // 송원철, 헤더에 nickName, image 가져오기 위한 용도
     private final ImageServiceImpl imageService; // 송원철, 헤더에 nickName, image 가져오기 위한 용도
-    private final SemiMemberService semiMemberService;
 
     /*
    Todo

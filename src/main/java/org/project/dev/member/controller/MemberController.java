@@ -413,7 +413,7 @@ public class MemberController {
             model.addAttribute("member", member);
             model.addAttribute("memberImageUrl", memberImageUrl);
 
-            return "member/inquiryList";
+            return "member/myInquiryList";
         }
         System.out.println("조회할 문의사항이 없다.");
 

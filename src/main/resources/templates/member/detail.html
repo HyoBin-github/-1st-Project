@@ -44,6 +44,7 @@
   <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
   <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
   <a th:href="@{/index}">홈</a>
+  <a th:href="@{/member/inquiry?page=0&select=&search=}">내 문의사항</a>
 </div>
 <!-- Thymeleaf 표현식을 사용하여 memberId를 JavaScript 변수에 할당 -->
 <script th:inline="javascript">
