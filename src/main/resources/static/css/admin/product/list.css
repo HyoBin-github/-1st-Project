@@ -80,25 +80,35 @@ tr{
   margin: 10px 0;
 }
 
+/* 예진 */
+/* .main_wrap .searchBar_wrap{
+    margin: 10px 0;
+} */
+
 .main_wrap .searchBar_wrap .searchBar{
+    /* 예진 */
+    display: inline-flex;
+    align-items: center;
+    position: relative;
 }
-
-.main_wrap .searchBar_wrap .searchBar > input{
+/* .main_wrap .searchBar_wrap .searchBar > input{
  margin: 10px 0;
+} */
+/* 예진 */
+.main_wrap .searchBar_wrap .searchBar > input{
+    height: 30px;
+    width: 500px;
+    margin: 10px 0;
 }
-
 .main_wrap .searchBar_wrap .searchBar > input:focus{
 
     border: 1.5px solid #7285d3;
     outline: none;
 }
-
-.searchBar_wrap .searchBar .searchBarBtn{
-
+/* .searchBar_wrap .searchBar .searchBarBtn{
   width: 92px;
     height: 30px;
     flex: 1;
-    /* padding: 30px; */
     box-sizing: border-box;
     align-items: center;
     text-align: center;
@@ -113,13 +123,53 @@ tr{
     transition: all 0.3s;
     background: transparent;
     box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
-
+} */
+/* 예진 */
+/* .searchBar_wrap .searchBar .searchBarBtn
+{
+    width: 92px;
+    height: 30px;
+    flex: 1;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 15px;
+    border-top: 1px solid #7285d3;
+    border-right: 1px solid #7285d3;
+    border-left: 20px solid #7285d3;
+    border-bottom: 1px solid #7285d3;
+    transition: all 0.3s;
+    background: transparent;
+    box-shadow: 0px 1px 1px 0px #8C9CDB, inset 0px -2px 4px -1px #8c9cdb98;
+    position: absolute;
+    right: 1px;
 }
-
-
 .searchBar_wrap .searchBar .searchBarBtn:hover{
   border-left-width: 4px;
+} */
+/* 검색 버튼 2안 */
+.searchBar_wrap .searchBar .searchBarBtn{
+    width: 92px;
+    height: 40px;
+    border-radius: 0 5px 5px 0;
+    text-align: center;
+    font-size: 18px;
+    background: #4b66c79e;
+    border: none;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
 }
+.searchBar_wrap .searchBar .searchBarBtn:hover{
+    box-sizing: border-box;
+    background: #4b66c7;
+    box-shadow: 0 10px 10px 0 #cccccc;
+}
+
 
 /* 이 밑으로는 페이징 처리 로직이 포함되어 있으니 작업전에 물어봐주세요. */
 .searchBar_wrap{
