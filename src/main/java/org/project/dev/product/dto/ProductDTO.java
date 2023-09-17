@@ -4,7 +4,12 @@ import lombok.*;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductEntity;
+import org.project.dev.product.entity.ProductImgEntity;
+
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -29,15 +34,18 @@ public class ProductDTO {
     private String productSize;
     private String productDescription;
     private int productHits;
-    // 이 부분을 나중에 member 쪽에 연결(?) 하면 될 것 같습니다.
-//    private String productWriter;
     private Long productPrice;
-//    private String productWriter;
     private Boolean isProductDisplayed;
+
+    // from BaseEntity
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
 
-    private ProductBrandEntity productBrandEntity;
+    // from ProductBrandEntity
+    private ProductBrandDTO productBrand;
+
+    // from ProductImgEntity
+    private List<ProductImgDTO> productImgDTOS;
 
     // 송원철 / 장바구니 관련
     private MemberEntity member;
@@ -59,6 +67,18 @@ public class ProductDTO {
         productDTO.setProductUpdateTime(productEntity.getUpdateTime());
         productDTO.setMemberNickName(productEntity.getMember().getMemberNickName());
 
+        // ProductBrandEntity를 ProductBrandDTO로 변환
+        if (productEntity.getProductBrandEntity() != null) {
+            productDTO.setProductBrand(ProductBrandDTO.toDTO(productEntity.getProductBrandEntity()));
+        }
+
+        // ProductImgEntity 리스트를 ProductImgDTO 리스트로 변환
+        if (productEntity.getProductImgEntities() != null && !productEntity.getProductImgEntities().isEmpty()) {
+            List<ProductImgDTO> imgDTOs = productEntity.getProductImgEntities().stream()
+                    .map(ProductImgDTO::toDTO)
+                    .collect(Collectors.toList());
+            productDTO.setProductImgDTOS(imgDTOs);
+        }
         return productDTO;
     }
 
