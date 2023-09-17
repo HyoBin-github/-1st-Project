@@ -5,8 +5,8 @@
     <title>회원목록 선택페이지</title>
 </head>
 <body>
-<a th:href="@{/member/memberList}">회원목록</a>
-<a th:href="@{/member/pagingList}">회원목록</a>
-<a th:href="@{/semiMember/pagingList}">간편회원목록</a>
+<a th:href="@{/member/memberList}">회원목록(noPaging)</a>
+<a th:href="@{/member/pagingList?page=0&subject=&search=}">회원목록</a>
+<a th:href="@{/semiMember/pagingList?page=0&subject=&search=}">간편회원목록</a>
 </body>
 </html>

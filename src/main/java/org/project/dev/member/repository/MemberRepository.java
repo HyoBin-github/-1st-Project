@@ -1,11 +1,13 @@
 package org.project.dev.member.repository;
 
 
+import org.project.dev.constrant.Role;
 import org.project.dev.member.entity.MemberEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,14 +28,14 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     MemberEntity findByMemberEmailAndMemberPhone(String memberEmail, String memberPhone);
 
     // 회원목록 내 검색
-    List<MemberEntity> findByMemberEmailContaining(String search);
-    List<MemberEntity> findByMemberNameContaining(String search);
-    List<MemberEntity> findByMemberNickNameContaining(String search);
-    List<MemberEntity> findByMemberPhoneContaining(String search);
-    List<MemberEntity> findByMemberBirthContaining(String search);
-    List<MemberEntity> findByMemberStreetAddressContaining(String search);
-    List<MemberEntity> findByMemberDetailAddressContaining(String search);
-    List<MemberEntity> findByRoleContaining(String search);
+    Page<MemberEntity> findByMemberEmailContaining(Pageable pageable, String memberEmail);
+    Page<MemberEntity> findByMemberNameContaining(Pageable pageable, String memberEmail);
+    Page<MemberEntity> findByMemberNickNameContaining(Pageable pageable, String memberNickName);
+    Page<MemberEntity> findByMemberPhoneContaining(Pageable pageable, String memberPhone);
+    Page<MemberEntity> findByMemberBirthContaining(Pageable pageable, String memberBirth);
+    Page<MemberEntity> findByMemberStreetAddressContaining(Pageable pageable, String memberStreetAddress);
+    Page<MemberEntity> findByMemberDetailAddressContaining(Pageable pageable, String memberDetailAddress);
+    Page<MemberEntity> findByRoleContaining(Pageable pageable, Role Role);
 
     // 일반회원, 간편회원 한 테이블에 모두 출력, 값 없으면 null 처리
 //    @Query("SELECT 'member' AS member, m.memberEmail AS memberEmail, " +

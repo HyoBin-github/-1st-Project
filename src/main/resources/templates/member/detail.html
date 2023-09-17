@@ -23,7 +23,16 @@
   <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 상세정보</h1>
   <!-- 이미지 미리보기 영역 -->
   <div id="image-preview"><img id="preview-image" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
-  <button onclick="redirectToURL()">프로필 이미지 수정</button>
+  <th:block th:if="${#authentication.principal.username==member.memberEmail}">
+        <span>
+            <button onclick="redirectToURL()">프로필 이미지 수정</button>
+        </span>
+  </th:block>
+  <th:block th:unless="${#authentication.principal.username==member.memberEmail}">
+        <span>
+            본인글이 아닙니다
+        </span>
+  </th:block>
   <span th:if="${false}" th:text="${member.memberId}"></span> <br> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
   <span th:if="${false}" :text="${member.memberPassword}"></span> <br>
   이메일 : <span th:text="${member.memberEmail}"></span> <br>
@@ -41,10 +50,19 @@
   <span th:if="${member.memberStreetAddress == null}" style="color: red;">주소를 입력해주세요</span> <br>
   권한 : <span th:text="${member.role}"></span> <br>
   가입일 : <span th:text="${#temporals.format(member.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span> <br>
-  <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
-  <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
+  <th:block th:if="${#authentication.principal.username==member.memberEmail}">
+        <span>
+            <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
+            <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
+            <a th:href="@{/member/inquiry?page=0&select=&search=}">내 문의사항</a>
+        </span>
+  </th:block>
+  <th:block th:unless="${#authentication.principal.username==member.memberEmail}">
+        <span>
+            본인글이 아닙니다
+        </span>
+  </th:block>
   <a th:href="@{/index}">홈</a>
-  <a th:href="@{/member/inquiry?page=0&select=&search=}">내 문의사항</a>
 </div>
 <!-- Thymeleaf 표현식을 사용하여 memberId를 JavaScript 변수에 할당 -->
 <script th:inline="javascript">

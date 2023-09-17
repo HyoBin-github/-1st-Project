@@ -13,7 +13,7 @@
       <div class="boardList-table">
         <h1>회원 목록</h1>
         <div class="search">
-          <form th:action="@{/member/search}" method="get">
+          <form th:action="@{/member/pagingList}" method="get">
             <select name="subject" id="subject">
               <option value="memberEmail">이메일</option>
               <option value="memberName">이름</option>
@@ -77,7 +77,7 @@
             <span th:if="${1==memberList.pageable.pageNumber+1}" class="span0">처음</span>
             <!-- 처음 페이지가 아니면  a -->
             <span th:unless="${1==memberList.pageable.pageNumber+1}">
-              <a th:href="@{/member/pagingList(page=0)}" class="span1">처음</a>
+              <a th:href="@{/member/pagingList(page=0, search=${param.search}, subject=${param.subject})}" class="span1">처음</a>
             </span>
           </li>
           <li>
@@ -85,21 +85,21 @@
             <span th:if="${1==memberList.pageable.pageNumber+1}"  class="span0">이전</span>
             <span th:unless="${1==memberList.pageable.pageNumber+1}">
               <!--boardList.pageable.pageNumber 현재페이지 -1 -->
-              <a th:href="@{/member/pagingList(page=${memberList.pageable.pageNumber-1})}" class="span1">이전</a>
+              <a th:href="@{/member/pagingList(page=${memberList.pageable.pageNumber-1}, search=${param.search}, subject=${param.subject})}" class="span1">이전</a>
             </span>
           </li>
           <!--페이지 번호-->
           <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
             <span th:if="${i==memberList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
             <a th:unless="${i==memberList.pageable.pageNumber+1}"
-               th:href="@{/member/pagingList(page=${i-1})}" th:text="${i}"></a>
+               th:href="@{/member/pagingList(page=${i-1}, search=${param.search}, subject=${param.subject})}" th:text="${i}"></a>
           </li>
           <li>
             <!-- 현재페이지가 마지막 페이지이면   span표시 -->
             <span th:if="${memberList.totalPages ==memberList.pageable.pageNumber+1}"  class="span0">다음</span>
             <!-- 현재페이지가 마지막 페이지아니면    a 표시 현재페이지 +1 -->
             <span th:unless="${memberList.totalPages ==memberList.pageable.pageNumber+1}">
-               <a th:href="@{/member/pagingList(page=${memberList.pageable.pageNumber+1})}"   class="span1">다음</a>
+               <a th:href="@{/member/pagingList(page=${memberList.pageable.pageNumber+1}, search=${param.search}, subject=${param.subject})}"   class="span1">다음</a>
             </span>
           </li>
           <li>
@@ -107,7 +107,7 @@
             <span th:if="${memberList.totalPages ==memberList.pageable.pageNumber+1}"  class="span0">마지막</span>
             <!-- 현재페이지가 마지막 페이지가 아니면 마지막 페이지로 이동 해라  a -->
             <span th:unless="${memberList.totalPages ==memberList.pageable.pageNumber+1}">
-              <a th:href="@{/member/pagingList(page=${memberList.totalPages-1})}"  class="span1">마지막</a>
+              <a th:href="@{/member/pagingList(page=${memberList.totalPages-1}, search=${param.search}, subject=${param.subject})}"  class="span1">마지막</a>
             </span>
           </li>
         </ul>

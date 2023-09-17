@@ -17,10 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -68,50 +65,39 @@ public class SemiMemberController {
 //        return "semiMember/semiMemberList";
 //    }
 
-    // Read_paging - 회원 목록 조회
-    @GetMapping("/pagingList") // page=0 -> DB     // 페이지수, 한페이지 보이는View수 , 정렬
-    public String getPagingList(@PageableDefault(page = 0, size = 2, sort = "semiMemberId",
-                                direction = Sort.Direction.DESC) Pageable pageable, Model model,
-                                @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails,
-                                @AuthenticationPrincipal MyUserDetails myUserDetails){
+    // 페이징, 검색 / size 바꿔야함
+    @GetMapping("/pagingList")
+    public String getSemiMemberList(
+            @PageableDefault(page=0, size=7, sort = "semiMemberId", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model,
+            @RequestParam(value = "subject", required = false) String subject,
+            @RequestParam(value = "search", required = false) String search,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
+    ) {
 
-        // *** Page<>  Pageable
-        Page<SemiMemberDto> semiMemberList = semiMemberService.SemiMemberPagingList(pageable);
+        Page<SemiMemberDto> semiMemberList = semiMemberService.semiMemberList(pageable, subject, search, myUserDetails);
 
-        long totalCount = semiMemberList.getTotalElements();
+        Long totalCount = semiMemberList.getTotalElements();
+        int totalPage = semiMemberList.getTotalPages();
         int pageSize = semiMemberList.getSize();
+        int nowPage = semiMemberList.getNumber();
+        int blockNum = 10;
 
-        // 총 글수 17
-        // 한페이지 당 size 3
-        // 총페이수 6
-        // blockNum=3
-        //1  2  3    -> 3 3 3
-        //4  5  6    -> 3 3 2
-        // 블록의 첫페지이 지
-        // 블록이 3일 경우     123 -> 1, 456  -> 4 , 789 -> 7
-        int nowPage = semiMemberList.getNumber(); // 현재 페이지
-        int totalPage = semiMemberList.getTotalPages(); // 총 페이지 수
-        int blockNum = 3;
+        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        // Math.floor -> 올림
-        int startPage =
-                (int)((Math.floor(nowPage/blockNum)*blockNum)+1 <= totalPage ? (Math.floor(nowPage/blockNum)*blockNum)+1 : totalPage);
-        // 블록의 마지막 페이지
-        // 블록이 3일 경우      123 -> 3, 456  -> 5 , 789 -> 9
-        // 시작페이지+블록-1> 전체 페이지 -> 마지막페이지숫자(시작페이지+블록-1)
-        int endPage = (startPage + blockNum-1 < totalPage ? startPage + blockNum-1 : totalPage);
+        if (!semiMemberList.isEmpty()) {
+            model.addAttribute("semiMemberList", semiMemberList);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("myUserDetails", myUserDetails);
 
-        for(int i=startPage;i<=endPage;i++){
-            System.out.print(i+" , ");
+            return "semiMember/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
         }
+        System.out.println("조회할 문의사항이 없다.");
 
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("semiMemberList", semiMemberList);
-        model.addAttribute("semiMyUserDetails", semiMyUserDetails);
-        model.addAttribute("myUserDetails", myUserDetails);
-
-        return "semiMember/pagingList";
+        return "redirect:/semiMember/pagingList?page=0&subject=&search=";
     }
 
     // Detail - 회원 상세 보기

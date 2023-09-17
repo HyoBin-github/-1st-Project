@@ -24,8 +24,17 @@
                 <span th:text="${semiMember.semiMemberEmail}"></span> 
               </li>
               <li>
+<!--                <span>휴대전화(암호화됨)</span>-->
+<!--                <span th:text="${semiMember.semiMemberPhone}"></span>-->
                 <span>휴대전화(암호화됨)</span>
-                <span th:text="${semiMember.semiMemberPhone}"></span>
+                <th:block th:if="${#authentication.principal.username==semiMember.semiMemberEmail}">
+                            <span th:text="${semiMember.semiMemberPhone}"></span>
+                </th:block>
+                <th:block th:unless="${#authentication.principal.username==semiMember.semiMemberEmail}">
+                    <span>
+                        본인글이 아닙니다
+                    </span>
+                </th:block>
               </li>
               <li>
                 <span>권한</span>
@@ -36,9 +45,18 @@
                 <span th:text="${#temporals.format(semiMember.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
               </li>
               <li class="delete">
-                <div class="btn">
-                  <a th:href="@{/semiMember/confirmEmail/{semiMemberId}(semiMemberId=${semiMember.semiMemberId})}">삭제</a>
-                  </div>
+                <th:block th:if="${#authentication.principal.username==semiMember.semiMemberEmail}">
+                    <span>
+                        <div class="btn">
+                            <a th:href="@{/semiMember/confirmEmail/{semiMemberId}(semiMemberId=${semiMember.semiMemberId})}">삭제</a>
+                        </div>
+                    </span>
+                </th:block>
+                <th:block th:unless="${#authentication.principal.username==semiMember.semiMemberEmail}">
+                    <span>
+                        본인글이 아닙니다
+                    </span>
+                </th:block>
               </li>
             </ul>
         </div>

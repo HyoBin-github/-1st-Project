@@ -3,9 +3,8 @@ package org.project.dev.member.service;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.cartNew.entity.CartEntity;
 import org.project.dev.cartNew.repository.CartRepository;
-import org.project.dev.member.dto.MemberDto;
+import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.dto.SemiMemberDto;
-import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.SemiMemberRepository;
 import org.springframework.data.domain.Page;
@@ -100,30 +99,27 @@ public class SemiMemberService {
         return semiMemberRepository.findById(semiMemberId).get();
     }
 
-    // 페이징
-    public Page<SemiMemberDto> SemiMemberPagingList(Pageable pageable) {
-        Page<SemiMemberEntity> semiMemberEntities = semiMemberRepository.findAll(pageable);
-        //    boardEntities.map(board ->new BoardDto(board.getId(),board.getBoardContent(),))
+    // 간편회원목록 페이징, 검색
+    public Page<SemiMemberDto> semiMemberList(Pageable pageable, String subject, String search, MyUserDetails myUserDetails) {
 
-        int nowPage = semiMemberEntities.getNumber();// 요청 페이지 번호
-        long totalCount = semiMemberEntities.getTotalElements();// 전체게시글수
-        int totalPage = semiMemberEntities.getTotalPages();// 전체 페이지갯수
-        int pageSize = semiMemberEntities.getSize();    // 한페이지에 보이는 개수
-        semiMemberEntities.isFirst(); // 첫번째 페이지인지?
-        semiMemberEntities.isLast(); // 마지막 페이지인지?
-        semiMemberEntities.hasPrevious(); // 이전 페이지 있는지?
-        semiMemberEntities.hasNext(); // 다음 페이지 있는지?
+        myUserDetails.getMemberEntity();
 
-        System.out.println(totalCount + " 총 글수");
-        System.out.println(totalPage + " 총 페이지");
-        System.out.println(pageSize + " 페이지 당 글수");
-        System.out.println(nowPage + " 현재 페이지");
+        Page<SemiMemberEntity> semiMemberEntities = null; // 기본 null값으로 설정
 
-        // Entity → Dto
+        if(subject.equals("semiMemberEmail")){
+            semiMemberEntities = semiMemberRepository.findBySemiMemberEmailContaining(pageable, search);
+        }else{
+            semiMemberEntities = semiMemberRepository.findAll(pageable);
+        }
+
+        semiMemberEntities.getNumber();
+        semiMemberEntities.getTotalElements();
+        semiMemberEntities.getTotalPages();
+        semiMemberEntities.getSize();
+
         Page<SemiMemberDto> semiMemberDtos = semiMemberEntities.map(SemiMemberDto::toSemiMemberDto);
+
+
         return semiMemberDtos;
-        //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
     }
-
-
 }
