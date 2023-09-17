@@ -16,7 +16,7 @@
         </div>
         <div class="search">
             <div class="form">
-                <form th:action="@{/member/inquiry" method="get">
+                <form th:action="@{/member/inquiry}" method="get">
                     <select name="select" id="select" class="select">
                         <option th:value="''" th:selected="${#strings.isEmpty(param.select)}">전체</option>
                         <option th:value="inquiryTitle" th:selected="${#strings.equals(param.select, 'inquiryTitle')}">제목</option>

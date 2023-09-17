@@ -3,24 +3,16 @@ package org.project.dev.notice.service;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.entity.MemberEntity;
-import org.project.dev.member.entity.SemiMemberEntity;
-import org.project.dev.member.service.MemberService;
 import org.project.dev.notice.dto.InquiryDto;
-import org.project.dev.notice.dto.NoticeDto;
 import org.project.dev.notice.entity.InquiryEntity;
-import org.project.dev.notice.entity.NoticeEntity;
 import org.project.dev.notice.repository.InquiryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.IllformedLocaleException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +20,6 @@ import java.util.Optional;
 public class InquiryService {
 
     private final InquiryRepository inquiryRepository;
-    private final MemberService memberService; // 송원철 / 내가 쓴 문의사항 가져오기
     /*
    Todo
     1. rladpwls1843@gamil.com
@@ -219,7 +210,9 @@ public class InquiryService {
         return 0;
     }
 
-    public Page<InquiryDto> myInquiryList(Pageable pageable, String inquirySelect, String inquirySearch, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+    // 내가 작성한 문의사항 보기
+    public Page<InquiryDto> myInquiryList(Pageable pageable, String inquirySelect, String inquirySearch,MemberEntity memberEntity) {
+
 
         Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
 
@@ -230,7 +223,7 @@ public class InquiryService {
         } else if (inquirySelect.equals("memberEmail")) {
             inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable, inquirySearch); // 송원철
         } else {
-            inquiryEntities = inquiryRepository.findByMemberMemberId(pageable, myUserDetails.getMemberEntity().getMemberId());
+            inquiryEntities = inquiryRepository.findByMemberMemberId(pageable, memberEntity.getMemberId());
         }
 
         inquiryEntities.getNumber();
@@ -242,4 +235,5 @@ public class InquiryService {
 
         return inquiryDtoPage;
     }
+
 }
