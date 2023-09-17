@@ -164,7 +164,7 @@ public class NoticeService {
     }
 
     @Transactional
-    public NoticeDtogitffnoticeUpdateOk(NoticeDto noticeDto, Long id) {
+    public NoticeDto noticeUpdateOk(NoticeDto noticeDto, Long id) {
         // errer throw 처리
         NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(()->{
             throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
