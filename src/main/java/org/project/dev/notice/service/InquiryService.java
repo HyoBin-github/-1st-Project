@@ -102,8 +102,6 @@ public class InquiryService {
 
 
         myUserDetails.getMemberEntity();
-
-
         Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
 
         if(inquirySelect.equals("inquiryTitle")){

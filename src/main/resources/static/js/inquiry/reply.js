@@ -43,13 +43,15 @@ function replyList(){
 
             $(res).each(function(){
                 list = "<ul>";
-                list+="<li>"+this.replyWriter+"</li>";
-                list+="<li>"+this.createTime+"</li>";
+                list+="<li class='writer'>"+this.replyWriter+"</li>";
+                list+="<li class='create'>"+this.createTime+"</li>";
                 list+="<li>";
-                list+="<div id='reCon"+this.id+"'>";
+                list+="<div id='reCon"+this.id+"' class='content'>";
                 list+="<span>"+this.reply+"</span>";
+                list+="<div class='Btn'>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
                 list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+this.id+',"'+this.reply+'",'+this.inqId+")'>";
+                list+="</div>";
                 list+="</div>";
                 list+="<div id='showUp"+this.id+"'>";
                 list+="</div>";
