@@ -1,9 +1,5 @@
 
-<!--
-/* fragments 안했어요 그냥 통  html 파일입니다 */
-
-/*catfather49@gmail.com*/
--->
+<!--catfather49@gmail.com-->
 <!DOCTYPE html>
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
@@ -19,8 +15,7 @@
     <title>Document</title>
 </head>
 
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--head.html에 사용해도 되는지?-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <th:block layout:fragment="title">
     <title>ADMIN</title>
 </th:block>
@@ -49,7 +44,7 @@
                     <div class="sec1-title">상품</div>
                     <ul class="sec1-item">
                         <li>상품 생성</li>
-                        <li>상품 리스트</li>
+                        <li><a th:href="@{/admin/product/{memberId}/list(memberId=${#authentication.principal.memberEntity.memberId})}">상품 리스트</a></li>
                     </ul>
                 </li>
                 <li>
