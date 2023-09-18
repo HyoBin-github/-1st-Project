@@ -23,7 +23,7 @@
     var paymentButton = document.getElementById("payment-button").value
     document.getElementById("payment-button").onclick = function(){
     var text = "";
-    fetch("http://localhost:8111"+paymentButton)
+    fetch("http://localhost:8095"+paymentButton)
     .then(res => res.json())
     .then(json => {
         text = json;

@@ -77,17 +77,22 @@ public class CartController {
 
             // 상품 이미지를 가져와서 모델에 추가
             List<ProductImgDTO> productImages = new ArrayList<>();
+            List<ProductEntity> productEntities = new ArrayList<ProductEntity>();
             for (CartItemEntity cartItem : cartItemEntityList) {
                 Long productId = cartItem.getProduct().getId();
+                productEntities.add(productService.productView(productId));
                 List<ProductImgDTO> productImgs = productUtilService.getProductImagesByProductId(productId);
                 productImages.addAll(productImgs);
             }
+
+
 
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("totalCount", memberCart.getCartCount());
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("member", memberService.findMember(memberId));
             model.addAttribute("productImages", productImages);
+            model.addAttribute("productList", productEntities);
             model.addAttribute("memberImageUrl", memberImageUrl); // 프로필 이미지 불러옴
 
             return "/member/cart";
