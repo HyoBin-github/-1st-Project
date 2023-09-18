@@ -5,23 +5,45 @@
 button{
   border: 0;
   background-color: transparent;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+button:hover{
+  color: white;
+  font-weight: bold;
 }
 
-.contianer{
+
+.main{
   width: 100%;
-  background-color: #F0F2F5;
-}
-.contianer .main{
-  width: 100%;
-  display: flex;
+  /* background-color: #F0F2F5; */
+  display: inline-flex;
+  flex-direction: column;
   justify-content: center;
+  padding: 10px;
 }
-.container .main .title{
+.main .title{
+  width: 1000px;
+  margin: auto;
   padding: 20px;
+  display: contents;
   box-sizing: border-box;
-  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   border-bottom: 2px solid #7285d3a4;
+}
+.main .title h1{
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px 10px 10px 250px;
+}
+.main .title h1 span{
+  color: #7285d3a4;
+}
+
+.price{
+  display: flex;
+  justify-content: center;
 }
 
 table {
@@ -40,14 +62,14 @@ table th {
   background-color: #7286D3;
   color: #fff;
   padding: 10px;
+  transition: all 0.3s;
 }
-img {
+td a:hover{
+  color: white;
+  font-weight: bold;
+}
+th img {
   width: 90px;
   height: 90px;
-}
-
-
-table span{
-  font-size: 20px;
 }
 
