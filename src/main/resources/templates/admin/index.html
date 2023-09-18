@@ -6,14 +6,11 @@
 -->
 <!DOCTYPE html>
 
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"-->
-<!--      layout:decorate="~{admin/fragments/layout/baseLayout}">-->
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      layout:decorate="~{admin/fragments/layout/baseLayout}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,125 +20,16 @@
 </head>
 
 
-<!--<meta name="viewport" content="width=device-width, initial-scale=1.0"> &lt;!&ndash;head.html에 사용해도 되는지?&ndash;&gt;-->
-<!--<th:block layout:fragment="title">-->
-<!--    <title>ADMIN</title>-->
-<!--</th:block>-->
-<!--<th:block layout:fragment="css">-->
-<!--    <link rel="stylesheet" th:href="@{/css/admin/index.css}">-->
-<!--</th:block>-->
-<!--<th:block layout:fragment="container">-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--head.html에 사용해도 되는지?-->
+<th:block layout:fragment="title">
+    <title>ADMIN</title>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/admin/index.css}">
+</th:block>
+<th:block layout:fragment="container">
 
-<!--</th:block>-->
 <body>
-<div class="header">
-    <div class="top-nav">
-        <div class="logo">
-            <h1>로고</h1>
-        </div>
-
-        <ul>
-            <th:block sec:authorize="hasAnyRole('ADMIN', 'SELLER')">
-                <li><a href="/member/logout">로그아웃</a></li>
-            </th:block>
-
-            <th:block sec:authorize="hasAnyRole('ADMIN')">
-                <li><a href="/member/logout">고객 관리</a></li>
-            </th:block>
-        </ul>
-    </div>
-</div>
-<div class="sideBar">
-    <div class="sideBarTitle">
-        <span>  </span>
-    </div>
-
-    <th:block sec:authorize="isAnonymous()">
-        <div class="loginInfo">
-            <form action="admin/login">
-                <input type="text" name="id" class="id">
-                <input type="password" name="pw" class="pw">
-                <button type="submit" class="loginBtn">login</button>
-            </form>
-        </div>
-    </th:block>
-
-    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
-        <div class="loginInfo">
-            <ul>
-                <li>
-                    <span th:text="${#authentication.principal.memberEntity.memberNickName}" class="data1 span"></span>님
-                </li>
-            </ul>
-        </div>
-
-    </th:block>
-
-    <div class="sideBar-sec">
-        <ul>
-            <li>
-                <a href="#">문의사항</a>
-                <ul>
-                    <li>
-                        <a href="#">고객</a>
-                    </li>
-                    <li>
-                        <a href="#">배송</a>
-                    </li>
-                    <li>
-                        <a href="#">이벤트</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">상품</a>
-                <ul>
-                    <li>
-                        <a href="/product/write">상품생성</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/admin/product/{memberId}/list(memberId=${#authentication.principal.memberEntity.memberId})}">상품 리스트</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">주문 목록</a>
-                <ul>
-                    <li>
-                        <a href="#">주문 목록</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">배송</a>
-                <ul>
-                    <li>
-                        <a href="#">주문별 배송 상태</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
-
 <div class="main">
     <div class="container">
         <div class="main-section1">
@@ -298,5 +186,5 @@
 <!--    </div>-->
 <!--</div>-->
 </body>
-
+</th:block>
 </html>
