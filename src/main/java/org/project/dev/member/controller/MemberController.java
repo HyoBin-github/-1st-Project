@@ -466,8 +466,13 @@ public class MemberController {
             @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        if (myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
 
         Page<InquiryDto> inquiryList = inquiryService.myInquiryList(pageable, inquirySelect, inquirySearch, myUserDetails.getMemberEntity());
 
@@ -481,18 +486,11 @@ public class MemberController {
                 (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if (!inquiryList.isEmpty()) {
-            model.addAttribute("inquiryList", inquiryList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("member", member);
-            model.addAttribute("memberImageUrl", memberImageUrl);
+        model.addAttribute("inquiryList", inquiryList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
-            return "member/myInquiryList";
-        }
-        System.out.println("조회할 문의사항이 없다.");
-
-        return "redirect:/member/inquiry?page=0&select=&search=";
+        return "member/myInquiryList";
     }
 
 }
