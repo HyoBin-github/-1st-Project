@@ -52,10 +52,13 @@
 .header .nav .middle-nav h1{
     flex-basis: 120px; /* logo 이미지 삽입 시 flex기본 크기 설정 */
 }
-.header .nav .middle-nav h1 image{
-    width: 100%;
+.header .nav .middle-nav h1 a image{
+    /* width: 100%; */
+    width: 120px;
+    height: 60px;
     height: auto;
     display: block;
+    background: transition;
 }
 .header .nav .middle-nav .middle-menu{
     padding: 5px; /*ul과의 전체 간격*/

@@ -37,10 +37,12 @@
                 <li>
                     <div class="sec1-title">문의 사항</div>
                     <ul class="sec1-item">
-                        <li>고객 문의 사항</li>
-                        <li>배송 상태 문의 사항</li>
-                        <li>이벤트 문의사항</li>
-                        <li>비고</li>
+                        <li>
+                            <a th:href="@{/inquiry/list?page=0&select=&search=}">문의사항 보기</a>
+                         </li>
+<!--                        <li>-->
+<!--                            <a th:href="@{/reply/write}">문의사항 답변하기</a>-->
+<!--                        </li> -->
                     </ul>
                 </li>
                 <li>
@@ -48,17 +50,17 @@
                     <ul class="sec1-item">
                         <li>상품 생성</li>
                         <li>상품 리스트</li>
-                        <li>비고</li>
-                        <li>비고</li>
                     </ul>
                 </li>
                 <li>
-                    <div class="sec1-title">주문 목록</div>
+                    <div class="sec1-title">공지사항</div>
                     <ul class="sec1-item">
-                        <li>주문 목록 보기</li>
-                        <li>비고</li>
-                        <li>비고</li>
-                        <li>비고</li>
+                        <li>
+                            <a th:href="@{notice/write}">공지사항 작성</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/notice/list?page=0&select=&search=}">공지사항 보기</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -66,8 +68,6 @@
                     <ul class="sec1-item">
                         <li><a th:href="@{/member/pagingList?page=0&subject=&search=}">회원 목록</a></li>
                         <li><a th:href="@{/semiMember/pagingList?page=0&subject=&search=}">간편회원 목록</a></li>
-                        <li>비고</li>
-                        <li>비고</li>
                     </ul>
                 </li>
             </ul>
@@ -79,12 +79,12 @@
                     오늘 할일
                 </div>
                 <ul>
-                    <li>신규 주문<span class="workList-item-number">10</span></li>
-                    <li>반품 신청<span class="workList-item-number">1</span></li>
+                    <li>신규 주문<span class="workList-item-number">30</span></li>
+                    <li>반품 신청<span class="workList-item-number">0</span></li>
                     <li>환불 처리<span class="workList-item-number">0</span></li>
-                    <li>입금 대기<span class="workList-item-number">5</span></li>
-                    <li>문의<span class="workList-item-number">3</span></li>
-                    <li>답변 대기 문의<span class="workList-item-number">2</span></li>
+                    <li>입금 대기<span class="workList-item-number">10</span></li>
+                    <li>문의<span class="workList-item-number">5</span></li>
+                    <li>답변 대기 문의<span class="workList-item-number">5</span></li>
                 </ul>
             </div>
         </div>
@@ -129,7 +129,7 @@
                     <th>문의</th>
                     <th>후기</th>
                     <tr>
-                        <td>2022-00-15</td>
+                        <td>2023-09-25</td>
                         <td>15</td>
                         <td>5,000,000</td>
                         <td>30</td>
@@ -160,31 +160,6 @@
         </div>
     </div>
 </div>
-
-<!--<div class="footer">-->
-<!--    <div class="nav">-->
-<!--        <a th:href="@{/}">-->
-<!--            <h2>CLOTH KEEPER</h2>-->
-<!--        </a>-->
-<!--        <ul class="menu">-->
-<!--            <li>개인정보처리방침</li>-->
-<!--            <li>영상정보처리기기 운영관리 방침</li>-->
-<!--            <li>홈페이지 이용약관</li>-->
-<!--            <li>위치정보 이용약관</li>-->
-<!--            <li>윤리경영</li>-->
-<!--        </ul>-->
-<!--        <div class="info">-->
-<!--            <span>주소: 서울특별시 노원구 OO동 OO로 OO길</span>-->
-<!--            <span>(주)Cloth Keeper 대표☆☆☆</span>-->
-<!--            <span>TEL: 02) 0000 - 1111 / FAX: 02) 0000 - 1112</span>-->
-<!--            <span><a th:href="@{/notice/list}">공지사항</a></span>-->
-<!--        </div>-->
-<!--        <p class="copyroight">-->
-<!--            &copy; <span class="this-year"></span> Cloth Keeper Company. All Rights Reseved.-->
-<!--        </p>-->
-<!--        <img th:src="@{/images/logo.png}" alt="" class="logo">-->
-<!--    </div>-->
-<!--</div>-->
 </body>
 </th:block>
 </html>
