@@ -1,7 +1,21 @@
 @import url(/css/common/reset.css);
-/* @import url(/css/common/header.css);
-@import url(/css/common/footer.css); */
+@import url(/css/admin/common/header.css);
+@import url(/css/admin/common/sidebar.css);
 
+table {
+  width: 100%;
+  border-top: 1px solid #444444;
+  border-collapse: collapse;
+}
+th, td {
+  border-bottom: 1px solid #444444;
+  padding: 10px;
+}
+
+button{
+  border: 0;
+  background-color: transparent;
+}
 
 html{
       background-color: #F0F2F5;
@@ -16,9 +30,9 @@ html{
 
 .main_wrap{
   width: 70%;
-  margin: 30px auto;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 table {
@@ -45,6 +59,12 @@ tr{
     height: 30px;
 }
 
+/*예진*/
+table tr td a:hover{
+    color: white;
+}
+
+
 .product {
     width: 100%;
     height: auto;
@@ -55,11 +75,11 @@ tr{
     padding: 20px;
 }
 .product .table_id {
-    width: 10%;
+    width: 5%;
     text-align: center;
 }
 .product .table_title {
-    width: 50%;
+    width: 40%;
     text-align: center;
 }
 .product .table_writer {
@@ -70,8 +90,14 @@ tr{
     width: 15%;
     text-align: center;
 }
-.product .table_hits {
-    width: 10%;
+/*예진*/
+.product .table_detail {
+    width: 15%;
+    text-align: center;
+}
+/*예진*/
+.product .table_delete {
+    width: 15%;
     text-align: center;
 }
 
@@ -163,6 +189,7 @@ tr{
     outline: none;
     cursor: pointer;
     position: absolute;
+    right: 0;
 }
 .searchBar_wrap .searchBar .searchBarBtn:hover{
     box-sizing: border-box;

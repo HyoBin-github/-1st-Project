@@ -157,7 +157,8 @@ public class InquiryController {
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
+//        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
+        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
 
         Long totalCount = inquiryList.getTotalElements();
         int totalPage = inquiryList.getTotalPages();

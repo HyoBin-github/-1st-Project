@@ -1,43 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
   <title>List</title>
   <link rel="stylesheet" th:href="@{/css/admin/product/detail.css}">
   <link rel="stylesheet" href="maincss.css">
 </head>
+<div th:replace="~{admin/fragments/common/header :: headerFragment}"></div>
+<div th:replace="~{admin/fragments/common/sidebar :: sidebarFragment}"></div>
 <body>
-    <div class="header">
-      <div class="nav">
-        <div class="top-nav">
-
-        </div>
-        <div class="bottom-nav">
-
-        </div>
+   <div class="main">
+    <div class="title">  
+     <div class="main-title">
+       <h2>상품 상세보기</h2>
       </div>
     </div>
-
-   <div class="main">
       <div class="main-section1">
-        <div class="main-title">
-          <span>상품 상세보기</span>
+        <div class="image">
+          
         </div>
-        <div class="item-info">
-          <table class="item-info-table">
-            <th>제목</th>
-            <th>색상</th>
-            <th>설명</th>
-            <th>노출 여부</th>
-            <th>가격</th>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </table>
+        <div class="item-form">
+          <ul>
+            <li>
+              <label>제목</label>
+              <span th:text="${productDetail.productName}"></span>
+            </li>
+            <li>
+              <label>색상</label>
+              <span  th:text="${productDetail.productColor}"></span>
+            </li>
+            <li>
+              <label>사이즈</label>
+              <span th:text="${productDetail.productSize}"></span>
+            </li>
+            <li>
+              <label>조회수</label>
+              <span th:text="${productDetail.productHits}"></span>
+            </li>
+            <li>
+              <label>상세설명</label>
+              <span th:text="${productDetail.productDescription}"></span>
+            </li>
+            <li>
+              <label>노출여부</label>
+              <span th:text="${productDetail.isProductDisplayed}"></span>
+            </li>
+            <li>
+              <label>가격</label>
+              <span th:text="${productDetail.productPrice}"></span>
+            </li>
+
+          </ul>
         </div>
       </div>
     </div>

@@ -38,7 +38,10 @@ public class InquiryDto {
         if (inquiryEntity.getMember() != null) {
             inquiryDto.setMemberEmail(inquiryEntity.getMember().getMemberEmail());
         }
+        inquiryDto.setMemberEmail(inquiryEntity.getMember().getMemberEmail()); // 송원철
+
         return inquiryDto;
+
     }
 }
 
