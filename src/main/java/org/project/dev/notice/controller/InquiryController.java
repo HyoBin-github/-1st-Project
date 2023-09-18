@@ -153,6 +153,10 @@ public class InquiryController {
             model.addAttribute("memberImageUrl", memberImageUrl);
         }
 
+        myUserDetails.getMemberEntity();
+        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
         Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
 
         Long totalCount = inquiryList.getTotalElements();
@@ -165,10 +169,20 @@ public class InquiryController {
                 (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        model.addAttribute("inquiryList", inquiryList);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("myUserDetails", myUserDetails);
+        if (!inquiryList.isEmpty()) {
+                model.addAttribute("inquiryList", inquiryList);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+
+                model.addAttribute("myUserDetails", myUserDetails);
+                model.addAttribute("member", member);
+                model.addAttribute("memberImageUrl", memberImageUrl);
+                return "inquiry/list";
+            }
+//        model.addAttribute("inquiryList", inquiryList);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("myUserDetails", myUserDetails);
 
         return "inquiry/list";
     }
