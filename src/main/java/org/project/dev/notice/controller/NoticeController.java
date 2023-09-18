@@ -70,6 +70,47 @@ public class NoticeController {
      3. 공지사항 목록 & 페이징 & 검색
      4.
      */
+//    @GetMapping("/list")
+//    public String getNoticeList(
+//            @PageableDefault(page = 0, size = 10, sort = "notId", direction = Sort.Direction.DESC) Pageable pageable,
+//            Model model,
+//            @RequestParam(required = false, value = "select") String noticeSelect,
+//            @RequestParam(required = false, value = "search") String noticeSearch,
+//            @AuthenticationPrincipal MyUserDetails myUserDetails
+//            ){
+//
+//        myUserDetails.getMemberEntity();
+//
+//        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+//        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+//
+//        Page<NoticeDto> noticeList = noticeService.noticeList(pageable, noticeSelect, noticeSearch, myUserDetails);
+//        // select에 해당하는 종류에 search의 내용이 포함되어 있는지 검색 + 목록페이징 구현
+//
+//        Long totalCount = noticeList.getTotalElements();
+//        int totalPage = noticeList.getTotalPages();
+//        int pageSize = noticeList.getSize();
+//        int nowPage = noticeList.getNumber();
+//        int blockNum = 10;
+//
+//        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
+//                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
+//        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+//
+//        if(!noticeList.isEmpty()) {
+//            model.addAttribute("noticeList", noticeList);
+//            model.addAttribute("startPage", startPage);
+//            model.addAttribute("endPage", endPage);
+//            model.addAttribute("myUserDetails", myUserDetails);
+//
+//            model.addAttribute("member", member);
+//            model.addAttribute("memberImageUrl", memberImageUrl);
+//
+//            return "notice/list";
+//        }
+//
+//        return "notice/list";
+//    }
     @GetMapping("/list")
     public String getNoticeList(
             @PageableDefault(page = 0, size = 10, sort = "notId", direction = Sort.Direction.DESC) Pageable pageable,
@@ -77,14 +118,18 @@ public class NoticeController {
             @RequestParam(required = false, value = "select") String noticeSelect,
             @RequestParam(required = false, value = "search") String noticeSearch,
             @AuthenticationPrincipal MyUserDetails myUserDetails
-            ){
+    ){
+        if (myUserDetails != null) {
+            myUserDetails.getMemberEntity();
 
-        myUserDetails.getMemberEntity();
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
 
-        Page<NoticeDto> noticeList = noticeService.noticeList(pageable, noticeSelect, noticeSearch, myUserDetails);
+        Page<NoticeDto> noticeList = noticeService.noticeList(pageable, noticeSelect, noticeSearch);
         // select에 해당하는 종류에 search의 내용이 포함되어 있는지 검색 + 목록페이징 구현
 
         Long totalCount = noticeList.getTotalElements();
@@ -97,16 +142,10 @@ public class NoticeController {
                 (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if(!noticeList.isEmpty()) {
-            model.addAttribute("noticeList", noticeList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("myUserDetails", myUserDetails);
-
-            model.addAttribute("member", member);
-            model.addAttribute("memberImageUrl", memberImageUrl);
-            return "notice/list";
-        }
+        model.addAttribute("noticeList", noticeList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("myUserDetails", myUserDetails);
 
         return "notice/list";
     }
@@ -118,6 +157,48 @@ public class NoticeController {
         3. html의 a태그에 설정되어 있는 type에 해당하는 list만 출력
         4.
        */
+//    @GetMapping("/list/{type}")
+//    public String getNoticeList(
+//            @PageableDefault(page = 0, size = 10, sort = "notId",direction = Sort.Direction.DESC)Pageable pageable,
+//            Model model,
+//            @PathVariable("type") String type,
+//            @AuthenticationPrincipal MyUserDetails myUserDetails){
+//
+//        myUserDetails.getMemberEntity();
+//        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+//        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+//
+//        // type을 가져오고 페이징
+//        Page<NoticeDto> noticeList = noticeService.noticeList(type, pageable, myUserDetails);
+//
+//        if (noticeList==null) {
+//            throw new RuntimeException("list none");
+//        }
+//        Long totalCount = noticeList.getTotalElements();
+//        int totalPage = noticeList.getTotalPages();
+//        int pageSize = noticeList.getSize();
+//        int nowPage = noticeList.getNumber();
+//        int blockNum = 10;
+//
+//        int startPage = (int)((Math.floor(nowPage/blockNum)*blockNum) + 1 <= totalPage ?
+//                (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
+//        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+//
+//        if(!noticeList.isEmpty()){
+//            model.addAttribute("noticeList", noticeList);
+//            model.addAttribute("startPage", startPage);
+//            model.addAttribute("endPage", endPage);
+//            model.addAttribute("member", member);
+//            model.addAttribute("memberImageUrl", memberImageUrl);
+//            return "notice/list";
+//        }
+//        System.out.println("조회할 공지사항이 없다.");
+//
+//        model.addAttribute("member", member);
+//        model.addAttribute("memberImageUrl", memberImageUrl);
+//
+//        return "notice/list";
+//    }
     @GetMapping("/list/{type}")
     public String getNoticeList(
             @PageableDefault(page = 0, size = 10, sort = "notId",direction = Sort.Direction.DESC)Pageable pageable,
@@ -125,12 +206,16 @@ public class NoticeController {
             @PathVariable("type") String type,
             @AuthenticationPrincipal MyUserDetails myUserDetails){
 
-        myUserDetails.getMemberEntity();
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        if (myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
 
         // type을 가져오고 페이징
-        Page<NoticeDto> noticeList = noticeService.noticeList(type, pageable, myUserDetails);
+        Page<NoticeDto> noticeList = noticeService.noticeList(type, pageable);
 
         if (noticeList==null) {
             throw new RuntimeException("list none");
@@ -145,20 +230,13 @@ public class NoticeController {
                 (Math.floor(nowPage/blockNum)*blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if(!noticeList.isEmpty()){
-            model.addAttribute("noticeList", noticeList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("member", member);
-            model.addAttribute("memberImageUrl", memberImageUrl);
-            return "notice/list";
-        }
-        System.out.println("조회할 공지사항이 없다.");
 
-        model.addAttribute("member", member);
-        model.addAttribute("memberImageUrl", memberImageUrl);
+        model.addAttribute("noticeList", noticeList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "notice/list";
+
     }
 
     /*

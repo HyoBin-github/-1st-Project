@@ -186,6 +186,43 @@ public class MemberController {
 //    }
 
     // 페이징, 검색 / size 바꿔야함
+//    @GetMapping("/pagingList")
+//    public String getMemberList(
+//            @PageableDefault(page=0, size=7, sort = "memberId", direction = Sort.Direction.DESC) Pageable pageable,
+//            Model model,
+//            @RequestParam(value = "subject", required = false) String subject,
+//            @RequestParam(value = "search", required = false) String search,
+//            @AuthenticationPrincipal MyUserDetails myUserDetails
+//    ) {
+//
+//        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+//        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+//
+//        Page<MemberDto> memberList = memberService.memberList(pageable, subject, search, myUserDetails);
+//
+//        Long totalCount = memberList.getTotalElements();
+//        int totalPage = memberList.getTotalPages();
+//        int pageSize = memberList.getSize();
+//        int nowPage = memberList.getNumber();
+//        int blockNum = 10;
+//
+//        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+//                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+//        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+//
+//        if (!memberList.isEmpty()) {
+//            model.addAttribute("memberList", memberList);
+//            model.addAttribute("startPage", startPage);
+//            model.addAttribute("endPage", endPage);
+//            model.addAttribute("myUserDetails", myUserDetails);
+//            model.addAttribute("memberImageUrl", memberImageUrl);
+//
+//            return "member/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
+//        }
+//        System.out.println("조회할 문의사항이 없다.");
+//
+//        return "redirect:/member/pagingList?page=0&subject=&search=";
+//    }
     @GetMapping("/pagingList")
     public String getMemberList(
             @PageableDefault(page=0, size=7, sort = "memberId", direction = Sort.Direction.DESC) Pageable pageable,
@@ -198,7 +235,7 @@ public class MemberController {
         MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-        Page<MemberDto> memberList = memberService.memberList(pageable, subject, search, myUserDetails);
+        Page<MemberDto> memberList = memberService.memberList(pageable, subject, search);
 
         Long totalCount = memberList.getTotalElements();
         int totalPage = memberList.getTotalPages();
@@ -220,7 +257,6 @@ public class MemberController {
             return "member/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
         }
         System.out.println("조회할 문의사항이 없다.");
-
         return "redirect:/member/pagingList?page=0&subject=&search=";
     }
 

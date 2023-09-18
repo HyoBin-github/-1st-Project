@@ -51,7 +51,7 @@ public class InquiryController {
 //        return "inquiry/write";
 //    }
 
-    /*송원철*/ // 헤더에 nickName, image 가져오기 위한 용도
+    // 송원철 / 헤더에 nickName, image 가져오기 위한 용도
     @GetMapping("/write")
     public String getInquiryWrite(InquiryDto inquiryDto, @AuthenticationPrincipal MyUserDetails myUserDetails,
                                   @AuthenticationPrincipal SemiMyUserDetails semiMyUserDetails, Model model){
@@ -137,6 +137,45 @@ public class InquiryController {
 //        return "inquiry/list";
 
     // 송원철
+//    @GetMapping("/list")
+//    public String getInquiryList(
+//            @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
+//            Model model,
+//            @RequestParam(value = "select", required = false) String inquirySelect,
+//            @RequestParam(value = "search", required = false) String inquirySearch,
+//            @AuthenticationPrincipal MyUserDetails myUserDetails
+//    ) {
+//
+//            myUserDetails.getMemberEntity();
+//            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+//            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+//
+//            Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
+//
+//            Long totalCount = inquiryList.getTotalElements();
+//            int totalPage = inquiryList.getTotalPages();
+//            int pageSize = inquiryList.getSize();
+//            int nowPage = inquiryList.getNumber();
+//            int blockNum = 10;
+//
+//            int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+//                    (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+//            int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+//
+//            if (!inquiryList.isEmpty()) {
+//                model.addAttribute("inquiryList", inquiryList);
+//                model.addAttribute("startPage", startPage);
+//                model.addAttribute("endPage", endPage);
+//
+//                model.addAttribute("myUserDetails", myUserDetails);
+//                model.addAttribute("member", member);
+//                model.addAttribute("memberImageUrl", memberImageUrl);
+//                return "inquiry/list";
+//            }
+//            System.out.println("조회할 문의사항이 없다.");
+//
+//            return "inquiry/list";
+//        }
     @GetMapping("/list")
     public String getInquiryList(
             @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
@@ -145,37 +184,33 @@ public class InquiryController {
             @RequestParam(value = "search", required = false) String inquirySearch,
             @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
-
-            myUserDetails.getMemberEntity();
+        if (myUserDetails != null) {
             MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
             String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
-            Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
-
-            Long totalCount = inquiryList.getTotalElements();
-            int totalPage = inquiryList.getTotalPages();
-            int pageSize = inquiryList.getSize();
-            int nowPage = inquiryList.getNumber();
-            int blockNum = 10;
-
-            int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
-                    (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
-            int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
-
-            if (!inquiryList.isEmpty()) {
-                model.addAttribute("inquiryList", inquiryList);
-                model.addAttribute("startPage", startPage);
-                model.addAttribute("endPage", endPage);
-
-                model.addAttribute("myUserDetails", myUserDetails);
-                model.addAttribute("member", member);
-                model.addAttribute("memberImageUrl", memberImageUrl);
-                return "inquiry/list";
-            }
-            System.out.println("조회할 문의사항이 없다.");
-
-            return "inquiry/list";
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
         }
+
+        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch, myUserDetails);
+
+        Long totalCount = inquiryList.getTotalElements();
+        int totalPage = inquiryList.getTotalPages();
+        int pageSize = inquiryList.getSize();
+        int nowPage = inquiryList.getNumber();
+        int blockNum = 10;
+
+        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        model.addAttribute("inquiryList", inquiryList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("myUserDetails", myUserDetails);
+
+        return "inquiry/list";
+    }
 
     /*
            Todo

@@ -326,10 +326,45 @@ public class MemberService {
 //    }
     
     // 회원목록 페이징, 검색
-    public Page<MemberDto> memberList(Pageable pageable, String subject, String search,
-                                        MyUserDetails myUserDetails) {
+//    public Page<MemberDto> memberList(Pageable pageable, String subject, String search,
+//                                        MyUserDetails myUserDetails) {
+//
+//        myUserDetails.getMemberEntity();
+//
+//        Page<MemberEntity> memberEntities = null; // 기본 null값으로 설정
+//
+//        if(subject.equals("memberEmail")){
+//            memberEntities = memberRepository.findByMemberEmailContaining(pageable, search);
+//        }else if(subject.equals("memberName")){
+//            memberEntities = memberRepository.findByMemberNameContaining(pageable, search);
+//        }else if(subject.equals("memberNickName")){
+//            memberEntities = memberRepository.findByMemberNickNameContaining(pageable, search);
+//        }else if(subject.equals("memberPhone")) {
+//            memberEntities = memberRepository.findByMemberPhoneContaining(pageable, search);
+//        }else if(subject.equals("memberBirth")) {
+//            memberEntities = memberRepository.findByMemberBirthContaining(pageable, search);
+//        }else if(subject.equals("memberStreetAddress")) {
+//            memberEntities = memberRepository.findByMemberStreetAddressContaining(pageable, search);
+//        }else if(subject.equals("memberDetailAddress")) {
+//            memberEntities = memberRepository.findByMemberDetailAddressContaining(pageable, search);
+//        }else{
+//            memberEntities = memberRepository.findAll(pageable);
+//        }
+//
+//        memberEntities.getNumber();
+//        memberEntities.getTotalElements();
+//        memberEntities.getTotalPages();
+//        memberEntities.getSize();
+//
+//        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
+//
+//
+//        return memberDtos;
+//    }
 
-        myUserDetails.getMemberEntity();
+    public Page<MemberDto> memberList(Pageable pageable, String subject, String search) {
+
+//        myUserDetails.getMemberEntity();
 
         Page<MemberEntity> memberEntities = null; // 기본 null값으로 설정
 

@@ -55,31 +55,55 @@ public class NoticeService {
         4.
     */
 
-    @Transactional
-    public Page<NoticeDto> noticeList(Pageable pageable, String noticeSelect, String noticeSearch,
-                                      MyUserDetails myUserDetails) {
+//    @Transactional
+//    public Page<NoticeDto> noticeList(Pageable pageable, String noticeSelect, String noticeSearch,
+//                                      MyUserDetails myUserDetails) {
+//
+//        myUserDetails.getMemberEntity();
+//        Page<NoticeEntity> noticeEntities = null; // 기본 null 값으로 설정
+//
+//        if (noticeSelect.equals("noticeTitle")) {
+//            noticeEntities = noticeRepository.findByNoticeTitleContaining(pageable, noticeSearch); // title에 해당하는 검색 내용
+//        } else if (noticeSelect.equals("noticeContent")) {
+//            noticeEntities = noticeRepository.findByNoticeContentContaining(pageable, noticeSearch); // content에 해당하는 검색 내용
+//        } else {
+//            noticeEntities = noticeRepository.findAll(pageable); // 위 2가지가 아닌 경우 모든 리스트
+//        }
+//
+//        noticeEntities.getNumber();
+//        noticeEntities.getTotalElements();
+//        noticeEntities.getTotalPages();
+//        noticeEntities.getSize();
+//
+//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+//
+//        return noticeDtoPage;
+//
+//    }
+@Transactional
+public Page<NoticeDto> noticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
 
-        myUserDetails.getMemberEntity();
-        Page<NoticeEntity> noticeEntities = null; // 기본 null 값으로 설정
+//    myUserDetails.getMemberEntity();
+    Page<NoticeEntity> noticeEntities = null; // 기본 null 값으로 설정
 
-        if (noticeSelect.equals("noticeTitle")) {
-            noticeEntities = noticeRepository.findByNoticeTitleContaining(pageable, noticeSearch); // title에 해당하는 검색 내용
-        } else if (noticeSelect.equals("noticeContent")) {
-            noticeEntities = noticeRepository.findByNoticeContentContaining(pageable, noticeSearch); // content에 해당하는 검색 내용
-        } else {
-            noticeEntities = noticeRepository.findAll(pageable); // 위 2가지가 아닌 경우 모든 리스트
-        }
-
-        noticeEntities.getNumber();
-        noticeEntities.getTotalElements();
-        noticeEntities.getTotalPages();
-        noticeEntities.getSize();
-
-        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
-
-        return noticeDtoPage;
-
+    if (noticeSelect.equals("noticeTitle")) {
+        noticeEntities = noticeRepository.findByNoticeTitleContaining(pageable, noticeSearch); // title에 해당하는 검색 내용
+    } else if (noticeSelect.equals("noticeContent")) {
+        noticeEntities = noticeRepository.findByNoticeContentContaining(pageable, noticeSearch); // content에 해당하는 검색 내용
+    } else {
+        noticeEntities = noticeRepository.findAll(pageable); // 위 2가지가 아닌 경우 모든 리스트
     }
+
+    noticeEntities.getNumber();
+    noticeEntities.getTotalElements();
+    noticeEntities.getTotalPages();
+    noticeEntities.getSize();
+
+    Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+
+    return noticeDtoPage;
+
+}
     /*
        Todo
         1. rladpwls1843@gamil.com
@@ -87,11 +111,26 @@ public class NoticeService {
         3.
         4. type에 해당하는 목록으로 이동
         */
+//    @Transactional
+//    public Page<NoticeDto> noticeList(String type, Pageable pageable, MyUserDetails myUserDetails) {
+//
+//
+//        myUserDetails.getMemberEntity();
+//
+//        Page<NoticeEntity> noticeEntities = noticeRepository.findByNotType(type, pageable); // not_type에 해당하는 값만 출력
+//
+//        noticeEntities.getNumber();
+//        noticeEntities.getTotalElements();
+//        noticeEntities.getTotalPages();
+//        noticeEntities.getSize();
+//
+//        Page<NoticeDto> noticeDtoPage = noticeEntities.map(NoticeDto::tonoticeDto);
+//
+//        return noticeDtoPage;
+//    }
     @Transactional
-    public Page<NoticeDto> noticeList(String type, Pageable pageable, MyUserDetails myUserDetails) {
+    public Page<NoticeDto> noticeList(String type, Pageable pageable) {
 
-
-        myUserDetails.getMemberEntity();
 
         Page<NoticeEntity> noticeEntities = noticeRepository.findByNotType(type, pageable); // not_type에 해당하는 값만 출력
 
