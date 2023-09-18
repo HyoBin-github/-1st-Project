@@ -7,17 +7,18 @@
     <title>Cloth Keeper</title>
 </th:block>
 <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/cart/cart.css}">
     <link rel="stylesheet" href="maincss.css">
     <script th:src="@{/js/payment/payment.js}" defer="defer"></script>
 </th:block>
 
 <th:block layout:fragment="container">
-    <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 장바구니</h1>
-    <h1 class="title1"><span th:text="${member.memberId}"></span>회원번호</h1>
     <div class="contianer">
         <div class="main">
+            <div class="title">
+                <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 장바구니</h1>
+                <h1 class="title1"><span th:text="${member.memberId}"></span>회원번호</h1>
+            </div>
             <table class="cartTable">
                 <thead>
                 <tr>
@@ -64,8 +65,9 @@
                         </th:block>
                     </td>
                 </tbody>
+                총가격 : <span th:text="${totalPrice}">총가격</span>
             </table>
-            총가격 : <span th:text="${totalPrice}">총가격</span>
+            <!-- 총가격 : <span th:text="${totalPrice}">총가격</span> -->
         </div>
     </div>
 </th:block>

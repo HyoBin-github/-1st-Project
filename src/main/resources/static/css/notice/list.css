@@ -183,7 +183,6 @@ table, th, td{
     display: flex;
     justify-content: center;
     gap: 5px;
-    border: 2px solid #c5c5c5;
 }
 .List .List-con .page > ul> li.block a{
     font-weight:bold;
