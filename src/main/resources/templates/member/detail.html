@@ -127,7 +127,7 @@
             <!-- 이미지 미리보기 영역 -->
             <div id="image-preview"><img id="preview-image" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <th:block th:if="${#authentication.principal.username==member.memberEmail}">
-            <span>
+            <span class="image_btn">
                 <button onclick="redirectToURL()">프로필 이미지 수정</button>
             </span>
             </th:block>
@@ -178,31 +178,29 @@
                         <span>가입일</span>
                         <span th:text="${#temporals.format(member.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                     </li>
-                    <th:block th:if="${#authentication.principal.username==member.memberEmail}">
-                        <ul>
-                            <li class="update">
-                                <span>
-                                    <div class="update-btn">
-                                        <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
-                                    </div>
-                                </span>
-                            </li>
-                            <li class="delete">
-                                <span>
-                                    <div class="delete-btn">
-                                        <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
-                                    </div>
-                                </span>
-                            </li>
-                            <li class="inquiry">
-                                <span>
-                                    <div class="inquiry-btn">
-                                        <a th:href="@{/member/inquiry?page=0&select=&search=}">내 문의사항</a>
-                                    </div>
-                                </span>
-                            </li>
-                        </ul>
-                    </th:block>
+                        <th:block th:if="${#authentication.principal.username==member.memberEmail}">
+                                <li class="update">
+                                    <span>
+                                        <div class="update-btn">
+                                            <a th:href="@{/member/update/{memberId}(memberId=${member.memberId})}">수정</a>
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="delete">
+                                    <span>
+                                        <div class="delete-btn">
+                                            <a th:href="@{/member/confirmEmail/{memberId}(memberId=${member.memberId})}">삭제</a>
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="inquiry">
+                                    <span>
+                                        <div class="inquiry-btn">
+                                            <a th:href="@{/member/inquiry?page=0&select=&search=}">내 문의사항</a>
+                                        </div>
+                                    </span>
+                                </li>
+                        </th:block>
                     <th:block th:unless="${#authentication.principal.username==member.memberEmail}">
                         <span>
                             본인글이 아닙니다

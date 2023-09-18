@@ -107,6 +107,114 @@
 }*/
 /* detail.css */
 
+
+/*예진 rladpwls1843@gmail.com*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+/* 상세 정보 영역 스타일 */
+.detail-con {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+/* title */
+.detail-con .title {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #7285d3;
+}
+.detail-con .title h1 {
+    font-size: 24px
+}
+/* image */
+#image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+/* detail */
+.detail-con .detail{
+}
+.detail-con .detail>ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+.detail-con .detail>ul>li{
+    display: flex;
+    justify-content: space-between;
+}
+.detail-con .detail>ul>li span:nth-child(1){
+    flex: 1;
+    /* width: 100px; */
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-right: 2px solid #c5c5c5;
+    margin: 10px;
+    text-align: center;
+}
+.detail-con .detail>ul>li span:nth-child(2){
+    flex: 3;
+    font-size: 22px;
+    padding: 20px;
+}
+#image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.detail-con .detail>ul>li.update{
+    padding: 10px;
+    font-size: 12px;
+    box-shadow: inset 0px -2px 4px -1px #cccccc;
+}
+.detail-con .detail>ul>li.delete{
+    font-size: 12px;
+    box-shadow: inset 0px -2px 4px -1px #cccccc;
+}
+.detail-con .detail>ul>li.inquiry{
+    font-size: 12px;
+    box-shadow: inset 0px -2px 4px -1px #cccccc;
+}
+/* 버튼 스타일 */
+.detail-con span.image_btn{
+    display: flex;
+    justify-content: flex-end;
+}
+.detail-con span.image_btn button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.detail-con span.image_btn button:hover {
+    background-color: #0056b3;
+}
+/* 오류 메시지 스타일 */
+.error {
+    color: red;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+
+/*
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -161,4 +269,4 @@ button:hover {
 a:hover {
     text-decoration: underline;
 }
-
+*/
