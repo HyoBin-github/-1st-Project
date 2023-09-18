@@ -1,6 +1,6 @@
 // 파일 선택 시 이미지 미리보기 함수
   document.getElementById('file-input').addEventListener('change', function() {
-    var preview = document.getElementById('image-preview');
+    var preview = document.getElementById('image-preview1');
     var file = this.files[0];
     var reader = new FileReader();
 
@@ -47,7 +47,7 @@
 
   // 이미지가 삭제되었는지 확인하는 함수
   function isImageDeleted() {
-    var imagePreview = document.getElementById('preview-image');
+    var imagePreview = document.getElementById('preview-image1');
     return !imagePreview.src; // 이미지가 존재하지 않으면 true를 반환
   }
 
@@ -105,7 +105,7 @@ document.getElementById('delete-button').addEventListener('click', function() {
 
 // 현재 이미지가 기본 이미지(default.png)인지 확인하는 함수
 function isDefaultImage() {
-  var imagePreview = document.getElementById('preview-image');
+  var imagePreview = document.getElementById('preview-image1');
   var imageUrl = imagePreview.src;
 
   return imageUrl.endsWith('/profileImages/default.png');
@@ -119,7 +119,7 @@ window.onload = function() {
 };
 // 기본 이미지를 다시 로드하는 함수
 function loadDefaultImage() {
-  var imagePreview = document.getElementById('preview-image');
+  var imagePreview = document.getElementById('preview-image1');
   imagePreview.src = '/profileImages/default.png';
 }
 

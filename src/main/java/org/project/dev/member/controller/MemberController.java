@@ -1,6 +1,7 @@
 package org.project.dev.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.dialect.MySQL5Dialect;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.repository.MemberRepository;
@@ -102,7 +103,13 @@ public class MemberController {
 
     // 회원목록, 간편회원목록 선택 페이지 이동
     @GetMapping("/list")
-    public String getListPage(){
+    public String getListPage(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+
+        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        model.addAttribute("memberImageUrl", memberImageUrl);
+        model.addAttribute("member", member);
+
         return "member/list";
     }
 
@@ -232,8 +239,14 @@ public class MemberController {
             @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        if (myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+            model.addAttribute("myUserDetails", myUserDetails);
+        }
 
         Page<MemberDto> memberList = memberService.memberList(pageable, subject, search);
 
@@ -247,17 +260,11 @@ public class MemberController {
                 (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if (!memberList.isEmpty()) {
-            model.addAttribute("memberList", memberList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("myUserDetails", myUserDetails);
-            model.addAttribute("memberImageUrl", memberImageUrl);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
-            return "member/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
-        }
-        System.out.println("조회할 문의사항이 없다.");
-        return "redirect:/member/pagingList?page=0&subject=&search=";
+        return "member/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
     }
 
     // Detail - 회원 상세 보기
@@ -265,7 +272,6 @@ public class MemberController {
     public String getDetail(@PathVariable("memberId") Long memberId, Model model){
 
         MemberDto member=memberService.detailMember(memberId);
-
         // 이미지 url을 db에서 가져오기
         String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
@@ -278,7 +284,7 @@ public class MemberController {
 
     // Update - 회원 수정 화면
     @GetMapping("/update/{memberId}")
-    public String getUpdate(@PathVariable("memberId") Long memberId, MemberDto memberDto, Model model){
+    public String getUpdate(@PathVariable("memberId") Long memberId, MemberDto memberDto, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
         List<Integer> birthYears = new ArrayList<>();
@@ -294,11 +300,19 @@ public class MemberController {
             birthDays.add(day);
         }
 
+        if (myUserDetails != null) {
+            MemberDto member = memberService.detailMember(memberId);
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
+
         model.addAttribute("birthYears", birthYears);
         model.addAttribute("birthMonths", birthMonths);
         model.addAttribute("birthDays", birthDays);
 
-        memberDto=memberService.updateViewMember(memberId);
+        memberDto = memberService.updateViewMember(memberId);
         model.addAttribute("memberDto", memberDto);
 
         System.out.println("imageUrl : " + memberDto.getImageUrl()); // 오류 발견 목적으로 써놓음, 지워도 됨
@@ -359,9 +373,15 @@ public class MemberController {
 
     // 비밀번호 변경
     @GetMapping("/changePassword/{memberId}")
-    public String getChangePasswordPage(@PathVariable("memberId") Long memberId, Model model) {
+    public String getChangePasswordPage(@PathVariable("memberId") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+
+        MemberDto member = memberService.detailMember(memberId);
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         model.addAttribute("memberId", memberId);
+        model.addAttribute("member", member);
+        model.addAttribute("memberImageUrl", memberImageUrl);
+
         return "member/changePassword"; // changePassword.html 페이지로 이동
     }
 
@@ -395,7 +415,7 @@ public class MemberController {
     // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
     @PostMapping("/checkCurrentPassword")
     @ResponseBody
-    public Map<String, Boolean> checkCurrentPassword(@RequestParam("currentPassword") String currentPassword,
+    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
                                                      @RequestParam("memberId") Long memberId) {
 
         boolean valid = memberService.checkCurrentPassword(memberId, currentPassword);
@@ -407,9 +427,15 @@ public class MemberController {
 
     // 정보 수정 전 비밀번호 확인 - 입력 화면
     @GetMapping("/confirmPassword/{memberId}")
-    public String getConfirmPasswordView(@PathVariable("memberId") Long memberId, Model model){
+    public String getConfirmPasswordView(@PathVariable("memberId") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        MemberDto member = memberService.detailMember(memberId);
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         model.addAttribute("memberId", memberId);
+        model.addAttribute("member", member);
+        model.addAttribute("memberImageUrl", memberImageUrl);
+
         return "member/confirmPassword";
     }
 

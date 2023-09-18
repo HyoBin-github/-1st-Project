@@ -100,9 +100,7 @@ public class SemiMemberService {
     }
 
     // 간편회원목록 페이징, 검색
-    public Page<SemiMemberDto> semiMemberList(Pageable pageable, String subject, String search, MyUserDetails myUserDetails) {
-
-        myUserDetails.getMemberEntity();
+    public Page<SemiMemberDto> semiMemberList(Pageable pageable, String subject, String search) {
 
         Page<SemiMemberEntity> semiMemberEntities = null; // 기본 null값으로 설정
 

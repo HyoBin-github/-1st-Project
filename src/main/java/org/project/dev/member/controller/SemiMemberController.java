@@ -5,6 +5,7 @@ import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.dto.SemiMemberDto;
+import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ public class SemiMemberController {
 
     private final SemiMemberService semiMemberService;
     private final MemberService memberService; // 프로필 이미지 가져오기위함
+    private final ImageServiceImpl imageService; // 프로필 이미지 가져오기위함
 
     @GetMapping("/join")
     public String getJoin(SemiMemberDto semiMemberDto){
@@ -65,7 +67,7 @@ public class SemiMemberController {
 //        return "semiMember/semiMemberList";
 //    }
 
-    // 페이징, 검색 / size 바꿔야함
+    // 간편회원 목록 / 페이징, 검색
     @GetMapping("/pagingList")
     public String getSemiMemberList(
             @PageableDefault(page=0, size=7, sort = "semiMemberId", direction = Sort.Direction.DESC) Pageable pageable,
@@ -75,7 +77,16 @@ public class SemiMemberController {
             @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
 
-        Page<SemiMemberDto> semiMemberList = semiMemberService.semiMemberList(pageable, subject, search, myUserDetails);
+        if(myUserDetails != null){
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+            model.addAttribute("myUserDetails", myUserDetails);
+        }
+
+        Page<SemiMemberDto> semiMemberList = semiMemberService.semiMemberList(pageable, subject, search);
 
         Long totalCount = semiMemberList.getTotalElements();
         int totalPage = semiMemberList.getTotalPages();
@@ -87,17 +98,11 @@ public class SemiMemberController {
                 (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
         int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
 
-        if (!semiMemberList.isEmpty()) {
-            model.addAttribute("semiMemberList", semiMemberList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("myUserDetails", myUserDetails);
+        model.addAttribute("semiMemberList", semiMemberList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
-            return "semiMember/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
-        }
-        System.out.println("조회할 문의사항이 없다.");
-
-        return "redirect:/semiMember/pagingList?page=0&subject=&search=";
+        return "semiMember/pagingList"; // 이름 바꿔주기(memberList 지우고 memberList로)
     }
 
     // Detail - 회원 상세 보기

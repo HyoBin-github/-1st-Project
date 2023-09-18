@@ -5,13 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <title>프로필 이미지 수정</title>
+    <link rel="stylesheet" th:href="@{/css/member/update.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/member/detail.js}" defer="defer"></script>
 </head>
 <body>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <style>
     /* 미리보기 이미지 스타일 */
-    #image-preview {
+    #image-preview1 {
       max-width: 100px;
       max-height: 100px;
       border: 1px solid #ccc;
@@ -22,7 +24,7 @@
 <div class="detail">
     <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 상세정보</h1>
     <!-- 이미지 미리보기 영역 -->
-    <div id="image-preview"><img id="preview-image" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
+    <div id="image-preview1"><img id="preview-image1" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
     <!-- 버튼을 클릭하면 /image/upload로 POST 요청 보내기 -->
     <form action="/image/upload" method="post" enctype="multipart/form-data">
         <ul>
@@ -46,5 +48,6 @@
       window.history.back();
     }
 </script>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>

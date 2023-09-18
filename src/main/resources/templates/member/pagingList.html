@@ -7,6 +7,7 @@
   <link rel="stylesheet" th:href="@{/css/member/pagingList.css}">
 </head>
 <body>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <div class="container">
   <div class="pagingList">
     <div class="pagingList-con">
@@ -116,5 +117,6 @@
   </div>
   </div>
 </div>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>
