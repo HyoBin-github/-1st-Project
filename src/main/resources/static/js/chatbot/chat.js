@@ -36,7 +36,7 @@ function inputTagString(text){
     let ampm = (now.getHours()>11)?"오후":"오전";
     let time = ampm + now.getHours()%12+":"+now.getMinutes();
     let message = `
-    <div class="msg user flex end">
+    <div class="msg_user_flex_end">
     <div class="message">
     <div class="part">
     <p>${text}</p>
