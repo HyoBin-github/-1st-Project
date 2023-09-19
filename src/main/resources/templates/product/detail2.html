@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <!-- 송원철 -->
 
 <head>
@@ -63,7 +64,6 @@
         </tr>
     </table>
     <!-- 송원철 -->
-    </script>
     <form class="wishListForm2" sec:authorize="hasAnyRole('MEMBER', 'SEMIMEMBER', 'SELLER', 'ADMIN')"
         onsubmit="return addProduct();"
         th:action="@{(${member != null} ? '/cart/member/' + ${member.getMemberId()} + '/' + ${product.id} : '/cart/semiMember/' + ${#authentication.principal.semiMemberEntity.semiMemberId} + '/' + ${product.id})}"
@@ -89,11 +89,6 @@
     </script>
     <form class="abc" sec:authorize="!isAuthenticated()">
         <div class="d-flex">
-            <!--        <a th:href="@{/login}">-->
-            <!--            <button class="btn btn-outline-dark flex-shrink-0" type="button">-->
-            <!--                구매하기-->
-            <!--            </button>-->
-            <!--        </a>-->
             <a class="btn btn-outline-dark" th:href="@{/login}">
                 <i class="bi-cart-fill me-1"></i>
                 장바구니
