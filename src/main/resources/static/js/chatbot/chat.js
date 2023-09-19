@@ -25,10 +25,25 @@ function connect(){
             showMessage(JSON.parse(botMessage.body).message);
         });
         // @MessageMapping -> 처음연결시
-        stompClient.send("/chatbot/",{}, JSON.stringify({'content':'guest'}));
+        stompClient.send("/chatbot/hello",{}, JSON.stringify({'content':'guest'}));
     });
 }
 function inputTagString(text){
     let now = new Date();
-    
+    let ampm = (now.getHours()>11)?"오후":"오전";
+    let time = ampm + now.getHours()%12+":"+now.getMinutes();
+    let message = ' <div class="msg user flex end"><div class="message"><div class="part"><p>${text}</p></div><div class="time">${time}</div></div></div>';
+    return message;
+}
+function qKeyupFn(event){
+    if(event.keyCode!=13) return;
+    msgSendClickFn()
+}
+function msgSendClickFn(){
+    let question = $('#question').val().trim();
+    if(question==""||question.length<2) return;
+    let message = inputTagString(question);
+    showMessage(message);
+    $('#question').val("");
+    stompClient.send("/chatbot/message",{},JSON.stringify({'content':question}));
 }
