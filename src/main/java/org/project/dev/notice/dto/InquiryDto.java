@@ -34,8 +34,14 @@ public class InquiryDto {
         inquiryDto.setInqHit(inquiryEntity.getInqHit());
         inquiryDto.setCreateTime(inquiryEntity.getCreateTime());
         inquiryDto.setUpdateTime(inquiryEntity.getUpdateTime());
+        // member 필드 초기화
+        if (inquiryEntity.getMember() != null) {
+            inquiryDto.setMemberEmail(inquiryEntity.getMember().getMemberEmail());
+        }
         inquiryDto.setMemberEmail(inquiryEntity.getMember().getMemberEmail()); // 송원철
+
         return inquiryDto;
+
     }
 }
 

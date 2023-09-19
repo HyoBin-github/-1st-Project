@@ -71,9 +71,38 @@ public class InquiryService {
   3.
   4.
   */
-//    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch) {
+    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch) {
+
+       Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
+
+        if(inquirySelect.equals("inquiryTitle")){
+            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
+        }else if(inquirySelect.equals("inquiryContent")){
+            inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
+        }else if(inquirySelect.equals("memberEmail")){
+            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
+        }else{
+            inquiryEntities = inquiryRepository.findAll(pageable);
+        }
+
+
+        inquiryEntities.getNumber();
+        inquiryEntities.getTotalElements();
+        inquiryEntities.getTotalPages();
+        inquiryEntities.getSize();
+        Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
+
+
+
+        return inquiryDtoPage;
+    }
+//    @Transactional
+//    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch,
+//                                        MyUserDetails myUserDetails) {
 //
-//       Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
+//
+//        myUserDetails.getMemberEntity();
+//        Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
 //
 //        if(inquirySelect.equals("inquiryTitle")){
 //            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
@@ -93,38 +122,12 @@ public class InquiryService {
 //
 //        Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
 //
+////        InquiryDto.toinquiryDto()
+////        Page<InquiryDto> inquiryDtoPage = inquiryEntities.map();
+//
 //
 //        return inquiryDtoPage;
 //    }
-    @Transactional
-    public Page<InquiryDto> inquiryList(Pageable pageable, String inquirySelect, String inquirySearch,
-                                        MyUserDetails myUserDetails) {
-
-
-        myUserDetails.getMemberEntity();
-        Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
-
-        if(inquirySelect.equals("inquiryTitle")){
-            inquiryEntities = inquiryRepository.findByInquiryTitleContaining(pageable,inquirySearch);
-        }else if(inquirySelect.equals("inquiryContent")){
-            inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
-        }else if(inquirySelect.equals("memberEmail")){
-            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
-        }else{
-            inquiryEntities = inquiryRepository.findAll(pageable);
-        }
-
-
-        inquiryEntities.getNumber();
-        inquiryEntities.getTotalElements();
-        inquiryEntities.getTotalPages();
-        inquiryEntities.getSize();
-
-        Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
-
-
-        return inquiryDtoPage;
-    }
 
     @Transactional
     public InquiryDto InquiryDetail(Long id) {
@@ -173,20 +176,45 @@ public class InquiryService {
         }
         return null;
     }
+//    @Transactional
+//    public InquiryDto inquiryUpdateOk(InquiryDto inquiryDto, Long id) {
+//
+//        InquiryEntity inquiryEntity = inquiryRepository.findById(id).orElseThrow(()->{
+//            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
+//        });
+//
+//        Long inquiryId = inquiryRepository.save(InquiryEntity.toInquiryEntityUpdate(inquiryDto)).getInqId(); // 수정을 위한 jparepository
+//
+//        InquiryEntity inquiryEntity1 = inquiryRepository.findById(inquiryId).orElseThrow(()->{
+//            throw new IllegalArgumentException("수정한 공지사항이 존재하지 않습니다.");
+//        });
+//
+//        return InquiryDto.toinquiryDto(inquiryEntity1);
+//    }
+    
+    // 송원철 / 문의사항 수정 시 member 정보 유지해서 같이 저장
     @Transactional
     public InquiryDto inquiryUpdateOk(InquiryDto inquiryDto, Long id) {
-
+    
         InquiryEntity inquiryEntity = inquiryRepository.findById(id).orElseThrow(()->{
             throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
         });
-
-        Long inquiryId = inquiryRepository.save(InquiryEntity.toInquiryEntityUpdate(inquiryDto)).getInqId(); // 수정을 위한 jparepository
-
-        InquiryEntity inquiryEntity1 = inquiryRepository.findById(inquiryId).orElseThrow(()->{
+    
+        // InquiryEntity를 업데이트
+        InquiryEntity updatedInquiryEntity = InquiryEntity.toInquiryEntityUpdate(inquiryDto);
+        updatedInquiryEntity.setMember(inquiryEntity.getMember()); // member 정보 유지
+    
+        // 업데이트된 InquiryEntity를 저장
+        Long inquiryId = inquiryRepository.save(updatedInquiryEntity).getInqId();
+    
+        InquiryEntity inquiryEntity1 = inquiryRepository.findById(inquiryId).orElseThrow(() -> {
             throw new IllegalArgumentException("수정한 공지사항이 존재하지 않습니다.");
         });
-
-        return InquiryDto.toinquiryDto(inquiryEntity1);
+    
+        // 업데이트된 InquiryEntity를 사용하여 InquiryDto를 생성하고 반환
+        InquiryDto updatedInquiryDto = InquiryDto.toinquiryDto(inquiryEntity1);
+    
+        return updatedInquiryDto;
     }
 
     /*

@@ -7,6 +7,7 @@
   <link rel="stylesheet" th:href="@{/css/member/pagingList.css}">
 </head>
 <body>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <div class="pagingList">
   <div class="pagingList-con">
     <div class="boardList-table">
@@ -49,48 +50,50 @@
       </tbody>
     </table>
     <div class="paging">
-      <ul>
-        <li>
-          <!-- 현재페이지가  첫번째 페이지이면 span표시 -->
-          <span th:if="${1==semiMemberList.pageable.pageNumber+1}" class="span0">처음</span>
-          <!-- 처음 페이지가 아니면  a -->
-          <span th:unless="${1==semiMemberList.pageable.pageNumber+1}">
-            <a th:href="@{/semiMember/pagingList(page=0, search=${param.search}, subject=${param.subject})}" class="span1">처음</a>
-          </span>
-        </li>
-        <li>
-          <!-- 이전페이지가  첫번째 페이지이면   span표시 -->
-          <span th:if="${1==semiMemberList.pageable.pageNumber+1}"  class="span0">이전</span>
-          <span th:unless="${1==semiMemberList.pageable.pageNumber+1}">
-            <!--boardList.pageable.pageNumber 현재페이지 -1 -->
-            <a th:href="@{/semiMember/pagingList(page=${semiMemberList.pageable.pageNumber-1}, search=${param.search}, subject=${param.subject})}" class="span1">이전</a>
-          </span>
-        </li>
-        <!--페이지 번호-->
-        <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
-          <span th:if="${i==semiMemberList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
-          <a th:unless="${i==semiMemberList.pageable.pageNumber+1}"
-             th:href="@{/semiMember/pagingList(page=${i-1}, search=${param.search}, subject=${param.subject})}" th:text="${i}"></a>
-        </li>
-        <li>
-          <!-- 현재페이지가 마지막 페이지이면   span표시 -->
-          <span th:if="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}"  class="span0">다음</span>
-          <!-- 현재페이지가 마지막 페이지아니면    a 표시 현재페이지 +1 -->
-          <span th:unless="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}">
-             <a th:href="@{/semiMember/pagingList(page=${semiMemberList.pageable.pageNumber+1}, search=${param.search}, subject=${param.subject})}"   class="span1">다음</a>
-          </span>
-        </li>
-        <li>
-          <!-- 현재페이지가 마지막 페이지이면   span표시 -->
-          <span th:if="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}"  class="span0">마지막</span>
-          <!-- 현재페이지가 마지막 페이지가 아니면 마지막 페이지로 이동 해라  a -->
-          <span th:unless="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}">
-            <a th:href="@{/semiMember/pagingList(page=${semiMemberList.totalPages-1}, search=${param.search}, subject=${param.subject})}"  class="span1">마지막</a>
-          </span>
-        </li>
-      </ul>
+        <ul>
+          <li>
+            <!-- 현재페이지가  첫번째 페이지이면 span표시 -->
+            <span th:if="${1==semiMemberList.pageable.pageNumber+1}" class="span0">처음</span>
+            <!-- 처음 페이지가 아니면  a -->
+            <span th:unless="${1==semiMemberList.pageable.pageNumber+1}">
+              <a th:href="@{/semiMember/pagingList(page=0, search=${param.search}, subject=${param.subject})}" class="span1">처음</a>
+            </span>
+          </li>
+          <li>
+            <!-- 이전페이지가  첫번째 페이지이면   span표시 -->
+            <span th:if="${1==semiMemberList.pageable.pageNumber+1}"  class="span0">이전</span>
+            <span th:unless="${1==semiMemberList.pageable.pageNumber+1}">
+              <!--boardList.pageable.pageNumber 현재페이지 -1 -->
+              <a th:href="@{/semiMember/pagingList(page=${semiMemberList.pageable.pageNumber-1}, search=${param.search}, subject=${param.subject})}" class="span1">이전</a>
+            </span>
+          </li>
+            <!--페이지 번호-->
+          <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
+            <span th:if="${i==semiMemberList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
+            <a th:unless="${i==semiMemberList.pageable.pageNumber+1}"
+               th:href="@{/semiMember/pagingList(page=${i-1}, search=${param.search}, subject=${param.subject})}" th:text="${i}"></a>
+          </li>
+          <li>
+            <!-- 현재페이지가 마지막 페이지이면   span표시 -->
+            <span th:if="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}"  class="span0">다음</span>
+            <!-- 현재페이지가 마지막 페이지아니면    a 표시 현재페이지 +1 -->
+            <span th:unless="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}">
+               <a th:href="@{/semiMember/pagingList(page=${semiMemberList.pageable.pageNumber+1}, search=${param.search}, subject=${param.subject})}"   class="span1">다음</a>
+            </span>
+          </li>
+          <li>
+            <!-- 현재페이지가 마지막 페이지이면   span표시 -->
+            <span th:if="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}"  class="span0">마지막</span>
+            <!-- 현재페이지가 마지막 페이지가 아니면 마지막 페이지로 이동 해라  a -->
+            <span th:unless="${semiMemberList.totalPages ==semiMemberList.pageable.pageNumber+1}">
+              <a th:href="@{/semiMember/pagingList(page=${semiMemberList.totalPages-1}, search=${param.search}, subject=${param.subject})}"  class="span1">마지막</a>
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>

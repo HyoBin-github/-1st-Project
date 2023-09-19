@@ -16,7 +16,7 @@
          <span>주소: 서울특별시 노원구 OO동 OO로 OO길</span>
          <span>(주)Cloth Keeper 대표☆☆☆</span>
          <span>TEL: 02) 0000 - 1111 / FAX: 02) 0000 - 1112</span>
-         <span><a th:href="@{/notice/list}">공지사항</a></span>
+         <span><a th:href="@{/notice/list(page=0 ,search=${param.search} ,select=${param.select})}">공지사항</a></span>
      </div>
     <p class="copyroight">
         &copy; <span class="this-year"></span> Cloth Keeper Company. All Rights Reseved.

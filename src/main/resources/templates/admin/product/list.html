@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>List</title>
     <link rel="stylesheet" th:href="@{/css/admin/product/list.css}">
     <link rel="stylesheet" href="maincss.css">
 </head>
+<div th:replace="~{admin/fragments/common/header :: headerFragment}"></div>
+<div th:replace="~{admin/fragments/common/sidebar :: sidebarFragment}"></div>
 <body>
 
 <div class="main_wrap">
@@ -28,6 +32,7 @@
             <th class="table_title">제목</th>
             <th class="table_date">날짜</th>
             <th class="table_detail">상세보기</th>
+            <th class="table_delete">삭제하기</th>
         </tr>
         <!-- each -> 반복문 -->
         <!-- product -> 변수같은 개념 -->
@@ -38,15 +43,14 @@
             <td th:text="${product.memberNickName}"></td>
             <td th:text="${product.productName}"></td>
             <td th:text="${#temporals.format(product.productCreateTime, 'yy/MM/dd HH:mm')}"></td>
+
             <td><a th:href="@{|/admin/product/${product.id}/detail|}" th:text="${product.productName}"></a></td>
+            <td><a th:href="@{admin/product/${product.id}/detail}">상세보기</a></td>
             <td><a th:href="@{admin/product/${product.id}/delete}">삭제</a></td>
 
         </tr>
     </table>
 </div>
-
-
-
 
 
 <div class="pagination_wrap">
@@ -135,4 +139,5 @@
 
 
 </body>
+</th:block>
 </html>

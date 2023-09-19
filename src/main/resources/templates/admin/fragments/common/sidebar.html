@@ -36,16 +36,21 @@
                 <a href="#">문의사항</a>
                 <ul>
                     <li>
-                        <a href="#">고객</a>
+                        <a th:href="@{/inquiry/list?page=0&select=&search=}">문의사항 보기</a>
                     </li>
                     <li>
-                        <a href="#">배송</a>
+                        <a href="#">답변</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">공지사항</a>
+                <ul>
+                    <li>
+                        <a th:href="@{/notice/write}">공지사항 작성</a>
                     </li>
                     <li>
-                        <a href="#">이벤트</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
+                        <a th:href="@{/notice/list?page=0&select=&search=}">공지사항 보기</a>
                     </li>
                 </ul>
             </li>
@@ -67,7 +72,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">주문 목록</a>
+                <a href="#">장바구니</a>
                 <ul>
                     <li>
                         <a href="#">주문 목록</a>
@@ -84,10 +89,13 @@
                 </ul>
             </li>
             <li>
-                <a href="#">배송</a>
+                <a href="#">회원관리</a>
                 <ul>
                     <li>
-                        <a href="#">주문별 배송 상태</a>
+                        <a href="#">일반회원 목록</a>
+                    </li>
+                    <li>
+                        <a href="#">간편회원 목록</a>
                     </li>
                 </ul>
             </li>

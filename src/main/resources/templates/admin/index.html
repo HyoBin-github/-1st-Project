@@ -1,19 +1,12 @@
 
-<!--
-/* fragments 안했어요 그냥 통  html 파일입니다 */
-
-/*catfather49@gmail.com*/
--->
+<!--catfather49@gmail.com-->
 <!DOCTYPE html>
 
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"-->
-<!--      layout:decorate="~{admin/fragments/layout/baseLayout}">-->
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      layout:decorate="~{admin/fragments/layout/baseLayout}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,126 +15,16 @@
     <title>Document</title>
 </head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<th:block layout:fragment="title">
+    <title>ADMIN</title>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/admin/index.css}">
+</th:block>
+<th:block layout:fragment="container">
 
-<!--<meta name="viewport" content="width=device-width, initial-scale=1.0"> &lt;!&ndash;head.html에 사용해도 되는지?&ndash;&gt;-->
-<!--<th:block layout:fragment="title">-->
-<!--    <title>ADMIN</title>-->
-<!--</th:block>-->
-<!--<th:block layout:fragment="css">-->
-<!--    <link rel="stylesheet" th:href="@{/css/admin/index.css}">-->
-<!--</th:block>-->
-<!--<th:block layout:fragment="container">-->
-
-<!--</th:block>-->
 <body>
-<div class="header">
-    <div class="top-nav">
-        <div class="logo">
-            <h1>로고</h1>
-        </div>
-
-        <ul>
-            <th:block sec:authorize="hasAnyRole('ADMIN', 'SELLER')">
-                <li><a href="/member/logout">로그아웃</a></li>
-            </th:block>
-
-            <th:block sec:authorize="hasAnyRole('ADMIN')">
-                <li><a href="/member/logout">고객 관리</a></li>
-            </th:block>
-        </ul>
-    </div>
-</div>
-<div class="sideBar">
-    <div class="sideBarTitle">
-        <span>  </span>
-    </div>
-
-    <th:block sec:authorize="isAnonymous()">
-        <div class="loginInfo">
-            <form action="admin/login">
-                <input type="text" name="id" class="id">
-                <input type="password" name="pw" class="pw">
-                <button type="submit" class="loginBtn">login</button>
-            </form>
-        </div>
-    </th:block>
-
-    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
-        <div class="loginInfo">
-            <ul>
-                <li>
-                    <span th:text="${#authentication.principal.memberEntity.memberNickName}" class="data1 span"></span>님
-                </li>
-            </ul>
-        </div>
-
-    </th:block>
-
-    <div class="sideBar-sec">
-        <ul>
-            <li>
-                <a href="#">문의사항</a>
-                <ul>
-                    <li>
-                        <a href="#">고객</a>
-                    </li>
-                    <li>
-                        <a href="#">배송</a>
-                    </li>
-                    <li>
-                        <a href="#">이벤트</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">상품</a>
-                <ul>
-                    <li>
-                        <a href="/product/write">상품생성</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/admin/product/{memberId}/list(memberId=${#authentication.principal.memberEntity.memberId})}">상품 리스트</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">주문 목록</a>
-                <ul>
-                    <li>
-                        <a href="#">주문 목록</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                    <li>
-                        <a href="#">비고</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">배송</a>
-                <ul>
-                    <li>
-                        <a href="#">주문별 배송 상태</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
-
 <div class="main">
     <div class="container">
         <div class="main-section1">
@@ -149,37 +32,37 @@
                 <li>
                     <div class="sec1-title">문의 사항</div>
                     <ul class="sec1-item">
-                        <li>고객 문의 사항</li>
-                        <li>배송 상태 문의 사항</li>
-                        <li>이벤트 문의사항</li>
-                        <li>비고</li>
+                        <li>
+                            <a th:href="@{/inquiry/list?page=0&select=&search=}">문의사항 보기</a>
+                         </li>
+<!--                        <li>-->
+<!--                            <a th:href="@{/reply/write}">문의사항 답변하기</a>-->
+<!--                        </li> -->
                     </ul>
                 </li>
                 <li>
                     <div class="sec1-title">상품</div>
                     <ul class="sec1-item">
                         <li>상품 생성</li>
-                        <li>상품 리스트</li>
-                        <li>비고</li>
-                        <li>비고</li>
+                        <li><a th:href="@{/admin/product/{memberId}/list(memberId=${#authentication.principal.memberEntity.memberId})}">상품 리스트</a></li>
                     </ul>
                 </li>
                 <li>
-                    <div class="sec1-title">주문 목록</div>
+                    <div class="sec1-title">공지사항</div>
                     <ul class="sec1-item">
-                        <li>주문 목록 보기</li>
-                        <li>비고</li>
-                        <li>비고</li>
-                        <li>비고</li>
+                        <li>
+                            <a th:href="@{notice/write}">공지사항 작성</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/notice/list?page=0&select=&search=}">공지사항 보기</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
-                    <div class="sec1-title">배송</div>
+                    <div class="sec1-title">회원 목록</div>
                     <ul class="sec1-item">
-                        <li>주문별 배송 상태</li>
-                        <li>상품별 주문 상태</li>
-                        <li>배송 현황 보기</li>
-                        <li>비고</li>
+                        <li><a th:href="@{/member/pagingList?page=0&subject=&search=}">회원 목록</a></li>
+                        <li><a th:href="@{/semiMember/pagingList?page=0&subject=&search=}">간편회원 목록</a></li>
                     </ul>
                 </li>
             </ul>
@@ -191,12 +74,12 @@
                     오늘 할일
                 </div>
                 <ul>
-                    <li>신규 주문<span class="workList-item-number">10</span></li>
-                    <li>반품 신청<span class="workList-item-number">1</span></li>
+                    <li>신규 주문<span class="workList-item-number">30</span></li>
+                    <li>반품 신청<span class="workList-item-number">0</span></li>
                     <li>환불 처리<span class="workList-item-number">0</span></li>
-                    <li>입금 대기<span class="workList-item-number">5</span></li>
-                    <li>문의<span class="workList-item-number">3</span></li>
-                    <li>답변 대기 문의<span class="workList-item-number">2</span></li>
+                    <li>입금 대기<span class="workList-item-number">10</span></li>
+                    <li>문의<span class="workList-item-number">5</span></li>
+                    <li>답변 대기 문의<span class="workList-item-number">5</span></li>
                 </ul>
             </div>
         </div>
@@ -241,7 +124,7 @@
                     <th>문의</th>
                     <th>후기</th>
                     <tr>
-                        <td>2022-00-15</td>
+                        <td>2023-09-25</td>
                         <td>15</td>
                         <td>5,000,000</td>
                         <td>30</td>
@@ -272,31 +155,6 @@
         </div>
     </div>
 </div>
-
-<!--<div class="footer">-->
-<!--    <div class="nav">-->
-<!--        <a th:href="@{/}">-->
-<!--            <h2>CLOTH KEEPER</h2>-->
-<!--        </a>-->
-<!--        <ul class="menu">-->
-<!--            <li>개인정보처리방침</li>-->
-<!--            <li>영상정보처리기기 운영관리 방침</li>-->
-<!--            <li>홈페이지 이용약관</li>-->
-<!--            <li>위치정보 이용약관</li>-->
-<!--            <li>윤리경영</li>-->
-<!--        </ul>-->
-<!--        <div class="info">-->
-<!--            <span>주소: 서울특별시 노원구 OO동 OO로 OO길</span>-->
-<!--            <span>(주)Cloth Keeper 대표☆☆☆</span>-->
-<!--            <span>TEL: 02) 0000 - 1111 / FAX: 02) 0000 - 1112</span>-->
-<!--            <span><a th:href="@{/notice/list}">공지사항</a></span>-->
-<!--        </div>-->
-<!--        <p class="copyroight">-->
-<!--            &copy; <span class="this-year"></span> Cloth Keeper Company. All Rights Reseved.-->
-<!--        </p>-->
-<!--        <img th:src="@{/images/logo.png}" alt="" class="logo">-->
-<!--    </div>-->
-<!--</div>-->
 </body>
-
+</th:block>
 </html>

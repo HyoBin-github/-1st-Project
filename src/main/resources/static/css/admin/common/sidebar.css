@@ -1,8 +1,8 @@
 @import url(/css/common/reset.css);
 
-:root {
+  :root {
     --side-bar-width: 200px;
-    --side-bar-height: 70vh;
+    --side-bar-height: 100vh;
   }
 
 
@@ -10,9 +10,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-evenly;
+    justify-content: unset;
+    gap: 100px;
     padding: 10px;
-    background-color: #f5d4d4;
+    background-color: #7286D3;
 
     transform: translate(calc(var(--side-bar-width) * -0.9), 0);  /* X축 이동, Y축 고정 */
     transition: .5s;
@@ -20,9 +21,13 @@
     width: var(--side-bar-width); /*변수를 통해 사이드바 넒이 조정*/
     min-height: var(--side-bar-height);   /*사이드바 높이 조정*/
 
+    /* height: 1000px; 사이드바 길이 설정하기 */
 
   }
 
+  .sideBar > .sideBar-sec{
+    padding: 10px;
+  }
   .sideBar > .sideBar-sec > ul > li {
     position: relative;
   }
@@ -32,7 +37,7 @@
           display: block;
           width: 60px;
           border-bottom: 1px solid #bcbcbc;
-          margin: 20px auto;
+          /* margin: 20px auto; */
         }
 
   .sideBar > .sideBar-sec > ul{
@@ -50,7 +55,7 @@
   .sideBar > .sideBar-sec > ul > li:hover > ul  {
     display: block;
     position: absolute;
-    background-color: #f5d4d4;
+    background-color: #E3BD4F;
     top: 0;         /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
     left: 100%;     /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
     width: 150%;    /* 1차 메뉴의 너비를 상속 */
@@ -63,5 +68,5 @@
   }
 
   .sideBar:hover {
-    transform: translate(15px, 0);   /* 둥근 모서리의 너비만큼 X축 이동, Y축 고정 */
+    transform: translate(1px, 0);   /* 둥근 모서리의 너비만큼 X축 이동, Y축 고정 */
   }

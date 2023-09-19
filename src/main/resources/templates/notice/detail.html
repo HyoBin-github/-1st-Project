@@ -41,6 +41,7 @@
                         <div class="delete">
                             <th:block sec:authorize="hasAnyRole('ADMIN')">
                             <a th:href="@{/notice/delete/{id}(id=${noticeDto.notId})}">삭제하기</a>
+                            </th:block>
                         </div>
                         <div class="list">
                             <a th:href="@{/notice/list?page=0&select=&search=}" class="list">LIST</a>
@@ -50,19 +51,20 @@
                         <div class="update">
                             <th:block sec:authorize="hasAnyRole('ADMIN')">
                             <a th:href="@{/notice/update/{id}(id=${noticeDto.notId})}">수정하기</a>
+                            </th:block>
                         </div>
                     </div>
                 </div>
             </div>
             <!--댓글-->
-            <div class="reply-con">
-                <div class="reply-write">
-                    <form action="@{/notice/}">
-                        <!-- 번호 -->
-                    </form>
-                </div>
+                <div class="reply-con">
+                    <div class="reply-write">
+                        <form action="@{/notice/}">
+                            <!-- 번호 -->
+                        </form>
+                    </div>
 
-            </div>
+                </div>
         </div>
     </div>
 </div>

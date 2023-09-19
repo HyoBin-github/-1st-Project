@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -8,17 +7,17 @@
     <title>Cloth Keeper</title>
 </th:block>
 <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/cart/cart.css}">
-    <link rel="stylesheet" href="maincss.css">
+    <!-- <link rel="stylesheet" href="maincss.css"> -->
+    <script th:src="@{/js/payment/payment.js}" defer="defer"></script>
 </th:block>
-<th:block layout:fragment="script">
-</th:block>
+
 <th:block layout:fragment="container">
-    <h1 class="title"><span th:text="${member.memberNickName}" ></span>님 장바구니</h1>
-    <h1 class="title1"><span th:text="${member.memberId}"></span>회원번호</h1>
-    <div class="contianer">
         <div class="main">
+            <div class="title">
+                <h1 ><span th:text="${member.memberNickName}" class="title"></span>&nbsp;님 장바구니</h1>
+                <h1 ><span th:text="${member.memberId}" class="title"></span>&nbsp;회원번호</h1>
+            </div>
             <table class="cartTable">
                 <thead>
                 <tr>
@@ -56,12 +55,26 @@
                     <td class="btn btn-outline-dark"><a
                             th:href="@{/cart/member/{memberId}/{cartItemId}/delete(memberId=${cartItem.getCart().getMember().getMemberId()}, cartItemId=${cartItem.getCartItemId()})}"
                             style="text-decoration: none">삭제</a></td>
-                    <td><a href="#">결제</a></td>
-                </tr>
+
+                    <td>
+                        <th:block th:each="product: ${productList}">
+                            <button class="buttonpa" id="payment-button" th:value="@{/payment/kakao/pg(productId=${product.id}, memberId=${member.memberId}, productPrice=${product.productPrice}, productName=${product.productName})}">
+                                결제하기
+                            </button>
+                        </th:block>
+                    </td>
                 </tbody>
             </table>
-            총가격 : <span th:text="${totalPrice}">총가격</span>
         </div>
-    </div>
+        <div class="price">
+                총가격 : <span th:text="${totalPrice}">총가격</span>
+            </div>
 </th:block>
+
+<!--<a th:href=@{"/payment/kakao/pg?{productId=123&memberId=123&productPrice=100000&productName=testProduct"}></a>-->
+
+<script>
+
+</script>
+
 </html>

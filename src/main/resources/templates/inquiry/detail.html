@@ -41,7 +41,6 @@
                 <div class="bottom">
                     <div class="bottom-top">
                         <div class="delete">
-                            <th:block sec:authorize="hasAnyRole('ADMIN')">
                                 <a th:href="@{/inquiry/delete/{id}(id=${inquiryDto.inqId})}">삭제하기</a>
                         </div>
                         <div class="list">
@@ -50,45 +49,46 @@
                     </div>
                     <div class="bottom-bottom">
                         <div class="update">
-                            <th:block sec:authorize="hasAnyRole('ADMIN')">
                                 <a th:href="@{/inquiry/update/{id}(id=${inquiryDto.inqId})}">수정하기</a>
                         </div>
                     </div>
                 </div>
             </div>
             <!--댓글-->
+            <th:block sec:authorize="hasAnyRole('ADMIN','SELLER')">
             <style>
                 .hidden {display:none}
             </style>
-            <div class="reply-con">
-                <div class="title">
-                    <h2>답변</h2>
-                </div>
-                <div class="reply-write">
-                    <form id="replyForm">
-                        <input type="hidden" readonly name="inqId"
-                               th:value="${inquiryDto.inqId}" th:id="inqId">
-                        <ul>
-                            <li>
-                                <textarea name="reply" id="reply"
-                                          cols="30" rows="1" placeholder="내용작성"></textarea>
-                            </li>
-                            <!--                            <li>-->
-                            <!--                                <label for="reviewFile">리뷰사진</label>-->
-                            <!--                                <input type="file" multiple name="reviewFile" id="reviewFile">-->
-                            <!--                            </li>-->
-                            <li class="Btn">
-                                <input type="button" value="답글작성" id="replyBtn">
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-                <div class="replyList">
-                    <div id="replyCon" class="replyCon">
+                <div class="reply-con">
+                    <div class="title">
+                        <h2>답변</h2>
+                    </div>
+                    <div class="reply-write">
+                        <form id="replyForm">
+                            <input type="hidden" readonly name="inqId"
+                                   th:value="${inquiryDto.inqId}" th:id="inqId">
+                            <ul>
+                                <li>
+                                    <textarea name="reply" id="reply"
+                                              cols="30" rows="1" placeholder="내용작성"></textarea>
+                                </li>
+                                <!--                            <li>-->
+                                <!--                                <label for="reviewFile">리뷰사진</label>-->
+                                <!--                                <input type="file" multiple name="reviewFile" id="reviewFile">-->
+                                <!--                            </li>-->
+                                <li class="Btn">
+                                    <input type="button" value="답글작성" id="replyBtn">
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="replyList">
+                        <div id="replyCon" class="replyCon">
 
+                        </div>
                     </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </div>
 </div>

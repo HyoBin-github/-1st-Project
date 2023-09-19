@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/member/list.css}">
 </head>
 <body>
+<div th:replace="~{fragments/common/header :: headerFragment}"></div>
     <div class="container">
         <div class="nav">
             <!-- admin page header,sidebar 연결 -->
@@ -19,5 +20,6 @@
             </div>
         </div>
     </div>
+<div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>

@@ -28,7 +28,8 @@ public class WebSecurityConfigClass {
             http.antMatcher("/admin/**")
                     .authorizeHttpRequests()
                     .antMatchers("/", "/login").permitAll()
-//                    .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                    .antMatchers("/admin/index").hasAnyRole("ADMIN")
+//                    .antMatchers("/admin/index").hasAnyRole("ADMIN")
 //            http.authorizeHttpRequests()
 //                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
 //                    .antMatchers("/member/logout", "/board/**").authenticated()
@@ -85,10 +86,11 @@ public class WebSecurityConfigClass {
         @Bean
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
-                    .antMatchers("/", "/member/join", "/member/login").permitAll()
-                    .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**", "/board/**", "/cart/**", "/inquiry/**").authenticated()
-                    .antMatchers("/product/manage").hasAnyRole("SELLER", "ADMIN")
-                    .antMatchers("/admin/**", "/member/list", "/member/memberList", "/semiMember/semiMemberList").hasAnyRole("ADMIN")
+                    .antMatchers("/", "/member/join", "/member/login", "/product/list").permitAll()
+                    .antMatchers("/member/logout", "/member/detail/**", "/member/update/**", "/member/updateImage/**", "/member/delete/**",
+                            "/board/**", "/cart/**", "/member/inquiry**", "/member/confirmEmail/**", "/member/confirmPassword/**", "/inquiry/**").authenticated()
+                    .antMatchers("/product/manage", "/product/write").hasAnyRole("SELLER", "ADMIN")
+                    .antMatchers("/member/list", "/member/pagingList**").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin()
@@ -154,6 +156,7 @@ public class WebSecurityConfigClass {
                     .authorizeHttpRequests()
                     .antMatchers("/", "/login").permitAll()
                     .antMatchers("/semiMember/detail/**").hasAnyRole("SEMIMEMBER", "ADMIN")
+                    .antMatchers("/semiMember/pagingList**").hasAnyRole("ADMIN")
 //            http.authorizeHttpRequests()
 //                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
 //                    .antMatchers("/member/logout", "/board/**").authenticated()

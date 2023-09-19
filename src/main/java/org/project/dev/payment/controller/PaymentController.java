@@ -45,9 +45,6 @@ public class PaymentController {
             @RequestParam("pg_token") String pgToken) {
         Map<String, Object> paymentMap = new HashMap<String, Object>();
         paymentService.paymentApproval(pgToken, paymentId,productPrice,productName,memberId);
-
-
-
         return "payment/succed";
     }
 
@@ -59,7 +56,6 @@ public class PaymentController {
     3. return 으로 result pc 앱 결제 url 만 설정
      */
     @GetMapping("/{pg}/pg")
-
     @ResponseBody
     public Map<String, Object> pgRequest(
             @PathVariable("pg") String pg,
