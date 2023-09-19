@@ -136,56 +136,6 @@ public class InquiryController {
 //
 //        return "inquiry/list";
 
-    // 송원철
-//    @GetMapping("/list")
-//    public String getInquiryList(
-//            @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
-//            Model model,
-//            @RequestParam(value = "select", required = false) String inquirySelect,
-//            @RequestParam(value = "search", required = false) String inquirySearch,
-//            @AuthenticationPrincipal MyUserDetails myUserDetails
-//    ) {
-//        if (myUserDetails != null) {
-//            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-//            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
-//
-//            model.addAttribute("member", member);
-//            model.addAttribute("memberImageUrl", memberImageUrl);
-//        }
-//
-//        myUserDetails.getMemberEntity();
-//        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-//        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
-//
-//        Page<InquiryDto> inquiryList = inquiryService.inquiryList(pageable, inquirySelect, inquirySearch);
-//
-//        Long totalCount = inquiryList.getTotalElements();
-//        int totalPage = inquiryList.getTotalPages();
-//        int pageSize = inquiryList.getSize();
-//        int nowPage = inquiryList.getNumber();
-//        int blockNum = 10;
-//
-//        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
-//                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
-//        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
-//
-//        if (!inquiryList.isEmpty()) {
-//                model.addAttribute("inquiryList", inquiryList);
-//                model.addAttribute("startPage", startPage);
-//                model.addAttribute("endPage", endPage);
-//
-//                model.addAttribute("myUserDetails", myUserDetails);
-//                model.addAttribute("member", member);
-//                model.addAttribute("memberImageUrl", memberImageUrl);
-//                return "inquiry/list";
-//            }
-////        model.addAttribute("inquiryList", inquiryList);
-////        model.addAttribute("startPage", startPage);
-////        model.addAttribute("endPage", endPage);
-////        model.addAttribute("myUserDetails", myUserDetails);
-//
-//        return "inquiry/list";
-//    }
     @GetMapping("/list")
     public String getInquiryList(
             @PageableDefault(page=0, size=10, sort = "inqId", direction = Sort.Direction.DESC) Pageable pageable,
