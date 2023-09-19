@@ -219,6 +219,9 @@
     align-items: center;
     text-align: center;
 }
+.container .detail .detail-con .reply-con .reply-write form>ul>li{
+    width: 900px;
+}
 .container .detail .detail-con .reply-con .reply-write form>ul>li:not(.Btn){
     display: flex;
     justify-content: start;
@@ -264,6 +267,7 @@
     display: flex;
 }
 .container .detail .detail-con .replyList .replyCon{
+    width: 900px;
 }
 .container .detail .detail-con .replyList .replyCon>ul{
     display: flex;
@@ -308,6 +312,25 @@
     border: 2px solid #7285d3;
 }
 .container .detail .detail-con .replyList .replyCon>ul .content input:hover{
+    color: white;
+    background: #7285d3;
+}
+
+.container .detail .detail-con .replyList .replyCon>ul .show textarea{
+    width: 900px;
+    min-height: 100px;
+    padding: 0 0 30px 0;
+    font-size: 18px;
+}
+.container .detail .detail-con .replyList .replyCon>ul .show input{
+    width: 250px;
+    height: 25px;
+    font-size: 16px;
+    background: none;
+    border-radius: 10px;
+    border: 2px solid #7285d3;
+}
+.container .detail .detail-con .replyList .replyCon>ul .show input:hover{
     color: white;
     background: #7285d3;
 }

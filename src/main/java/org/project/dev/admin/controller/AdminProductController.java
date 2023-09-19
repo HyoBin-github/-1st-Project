@@ -58,7 +58,9 @@ public class AdminProductController {
                        @AuthenticationPrincipal MyUserDetails myUserDetails,
                        Model model) {
         ProductDTO productDetail = adminProductService.getProductDetail(productId);
+        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(productId);
         model.addAttribute("productDetail", productDetail);
+        model.addAttribute("productImgDTOS", productImgDTOS);
         return "admin/product/detail";
     }
 

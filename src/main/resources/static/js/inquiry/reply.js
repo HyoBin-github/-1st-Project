@@ -53,7 +53,7 @@ function replyList(){
                 list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+this.id+',"'+this.reply+'",'+this.inqId+")'>";
                 list+="</div>";
                 list+="</div>";
-                list+="<div id='showUp"+this.id+"'>";
+                list+="<div id='showUp"+this.id+"' class='show'>";
                 list+="</div>";
                 list+="</li>";
                 list+="</ul>";
