@@ -1,9 +1,8 @@
 package org.project.dev.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.project.dev.cartNew.entity.CartEntity;
-import org.project.dev.cartNew.repository.CartRepository;
-import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.cart.entity.CartEntity;
+import org.project.dev.cart.repository.CartRepository;
 import org.project.dev.member.dto.SemiMemberDto;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.member.repository.SemiMemberRepository;

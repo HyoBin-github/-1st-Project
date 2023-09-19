@@ -22,7 +22,6 @@
                         <li><a th:href="@{/join}">회원가입</a></li>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('ADMIN')">
-                        <li><a th:href="@{/member/list}">회원 목록</a></li>
                         <li><a th:href="@{/admin/index}">관리자페이지</a></li>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SELLER')">

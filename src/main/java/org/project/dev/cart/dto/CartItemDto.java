@@ -1,7 +1,7 @@
-package org.project.dev.cartNew.dto;
+package org.project.dev.cart.dto;
 
 import lombok.*;
-import org.project.dev.cartNew.entity.CartEntity;
+import org.project.dev.cart.entity.CartEntity;
 import org.project.dev.product.entity.ProductEntity;
 import java.time.LocalDateTime;
 

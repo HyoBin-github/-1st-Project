@@ -1,7 +1,7 @@
 package org.project.dev.config.member;
 import lombok.extern.slf4j.Slf4j;
-import org.project.dev.cartNew.entity.CartEntity;
-import org.project.dev.cartNew.repository.CartRepository;
+import org.project.dev.cart.entity.CartEntity;
+import org.project.dev.cart.repository.CartRepository;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.dto.ImageUploadDto;
 import org.project.dev.member.entity.ImageEntity;
@@ -11,7 +11,6 @@ import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;

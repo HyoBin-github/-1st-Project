@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_table")
+@Table(name = "admin_product_table")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
