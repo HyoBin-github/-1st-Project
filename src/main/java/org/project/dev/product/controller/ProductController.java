@@ -35,6 +35,7 @@ import org.project.dev.product.service.ProductService;
 import org.project.dev.product.service.ProductUtilService;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -233,6 +234,7 @@ public class ProductController {
         // 추가: member가 null이 아닌 경우에만 memberId를 model에 추가
         if (member != null) {
             MemberEntity loginMember = memberService.findMember(member.getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl(); // header 정보 가져오기
 
             int cartCount = 0;
             CartEntity memberCart = cartService.findMemberCart(loginMember.getMemberId());
@@ -243,11 +245,15 @@ public class ProductController {
             }
             model.addAttribute("cartCount", cartCount);
             model.addAttribute("member", member);
+            model.addAttribute("loginMember", loginMember); // header 정보 가져오기
+            model.addAttribute("memberImageUrl", memberImageUrl); // header 정보 가져오기
+
             log.info("Member: {}", member.getMemberId());
         }else {
             log.info("Member is null");
         }
 
+        // 추가: semiMember가 null이 아닌 경우에만 semiMemberId를 model에 추가
         if (semiMember != null) {
             SemiMemberEntity loginSemiMember = semiMemberService.findSemiMember(semiMember.getSemiMemberId());
 
