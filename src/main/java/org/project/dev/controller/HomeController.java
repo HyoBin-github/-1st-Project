@@ -86,6 +86,4 @@ public class HomeController {
     public String getLogin(){
         return "login";
     }
-
-
 }
