@@ -1,17 +1,15 @@
+@charset "UTF-8";
 .chat{
     width: 100%;
-}
-.chat .chatbot{
-    display: flex;
-    /* flex-direction: column; */
-    justify-content: space-between;
-}
-.chat .chatbot .chat-nav{
-    display: flex;
-    justify-content: space-between;
     border: 2px red;
 }
-.chat .chatbot .chat-nav .chat-header{
-
+#chatbot{
     border: 2px yellow;
+}
+.chat .chatbot dl{
+    border: 2px orange;
+}
+.chat .chatbot .chat-nav dl dt{
+
+    border: 2px gray;
 }

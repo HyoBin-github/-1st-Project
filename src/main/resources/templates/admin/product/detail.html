@@ -12,7 +12,7 @@
 <div th:replace="~{admin/fragments/common/sidebar :: sidebarFragment}"></div>
 <body>
    <div class="main">
-    <div class="title">  
+    <div class="title">
      <div class="main-title">
        <h2>상품 상세보기</h2>
       </div>
@@ -22,11 +22,10 @@
           <!-- <tr th:each="product, stat: ${productList}" > -->
 
 <!--          <div th:each="product, stat: ${productImgDTOS}" >-->
-          <img th:src="@{/images/{filename}(filename=${productImages[stat.index].productImgSavedName})}"/><
+<!--          <img th:src="@{/images/{filename}(filename=${productImages[stat.index].productImgSavedName})}"/><-->
 <!--            <img th:src="${/images/{filename}(filename=${product[stat.index].productImgSavedName})}" />-->
           <!-- <span image="${productImg.productImgSavedPath}"></span> -->
           </div>
-        </div>
         <div class="item-form">
           <ul>
             <li>

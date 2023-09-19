@@ -7,3 +7,17 @@
    background:url("/images/chatbot2.png") no-repeat;
    cursor:pointer;
 }
+.chat{
+  width: 100%;
+  border: 2px red;
+}
+.chat .chatbot{
+  border: 2px yellow;
+}
+.chat .chatbot dl{
+  border: 2px orange;
+}
+.chat .chatbot .chat-nav dl dt{
+
+  border: 2px gray;
+}
