@@ -19,7 +19,7 @@ public interface InquiryRepository extends JpaRepository<InquiryEntity, Long> {
     Page<InquiryEntity> findByMemberMemberEmailContaining(Pageable pageable, String memberEmail); // 송원철 / 이메일
     Page<InquiryEntity> findByMemberMemberId(Pageable pageable, Long memberId); // 송원철 // 내가 쓴 문의사항 가져오기
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE inquiry1 i set i.inq_hit = i.inq_hit+1 where i.inq_id = :id", nativeQuery = true)
+    @Query(value = "UPDATE inquiry i set i.inq_hit = i.inq_hit+1 where i.inq_id = :id", nativeQuery = true)
     void InquiryHit(@Param("id") Long id);
 
 
