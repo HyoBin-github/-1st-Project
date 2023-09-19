@@ -88,7 +88,7 @@ public class CartController {
             model.addAttribute("cartItems", cartItemEntityList);
             model.addAttribute("member", memberService.findMember(memberId));
             model.addAttribute("productImages", productImages);
-            model.addAttribute("productList", productEntities);
+            model.addAttribute("product", productEntities.get(0));
             model.addAttribute("memberImageUrl", memberImageUrl); // 프로필 이미지 불러옴
 
             return "/member/cart";

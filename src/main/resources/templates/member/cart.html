@@ -54,18 +54,14 @@
                     <td th:text="${#temporals.format(cartItem.getCreateTime(), 'yyyy-MM-dd HH:mm:ss')}">날짜</td>
                     <td class="btn btn-outline-dark"><a
                             th:href="@{/cart/member/{memberId}/{cartItemId}/delete(memberId=${cartItem.getCart().getMember().getMemberId()}, cartItemId=${cartItem.getCartItemId()})}"
-                            style="text-decoration: none">삭제</a></td>
-
-                    <td>
-                        <th:block th:each="product: ${productList}">
-                            <button class="buttonpa" id="payment-button" th:value="@{/payment/kakao/pg(productId=${product.id}, memberId=${member.memberId}, productPrice=${product.productPrice}, productName=${product.productName})}">
-                                결제하기
-                            </button>
-                        </th:block>
+                            style="text-decoration: none">삭제</a>
                     </td>
                 </tbody>
             </table>
         </div>
+            <button class="buttonpa" id="payment-button" th:value="@{/payment/kakao/pg(productId=${product.id}, memberId=${member.memberId}, productPrice=${totalPrice}, productName=${product.productName})}">
+                결제하기
+            </button>
         <div class="price">
                 총가격 : <span th:text="${totalPrice}">총가격</span>
             </div>
