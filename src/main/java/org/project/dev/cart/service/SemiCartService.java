@@ -1,10 +1,10 @@
-package org.project.dev.cartNew.service;
+package org.project.dev.cart.service;
 
 import lombok.RequiredArgsConstructor;
-import org.project.dev.cartNew.entity.CartEntity;
-import org.project.dev.cartNew.entity.CartItemEntity;
-import org.project.dev.cartNew.repository.CartItemRepository;
-import org.project.dev.cartNew.repository.CartRepository;
+import org.project.dev.cart.entity.CartEntity;
+import org.project.dev.cart.entity.CartItemEntity;
+import org.project.dev.cart.repository.CartItemRepository;
+import org.project.dev.cart.repository.CartRepository;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.project.dev.product.repository.ProductRepository;

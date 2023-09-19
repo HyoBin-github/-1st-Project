@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "member_project")
+@Table(name = "admin_member_project")
 public class AdminMemberEntity extends BaseEntity {
 
     @Id

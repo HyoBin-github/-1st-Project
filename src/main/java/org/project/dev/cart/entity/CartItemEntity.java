@@ -1,4 +1,4 @@
-package org.project.dev.cartNew.entity;
+package org.project.dev.cart.entity;
 
 import lombok.*;
 import org.project.dev.product.entity.ProductEntity;

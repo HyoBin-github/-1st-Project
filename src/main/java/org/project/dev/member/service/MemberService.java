@@ -2,17 +2,14 @@ package org.project.dev.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.project.dev.cartNew.entity.CartEntity;
-import org.project.dev.cartNew.repository.CartRepository;
-import org.project.dev.config.member.MyUserDetails;
+import org.project.dev.cart.entity.CartEntity;
+import org.project.dev.cart.repository.CartRepository;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
 import org.project.dev.member.repository.SemiMemberRepository;
-import org.project.dev.notice.dto.InquiryDto;
-import org.project.dev.notice.entity.InquiryEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +19,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j // log 객체 사용하기위함
 @Service

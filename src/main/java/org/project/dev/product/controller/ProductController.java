@@ -1,12 +1,11 @@
 package org.project.dev.product.controller;
 
-import com.sun.mail.imap.protocol.Item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.project.dev.cartNew.entity.CartEntity;
-import org.project.dev.cartNew.entity.CartItemEntity;
-import org.project.dev.cartNew.service.CartService;
-import org.project.dev.cartNew.service.SemiCartService;
+import org.project.dev.cart.entity.CartEntity;
+import org.project.dev.cart.entity.CartItemEntity;
+import org.project.dev.cart.service.CartService;
+import org.project.dev.cart.service.SemiCartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
 import org.project.dev.member.entity.MemberEntity;
@@ -19,8 +18,6 @@ import org.project.dev.product.dto.ProductImgDTO;
 import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductCategoryEntity;
 import org.project.dev.product.entity.ProductEntity;
-import org.project.dev.review.dto.ReviewDto;
-import org.project.dev.review.entity.ReviewEntity;
 import org.project.dev.review.repository.ReviewRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

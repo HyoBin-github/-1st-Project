@@ -3,14 +3,7 @@ package org.project.dev.product.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.project.dev.cartNew.entity.CartItemEntity;
-import org.project.dev.member.entity.MemberEntity;
-import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.product.dto.ProductBrandDTO;
-import org.project.dev.product.dto.ProductDTO;
-import org.project.dev.review.entity.ReviewEntity;
-import org.project.dev.utils.BaseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

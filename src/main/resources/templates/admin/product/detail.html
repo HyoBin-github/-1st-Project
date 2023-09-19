@@ -19,7 +19,7 @@
     </div>
       <div class="main-section1">
         <div class="image">
-          
+          <!-- image넣기 -->
         </div>
         <div class="item-form">
           <ul>
@@ -41,7 +41,8 @@
             </li>
             <li>
               <label>상세설명</label>
-              <span th:text="${productDetail.productDescription}"></span>
+              <textarea th:text="${productDetail.productDescription}" th:value="${productDetail.productDescription}" name="productDescription" id="contentText" disabled></textarea>
+              <!-- <span th:text="${productDetail.productDescription}"></span> -->
             </li>
             <li>
               <label>노출여부</label>

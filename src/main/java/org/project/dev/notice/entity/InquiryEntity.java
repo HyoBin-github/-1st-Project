@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "inquiry1") // 송원철
+@Table(name = "inquiry") // 송원철
 public class InquiryEntity extends BaseEntity {
 
     @Id

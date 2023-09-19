@@ -13,7 +13,7 @@
     justify-content: unset;
     gap: 100px;
     padding: 10px;
-    background-color: #7286D3;
+    background-color: #627de6c3;
 
     transform: translate(calc(var(--side-bar-width) * -0.9), 0);  /* X축 이동, Y축 고정 */
     transition: .5s;
@@ -23,6 +23,11 @@
 
     /* height: 1000px; 사이드바 길이 설정하기 */
 
+  }
+
+  .sideBar .loginInfo>ul>li span{
+    font-size: 18px;
+    color: white;
   }
 
   .sideBar > .sideBar-sec{
@@ -55,7 +60,7 @@
   .sideBar > .sideBar-sec > ul > li:hover > ul  {
     display: block;
     position: absolute;
-    background-color: #E3BD4F;
+    background-color: #627de6;
     top: 0;         /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
     left: 100%;     /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
     width: 150%;    /* 1차 메뉴의 너비를 상속 */

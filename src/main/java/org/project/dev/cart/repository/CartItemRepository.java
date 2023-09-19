@@ -1,6 +1,6 @@
-package org.project.dev.cartNew.repository;
+package org.project.dev.cart.repository;
 
-import org.project.dev.cartNew.entity.CartItemEntity;
+import org.project.dev.cart.entity.CartItemEntity;
 import org.project.dev.product.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

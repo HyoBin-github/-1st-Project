@@ -4,7 +4,7 @@ package org.project.dev.product.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import org.project.dev.cartNew.entity.CartItemEntity;
+import org.project.dev.cart.entity.CartItemEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
 import org.project.dev.product.dto.ProductDTO;
@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_table1")
+@Table(name = "product_table")
 public class ProductEntity extends BaseEntity {
 
     /*

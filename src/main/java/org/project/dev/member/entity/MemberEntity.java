@@ -1,7 +1,7 @@
 package org.project.dev.member.entity;
 
 import lombok.*;
-import org.project.dev.cartNew.entity.CartEntity;
+import org.project.dev.cart.entity.CartEntity;
 import org.project.dev.constrant.Role;
 import org.project.dev.member.dto.MemberDto;
 import org.project.dev.notice.entity.InquiryEntity;
@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "member_project1")
+@Table(name = "member_project")
 public class MemberEntity extends BaseEntity {
 
     @Id
