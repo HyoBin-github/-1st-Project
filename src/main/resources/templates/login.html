@@ -5,12 +5,16 @@
 <th:block layout:fragment="title">
     <title>로그인</title>
 </th:block>
+<!--  chatbot-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/login.css}">
 </th:block>
 <th:block layout:fragment="javascript">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/member/tempPasswordLogin.js}" defer="defer"></script>
+    <script th:src="@{/js/chatbot/chatbot.js}" type="text/javascript" defer="defer"></script>
 </th:block>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <!--<div th:replace="~{fragments/common/header_SONG :: headerFragment}"></div>-->
@@ -42,4 +46,7 @@
     </div>
 </th:block>
 <div th:replace="~{fragments/common/footer :: footerFragment}"></div>
+<!--chatbot-->
+<div class="chatbot" >
+</div>
 </html>

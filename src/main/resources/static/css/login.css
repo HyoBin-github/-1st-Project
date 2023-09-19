@@ -1,6 +1,8 @@
 @import url(/css/common/reset.css);
 @import url(/css/common/header.css);
 @import url(/css/common/footer.css);
+/*chatbot*/
+@import url(/css/common/chatbot.css);
 /* container */
 .container{
     width: 100%;
