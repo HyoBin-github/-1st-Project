@@ -28,11 +28,11 @@ public class ReviewService {
 
         ProductEntity productEntity
                 = productRepository.findById(replyDto.getProductId()).orElseThrow(() -> new IllegalArgumentException("X"));
-        String replyName = "m1";
+
         ReviewEntity reviewEntity = ReviewEntity.builder()
                 .review(replyDto.getReview())
 //                .replyWriter(replyDto.getReplyWriter())
-                .reviewWriter(replyName)
+                .reviewWriter(myUserDetails.getMemberEntity().getMemberEmail())
                 .productEntity(productEntity)
                 .build();
         Long reviewId = reviewRepository.save(reviewEntity).getId();
@@ -94,11 +94,10 @@ public class ReviewService {
                 = productRepository.findById(reviewDto.getProductId()).orElseThrow(()->{
                     throw new IllegalArgumentException("X");
         });
-        reviewDto.setReviewWriter("m1");
         ReviewEntity reviewEntity = ReviewEntity.builder()
                 .id(reviewDto.getId())
                 .review(reviewDto.getReview())
-                .reviewWriter(reviewDto.getReviewWriter())
+                .reviewWriter(myUserDetails.getMemberEntity().getMemberEmail())
                 .productEntity(productEntity)
                 .build();
         Long saveId = reviewRepository.save(reviewEntity).getId();

@@ -18,7 +18,17 @@ function disconnect(){
 function connect(){
 
     let soket = new SockJS('/chatEndpoint');
-
-
-
+    stompClient = Stomp.over(soket);
+    stompClient.connect({},function (frame){
+        console.log('Connected:'+frame);
+        stompClient.subscribe('/topic/greetings',function(botMessage){
+            showMessage(JSON.parse(botMessage.body).message);
+        });
+        // @MessageMapping -> 처음연결시
+        stompClient.send("/chatbot/",{}, JSON.stringify({'content':'guest'}));
+    });
+}
+function inputTagString(text){
+    let now = new Date();
+    
 }
