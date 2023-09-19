@@ -3,12 +3,19 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
+<!--  chatbot-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>write</title>
   <link rel="stylesheet" th:href="@{/css/product/detail.css}">
   <script th:src="@{/js/product/detail.js}"></script>
   <script th:src="@{/js/review/review.js}" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--  chatbot-->
+  <script th:src="@{/js/chatbot/chatbot.js}" type="text/javascript" defer="defer"></script>
+
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -184,6 +191,10 @@
   </div>
 
 </div>
+<!--chatbot-->
+<div class="chatbot" >
+</div>
+
 <div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>
