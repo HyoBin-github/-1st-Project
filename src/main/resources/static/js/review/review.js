@@ -24,7 +24,7 @@ function reviewFn() {
 }
 
 function replyList(){
-    const productId = $('#productId').val();
+    const productId = $('#proId').val();
     const data = {
         'productId':productId
     }
@@ -48,7 +48,7 @@ function replyList(){
                 list+="<li>";
                 list+="<div id='reCon"+this.id+"'>";
                 list+="<span>"+this.review+"</span>";
-                list+="<div class='Btn'th:if='${#authentication.principal.username==member.memberEmail}''>";
+                list+="<div class='Btn' th:unless='${#authentication.principal.username=="+this.reviewWriter+"}'>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
                 list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+this.id+',"'+this.review+'",'+this.productId+")'>";
                 list+="</div>";
