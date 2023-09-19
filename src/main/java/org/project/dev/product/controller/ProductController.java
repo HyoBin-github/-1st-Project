@@ -8,8 +8,10 @@ import org.project.dev.cart.service.CartService;
 import org.project.dev.cart.service.SemiCartService;
 import org.project.dev.config.member.MyUserDetails;
 import org.project.dev.config.semiMember.SemiMyUserDetails;
+import org.project.dev.member.dto.MemberDto;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.entity.SemiMemberEntity;
+import org.project.dev.member.service.ImageServiceImpl;
 import org.project.dev.member.service.MemberService;
 import org.project.dev.member.service.SemiMemberService;
 import org.project.dev.product.dto.ProductBrandDTO;
@@ -64,6 +66,7 @@ public class ProductController {
     private final CartService cartService; // 송원철 / 장바구니 관련
     private final SemiMemberService semiMemberService; // 송원철 / 장바구니 관련
     private final SemiCartService semiCartService; // 송원철 / 장바구니 관련
+    private final ImageServiceImpl imageService; // 송원철 / header 관련
     
 
     // WRITE (INSERT)
@@ -158,14 +161,31 @@ public class ProductController {
     }
 
     // 스크롤 페이징 작업중 ==================================================================
+//    @GetMapping("/list")
+//    public String list(Model model){
+//        Optional<Long> lastProductId = productUtilService.findLastProductId();
+//        model.addAttribute("lastProductId_from_server", lastProductId.orElse(null));
+//        return "/product/list";
+//    }
+    // ===================================================================================
+    
+    // 송원철 / header에 로그인한 member정보 담아줌
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        if (myUserDetails != null) {
+
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
+
         Optional<Long> lastProductId = productUtilService.findLastProductId();
         model.addAttribute("lastProductId_from_server", lastProductId.orElse(null));
         return "/product/list";
     }
-
-    // ===================================================================================
 
     // DETAIL (SELECT)
 //    @GetMapping("/{id}")
