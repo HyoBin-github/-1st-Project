@@ -46,7 +46,7 @@ th, td {
   text-align: center;
 }
 th{
-  background-color: #4b66c7;
+  background-color: #4b66c7ae;
 }
 
 tbody tr:nth-child(2n) {

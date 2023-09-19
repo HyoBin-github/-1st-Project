@@ -3,7 +3,8 @@
   .header{
     height: 80px;
     padding: 20px;
-    background-color: #4F6DE3;
+    background-color: #627de6c3;
+    border-bottom: #627de6c3;
 
   }
 
@@ -36,6 +37,8 @@
     border: 1px solid #8C9CDB;
     border-radius: 10px;
     box-sizing: border-box;
-
+  }
+  .header .top-nav ul li:hover{
+    color: #cccccc;;
   }
 
