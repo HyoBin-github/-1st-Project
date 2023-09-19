@@ -106,7 +106,7 @@
     <button onclick="deleteReq()">삭제</button>
     <div class="reply-con">
         <div class="reply-write">
-            <form id="replyForm">
+            <form id="replyForm" sec:authorize="isAuthenticated()">
                 <input type="hidden" readonly name="productId" th:value="${product.id}" id="productId">
                 <ul>
                     <li>
