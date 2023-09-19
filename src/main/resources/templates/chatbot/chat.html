@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" th:href="@{/css/chatbot/chat.css}">
     <title>챗봇!</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
@@ -12,10 +12,10 @@
     <script th:src="@{/js/chatbot/chat.js}" type="text/javascript" defer="defer"></script>
 </head>
 <body>
-<div id="chat">
-    <div id="chat-bot">
-        <dl id="chat-disp">
-            <dt id="chat-header">
+<div id="chat" class="chat">
+    <div id="chat-bot" class="chatbot">
+        <dl id="chat-disp" class="chat-nav">
+            <dt id="chat-header" class="chat-header">
                 <span>집사</span>
                 <span class="btn-wrap">
                     <button type="button" id="btn-chat-close" onclick="disconnect()">X</button>

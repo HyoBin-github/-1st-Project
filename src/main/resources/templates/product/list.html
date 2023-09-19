@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <!--  chatbot-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/product/list.css}">
     <script th:src="@{/js/product/list.js}"></script>
+    <!--  chatbot-->
+    <script th:src="@{/js/chatbot/chatbot.js}" type="text/javascript" defer="defer"></script>
+
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -148,6 +156,9 @@
         <div class="product-list" id="product-list"></div>
     </div>
 </div>
+<!--chatbot-->
+<div class="chatbot" >
+</div>gi
 <div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>

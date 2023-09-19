@@ -1,0 +1,17 @@
+.chat{
+    width: 100%;
+}
+.chat .chatbot{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+}
+.chat .chatbot .chat-nav{
+    display: flex;
+    justify-content: space-between;
+    border: 2px red;
+}
+.chat .chatbot .chat-nav .chat-header{
+
+    border: 2px yellow;
+}
