@@ -32,6 +32,7 @@ public class ProductDTO {
     private String productName;
     private String productColor;
     private String productSize;
+    private int productStock;
     private String productDescription;
     private int productHits;
     private Long productPrice;
@@ -41,10 +42,13 @@ public class ProductDTO {
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
 
-    // from ProductBrandEntity
+    // from ProductBrandDTO
     private ProductBrandDTO productBrand;
 
-    // from ProductImgEntity
+    // from ProductCategoryDTO
+    private ProductCategoryDTO productCategory;
+
+    // from ProductImgDTO
     private List<ProductImgDTO> productImgDTOS;
 
     // 송원철 / 장바구니 관련
@@ -59,6 +63,7 @@ public class ProductDTO {
         productDTO.setProductName(productEntity.getProductName());
         productDTO.setProductColor(productEntity.getProductColor());
         productDTO.setProductSize(productEntity.getProductSize());
+        productDTO.setProductStock(productEntity.getProductStock());
         productDTO.setProductDescription(productEntity.getProductDescription());
         productDTO.setProductHits(productEntity.getProductHits());
         productDTO.setProductPrice(productEntity.getProductPrice());
@@ -70,6 +75,10 @@ public class ProductDTO {
         // ProductBrandEntity를 ProductBrandDTO로 변환
         if (productEntity.getProductBrandEntity() != null) {
             productDTO.setProductBrand(ProductBrandDTO.toDTO(productEntity.getProductBrandEntity()));
+        }
+
+        if (productEntity.getProductCategoryEntity() != null) {
+            productDTO.setProductCategory(ProductCategoryDTO.toDTO(productEntity.getProductCategoryEntity()));
         }
 
         // ProductImgEntity 리스트를 ProductImgDTO 리스트로 변환

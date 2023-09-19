@@ -158,11 +158,11 @@ public class ProductController {
     }
 
     // 스크롤 페이징 작업중 ==================================================================
-    @GetMapping("/list2")
-    public String list2(Model model){
+    @GetMapping("/list")
+    public String list(Model model){
         Optional<Long> lastProductId = productUtilService.findLastProductId();
         model.addAttribute("lastProductId_from_server", lastProductId.orElse(null));
-        return "/product/list2";
+        return "/product/list";
     }
 
     // ===================================================================================
@@ -193,6 +193,14 @@ public class ProductController {
         // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
         productUtilService.updateHits(id);
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+        if (productDTOViewDetail == null) {
+            log.warn("productDTOViewDetail is null");
+        } else {
+            log.info("productDTOViewDetail: {}", productDTOViewDetail.toString());
+            if (productDTOViewDetail.getProductCategory() == null) {
+                log.warn("productDTOViewDetail's productCategory is null");
+            }
+        }
         List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
 
 

@@ -46,6 +46,9 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_size", nullable = false)
     private String productSize;
 
+    @Column(name = "product_stock", length = 5, nullable = false)
+    private int productStock;
+
     @Column(name = "product_description", length = 500, nullable = false)
     private String productDescription;
 
@@ -103,6 +106,7 @@ public class ProductEntity extends BaseEntity {
         productEntity.setProductName(productDTO.getProductName());
         productEntity.setProductColor(productDTO.getProductColor());
         productEntity.setProductSize(productDTO.getProductSize());
+        productEntity.setProductStock(productDTO.getProductStock());
         productEntity.setProductDescription(productDTO.getProductDescription());
         productEntity.setProductHits(productDTO.getProductHits());
         productEntity.setProductPrice(productDTO.getProductPrice());

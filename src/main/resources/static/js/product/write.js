@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var imageContainer = document.getElementById("image-container");
 
-    const colorRadioBtn = document.querySelectorAll(".colorRadioBtn");
+    const colorRadioBtn = document.querySelectorAll(".color_radio-btn_label");
 
     var productSubmit = document.getElementById("productSubmit");
 
@@ -195,10 +195,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const isProductName = document.getElementById("productName").value.trim();
       const isProductSize = document.getElementById("productSize").value.trim();
       const isProductPrice = document.getElementById("productPrice").value.trim();
+      const isProductStock = document.getElementById("productStock").value.trim();
       const isProductDescription = document.getElementById("productDescription").value.trim();
 
       if (!isProductCategoryName || !isProductBrandName || !isProductName || 
-        !isProductSize || !isProductPrice || !isProductDescription) {
+        !isProductSize || !isProductPrice || !isProductStock || !isProductDescription) {
         alert("모든 필드를 채워주세요.");
         return;
       }
@@ -351,11 +352,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 카테고리
     document.getElementById("productCategoryName").addEventListener("focus", function(event) {
-      setupAutocomplete("productCategoryName", "/categoryName", "category-autocomplete-div", "category-autocomplete-text-ul");
+      setupAutocomplete("productCategoryName", "/categoryName", "autocomplete_div__category", "autocomplete_ul__category");
     });
     // 브랜드
     document.getElementById("productBrandName").addEventListener("focus", function(event) {
-      setupAutocomplete("productBrandName", "/brandName", "brand-autocomplete-div", "brand-autocomplete-text-ul");
+      setupAutocomplete("productBrandName", "/brandName", "autocomplete_div__brand", "autocomplete_ul__brand");
     });
 
 
