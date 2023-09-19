@@ -6,7 +6,7 @@
 <div id="header" class="header" th:fragment="headerFragment">
         <div class="top-nav">
             <div class="logo">
-                <h1>로고</h1>
+                <a th:href="@{/}"><img th:src="@{/images/logo.png}" alt="HOME"></a>
             </div>
 
             <ul>
@@ -15,7 +15,7 @@
                 </th:block>
 
                 <th:block sec:authorize="hasAnyRole('ADMIN')">
-                    <li><a href="#">고객 관리</a></li>
+                    <li><a th:href="@{/member/list}">고객 관리</a></li>
                 </th:block>
             </ul>
         </div>
