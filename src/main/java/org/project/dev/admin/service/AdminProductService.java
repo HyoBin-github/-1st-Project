@@ -54,8 +54,8 @@ public class AdminProductService {
             throw new IllegalArgumentException("가져올 항목이 없습니다");
         }));
 
-//        return ProductDTO.toDTO(productEntity.get());
-        return null;
+        return ProductDTO.toDTO(productEntity.get());
+//        return null;
     }
 
     public ProductListResponse getProductList(int page, Pageable pageable,

@@ -19,7 +19,13 @@
     </div>
       <div class="main-section1">
         <div class="image">
-          <!-- image넣기 -->
+          <!-- <tr th:each="product, stat: ${productList}" > -->
+
+<!--          <div th:each="product, stat: ${productImgDTOS}" >-->
+          <img th:src="@{/images/{filename}(filename=${productImages[stat.index].productImgSavedName})}"/><
+<!--            <img th:src="${/images/{filename}(filename=${product[stat.index].productImgSavedName})}" />-->
+          <!-- <span image="${productImg.productImgSavedPath}"></span> -->
+          </div>
         </div>
         <div class="item-form">
           <ul>
