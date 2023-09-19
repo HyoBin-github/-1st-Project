@@ -47,7 +47,7 @@
                     </td>
                     <td th:text="${cartItem.getCartItemCount()}">수량</td>
                     <td th:text="${cartItem.getProduct().getProductPrice() * cartItem.getCartItemCount()}">가격</td>
-                    <td th:text="${cartItem.getCart().getCreateTime()}">날짜</td>
+                    <td th:text="${#temporals.format(cartItem.getCreateTime(), 'yyyy-MM-dd HH:mm:ss')}">날짜</td>
                     <td class="btn btn-outline-dark"><a
                             th:href="@{/cart/semiMember/{semiMemberId}/{cartItemId}/delete(semiMemberId=${cartItem.getCart().getSemiMember().getSemiMemberId()}, cartItemId=${cartItem.getCartItemId()})}"
                             style="text-decoration: none">삭제</a></td>
