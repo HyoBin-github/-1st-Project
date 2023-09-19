@@ -11,16 +11,6 @@
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
-<style>
-    /* 미리보기 이미지 스타일 */
-    #image-preview1 {
-      max-width: 100px;
-      max-height: 100px;
-      border: 1px solid #ccc;
-      border-radius: 50%; /* 50%로 설정하여 원형 모양으로 만듭니다. */
-      overflow: hidden; /* 넘치는 부분은 숨깁니다. */
-    }
-</style>
 <div class="container">
     <div class="nav">
         <div class="updateImage-con">
@@ -38,7 +28,7 @@
                     </li>
                     <li>
                         <button type="submit" id="upload-button" disabled>적용</button>
-                        <button type="button" onclick="goBack()">취소</button>
+                        <button type="button" id="cancel" onclick="goBack()">취소</button>
                     </li>
                 </ul>
             </form>

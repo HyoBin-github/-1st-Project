@@ -83,8 +83,6 @@ public class CartController {
                 productImages.addAll(productImgs);
             }
 
-
-
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("totalCount", memberCart.getCartCount());
             model.addAttribute("cartItems", cartItemEntityList);

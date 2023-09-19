@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
+<!--  chatbot-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>write</title>
   <link rel="stylesheet" th:href="@{/css/product/detail.css}">
   <script th:src="@{/js/product/detail.js}"></script>
   <script th:src="@{/js/review/review.js}" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--  chatbot-->
+  <script th:src="@{/js/chatbot/chatbot.js}" type="text/javascript" defer="defer"></script>
+
 </head>
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
@@ -92,11 +100,51 @@
           </div>
         </a>
 
-        <a href="" class="cart_link">
-          <div class="cart_btn">
+<!--        <a href="" class="cart_link">-->
+<!--          <div class="cart_btn">-->
+<!--            <span class="cart_text">장바구니 추가</span>-->
+<!--          </div>-->
+<!--        </a>-->
+        <!-- 송원철 -->
+        <form class="wishListForm" name="wishListForm" sec:authorize="hasAnyRole('MEMBER', 'SEMIMEMBER', 'SELLER', 'ADMIN')"
+              onsubmit="return addProduct();"
+              th:action="@{(${member != null} ? '/cart/member/' + ${member.getMemberId()} + '/' + ${product.id} : '/cart/semiMember/' + ${#authentication.principal.semiMemberEntity.semiMemberId} + '/' + ${product.id})}"
+              method="post">
+          <input class="form-control text-center me-3" id="amount" name="amount" type="num" value="1"
+                 style="max-width: 3rem" />
+          <div class="cart_btn" id="wish1" style="cursor:pointer;">
+            <i class="bi-cart-fill me-1"></i>
             <span class="cart_text">장바구니 추가</span>
           </div>
-        </a>
+        </form>
+        <script th:inline="javascript">
+          /* <![CDATA[ */
+          const submitButton = document.querySelector('.cart_btn');
+              submitButton.addEventListener('click', function() {
+                 const form = document.forms.wishListForm;
+                 form.submit();
+              });
+
+          function addProduct() {
+              var count = document.getElementById("amount").value
+              if (isNaN(count)) {
+                  alert("숫자를 입력해주세요.")
+                  return false
+              } else {
+                  return true
+              }
+          }
+        </script>
+        <!-- 비로그인 시 -->
+        <form class="abc" sec:authorize="!isAuthenticated()">
+          <a class="btn btn-outline-dark" th:href="@{/login}">
+            <i class="bi-cart-fill me-1"></i>
+            <div class="cart_btn1" style="cursor:pointer;">
+              <span class="cart_text1">장바구니 추가</span>
+            </div>
+          </a>
+        </form>
+        <!---------------->
         <!-- =============================================== -->
         <div class="reply-con">
           <div class="reply-write">
@@ -143,6 +191,10 @@
   </div>
 
 </div>
+<!--chatbot-->
+<div class="chatbot" >
+</div>
+
 <div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>

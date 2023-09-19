@@ -97,7 +97,6 @@ public class CartService {
         return cartItems;
     }
 
-
     // 카트상품 리스트 중 해당하는 상품id의 상품만 반환
     public CartItemEntity findCartItemById(Long cartItemId) {
 
