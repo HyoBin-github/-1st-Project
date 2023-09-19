@@ -58,7 +58,7 @@ public class ReviewService {
         });
         List<ReviewDto> reviewDtos = new ArrayList<>();
         List<ReviewEntity> reviewEntities
-                = reviewRepository.findByProductId(reviewDto.getProductId());
+                = reviewRepository.findByProductId(productEntity.getId());
 
         for (ReviewEntity reviewEntity : reviewEntities) {
 
