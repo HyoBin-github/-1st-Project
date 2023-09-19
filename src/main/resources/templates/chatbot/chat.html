@@ -16,15 +16,16 @@
     <div id="chat-bot" class="chatbot">
         <dl id="chat-disp" class="chat-nav">
             <dt id="chat-header" class="chat-header">
-                <span>집사</span>
+                <span>무엇이든 물어보세요 ヾ(*´∇`)ﾉ </span>
                 <span class="btn-wrap">
-                    <button type="button" id="btn-chat-close" onclick="disconnect()">X</button>
+                    <button type="button" id="btn-chat-close" onclick="disconnect()">나가기</button>
                 </span>
             </dt>
+            <!-- dd를 div로 바꾸고 싶어요,, -->
             <dd id="chat-content">
 
             </dd>
-            <dd id="chat-question" class="flex between">
+            <dd id="chat-question" class="flex _between">
                 <span class="flex column center"><i></i></span>
                 <input type="text" id="question" placeholder="질문을 입력하세요">
                 <button type="button" id="btn-msg-sand" onclick="msgSendClickFn()">전송</button>
