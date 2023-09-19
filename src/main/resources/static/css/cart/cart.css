@@ -41,9 +41,30 @@ button:hover{
   color: #7285d3a4;
 }
 
-.price{
+.Btn{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+  margin: 0 auto;
+}
+.Btn .price{
+  font-size: 28px;
+}
+.Btn button{
   display: flex;
   justify-content: center;
+  width: 150px;
+  height: 50px;
+  border: 2px solid #c5c5c5;
+  transition: all 0.3s;
+  align-items: center;
+  font-size: 25px;
+  border-radius: 10px;
+}
+.Btn button:hover{
+  background-color: #c5c5c5;
+  color: white;
 }
 
 table {

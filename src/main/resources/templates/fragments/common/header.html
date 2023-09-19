@@ -33,9 +33,9 @@
                         <li><a th:href="@{/semiMember/detail/{semiMemberId}(semiMemberId=${#authentication.principal.semiMemberEntity.semiMemberId})}">마이페이지</a></li>
                         <li><a th:href="@{/cart/semiMember/{semiMemberId}(semiMemberId=${#authentication.principal.semiMemberEntity.semiMemberId})}">장바구니</a></li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
-                        <li><a th:href="@{/product/manage}">상품관리</a></li>
-                    </th:block>
+<!--                    <th:block sec:authorize="hasAnyRole('SELLER', 'ADMIN')">-->
+<!--                        <li><a th:href="@{/product/manage}">상품관리</a></li>-->
+<!--                    </th:block>-->
                     <th:block sec:authorize="hasAnyRole('ADMIN', 'MEMBER', 'SELLER')">
                         <li><a th:href="@{/member/logout}">로그아웃</a></li>
 <!--                        <li><span th:text="${#authentication.principal.memberEntity.memberNickName}" class="data1 span"></span>님</li> &lt;!&ndash; 일반회원 닉네임 출력 &ndash;&gt;-->

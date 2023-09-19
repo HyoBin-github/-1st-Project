@@ -36,7 +36,7 @@ public class ChatBotController {
         return new BotMessage("<div class='flex center date' >"+formattedDay+"</div>"+
                 "<div class='msg bot flex'>"+
                 "<div class='icon'>"+
-                "<img src='/img/chat.png'  th:alt=\"#{chat}\" />" +
+                "<img src='/images/chatbot2.png'  th:alt=\"#{chat}\" />" +
                 "</div>"+
                 "<div class='message'>"+
                 "<div class='part'>"+
