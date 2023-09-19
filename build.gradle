@@ -44,10 +44,6 @@ dependencies {
 	implementation 'org.webjars:stomp-websocket:2.3.3'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
 jar {
 	enabled = false
 }
