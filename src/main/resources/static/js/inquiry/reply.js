@@ -48,7 +48,7 @@ function replyList(){
                 list+="<li>";
                 list+="<div id='reCon"+this.id+"' class='content'>";
                 list+="<span>"+this.reply+"</span>";
-                list+="<div class='Btn'>";
+                list+="<div class='Btn'th:if='${#authentication.principal.username==member.memberEmail}''>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
                 list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+this.id+',"'+this.reply+'",'+this.inqId+")'>";
                 list+="</div>";
