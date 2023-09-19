@@ -3,6 +3,7 @@ package org.project.dev.chatbot.controller;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.asm.Advice;
 import org.project.dev.chatbot.message.BotMessage;
+import org.project.dev.chatbot.message.ClientMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,50 @@ public class ChatBotController {
         String formattedTime = today.format(DateTimeFormatter.ofPattern("a H:mm"));
 
         // 처음 실행되는 -> 답장문
-        return new BotMessage("");
+        return new BotMessage("<div class='flex center date' >"+formattedDay+"</div>"+
+                "<div class='msg bot flex'>"+
+                "<div class='icon'>"+
+                "<img src='/img/chat.png'  th:alt=\"#{chat}\" />" +
+                "</div>"+
+                "<div class='message'>"+
+                "<div class='part'>"+
+                "<p style='text-align:center'>안녕하세요, 쳇봇입니다. <br> 궁금한 점은 저에게 물어보세요!</p>"+
+                "</div>" +
+                "<div class='part'>"+
+                "<p>아래는 자주하는 질문 내용을 클릭해 주세요.</p>"+
+                "<div class='flex center menu'>"+
+                "<div class='menu-item'><span onclick='menuclickFn(event)'>상품문의</span></div>"+
+                "<div class='menu-item'><span onclick='menuclickFn(event)'>결제문의</span></div>"+
+                "<div class='menu-item'><span onclick='menuclickFn(event)'>배송문의</span></div>"+
+                "</div>"+
+                "</div>"+
+                "<div class='time'>"+
+                formattedTime+
+                "</div>"+
+                "</div>"+
+                "</div>");
+    }
+    @MessageMapping("/message")
+    @SendTo("/topic/message")
+    public BotMessage message(ClientMessage message) throws Exception{
+        Thread.sleep(100);
+        LocalDateTime today = LocalDateTime.now();
+        String formattedTime = today.format(DateTimeFormatter.ofPattern("a H:mm"));
+        String responseText = message.getContent()+"대한 답장입니다.";
+
+        return new BotMessage("<div class='msg bot flex'>"+
+                "<div class='icon'>"+
+                "<img src='/img/chat.png'  th:alt=\"#{chat}\" />" +
+                "</div>"+
+                "<div class='message'>"+
+                "<div class='part'>"+
+                "<p>"+responseText+"</p>"+
+                "</div>"+
+                "<div class='time'>"+
+                formattedTime+
+                "</div>"+
+                "</div>"+
+                "</div>");
     }
 
 }
