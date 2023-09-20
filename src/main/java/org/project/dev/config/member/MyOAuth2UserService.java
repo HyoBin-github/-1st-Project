@@ -102,8 +102,6 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
             // 휴대전화번호 데이터 형식 변환
             memberPhone = transformPhoneNumber((String) response.get("mobile"));
             memberBirth=(String) response.get("birthday");
-//            birth=(String) response.get("profile_image"); // 프로필 URL
-//            birthYear=(String)response.get("birthyear");
 
             System.out.println((String) response.get("id"));
             System.out.println((String) response.get("email"));
@@ -123,9 +121,6 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
             memberEmail = (String) response.get("email");
             memberNickName = (String) profile.get("nickname");
             memberBirth=(String) response.get("birthday");
-//            name=(String) profile.get("name");
-//            phone=(String) profile.get("phone_number");
-//          birthYear=(String)profile.get("birthyear");
         }
 
         // 휴대전화번호가 비어있는 경우 임의의 15자리 숫자 생성
@@ -225,5 +220,4 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
 
         return cleanedPhoneNumber;
     }
-
 }

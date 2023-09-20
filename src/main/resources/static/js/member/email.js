@@ -3,7 +3,7 @@ $(document).ready(function() {
     var isVerified = false; // 인증번호 확인 여부를 나타내는 변수
     var isEmailAvailable = false; // 이메일 중복 확인 여부를 나타내는 변수
 
-// 이메일 중복 확인 버튼 클릭 시 이벤트 처리
+    // 이메일 중복 확인 버튼 클릭 시 이벤트 처리
     $('#emailCheckButton').click(function () {
         $.ajax({
             url: '/api/member/memberEmail/check',

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/send-mail")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/send-mail")
 public class EmailController {
 
     private final EmailService emailService;

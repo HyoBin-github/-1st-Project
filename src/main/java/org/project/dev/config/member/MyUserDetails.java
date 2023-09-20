@@ -1,21 +1,15 @@
 package org.project.dev.config.member;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -71,21 +65,25 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         return memberEntity.getMemberEmail();
     }
 
+    // 계정 만료 여부
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    // 계정 잠김 여부
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    // 비밀번호 만료 여부
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    // 사용자 활성화 여부
     @Override
     public boolean isEnabled() {
         return true;

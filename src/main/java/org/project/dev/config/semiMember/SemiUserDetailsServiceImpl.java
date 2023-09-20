@@ -23,6 +23,4 @@ public class SemiUserDetailsServiceImpl implements UserDetailsService {
 
         return new SemiMyUserDetails(semiMemberEntity);
     }
-
-
 }

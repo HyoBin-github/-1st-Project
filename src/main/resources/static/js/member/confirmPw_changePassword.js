@@ -13,7 +13,7 @@ $(function(){
         }
     });
 
-    var currentPasswordChanged = false; // Flag to track if current password has changed
+    var currentPasswordChanged = false;
     $('#currentPassword').keyup(function(){
         currentPasswordChanged = true;
     });
