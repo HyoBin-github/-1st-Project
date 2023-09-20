@@ -29,7 +29,7 @@ fi
 # jar 파일 실행
 #echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 ./gradlew build
-sleep 20
+sleep 10
 nohup java -jar /home/ubuntu/app/build/libs/dev-0.0.1-SNAPSHOT.jar
 
 #CURRENT_PID=$(pgrep -f $JAR_FILE)
