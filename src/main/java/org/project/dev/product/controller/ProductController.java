@@ -85,7 +85,7 @@ public class ProductController {
         }else {
             log.info("member is null");
         }
-        return "/product/write";
+        return "product/write";
     }
 
     // 송원철 / write 시 로그인한 memberId, memberNickName 저장
@@ -162,7 +162,7 @@ public class ProductController {
 
         Optional<Long> lastProductId = productUtilService.findLastProductId();
         model.addAttribute("lastProductId_from_server", lastProductId.orElse(null));
-        return "/product/list";
+        return "product/list";
     }
 
 
@@ -232,7 +232,7 @@ public class ProductController {
         }else {
             log.info("SemiMember is null");
         }
-        return "/product/detail";
+        return "product/detail";
     }
 
 
