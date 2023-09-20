@@ -37,8 +37,6 @@ public class MemberController {
 
     private final MemberService memberService;
     private final ImageService imageService;
-    private final SemiMemberService semiMemberService;
-    private final MemberRepository memberRepository;
     private final InquiryService inquiryService;
 
     // Create
@@ -99,29 +97,6 @@ public class MemberController {
             model.addAttribute("member", member);
         }
         return "member/login";
-    }
-
-    // 회원목록, 간편회원목록 선택 페이지 이동
-    @GetMapping("/list")
-    public String getListPage(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
-        model.addAttribute("memberImageUrl", memberImageUrl);
-        model.addAttribute("member", member);
-
-        return "member/list";
-    }
-
-    // Read - 회원 목록 조회
-    @GetMapping("/memberList")
-    public String getMemberList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-        List<MemberDto> memberDtoList=memberService.listMember();
-
-        model.addAttribute("memberDtoList", memberDtoList);
-        model.addAttribute("myUserDetails", myUserDetails);
-
-        return "member/memberList";
     }
 
     // Read_paging - 회원 목록 조회
@@ -266,7 +241,34 @@ public class MemberController {
         }
     }
 
-    // 비밀번호 변경
+    // 정보 수정 전 비밀번호 확인 - 입력 화면
+    @GetMapping("/confirmPassword/{memberId}")
+    public String getConfirmPasswordView(@PathVariable("memberId") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        MemberDto member = memberService.detailMember(memberId);
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("member", member);
+        model.addAttribute("memberImageUrl", memberImageUrl);
+
+        return "member/confirmPassword";
+    }
+    @PostMapping("/confirmPassword")
+    public String postConfirmPassword(@RequestParam("currentPassword") String currentPassword,
+                                      @RequestParam("memberId") Long memberId,
+                                      MemberDto memberDto){
+
+        boolean valid=memberService.checkCurrentPassword(memberId, currentPassword);
+
+        if (valid) {
+            return "redirect:/member/changePassword/" + memberDto.getMemberId(); // 비밀번호 수정 페이지로 이동
+        } else {
+            return "redirect:/member/confirmPassword/" + memberDto.getMemberId(); // 다시 비밀번호 확인 페이지로 이동
+        }
+    }
+
+    // 비밀번호 변경 페이지
     @GetMapping("/changePassword/{memberId}")
     public String getChangePasswordPage(@PathVariable("memberId") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
@@ -279,7 +281,7 @@ public class MemberController {
 
         return "member/changePassword"; // changePassword.html 페이지로 이동
     }
-
+    // 비밀번호 변경 실행
     @PostMapping("/changePassword")
     public String postChangePassword(@RequestParam("memberId") Long memberId,
                                      @RequestParam("currentPassword") String currentPassword,
@@ -306,7 +308,6 @@ public class MemberController {
             return "redirect:/member/changePassword"; // 비밀번호 변경 페이지로 다시 이동
         }
     }
-
     // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
     @PostMapping("/checkCurrentPassword")
     @ResponseBody
@@ -320,44 +321,18 @@ public class MemberController {
         return response;
     }
 
-    // 정보 수정 전 비밀번호 확인 - 입력 화면
-    @GetMapping("/confirmPassword/{memberId}")
-    public String getConfirmPasswordView(@PathVariable("memberId") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
-
-        MemberDto member = memberService.detailMember(memberId);
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
-
-        model.addAttribute("memberId", memberId);
-        model.addAttribute("member", member);
-        model.addAttribute("memberImageUrl", memberImageUrl);
-
-        return "member/confirmPassword";
-    }
-
-    @PostMapping("/confirmPassword")
-    public String postConfirmPassword(@RequestParam("currentPassword") String currentPassword,
-                                      @RequestParam("memberId") Long memberId,
-                                      MemberDto memberDto){
-
-        boolean valid=memberService.checkCurrentPassword(memberId, currentPassword);
-
-        if (valid) {
-            return "redirect:/member/changePassword/" + memberDto.getMemberId(); // 비밀번호 수정 페이지로 이동
-        } else {
-            return "redirect:/member/confirmPassword/" + memberDto.getMemberId(); // 다시 비밀번호 확인 페이지로 이동
-        }
-    }
-
     // 회원(소셜로그인 사용자 포함) 탈퇴 전 이메일 인증 확인 - 입력 화면
     @GetMapping("/confirmEmail/{memberId}")
     public String getConfirmEmailView(@PathVariable("memberId") Long memberId,
                                       @AuthenticationPrincipal MyUserDetails myUserDetails,
                                       Model model){
 
-        MemberDto member=memberService.detailMember(memberId);
+        MemberDto member = memberService.detailMember(memberId);
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         model.addAttribute("member", member);
         model.addAttribute("myUserDetails", myUserDetails);
+        model.addAttribute("memberImageUrl", memberImageUrl);
 
         return "member/confirmEmail";
     }

@@ -102,8 +102,11 @@ public class ProductUtilService {
 
 
 
+    // save images
     public void saveProductImages(ProductEntity savedProductEntity,
                                   List<MultipartFile> productImages) throws IOException {
+
+        System.out.println(productImages);
 
         if (productImages != null && !productImages.isEmpty()) {
             for (int i = 0; i < productImages.size(); i++) {
@@ -126,7 +129,70 @@ public class ProductUtilService {
         }
     }
 
+    // update images
+    public void updateProductImages(ProductEntity productEntityUpdatePro,
+                                    List<MultipartFile> productImages,
+                                    String productImagesOrder) throws IOException {
 
+        System.out.println(productImages);
+        System.out.println(productImagesOrder);
+
+        // productImagesOrder를 배열로 변환
+        String[] imageOrderArray = productImagesOrder.split(",");
+
+        Map<String, Integer> imageOrderMap = new HashMap<>();
+        for (int i = 0; i < imageOrderArray.length; i++) {
+            imageOrderMap.put(imageOrderArray[i], i);
+        }
+
+        // DB에 이미 저장된 이미지의 순서를 업데이트
+        List<ProductImgEntity> existingImages = productImgRepository.findByProductEntity(productEntityUpdatePro);
+        for (ProductImgEntity img : existingImages) {
+            Integer newOrder = imageOrderMap.get(img.getProductImgSavedName());
+            if (newOrder != null) {
+                img.setProductImgOrder(newOrder);
+                productImgRepository.save(img);
+            }
+        }
+
+        // 새로운 이미지를 저장
+        if (productImages != null && !productImages.isEmpty()) {
+            for (MultipartFile multipartFile : productImages) {
+                String originalName = multipartFile.getOriginalFilename();
+                Integer order = imageOrderMap.get(originalName); // 매핑된 순서를 찾음
+
+                if (order != null) { // 해당하는 순서가 있으면
+                    String savedPath = fileStorageService.storeFile("product", multipartFile);
+
+                    ProductImgEntity productImgEntity = ProductImgEntity.builder()
+                            .productEntity(productEntityUpdatePro)
+                            .productImgOriginalName(originalName)
+                            .productImgSavedName(new File(savedPath).getName())
+                            .productImgSavedPath(savedPath)
+                            .productImgOrder(order)
+                            .isProductImgDisplayed(true)
+                            .build();
+
+                    productImgRepository.save(productImgEntity);
+                }
+            }
+        }
+    }
+
+    public void deleteProductImages (ProductEntity productEntityUpdatePro,
+                                     String productImagesOrder) throws IOException {
+
+        String[] imageOrderArray = productImagesOrder.split(",");
+
+        List<ProductImgEntity> existingImages = productImgRepository.findByProductEntity(productEntityUpdatePro);
+
+        for (ProductImgEntity img : existingImages) {
+            boolean exists = Arrays.asList(imageOrderArray).contains(img.getProductImgSavedName());
+            if (!exists) {
+                productImgRepository.delete(img);
+            }
+        }
+    }
 
 
     // 이미지 정보를 가져오기. (product_id 기준)

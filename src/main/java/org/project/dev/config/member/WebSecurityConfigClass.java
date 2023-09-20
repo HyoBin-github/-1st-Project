@@ -29,10 +29,6 @@ public class WebSecurityConfigClass {
                     .authorizeHttpRequests()
                     .antMatchers("/", "/login").permitAll()
                     .antMatchers("/admin/index").hasAnyRole("ADMIN")
-//                    .antMatchers("/admin/index").hasAnyRole("ADMIN")
-//            http.authorizeHttpRequests()
-//                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
-//                    .antMatchers("/member/logout", "/board/**").authenticated()
 
                     .and()
                     .formLogin()
@@ -47,10 +43,6 @@ public class WebSecurityConfigClass {
                     .logout()
                     .logoutUrl("/admin/logout")
                     .logoutSuccessUrl("/")
-
-//                    .and()
-//                    .exceptionHandling()
-//                    .accessDeniedPage("/403")
 
                     .and()
                     .csrf().disable()
@@ -157,9 +149,6 @@ public class WebSecurityConfigClass {
                     .antMatchers("/", "/login").permitAll()
                     .antMatchers("/semiMember/detail/**").hasAnyRole("SEMIMEMBER", "ADMIN")
                     .antMatchers("/semiMember/pagingList**").hasAnyRole("ADMIN")
-//            http.authorizeHttpRequests()
-//                    .antMatchers("/", "/semiMember/join", "/semiMember/login").permitAll()
-//                    .antMatchers("/member/logout", "/board/**").authenticated()
 
                     .and()
                     .formLogin()
@@ -174,10 +163,6 @@ public class WebSecurityConfigClass {
                     .logout()
                     .logoutUrl("/semiMember/logout")
                     .logoutSuccessUrl("/")
-
-//                    .and()
-//                    .exceptionHandling()
-//                    .accessDeniedPage("/403")
 
                     .and()
                     .csrf().disable()

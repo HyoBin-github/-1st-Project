@@ -6,8 +6,6 @@ $(document).ready(function() {
     // 인증번호 '전송' 버튼 클릭 시 이벤트 처리
     $("#certifyEmailButton").click(function() {
 
-//        var email = $("input[name='memberEmail']").val();
-//        var memberId = $('#memberId').val();
         var memberEmail = $('#memberEmail').val();
 
         // 서버로 이메일 주소 전송 및 인증 요청
@@ -54,11 +52,9 @@ $(document).ready(function() {
                  // 인증번호가 확인되면 확인/취소 팝업창 띄우기
                 if (confirm("삭제 후 복구할 수 없습니다. 정말 삭제하시겠습니까?")) {
                     // '확인'을 선택한 경우에만 폼을 제출
-                    // event.preventDefault(); // 이 줄은 삭제해주세요
                 } else {
                     // '취소'를 선택한 경우
                     event.preventDefault(); // 제출 방지
-                    // 추가 작업이 필요하지 않음
                 }
             }
     });

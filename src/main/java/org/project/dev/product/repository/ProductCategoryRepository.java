@@ -20,15 +20,11 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
      4. x
      */
 
-    // 브랜드 명으로 찾기.
+    // 카테고리 명으로 찾기.
     Optional<ProductCategoryEntity> findByProductCategoryName(String productCategoryName);
 
-    // 브랜드 명으로 찾기. (containing)
+    // 카테고리 명으로 찾기. (containing)
     List<ProductCategoryEntity> findByProductCategoryNameContaining(String substring);
 
-    // 스크롤 페이징 처리 작업중 =================================================================
-
-
-    // ======================================================================================
 
 }

@@ -10,11 +10,8 @@ import org.project.dev.product.repository.ProductBrandRepository;
 import org.project.dev.product.repository.ProductCategoryRepository;
 import org.project.dev.product.repository.ProductRepository;
 import org.project.dev.product.service.ProductService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -22,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
-public class AutoCompleteController {
+public class ProductRestController {
 
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductBrandRepository productBrandRepository;

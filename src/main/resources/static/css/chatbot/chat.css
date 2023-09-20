@@ -68,6 +68,7 @@
     flex-direction: column;
     gap: 10px;
     margin: 0 auto;
+    cursor:pointer;
 }
 .msg_bot_flex .message .part2 .flex_center_menu .menu-item{
     width: inherit;

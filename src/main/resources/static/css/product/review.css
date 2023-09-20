@@ -1,0 +1,150 @@
+.container .root .product-info_section .product-info-detail_area .review-con{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-title{
+    width: 100px;
+    border-bottom: 4px solid #7285d3;
+    text-align: start;
+    padding: 5px;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write{
+    padding: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form{
+    margin: auto;
+    text-align: center;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    box-sizing: border-box;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul{
+    width: inherit;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li{
+    width: 900px;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li:not(.Btn){
+    display: flex;
+    justify-content: start;
+    margin-bottom: 15px;
+    /* text-align: center;
+    align-items: center; */
+    box-sizing: border-box;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li:not(.Btn) textarea{
+    width: 50px;
+    height: 300px;
+    padding: 10px;
+    box-shadow: inset 0px -2px 4px -1px #8c9cdb;
+    border: none;
+    resize: none;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li.Btn input{
+    width: 40px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 10px;
+    background: #4b66c79e;
+    border: none;
+    color: white;
+    outline: none;
+    gap: 10px;
+    cursor: pointer;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li.Btn input:hover{
+    box-sizing: border-box;
+    background: #4b66c7;
+    box-shadow: 0 10px 10px 0 #cccccc;
+}
+
+/* reply */
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList{
+    padding: 10px;
+    /* box-sizing: border-box; */
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0px -2px 4px -1px #8c9cdb;
+    display: flex;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon{
+    width: 900px;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul>li.writer{
+    padding: 10px;
+    font-size: 20px;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul>li.create{
+    padding: 5px;
+    text-align: end;
+    border-bottom: 1px solid #4b66c7;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .content{
+    width: 90px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .content span{
+    width: 90px;
+    min-height: 100px;
+    padding: 0 0 30px 0;
+    font-size: 18px;
+
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .content .Btn{
+    display: grid;
+    justify-items: end;
+    padding: 10px;
+    gap: 6px;
+}
+
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .content .Btn input{
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+    background: none;
+    border-radius: 10px;
+    border: 2px solid #7285d3;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .content input:hover{
+    color: white;
+    background: #7285d3;
+}
+
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .show textarea{
+    width: 90px;
+    min-height: 100px;
+    padding: 0 0 30px 0;
+    font-size: 18px;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .show input{
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+    background: none;
+    border-radius: 10px;
+    border: 2px solid #7285d3;
+}
+.container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .show input:hover{
+    color: white;
+    background: #7285d3;
+}

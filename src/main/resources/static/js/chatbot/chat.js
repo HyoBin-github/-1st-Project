@@ -1,10 +1,8 @@
 let stompClient = null;
 $(function(){
     $("#question").keyup(qKeyupFn);
-})
-$(document).ready(function(){
     connect();
-});
+})
 function showMessage(message){
     $("#chat-content").append(message);
     $("#chat-content").scrollTop($("#chat-content").prop("scrollHeight"));
@@ -45,6 +43,12 @@ function inputTagString(text){
     </div>
     </div>`;
     return message;
+}
+function menuclickFn(event){
+    let text = event.target.innerText.trim();
+    let message = inputTagString(text);
+    showMessage(message);
+    stompClient.send("/chat/message", {}, JSON.stringify({'content':text}));
 }
 function qKeyupFn(event){
     if(event.keyCode!=13) return;

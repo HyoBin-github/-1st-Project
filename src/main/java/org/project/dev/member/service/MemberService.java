@@ -9,7 +9,6 @@ import org.project.dev.member.entity.ImageEntity;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.ImageRepository;
 import org.project.dev.member.repository.MemberRepository;
-import org.project.dev.member.repository.SemiMemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +28,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final ImageRepository imageRepository;
-    private final SemiMemberRepository semiMemberRepository;
 
     // Create + 장바구니 생성
     @Transactional
@@ -46,10 +44,11 @@ public class MemberService {
         // ImageEntity를 db에 저장
         imageRepository.save(imageEntity);
 
-        // 회원가입 이후 카트 생성
+        // 회원가입 이후 장바구니 생성
         createCartForMember(memberId);
     }
 
+    // 장바구니 생성 메서드
     private void createCartForMember(Long memberId) {
         MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
         CartEntity cart = CartEntity.createCart(memberEntity);
@@ -72,6 +71,40 @@ public class MemberService {
         return memberDtoList;
     }
 
+    // Read, 페이징/검색
+    public Page<MemberDto> memberList(Pageable pageable, String subject, String search) {
+
+        Page<MemberEntity> memberEntities = null; // 기본 null값으로 설정
+
+        if(subject.equals("memberEmail")){
+            memberEntities = memberRepository.findByMemberEmailContaining(pageable, search);
+        }else if(subject.equals("memberName")){
+            memberEntities = memberRepository.findByMemberNameContaining(pageable, search);
+        }else if(subject.equals("memberNickName")){
+            memberEntities = memberRepository.findByMemberNickNameContaining(pageable, search);
+        }else if(subject.equals("memberPhone")) {
+            memberEntities = memberRepository.findByMemberPhoneContaining(pageable, search);
+        }else if(subject.equals("memberBirth")) {
+            memberEntities = memberRepository.findByMemberBirthContaining(pageable, search);
+        }else if(subject.equals("memberStreetAddress")) {
+            memberEntities = memberRepository.findByMemberStreetAddressContaining(pageable, search);
+        }else if(subject.equals("memberDetailAddress")) {
+            memberEntities = memberRepository.findByMemberDetailAddressContaining(pageable, search);
+        }else{
+            memberEntities = memberRepository.findAll(pageable);
+        }
+
+        memberEntities.getNumber();
+        memberEntities.getTotalElements();
+        memberEntities.getTotalPages();
+        memberEntities.getSize();
+
+        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
+
+
+        return memberDtos;
+    }
+
     //  Detail (to메서드)
     public MemberDto detailMember(Long memberId) {
 
@@ -81,9 +114,7 @@ public class MemberService {
 
         if (optionalMemberEntity.isPresent()) {
 
-            // imageUrl 값을 로그에 출력
             ImageEntity imageEntity = optionalMemberEntity.get().getImage();
-//            System.out.println("imageUrl: " + imageEntity.getImageUrl());
 
             return MemberDto.toMemberDto(optionalMemberEntity.get());
         }
@@ -250,147 +281,6 @@ public class MemberService {
         String cleanedPhoneNumber = memberPhone.replaceAll("-", "");
 
         return cleanedPhoneNumber;
-    }
-
-    // 페이징
-//    public Page<MemberDto> memberPagingList(Pageable pageable) {
-//
-//        Page<MemberEntity> memberEntities = memberRepository.findAll(pageable);
-//        //    boardEntities.map(board ->new BoardDto(board.getId(),board.getBoardContent(),))
-//
-//        int nowPage = memberEntities.getNumber();// 요청 페이지 번호
-//        long totalCount = memberEntities.getTotalElements();// 전체게시글수
-//        int totalPage = memberEntities.getTotalPages();// 전체 페이지갯수
-//        int pageSize = memberEntities.getSize();    // 한페이지에 보이는 개수
-//        memberEntities.isFirst(); // 첫번째 페이지인지?
-//        memberEntities.isLast(); // 마지막 페이지인지?
-//        memberEntities.hasPrevious(); // 이전 페이지 있는지?
-//        memberEntities.hasNext(); // 다음 페이지 있는지?
-//
-//        System.out.println(totalCount + " 총 글수");
-//        System.out.println(totalPage + " 총 페이지");
-//        System.out.println(pageSize + " 페이지 당 글수");
-//        System.out.println(nowPage + " 현재 페이지");
-//
-//        // Entity → Dto
-//        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
-//        return memberDtos;
-//        //    return boardRepository.findAll(pageable).map(BoardDto::toBoardDto);;
-//    }
-//
-//    // 회원목록 내 검색
-//    public List<MemberDto> searchMemberList(String subject, String search) {
-//
-//        List<MemberDto> memberDtoList = new ArrayList<>();
-//        List<MemberEntity> memberEntityList = new ArrayList<>();
-//
-//        if (subject.equals("memberEmail")) {
-//            memberEntityList = memberRepository.findByMemberEmailContaining(search);
-//        } else if (subject.equals("memberName")) {
-//            memberEntityList = memberRepository.findByMemberNameContaining(search);
-//        } else if (subject.equals("memberNickName")) {
-//            memberEntityList = memberRepository.findByMemberNickNameContaining(search);
-//        } else if (subject.equals("memberPhone")) {
-//            memberEntityList = memberRepository.findByMemberPhoneContaining(search);
-//        } else if (subject.equals("memberBirth")) {
-//            memberEntityList = memberRepository.findByMemberBirthContaining(search);
-//        } else if (subject.equals("memberStreetAddress")) {
-//            memberEntityList = memberRepository.findByMemberStreetAddressContaining(search);
-//        } else if (subject.equals("memberDetailAddress")) {
-//            memberEntityList = memberRepository.findByMemberDetailAddressContaining(search);
-//        } else if (subject.equals("role")) {
-//            memberEntityList = memberRepository.findByRoleContaining(search);
-//        } else {
-//            memberEntityList = memberRepository.findAll();
-//        }
-//
-//        if (!memberEntityList.isEmpty()) {
-//            for (MemberEntity memberEntity : memberEntityList) {
-////                BoardDto boardDto=BoardDto.builder()
-////                        .id(boardEntity.getId())
-////                        .title(boardEntity.getTitle())
-////                        .content(boardEntity.getContent())
-////                        .writer(boardEntity.getWriter())
-////                        .createTime(boardEntity.getCreateTime())
-////                        .hit(boardEntity.getHit())
-////                        .build();
-//                MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
-//                memberDtoList.add(memberDto);
-//            }
-//        }
-//        return memberDtoList;
-//    }
-    
-    // 회원목록 페이징, 검색
-//    public Page<MemberDto> memberList(Pageable pageable, String subject, String search,
-//                                        MyUserDetails myUserDetails) {
-//
-//        myUserDetails.getMemberEntity();
-//
-//        Page<MemberEntity> memberEntities = null; // 기본 null값으로 설정
-//
-//        if(subject.equals("memberEmail")){
-//            memberEntities = memberRepository.findByMemberEmailContaining(pageable, search);
-//        }else if(subject.equals("memberName")){
-//            memberEntities = memberRepository.findByMemberNameContaining(pageable, search);
-//        }else if(subject.equals("memberNickName")){
-//            memberEntities = memberRepository.findByMemberNickNameContaining(pageable, search);
-//        }else if(subject.equals("memberPhone")) {
-//            memberEntities = memberRepository.findByMemberPhoneContaining(pageable, search);
-//        }else if(subject.equals("memberBirth")) {
-//            memberEntities = memberRepository.findByMemberBirthContaining(pageable, search);
-//        }else if(subject.equals("memberStreetAddress")) {
-//            memberEntities = memberRepository.findByMemberStreetAddressContaining(pageable, search);
-//        }else if(subject.equals("memberDetailAddress")) {
-//            memberEntities = memberRepository.findByMemberDetailAddressContaining(pageable, search);
-//        }else{
-//            memberEntities = memberRepository.findAll(pageable);
-//        }
-//
-//        memberEntities.getNumber();
-//        memberEntities.getTotalElements();
-//        memberEntities.getTotalPages();
-//        memberEntities.getSize();
-//
-//        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
-//
-//
-//        return memberDtos;
-//    }
-
-    public Page<MemberDto> memberList(Pageable pageable, String subject, String search) {
-
-//        myUserDetails.getMemberEntity();
-
-        Page<MemberEntity> memberEntities = null; // 기본 null값으로 설정
-
-        if(subject.equals("memberEmail")){
-            memberEntities = memberRepository.findByMemberEmailContaining(pageable, search);
-        }else if(subject.equals("memberName")){
-            memberEntities = memberRepository.findByMemberNameContaining(pageable, search);
-        }else if(subject.equals("memberNickName")){
-            memberEntities = memberRepository.findByMemberNickNameContaining(pageable, search);
-        }else if(subject.equals("memberPhone")) {
-            memberEntities = memberRepository.findByMemberPhoneContaining(pageable, search);
-        }else if(subject.equals("memberBirth")) {
-            memberEntities = memberRepository.findByMemberBirthContaining(pageable, search);
-        }else if(subject.equals("memberStreetAddress")) {
-            memberEntities = memberRepository.findByMemberStreetAddressContaining(pageable, search);
-        }else if(subject.equals("memberDetailAddress")) {
-            memberEntities = memberRepository.findByMemberDetailAddressContaining(pageable, search);
-        }else{
-            memberEntities = memberRepository.findAll(pageable);
-        }
-
-        memberEntities.getNumber();
-        memberEntities.getTotalElements();
-        memberEntities.getTotalPages();
-        memberEntities.getSize();
-
-        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
-
-
-        return memberDtos;
     }
 
 
