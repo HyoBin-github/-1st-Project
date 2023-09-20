@@ -26,7 +26,7 @@
 #!/usr/bin/env bash
 APP_NAME="dev-0.0.1-SNAPSHOT.jar"
 PROJECT_ROOT="/home/ubuntu/app/build/libs"
-JAR_FILE="$PROJECT_ROOT dev-0.0.1-SNAPSHOT.jar"
+JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
 #APP_LOG="$PROJECT_ROOT/application.log"
 #ERROR_LOG="$PROJECT_ROOT/error.log"
@@ -51,6 +51,6 @@ fi
 # jar 파일 실행
 #echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 echo "jar 빌드"
-sudo nohup java -jar $JAR_FILE &
+nohup java -jar $JAR_FILE &
 
 #CURRENT_PID=$(pgrep -f $JAR_FILE)
