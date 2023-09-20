@@ -119,5 +119,4 @@ public class MemberEntity extends BaseEntity {
 
         return memberEntity;
     }
-
 }

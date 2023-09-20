@@ -114,7 +114,6 @@ public class MemberService {
 
         if (optionalMemberEntity.isPresent()) {
 
-            // imageUrl 값을 로그에 출력
             ImageEntity imageEntity = optionalMemberEntity.get().getImage();
 
             return MemberDto.toMemberDto(optionalMemberEntity.get());

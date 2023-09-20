@@ -23,9 +23,6 @@ const emailIdInput = document.querySelector('#emailId');
 const domainCustomInput = document.querySelector('#domainCustom');
 const domainListSelect = document.querySelector('#domainList');
 const memberEmailInput = document.querySelector('#memberEmail');
-
-
-// 이메일 아이디 입력란 관련 요소들 가져오기
 const emailIdErrorMessage = document.querySelector('#emailIdErrorMessage'); // 오류 메시지를 표시할 영역 추가
 
 // 이메일 아이디 입력란 유효성 검사 함수
