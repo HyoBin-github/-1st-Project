@@ -294,8 +294,37 @@ public class ProductController {
 
     // 수정 작업중 =================================================================================
 
+//    @GetMapping("/update/{id}")
+//    public String getProductUpdate(@PathVariable Long id, Model model) {
+//
+//        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+//        if (productDTOViewDetail == null) {
+//            log.warn("productDTOViewDetail is null");
+//        } else {
+//            log.info("productDTOViewDetail: {}", productDTOViewDetail.toString());
+//            if (productDTOViewDetail.getProductCategory() == null) {
+//                log.warn("productDTOViewDetail's productCategory is null");
+//            }
+//        }
+//        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
+//
+//        model.addAttribute("product", productDTOViewDetail);
+//        model.addAttribute("productImages", productImgDTOS);
+//
+//        return "/product/update";
+//    }
+    // 송원철 / 헤더 정보 담기
     @GetMapping("/update/{id}")
-    public String getProductUpdate(@PathVariable Long id, Model model) {
+    public String getProductUpdate(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+
+        if (myUserDetails != null) {
+
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
 
         ProductDTO productDTOViewDetail = productService.productViewDetail(id);
         if (productDTOViewDetail == null) {

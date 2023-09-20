@@ -17,9 +17,10 @@ public class FindEmailController {
 
     private final MemberService memberService;
 
+    // 닉네임과 휴대전화번호를 입력하는 폼 화면
     @GetMapping("/forgot-email")
     public String getShowForgotEmailForm() {
-        return "member/findEmail"; // 닉네임과 휴대전화번호를 입력하는 폼 화면
+        return "member/findEmail";
     }
 
     @PostMapping("/find-email")

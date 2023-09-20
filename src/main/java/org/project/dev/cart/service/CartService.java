@@ -92,7 +92,6 @@ public class CartService {
 
     // 카트상품 리스트 중 해당하는 상품id의 상품만 반환
     public List<CartItemEntity> findCartItemByItemId(Long cartItemId) {
-
         List<CartItemEntity> cartItems = cartItemRepository.findListCartItemByCartItemId(cartItemId);
         return cartItems;
     }
@@ -110,7 +109,6 @@ public class CartService {
 //    }
 
     public void cartItemDelete(Long cartItemId){
-//        CartItemEntity cartItem = cartItemRepository.findById(cartItemId).orElse(null);
         CartItemEntity cartItem = cartItemRepository.findById(cartItemId).orElseThrow(IllegalAccessError::new);
         if (cartItem != null) {
             cartItem.setCart(null); // cart와의 관계 끊기

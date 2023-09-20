@@ -19,7 +19,6 @@ import javax.persistence.TypedQuery;
 public class CheckDuplicateController {
 
     private final MemberService memberService;
-    private final SemiMemberService semiMemberService;
     private final EntityManager entityManager;
 
 //    @GetMapping("/memberEmail/check")
@@ -95,6 +94,4 @@ public class CheckDuplicateController {
             return ResponseEntity.ok("사용가능한 휴대전화번호입니다");
         }
     }
-
-
 }
