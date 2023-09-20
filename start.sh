@@ -27,6 +27,8 @@ fi
 
 # jar 파일 실행
 #echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
+./gradlew build
+
 sudo nohup java -jar $JAR_FILE &
 
 #CURRENT_PID=$(pgrep -f $JAR_FILE)
