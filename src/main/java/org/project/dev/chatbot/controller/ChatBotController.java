@@ -43,7 +43,7 @@ public class ChatBotController {
                 "<p style='text-align:center'>안녕하세요, 챗봇입니다. <br> 궁금한 점은 저에게 물어보세요!</p>"+
                 "</div>" +
                 "<div class='part2'>"+
-                "<p>아래는 자주하는 질문 내용을 입력해 주세요.</p>"+
+                "<p>아래는 자주하는 질문 내용을 클릭이나 입력해 주세요.</p>"+
                 "<div class='flex_center_menu'>"+
                 "<div class='menu-item'><span onclick='menuclickFn(event)'>상품문의</span></div>"+
                 "<div class='menu-item'><span onclick='menuclickFn(event)'>결제문의</span></div>"+
