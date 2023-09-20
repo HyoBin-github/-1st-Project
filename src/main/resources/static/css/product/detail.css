@@ -220,12 +220,18 @@
   margin: -4px;
 }
 
+.wish-purchase_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .purchase_link {
 
 }
 .purchase_btn {
   height: 44px;
-  width: 420px;
+  width: 210px;
   background-color: #7286d3;
   display: flex;
   justify-content: center;
@@ -239,13 +245,21 @@
   color: #ffffff;
 }
 
-.cart_link {
-
-}
+/*송원철*/
 .cart_btn {
   height: 44px;
-  width: 420px;
-  background-color: #7286d3;
+  width: 210px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 3px 0px #b1b1b1;
+  border-radius: 8px;
+}
+.cart_btn1 {
+  height: 44px;
+  width: 210px;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -253,26 +267,15 @@
   border-radius: 8px;
 }
 /*송원철*/
-.cart_btn1 {
-  height: 44px;
-  width: 420px;
-  background-color: #7286d3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 3px 0px #b1b1b1;
-  border-radius: 8px;
-}
 .cart_text {
   font-size: 20px;
   font-weight: bold;
-  color: #ffffff;
+  color: #41444B;
 }
-/*송원철*/
 .cart_text1 {
   font-size: 20px;
   font-weight: bold;
-  color: #ffffff;
+  color: #41444B;
 }
 
 

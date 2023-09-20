@@ -48,7 +48,7 @@ public class ProductSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("productDescription"), "%" + searchKeyword + "%");
     }
 
-    // 카테고리
+    // 카테고리로 필터링
     public static Specification<ProductEntity> productCategoryContains(String category){
         return (root, query, criteriaBuilder) -> {
             // 조인을 생성합니다.
@@ -59,7 +59,7 @@ public class ProductSpecification {
         };
     }
 
-    // 브랜드
+    // 브랜드로 필터링
     public static Specification<ProductEntity> productBrandContains(String brand){
         return (root, query, criteriaBuilder) -> {
             // 조인을 생성합니다.
@@ -70,11 +70,10 @@ public class ProductSpecification {
         };
     }
 
-    // 색상
+    // 색상로 필터링
     public static Specification<ProductEntity> productColorContains(String color){
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("productColor"), "%" + color + "%");
     }
-
 
 
 

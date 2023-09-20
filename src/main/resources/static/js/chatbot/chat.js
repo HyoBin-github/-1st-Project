@@ -1,10 +1,8 @@
 let stompClient = null;
 $(function(){
     $("#question").keyup(qKeyupFn);
-})
-$(document).ready(function(){
     connect();
-});
+})
 function showMessage(message){
     $("#chat-content").append(message);
     $("#chat-content").scrollTop($("#chat-content").prop("scrollHeight"));

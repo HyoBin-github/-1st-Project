@@ -70,27 +70,6 @@ public class ProductController {
     private final ImageServiceImpl imageService; // 송원철 / header 관련
     
 
-    // WRITE (INSERT)
-    // 게시물 작성 페이지
-//    @GetMapping("/write")
-//    public String getProductWrite() {
-//        return "/product/write";
-//    }
-//
-//
-//    // WRITE PROCESS (INSERT)
-//    // 게시물 작성 처리 시
-//    @PostMapping("/write")
-//    public ResponseEntity<Map<String,Object>> postProductWrite(@ModelAttribute ProductDTO productDTO,
-//                                                  @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages) throws IOException {
-//        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO); // 상품글 작성
-//        productUtilService.saveProductImages(productEntityWritePro, productImages); // 이미지 저장
-//        System.out.println("productImages: " + productImages);
-//        Map<String,Object> response = new HashMap<>();
-//        response.put("status","success");
-//        response.put("redirectUrl","/product/index");
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
     // 송원철 / write에 로그인한 memberId 담기
     @GetMapping("/write")
@@ -114,6 +93,7 @@ public class ProductController {
                                                                @ModelAttribute ProductBrandDTO productBrandDTO,
                                                                @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
                                                                @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
+
         MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
 
         if (member == null) {
@@ -138,37 +118,32 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("{id}/list")
-    public String list(Model model,
-                       @PathVariable(name = "id") Long memberId,
-                       @RequestParam(name = "page", defaultValue = "1") int page,
-                       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                       @RequestParam(name = "searchType", required = false) String searchType,
-                       @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
 
-        ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword, memberId);
-        model.addAttribute("productList", response.getProductList());
-        model.addAttribute("nowPage", response.getNowPage());
-        model.addAttribute("startPage", response.getStartPage());
-        model.addAttribute("endPage", response.getEndPage());
-        model.addAttribute("totalPage", response.getTotalPage());
-        model.addAttribute("searchType", response.getSearchType());
-        model.addAttribute("searchKeyword", response.getSearchKeyword());
 
-        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImage(response.getProductList().getContent());
-        model.addAttribute("productImages", productImgDTOS);
-
-        return "/product/list";
-    }
-
-    // 스크롤 페이징 작업중 ==================================================================
-//    @GetMapping("/list")
-//    public String list(Model model){
-//        Optional<Long> lastProductId = productUtilService.findLastProductId();
-//        model.addAttribute("lastProductId_from_server", lastProductId.orElse(null));
+//    @GetMapping("{id}/list")
+//    public String list(Model model,
+//                       @PathVariable(name = "id") Long memberId,
+//                       @RequestParam(name = "page", defaultValue = "1") int page,
+//                       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+//                       @RequestParam(name = "searchType", required = false) String searchType,
+//                       @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
+//
+//        ProductService.ProductListResponse response = productService.getProductList(page, pageable, searchType, searchKeyword, memberId);
+//        model.addAttribute("productList", response.getProductList());
+//        model.addAttribute("nowPage", response.getNowPage());
+//        model.addAttribute("startPage", response.getStartPage());
+//        model.addAttribute("endPage", response.getEndPage());
+//        model.addAttribute("totalPage", response.getTotalPage());
+//        model.addAttribute("searchType", response.getSearchType());
+//        model.addAttribute("searchKeyword", response.getSearchKeyword());
+//
+//        List<ProductImgDTO> productImgDTOS = productUtilService.getMainProductImage(response.getProductList().getContent());
+//        model.addAttribute("productImages", productImgDTOS);
+//
 //        return "/product/list";
 //    }
-    // ===================================================================================
+
+
     
     // 송원철 / header에 로그인한 member정보 담아줌
     @GetMapping("/list")
@@ -188,22 +163,7 @@ public class ProductController {
         return "/product/list";
     }
 
-    // DETAIL (SELECT)
-//    @GetMapping("/{id}")
-//    public String getProductDetail(@PathVariable Long id, Model model) {
-//        // updateHits 메소드를 호출, 해당 게시글의 조회수를 하나 올린다.
-//        productUtilService.updateHits(id);
-//        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
-//        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
-//
-//        // dto 해야댐
-//        List<ReviewDto> reviewDtos = reviewService.reviewList(productDTOViewDetail.getId());
-//
-//        model.addAttribute("product", productDTOViewDetail);
-//        model.addAttribute("productImages", productImgDTOS);
-//        model.addAttribute("reviews", reviewDtos);
-//        return "/product/detail";
-//    }
+
 
     // 송원철 - member, semiMember 추가
     // 로그인 안한 사람, member, semiMember 모두 접근 가능
@@ -273,46 +233,8 @@ public class ProductController {
         return "/product/detail";
     }
 
-    // UPDATE (UPDATE)
-//    @GetMapping("/update/{id}")
-//    public String getProductUpdate(@PathVariable Long id, Model model) {
-//        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
-//        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
-//        model.addAttribute("productUpdate", productDTOViewDetail);
-//        model.addAttribute("productImages", productImgDTOS);
-//        return "/product/update";
-//    }
-//
-//    // UPDATE PROCESS (UPDATE)
-//    @PostMapping("/update")
-//    public String postProductUpdate(@ModelAttribute ProductDTO productDTO, Model model) {
-//        ProductDTO productDTOUpdatePro = productService.productUpdateDetail(productDTO);
-//        model.addAttribute("product", productDTOUpdatePro);
-//        return "/product/detail";
-//    }
 
 
-    // 수정 작업중 =================================================================================
-
-//    @GetMapping("/update/{id}")
-//    public String getProductUpdate(@PathVariable Long id, Model model) {
-//
-//        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
-//        if (productDTOViewDetail == null) {
-//            log.warn("productDTOViewDetail is null");
-//        } else {
-//            log.info("productDTOViewDetail: {}", productDTOViewDetail.toString());
-//            if (productDTOViewDetail.getProductCategory() == null) {
-//                log.warn("productDTOViewDetail's productCategory is null");
-//            }
-//        }
-//        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
-//
-//        model.addAttribute("product", productDTOViewDetail);
-//        model.addAttribute("productImages", productImgDTOS);
-//
-//        return "/product/update";
-//    }
     // 송원철 / 헤더 정보 담기
     @GetMapping("/update/{id}")
     public String getProductUpdate(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -343,6 +265,8 @@ public class ProductController {
         return "/product/update";
     }
 
+
+
     @PostMapping("/update")
     public ResponseEntity<Map<String,Object>> postProductUpdate(@ModelAttribute ProductDTO productDTO,
                                                                @ModelAttribute ProductCategoryDTO productCategoryDTO,
@@ -369,7 +293,6 @@ public class ProductController {
     }
 
 
-    // ===========================================================================================
 
     // DELETE (DELETE)
     @GetMapping("/delete/{id}")
@@ -377,6 +300,8 @@ public class ProductController {
         productService.delete(id);
         return "redirect:/product/list";
     }
+
+
 
     // 송원철 - 상품관리 페이지
     @GetMapping("/manage")

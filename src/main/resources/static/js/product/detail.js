@@ -14,6 +14,24 @@ document.addEventListener("DOMContentLoaded", function() {
       priceElement.text(formattedPrice);
     });
 
+    // quantity와 amount 연동
+    $(document).ready(function() {
+      const quantityElement = document.getElementById('quantity');
+      const amountInput = document.getElementById('amount');
+
+      // quantity 값이 변경될 때 amount 값을 업데이트
+      function updateAmount() {
+        const newQuantity = quantityElement.textContent;
+        amountInput.value = newQuantity;
+      }
+
+      // minus 버튼과 plus 버튼을 누르면 updateAmount 함수를 호출
+      const minusButton = document.getElementById('minus-button');
+      const plusButton = document.getElementById('plus-button');
+      
+      minusButton.addEventListener('click', updateAmount);
+      plusButton.addEventListener('click', updateAmount);
+    });
 
 
     // Quantity 숫자 변경 로직.

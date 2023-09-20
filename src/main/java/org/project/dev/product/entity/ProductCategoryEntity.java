@@ -32,7 +32,6 @@ public class ProductCategoryEntity {
     @Column(name = "product_category_name", nullable = false)
     private String productCategoryName;
 
-
     // DB 연관관계 설정 -> ProductEntity
     @OneToMany(mappedBy = "productCategoryEntity", cascade = CascadeType.REMOVE)
     private List<ProductEntity> productEntities = new ArrayList<>();
