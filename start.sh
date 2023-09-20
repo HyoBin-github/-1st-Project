@@ -24,7 +24,7 @@
 #nohup java -jar $JAR_FILE
 
 #!/usr/bin/env bash
-APP_NAME=app
+APP_NAME="dev-0.0.1-SNAPSHOT.jar"
 PROJECT_ROOT="/home/ubuntu/app/build/libs"
 JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
