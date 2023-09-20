@@ -40,7 +40,7 @@ public class ChatBotController {
                 "</div>"+
                 "<div class='message'>"+
                 "<div class='part'>"+
-                "<p style='text-align:center'>안녕하세요, 쳇봇입니다. <br> 궁금한 점은 저에게 물어보세요!</p>"+
+                "<p style='text-align:center'>안녕하세요, 챗봇입니다. <br> 궁금한 점은 저에게 물어보세요!</p>"+
                 "</div>" +
                 "<div class='part2'>"+
                 "<p>아래는 자주하는 질문 내용을 입력해 주세요.</p>"+
@@ -62,7 +62,7 @@ public class ChatBotController {
         Thread.sleep(100);
         LocalDateTime today = LocalDateTime.now();
         String formattedTime = today.format(DateTimeFormatter.ofPattern("a H:mm"));
-        String responseText = message.getContent()+"에 대한 답장입니다.";
+        String responseText = message.getContent()+"에 대한 안내입니다.";
 
         return new BotMessage("<div class='msg_bot_flex'>"+
                 "<div class='icon'>"+

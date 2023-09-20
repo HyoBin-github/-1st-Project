@@ -4,6 +4,7 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 /*chatbot*/
 @import url(/css/common/chatbot.css);
+@import url(/css/product/review.css);
 
 *{
   margin: 0;

@@ -46,6 +46,12 @@ function inputTagString(text){
     </div>`;
     return message;
 }
+function menuclickFn(event){
+    let text = event.target.innerText.trim();
+    let message = inputTagString(text);
+    showMessage(message);
+    stompClient.send("/chat/message", {}, JSON.stringify({'content':text}));
+}
 function qKeyupFn(event){
     if(event.keyCode!=13) return;
     msgSendClickFn()
