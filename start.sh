@@ -12,6 +12,7 @@ CURRENT_PID=$(pgrep -f "$APP_NAME")
 if [ -z "$CURRENT_PID" ]; then
   echo "현재 실행중인 애플리케이션이 없습니다"
 else
+  echo "현재 실행중인 애플리케이션이 제거"
     sudo kill -15 "$CURRENT_PID"
     sleep 5
 fi
