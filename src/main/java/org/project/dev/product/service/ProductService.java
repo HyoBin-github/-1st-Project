@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.project.dev.member.entity.MemberEntity;
 import org.project.dev.member.repository.MemberRepository;
+import org.project.dev.product.dto.ProductBrandDTO;
+import org.project.dev.product.dto.ProductCategoryDTO;
 import org.project.dev.product.dto.ProductDTO;
 import org.project.dev.product.entity.ProductBrandEntity;
 import org.project.dev.product.entity.ProductCategoryEntity;
@@ -217,12 +219,45 @@ public class ProductService {
     }
 
     // UPDATE PROCESS (UPDATE)
+//    @Transactional
+//    public ProductDTO productUpdateDetail(ProductDTO productDTO) {
+//        ProductEntity productEntity = ProductEntity.toEntity(productDTO);
+//        productRepository.save(productEntity);
+//        return productViewDetail(productDTO.getId());
+//    }
+
+
+    // Update 수정중==================================================================
+
     @Transactional
-    public ProductDTO productUpdateDetail(ProductDTO productDTO) {
-        ProductEntity productEntity = ProductEntity.toEntity(productDTO);
-        productRepository.save(productEntity);
-        return productViewDetail(productDTO.getId());
+    public ProductEntity productUpdateDetail(ProductDTO productDTO,
+                                             ProductCategoryDTO productCategoryDTO,
+                                             ProductBrandDTO productBrandDTO){
+//        ProductEntity productEntity = ProductEntity.toEntity(productDTO);
+//        productEntity.setProductCategoryEntity(productCategoryEntity);
+//        productEntity.setProductBrandEntity(productBrandEntity);
+//        return productRepository.save(productEntity);
+        Optional<ProductEntity> existingProduct = productRepository.findById(productDTO.getId());
+
+
+        ProductEntity productEntity = existingProduct.get();
+
+        // 필드 업데이트
+        productEntity.updateFromDTO(productDTO);
+
+        // 새로운 또는 기존의 ProductCategoryEntity와 ProductBrandEntity를 찾거나 생성
+        ProductCategoryEntity newOrExistingCategory = productUtilService.productCategoryWriteDetail(productCategoryDTO);
+        ProductBrandEntity newOrExistingBrand = productUtilService.productBrandWriteDetail(productBrandDTO);
+
+        // 필요한 필드만 업데이트
+        productEntity.setProductCategoryEntity(newOrExistingCategory);
+        productEntity.setProductBrandEntity(newOrExistingBrand);
+
+        return productRepository.save(productEntity);
     }
+
+
+    // ==============================================================================
 
 
     // DELETE (DELETE)

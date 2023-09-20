@@ -105,6 +105,8 @@ public class ProductUtilService {
     public void saveProductImages(ProductEntity savedProductEntity,
                                   List<MultipartFile> productImages) throws IOException {
 
+        System.out.println(productImages);
+
         if (productImages != null && !productImages.isEmpty()) {
             for (int i = 0; i < productImages.size(); i++) {
                 MultipartFile multipartFile = productImages.get(i);

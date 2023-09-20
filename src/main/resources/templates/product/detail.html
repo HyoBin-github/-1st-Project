@@ -87,7 +87,7 @@
             </div>
             <img src="/images/product/iconmonstr-plus-square-filled.svg" alt="plus" class="plus_img" id="plus-button">
             <p class="stock-result_text">남은 재고수량 :</p>
-            <span th:if="${product.productStock != null}" th:text="${product.productStock}" class="stock-result_text"></span>
+            <span th:if="${product.productStock != null}" th:text="${product.productStock}" class="stock-result_text" id="stock"></span>
           </div>
           <!-- <div class="stock_contents">
           </div> -->
@@ -152,7 +152,8 @@
               <input type="hidden" readonly name="productId" th:value="${product.id}" id="productId">
               <ul>
                 <li>
-                  <textarea name="review" id="review" cols="30" rows="1" placeholder="내용작성"></textarea>
+                  <textarea name="review" class="review_textarea" id="review" cols="30" rows="1" placeholder="내용작성"></textarea>
+                  <label for="review"></label>
                 </li>
                 <li class="Btn">
                   <input type="button" value="답글작성" id="reviewBtn">
