@@ -24,7 +24,7 @@
 #nohup java -jar $JAR_FILE
 
 #!/usr/bin/env bash
-APP_NAME="dev-0.0.1-SNAPSHOT.jar"
+APP_NAME=app
 PROJECT_ROOT="/home/ubuntu/app/build/libs"
 JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
@@ -34,7 +34,7 @@ JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
 TIME_NOW=$(date +%c)
 
-CURRENT_PID=$(pgrep -f $JAR_FILE)
+CURRENT_PID=$(pgrep -f $APP_NAME)
 
 if [ -z $CURRENT_PID ]; then
   echo "현재 실행중인 애플리케이션이 없습니다"
