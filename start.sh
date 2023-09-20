@@ -34,7 +34,7 @@ JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
 TIME_NOW=$(date +%c)
 
-CURRENT_PID=$(pgrep -f $APP_NAME)
+CURRENT_PID=$(pgrep -f $JAR_FILE)
 
 if [ -z $CURRENT_PID ]; then
   echo "현재 실행중인 애플리케이션이 없습니다"
