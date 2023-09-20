@@ -7,17 +7,20 @@ files:
     overwrite: yes
 
 permissions:
-  - object: /home/ubuntu/app
-    pattern: "**"
+  - object: /home/ubuntu/app/
     owner: ubuntu
     group: ubuntu
+    mode: 755
 
 hooks:
   AfterInstall:
-    - location: ./stop.sh
-      timeout: 60
-      runas: ubuntu
-  ApplicationStart:
     - location: ./start.sh
       timeout: 60
       runas: ubuntu
+#    - location: ./.sh
+#      timeout: 60
+#      runas: ubuntu
+#  ApplicationStart:
+#    - location: ./start.sh
+#      timeout: 60
+#      runas: ubuntu
