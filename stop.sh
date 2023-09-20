@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PROJECT_ROOT="/home/ubuntu/app"
-JAR_FILE="$PROJECT_ROOT/dev-webapp0.0.2.jar"
+JAR_FILE="$PROJECT_ROOT/dev-webapp0.0.1.jar"
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 
