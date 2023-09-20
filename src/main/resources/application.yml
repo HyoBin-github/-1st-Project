@@ -96,6 +96,6 @@ file:
   #reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
   #server
-  /home/ubuntu/projectImg/saveFiles/productImg
-  /home/ubuntu/projectImg/saveFiles/reviewImg
+  productImgUploadDir: /home/ubuntu/projectImg/saveFiles/productImg
+  reviewImgUploadDir: /home/ubuntu/projectImg/saveFiles/reviewImg
 
