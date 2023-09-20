@@ -69,19 +69,29 @@
     overflow: hidden;
     margin: 0 auto;
 }
-.detail-con .detail>ul>li.update{
+.detail-con .detail>ul>li.update span{
     padding: 10px;
-    font-size: 12px;
     box-shadow: inset 0px -2px 4px -1px #cccccc;
+    border: none;
 }
-.detail-con .detail>ul>li.delete{
-    font-size: 12px;
+.detail-con .detail>ul>li.delete span{
     box-shadow: inset 0px -2px 4px -1px #cccccc;
+    border: none;
 }
-.detail-con .detail>ul>li.inquiry{
-    font-size: 12px;
+.detail-con .detail>ul>li.inquiry span{
     box-shadow: inset 0px -2px 4px -1px #cccccc;
+    border: none;
 }
+.detail-con .detail>ul>li span a{
+    padding: 10px;
+    transition: all 0.3s;
+}
+.detail-con .detail>ul>li span a:hover{
+    color: white;
+    border-radius: 10px;
+    background: #c5c5c5;
+}
+
 /* 버튼 스타일 */
 .detail-con span.image_btn{
     display: flex;
@@ -142,7 +152,7 @@ a:hover {
 }
 
 /* 버튼 스타일 */
-button {
+button.URLBtn {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -151,7 +161,7 @@ button {
     border-radius: 5px;
 }
 
-button:hover {
+button.URLBtn:hover {
     background-color: #0056b3;
 }
 

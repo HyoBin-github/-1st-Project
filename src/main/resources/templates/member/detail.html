@@ -21,7 +21,7 @@
             <div id="image-preview"><img id="preview-image" th:src="${memberImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <th:block th:if="${#authentication.principal.username==member.memberEmail}">
             <span class="image_btn">
-                <button onclick="redirectToURL()">프로필 이미지 수정</button>
+                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>
             </span>
             </th:block>
             <th:block th:unless="${#authentication.principal.username==member.memberEmail}">
