@@ -34,6 +34,7 @@ JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
 TIME_NOW=$(date +%c)
 
+
 CURRENT_PID=$(pgrep -f $APP_NAME)
 
 if [ -z $CURRENT_PID ]; then
