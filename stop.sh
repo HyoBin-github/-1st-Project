@@ -14,4 +14,5 @@ if [ -z $CURRENT_PID ]; then
 else
   echo "실행 중인 애플리케이션 종료 "
   kill -15 $CURRENT_PID
+  sleep 5
 fi
