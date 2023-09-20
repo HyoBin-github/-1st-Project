@@ -48,12 +48,8 @@ function replyList(){
                 list+="<li>";
                 list+="<div id='reCon"+el.id+"' class='content'>";
                 list+="<span>"+el.review+"</span>";
-                list+="<div class='Btn' th:unless='${#authentication.principal.username=="+el.reviewWriter+"}'>";
-                list+="<th:block th:if='${#authentication.principal.username=="+el.reviewWriter+"}'>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+el.id+')">';
                 list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+el.id+',"'+el.review+'",'+el.productId+")'>";
-                list+="</th:block>";
-                list+="</div>";
                 list+="</div>";
                 list+="<div id='showUp"+el.id+"'>";
                 list+="</div>";
