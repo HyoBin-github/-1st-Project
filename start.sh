@@ -13,7 +13,7 @@ echo "$CURRENT_PID"
 
 echo "$JAR_FILE"
 
-nohup java -jar $JAR_FILE
+java -jar $JAR_FILE
 
 
 
