@@ -12,18 +12,18 @@ permissions:
     group: ubuntu
 
 
-hooks:
-  AfterInstall:
-    - location: ./start.sh
-      timeout: 60
-      runas: ubuntu
-
 #hooks:
 #  AfterInstall:
-#    - location: ./stop.sh
-#      timeout: 60
-#      runas: ubuntu
-#  ApplicationStart:
 #    - location: ./start.sh
 #      timeout: 60
 #      runas: ubuntu
+
+hooks:
+  AfterInstall:
+    - location: ./stop.sh
+      timeout: 60
+      runas: ubuntu
+  ApplicationStart:
+    - location: ./start.sh
+      timeout: 60
+      runas: ubuntu
