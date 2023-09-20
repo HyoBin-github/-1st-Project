@@ -86,11 +86,15 @@
             <label th:for="role">권한</label>
             <input type="text" th:field="*{role}" th:value="${memberDto.role}" readonly> <br>
           </li>
+          <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
+          <a th:href="@{/member/confirmPassword/{memberId}(memberId=${memberDto.memberId})}"><button type="button">비밀번호 변경</button></a>
         </ul>
       </form>
-      <a href="javascript:history.back()">수정취소</a>
-      <a th:href="@{/member/confirmPassword/{memberId}(memberId=${memberDto.memberId})}">비밀번호 변경</a>
+<!--      <a href="javascript:history.back()">수정취소</a>-->
+<!--      <a th:href="@{/member/confirmPassword/{memberId}(memberId=${memberDto.memberId})}">비밀번호 변경</a>-->
+
+
     </div>
   </div>
 </div>

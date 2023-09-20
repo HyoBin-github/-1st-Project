@@ -10,6 +10,9 @@ spring:
 #    url: jdbc:mysql://localhost:3306/qweqqwe
 #    username: root
 #    password: '1234'
+#    url: jdbc:mysql://localhost:3306/springdb
+#    username: root
+#    password: '1234'
 
   mail:
     # google smtp server 사용
@@ -92,6 +95,11 @@ file:
 #    reviewImgUploadDir: C:\Users\Administrator\Desktop\coding\saveFiles\reviewImg\   # 리뷰이미지 경로 (절대경로로 설정해주세요)
 
   #rladpwls1843@gmail.com
-  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
-  reviewImgUploadDir:  C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+#  productImgUploadDir: C:\Users\Documents\projectImg\saveFiles\productImg\ # 상품이미지 경로 (절대경로로 설정해주세요)
+#  reviewImgUploadDir: C:\Users\Documents\projectImg\saveFiles\reviewImg\  # 리뷰이미지 경로 (절대경로로 설정해주세요)
+
+  #server
+  productImgUploadDir: /home/ubuntu/projectImg/saveFiles/productImg
+  reviewImgUploadDir: /home/ubuntu/projectImg/saveFiles/reviewImg
+
 
