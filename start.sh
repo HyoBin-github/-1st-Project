@@ -51,6 +51,6 @@ fi
 # jar 파일 실행
 #echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 echo "jar 빌드"
-nohup java -jar $JAR_FILE &
+nohup java -jar $JAR_FILE
 
 #CURRENT_PID=$(pgrep -f $JAR_FILE)
