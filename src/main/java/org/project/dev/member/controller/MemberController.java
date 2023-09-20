@@ -354,10 +354,12 @@ public class MemberController {
                                       @AuthenticationPrincipal MyUserDetails myUserDetails,
                                       Model model){
 
-        MemberDto member=memberService.detailMember(memberId);
+        MemberDto member = memberService.detailMember(memberId);
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         model.addAttribute("member", member);
         model.addAttribute("myUserDetails", myUserDetails);
+        model.addAttribute("memberImageUrl", memberImageUrl);
 
         return "member/confirmEmail";
     }

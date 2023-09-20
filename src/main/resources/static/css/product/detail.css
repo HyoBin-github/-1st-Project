@@ -37,7 +37,8 @@
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 615px 15px 460px 50px 1fr;
-  grid-template-rows: 20px repeat(12, 100px);
+  /* grid-template-rows: 20px repeat(12, 100px); */
+  grid-template-rows: 20px repeat(12, minmax(100px, auto));
   position: relative;
   margin-bottom: -43px;
 }
@@ -162,8 +163,8 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 10px 0 10px 0;
-  margin-bottom: 20px;
+  padding: 40px 0 15px 0;
+  /* margin-bottom: 20px; */
   /* border-bottom: 1px solid #e8e8e8;  */
 }
 .price-result_text {
@@ -274,6 +275,25 @@
   color: #ffffff;
 }
 
+
+
+.reply-con {
+  height: auto;
+  width: 100%;
+  margin-top: 40px;
+}
+.review_textarea {
+  width: 386px;
+  height: 15px;
+  resize: none;
+  overflow: hidden;
+  border: 1px solid #dddddd !important;
+  font-size: 1rem;
+  line-height: 1.15;
+  letter-spacing: -0.04rem;
+  border-radius: 8px;
+  padding: 16px;
+}
 
 
 

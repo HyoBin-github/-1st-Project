@@ -295,17 +295,23 @@ public class ProductController {
     // 수정 작업중 =================================================================================
 
     @GetMapping("/update/{id}")
-    public String getProductUpdate(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+    public String getProductUpdate(@PathVariable Long id, Model model) {
 
-        MemberEntity member=myUserDetails.getMemberEntity();
-
-        if (member != null) {
-            model.addAttribute("member", member);
-            log.info("MemberId: {}", member.getMemberId());
-        }else {
-            log.info("member is null");
+        ProductDTO productDTOViewDetail = productService.productViewDetail(id);
+        if (productDTOViewDetail == null) {
+            log.warn("productDTOViewDetail is null");
+        } else {
+            log.info("productDTOViewDetail: {}", productDTOViewDetail.toString());
+            if (productDTOViewDetail.getProductCategory() == null) {
+                log.warn("productDTOViewDetail's productCategory is null");
+            }
         }
-        return "/product/write";
+        List<ProductImgDTO> productImgDTOS = productUtilService.getProductImagesByProductId(id);
+
+        model.addAttribute("product", productDTOViewDetail);
+        model.addAttribute("productImages", productImgDTOS);
+
+        return "/product/update";
     }
 
     @PostMapping("/update")
@@ -313,24 +319,19 @@ public class ProductController {
                                                                @ModelAttribute ProductCategoryDTO productCategoryDTO,
                                                                @ModelAttribute ProductBrandDTO productBrandDTO,
                                                                @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
-                                                               @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {
-        MemberEntity member = myUserDetails.getMemberEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
+                                                               @RequestParam(name = "productImagesOrder", required = false) String productImagesOrder)
+                                                               throws IOException {
 
-        if (member == null) {
-            // 사용자 정보가 없는 경우 로그를 남깁니다.
-            log.info("사용자 정보가 없습니다.");
-        }
+        // 상품글 수정
+        ProductEntity productEntityUpdatePro = productService.productUpdateDetail(productDTO, productCategoryDTO, productBrandDTO);
 
-        // 카테고리 정보 작성 또는 가져오기
-        ProductCategoryEntity productCategoryEntity = productUtilService.productCategoryWriteDetail(productCategoryDTO);
-        // 브랜드 정보 작성 또는 가져오기
-        ProductBrandEntity productBrandEntity = productUtilService.productBrandWriteDetail(productBrandDTO);
-        // 상품글 작성
-        ProductEntity productEntityWritePro = productService.productWriteDetail(productDTO, productCategoryEntity, productBrandEntity, member);
-        // 이미지 저장
-        productUtilService.saveProductImages(productEntityWritePro, productImages);
+        // 수정페이지에서 삭제한 이미지 삭제
+        productUtilService.deleteProductImages(productEntityUpdatePro, productImagesOrder);
 
-        Long productId = productEntityWritePro.getId(); // 작성한 글의 productId를 가져옴.
+        // 이미지 수정 및 저장
+        productUtilService.updateProductImages(productEntityUpdatePro, productImages, productImagesOrder);
+
+        Long productId = productEntityUpdatePro.getId(); // 작성한 글의 productId를 가져옴.
 
         Map<String,Object> response = new HashMap<>();
         response.put("status","success");

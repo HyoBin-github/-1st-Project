@@ -24,5 +24,7 @@ public interface ProductImgRepository extends JpaRepository<ProductImgEntity, Lo
     @Query("SELECT img FROM ProductImgEntity img WHERE img.productEntity.id = ?1")
     List<ProductImgEntity> findByProductId(Long productId);
 
+    List<ProductImgEntity> findByProductEntity(ProductEntity productEntity);
+
 }
 

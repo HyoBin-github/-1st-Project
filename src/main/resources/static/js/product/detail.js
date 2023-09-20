@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const minusButton = document.getElementById('minus-button');
     const plusButton = document.getElementById('plus-button');
     const quantityElement = document.getElementById('quantity');
-
+    const stockElement = document.getElementById('stock');
     // Quantity 초기 값
     let quantity = 1;
 
     // Handle minus button click
     minusButton.addEventListener('click', function() {
-      if (quantity > 0) {
+      if (quantity > 1) {
         quantity--;
         updateQuantity();
       }
@@ -34,8 +34,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Handle plus button click
     plusButton.addEventListener('click', function() {
-      quantity++;
-      updateQuantity();
+      let stock = parseInt(stockElement.textContent, 10); // 재고 수량을 숫자로 변환
+      
+      if (quantity < stock) {
+        quantity++;
+        updateQuantity();
+      }
     });
 
     // Update the quantity on the page

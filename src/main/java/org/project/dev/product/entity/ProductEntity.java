@@ -130,5 +130,16 @@ public class ProductEntity extends BaseEntity {
 //        return null;
 //    }
 
+    // 업데이트 시 사용되는 필드.
+    public void updateFromDTO(ProductDTO productDTO) {
+        this.setProductName(productDTO.getProductName());
+        this.setProductColor(productDTO.getProductColor());
+        this.setProductSize(productDTO.getProductSize());
+        this.setProductStock(productDTO.getProductStock());
+        this.setProductDescription(productDTO.getProductDescription());
+//        this.setProductHits(productDTO.getProductHits());
+        this.setProductPrice(productDTO.getProductPrice());
+        this.setIsProductDisplayed(productDTO.getIsProductDisplayed());
+    }
 
 }

@@ -161,7 +161,7 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
         return new MyUserDetails(memberEntity, attributes);
     }
 
-    // 휴대전화번호가 비어있는 경우 임의의 15자리 숫자 생성
+    // 휴대전화번호가 비어있는 경우 임의의 15자리 숫자 생성 메서드
     private String generateRandomPhoneNumber() {
         StringBuilder sb = new StringBuilder();
         Random rand = new Random();
