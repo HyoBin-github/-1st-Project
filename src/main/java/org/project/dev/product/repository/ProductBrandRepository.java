@@ -31,9 +31,4 @@ public interface ProductBrandRepository extends JpaRepository<ProductBrandEntity
     // 브랜드 명으로 찾기. (containing)
     List<ProductBrandEntity> findByProductBrandNameContaining(String substring);
 
-    // 스크롤 페이징 처리 작업중 =================================================================
-
-
-    // ======================================================================================
-
 }
