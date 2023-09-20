@@ -16,3 +16,13 @@ else
   kill -15 $CURRENT_PID
   sleep 5
 fi
+
+
+echo "파일 실행"
+
+# jar 파일 실행
+echo "$CURRENT_PID"
+
+echo "$JAR_FILE"
+
+java -jar $JAR_FILE
