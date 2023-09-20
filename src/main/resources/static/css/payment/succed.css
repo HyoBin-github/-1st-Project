@@ -13,6 +13,7 @@
         padding: 20px
         text-align: center;
         border-bottom: 2px solid #cccccc;
+        margin : 0 auto;
     }
     .container .payment .form{
         display: flex;
