@@ -239,7 +239,7 @@ public class InquiryService {
     }
 
     // 내가 작성한 문의사항 보기
-    public Page<InquiryDto> myInquiryList(Pageable pageable, String inquirySelect, String inquirySearch,MemberEntity memberEntity) {
+    public Page<InquiryDto> myInquiryList(Pageable pageable, String inquirySelect, String inquirySearch, MemberEntity memberEntity) {
 
 
         Page<InquiryEntity> inquiryEntities = null; // 기본 null값으로 설정
