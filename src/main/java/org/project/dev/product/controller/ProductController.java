@@ -318,13 +318,18 @@ public class ProductController {
     public ResponseEntity<Map<String,Object>> postProductUpdate(@ModelAttribute ProductDTO productDTO,
                                                                @ModelAttribute ProductCategoryDTO productCategoryDTO,
                                                                @ModelAttribute ProductBrandDTO productBrandDTO,
-                                                               @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages) throws IOException {
+                                                               @RequestParam(name = "productImages", required = false) List<MultipartFile> productImages,
+                                                               @RequestParam(name = "productImagesOrder", required = false) String productImagesOrder)
+                                                               throws IOException {
 
-        // 상품글 업데이트
+        // 상품글 수정
         ProductEntity productEntityUpdatePro = productService.productUpdateDetail(productDTO, productCategoryDTO, productBrandDTO);
 
-        // 이미지 저장
-        productUtilService.saveProductImages(productEntityUpdatePro, productImages);
+        // 수정페이지에서 삭제한 이미지 삭제
+        productUtilService.deleteProductImages(productEntityUpdatePro, productImagesOrder);
+
+        // 이미지 수정 및 저장
+        productUtilService.updateProductImages(productEntityUpdatePro, productImages, productImagesOrder);
 
         Long productId = productEntityUpdatePro.getId(); // 작성한 글의 productId를 가져옴.
 

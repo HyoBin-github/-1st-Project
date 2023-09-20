@@ -240,6 +240,10 @@ document.addEventListener("DOMContentLoaded", function() {
         formData.append("productImages", file);
       });
   
+      const imageNames = queuedFiles.map(file => file.name);
+
+      formData.append("productImagesOrder", imageNames);
+      
       // 서버로 데이터 전송
       const response = await fetch(event.target.action, {
         method: "POST",
