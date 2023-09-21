@@ -85,9 +85,7 @@ public class ReplyService {
     public int replyUp(ReplyDto replyDto, MyUserDetails myUserDetails) {
 
         InquiryEntity inquiryEntity
-                = inquiryRepository.findById(replyDto.getInqId()).orElseThrow(()->{
-                    throw new IllegalArgumentException("X");
-        });
+                = inquiryRepository.findById(replyDto.getInqId()).orElseThrow(IllegalArgumentException::new);
         replyDto.setReplyWriter("m1");
         ReplyEntity replyEntity = ReplyEntity.builder()
                 .id(replyDto.getId())
