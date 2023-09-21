@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ubuntu/app"
-JAR_FILE="$PROJECT_ROOT/dev-webapp0.0.1.jar"
-
-APP_LOG="$PROJECT_ROOT/application.log"
-ERROR_LOG="$PROJECT_ROOT/error.log"
-DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
-
-TIME_NOW=$(date +%c)
-
-# build 파일 복사
-echo "$TIME_NOW > $JAR_FILE 파일 복사" >> $DEPLOY_LOG
-cp $PROJECT_ROOT/build/libs/*.jar $JAR_FILE
-
-# jar 파일 실행
-echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
-sudo nohup java -jar $JAR_FILE &
+APP_NAME="dev-0.0.1-SNAPSHOT.jar"
+PROJECT_ROOT="/home/ubuntu/app/build/libs"
+JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
 
+CURRENT_PID=$(pgrep -f $APP_NAME)
 
-CURRENT_PID=$(pgrep -f $JAR_FILE)
-echo "$TIME_NOW > 실행된 프로세스 아이디 $CURRENT_PID 입니다." >> $DEPLOY_LOG
+if [ -z $CURRENT_PID ]; then
+  echo "현재 실행중인 애플리케이션이 없습니다"
+  echo "$CURRENT_PID"
+else
+  echo "실행중인애플리케이션 종료 "
+  sudo kill -9 $JAR_FILE
+fi
+
+
+echo "jar 빌드"
+nohup java -jar $JAR_FILE
+
