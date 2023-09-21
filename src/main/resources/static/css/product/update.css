@@ -175,9 +175,7 @@ input::placeholder, textarea::placeholder {
   height: 100px;
   margin: 2px;
 }
-.delete-icon {
-  /* background-color: #ffffff; */
-}
+
 .delete-img {
   position: absolute;
   height: 20px;
@@ -528,10 +526,26 @@ input::placeholder, textarea::placeholder {
   cursor: pointer;
   display: none;
 }
+.delete_btn {
+  display: inline-block;
+  cursor: pointer;
+  width: 50%;
+  height: 34px;
+  /* background-color: #952323; */
+  text-align: center; 
+  line-height: 32px;
+  position: relative;
+  top: 13px;
+  border-radius: 8px 8px 8px 8px;
+  box-shadow: 0px 0px 3px 0px #b1b1b1;
+  color: #41444B;
+  font-size: 14px;
+  font-weight:bold;
+}
 .submit_input_label {
   display: inline-block;
   cursor: pointer;
-  width: 360px;
+  width: 50%;
   height: 34px;
   background-color: #7286d3;
   text-align: center; /* 텍스트 중앙 정렬 */
@@ -549,8 +563,69 @@ input::placeholder, textarea::placeholder {
 
 
 
-
-
+/* 모달 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+.modal-content {
+  height: 200px;
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.modal-content p{
+  font-size: 20px;
+  font-weight: bold;
+}
+.modal-content img{
+ height: 50px;
+ width: 50px;
+ filter: invert(67%) 
+         sepia(81%) 
+         saturate(4410%) 
+         hue-rotate(323deg) 
+         brightness(109%) 
+         contrast(110%);
+}
+.confirmation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirmation button {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  height: 40px;
+  width: 80px;
+  margin: 0 4px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 3px 0px #b1b1b1;
+}
+.confirmation button:nth-child(1) {
+  color: #41444B;
+}
+.confirmation button:nth-child(2) {
+  color: #ffffff;
+  background-color: #7286d3;
+}
 
 
 

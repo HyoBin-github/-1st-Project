@@ -417,7 +417,7 @@ input::placeholder, textarea::placeholder {
 .product_input_hole__stock {
   position: absolute;
   height: 3px;
-  width: 71px;
+  width: 83px;
   top: 9px;
   left: 6px;
   background-color: #ffffff;
