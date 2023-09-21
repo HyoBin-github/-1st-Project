@@ -40,7 +40,7 @@
                             <!-- 상품 ID에 해당하는 이미지만 출력 -->
                             <th:block th:if="${cartItem.getProduct().getId()} == ${img.id}">
                                 <a th:href="@{/product/{id}(id=${cartItem.getProduct().getId()})}"> <!-- 상세보기 페이지로 이동-->
-                                <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="50" />
+                                    <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="50" />
                                 </a>
                             </th:block>
                         </th:block>
@@ -55,6 +55,7 @@
                             th:href="@{/cart/member/{memberId}/{cartItemId}/delete(memberId=${cartItem.getCart().getMember().getMemberId()}, cartItemId=${cartItem.getCartItemId()})}"
                             style="text-decoration: none">삭제</a>
                     </td>
+                </tr>
                 </tbody>
             </table>
         </div>
