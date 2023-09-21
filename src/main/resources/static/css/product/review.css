@@ -6,7 +6,7 @@
     gap: 10px;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .review-title{
-    width: 100px;
+    width: 70px;
     border-bottom: 4px solid #7285d3;
     text-align: start;
     padding: 5px;
@@ -19,7 +19,7 @@
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form{
     margin: auto;
     text-align: center;
-    width: 100px;
+    width: 70x;
     display: flex;
     justify-content: center;
     gap: 5px;
@@ -34,7 +34,7 @@
     text-align: center;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li{
-    width: 900px;
+    width: 100px;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li:not(.Btn){
     display: flex;
@@ -45,7 +45,7 @@
     box-sizing: border-box;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li:not(.Btn) textarea{
-    width: 50px;
+    width: 90px;
     height: 300px;
     padding: 10px;
     box-shadow: inset 0px -2px 4px -1px #8c9cdb;
@@ -53,7 +53,7 @@
     resize: none;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li.Btn input{
-    width: 40px;
+    width: 90px;
     height: 35px;
     text-align: center;
     font-size: 20px;
@@ -79,23 +79,30 @@
     justify-content: center;
     box-shadow: inset 0px -2px 4px -1px #8c9cdb;
     display: flex;
+    width: 500px;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon{
-    width: 900px;
+    width: 90px;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul{
+    position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-direction: column;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul>li.writer{
     padding: 10px;
     font-size: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul>li.create{
     padding: 5px;
     text-align: end;
     border-bottom: 1px solid #4b66c7;
+    position: absolute;
+    top: 10px;
+    right: 2px;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .content{
     width: 90px;

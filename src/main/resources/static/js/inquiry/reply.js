@@ -11,6 +11,8 @@ function replyFn() {
         'reply': $('#reply').val()
     }
 
+
+
     $.ajax({
         type: 'POST',
         url: "/reply/write",
@@ -95,11 +97,11 @@ function showUpDate(id,reply,inqId){
     console.log(inqId)
 
     const reId = $('#reCon'+id);
-    console.log(reId.hasClass('hidden'));
-    if(reId.hasClass('hidden')){
-        reId.removeClass('hidden')
+    console.log(reId.hasClass('content'));
+    if(reId.hasClass('content')){
+        reId.removeClass('content')
     }else{
-        reId.addClass('hidden')
+        reId.addClass('content')
          $('#showUp'+id).html(
              "<textarea id='reply"+id+"'>"+reply+"</textarea>"
             +"<input type='button' class='replyUpBtn' value='완료' onclick='replyUpDate("+id+','+inqId+")'>"
