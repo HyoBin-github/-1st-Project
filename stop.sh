@@ -1,34 +1,31 @@
-
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/app/build/libs
+PROJECT_ROOT="/home/ubuntu/app/build/libs"
+JAR_FILE="$PROJECT_ROOT/dev-0.0.1-SNAPSHOT.jar"
 
-./gradlew clean build
 
-echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fla java | grep hayan | awk '{print $1}')
+CURRENT_PID=$(pgrep -f $JAR_FILE)
 
-echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
+echo "$CURRENT_PID"
 
-if [ -z "$CURRENT_PID" ]; then
-  echo "현재 구동 중인 애플리케이션이 없으므로 종료하지 않습니다."
+# 프로세스가 켜져 있으면 종료
+if [ -z $CURRENT_PID ]; then
+  echo "현재 실행중인 애플리케이션이 없습니다"
+  # jar 파일 실행
+  echo "$CURRENT_PID"
 else
-  echo "> kill -15 $CURRENT_PID"
-  kill -15 $CURRENT_PID
+  echo "실행 중인 애플리케이션 종료 "
+  kill -9 $CURRENT_PID
   sleep 5
 fi
 
-echo "> 새 애플리케이션 배포"
 
-JAR_NAME=$(ls -tr $REPOSITORY/*SNAPSHOT.jar | tail -n 1)
+echo "파일 실행"
 
-echo "> JAR NAME: $JAR_NAME"
+# jar 파일 실행
+echo "$CURRENT_PID"
 
-echo "> $JAR_NAME 에 실행권한 추가"
+echo "$JAR_FILE"
 
-chmod +x $JAR_NAME
-
-echo "> $JAR_NAME 실행"
-
-nohup java -jar -Duser.timezone=Asia/Seoul $JAR_NAME >> $REPOSITORY/nohup.out 2>&1 &
+java -jar $JAR_FILE
