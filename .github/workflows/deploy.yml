@@ -45,7 +45,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew clean build
+      run: ./gradlew build
 
     # (3) Gradle build (Test 제외)
 #    - name: Build with Gradle
