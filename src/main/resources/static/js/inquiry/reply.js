@@ -48,7 +48,7 @@ function replyList(){
                 list+="<li class='writer'>"+this.replyWriter+"</li>";
                 list+="<li class='create'>"+this.createTime+"</li>";
                 list+="<li>";
-                list+="<div id='reCon"+this.id+"' class='content'>";
+                list+="<div id='reCon"+this.id+"'>";
                 list+="<span>"+this.reply+"</span>";
                 list+="<div class='Btn'>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
@@ -105,7 +105,6 @@ function showUpDate(id,reply,inqId){
          $('#showUp'+id).html(
              "<textarea id='reply"+id+"'>"+reply+"</textarea>"
             +"<input type='button' class='replyUpBtn' value='완료' onclick='replyUpDate("+id+','+inqId+")'>"
-            +"<input type='button' class='upXBtn' value='취소' onclick='upXDate("+inqId+")'>"
          );
     };
 }

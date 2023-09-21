@@ -50,7 +50,7 @@ function replyList(){
                 list+="<li class='writer'>"+this.reviewWriter+"</li>";
                 list+="<li class='create'>"+this.createTime+"</li>";
                 list+="<li>";
-                list+="<div id='reCon"+this.id+"' class='review_content'>";
+                list+="<div id='reCon"+this.id+"'>";
                 list+="<span>"+this.review+"</span>";
                 list+="<div class='Btn'>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
@@ -97,18 +97,15 @@ function showUpDate(id,review,productId){
     console.log(review)
     console.log(id)
     console.log(productId)
-    const reviews = $('#reviews');
     const reId = $('#reCon'+id);
-    console.log(reId.hasClass('content'));
-    if(reId.hasClass('content')){
-        reId.removeClass('content')
+    console.log(reId.hasClass('review_content'));
+    if(reId.hasClass('review_content')){
+        reId.removeClass('review_content')
     }else{
-        reviews.addClass('content')
-        reId.addClass('content')
+        reId.addClass('review_content')
          $('#showUp'+id).html(
              "<textarea id='review"+id+"'>"+review+"</textarea>"
             +"<input type='button' class='replyUpBtn' value='완료' onclick='replyUpDate("+id+','+productId+")'>"
-            +"<input type='button' class='upXBtn' value='취소' onclick='upXDate("+productId+")'>"
          );
     };
 }
