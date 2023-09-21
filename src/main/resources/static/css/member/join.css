@@ -168,7 +168,7 @@
 }
 .container .join .join-con .join-form form>ul>li .email button{
     position: absolute;
-    width: 100px;
+    width: 110px;
     height: 30px;
     top: 0;
     bottom: 0;
@@ -218,7 +218,7 @@
 }
 .container .join .join-con .join-form form>ul>li .nickName button{
     position: absolute;
-    width: 100px;
+    width: 110px;
     height: 30px;
     top: 0;
     bottom: 0;
@@ -236,7 +236,7 @@
     position: relative;
 }
 .container .join .join-con .join-form form>ul>li .phone button{
-    width: 110px;
+    width: 120px;
     position: absolute;
     height: 30px;
     top: 0;
