@@ -262,7 +262,7 @@ public class ProductController {
         model.addAttribute("product", productDTOViewDetail);
         model.addAttribute("productImages", productImgDTOS);
 
-        return "/product/update";
+        return "product/update";
     }
 
 
@@ -306,7 +306,7 @@ public class ProductController {
     // 송원철 - 상품관리 페이지
     @GetMapping("/manage")
     public String getProductManage(){
-        return "/product/manage";
+        return "product/manage";
     }
 
 }
