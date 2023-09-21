@@ -7,7 +7,9 @@ spring:
     url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
     username: admin
     password: '00000000'
+
 #    url: jdbc:mysql://localhost:3306/test2
+#    url: jdbc:mysql://localhost:3306/springdb
 #    username: root
 #    password: '1234'
 

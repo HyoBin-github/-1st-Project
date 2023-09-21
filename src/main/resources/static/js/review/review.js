@@ -5,21 +5,25 @@ $(document).ready(function(){
 });
 
 function reviewFn() {
-
+    const review = $('#review').val()
     const date = {
         'productId': $('#productId').val(),
         'review': $('#review').val()
     }
 
-    $.ajax({
-        type: 'POST',
-        url: "/review/write",
-        data: date,
-        success(res) {
-            alert("작성완료");
-        replyList();
-        }
-    });
+    if(review!=""){
+        $.ajax({
+            type: 'POST',
+            url: "/review/write",
+            data: date,
+            success(res) {
+                alert("작성완료");
+            replyList();
+            }
+        });
+    }else{
+        alert("리뷰를 작성해주세요");
+    }
         $('#review').val("");
 }
 
@@ -41,21 +45,23 @@ function replyList(){
                 list="등록된 댓글이 없습니다.";
             }else{
 
-            $(res).each(function(index, el){
+            $(res).each(function(){
                 list = "<ul>";
-                list+="<li class='writer'>"+el.reviewWriter+"</li>";
-                list+="<li class='create'>"+el.createTime+"</li>";
+                list+="<li class='writer'>"+this.reviewWriter+"</li>";
+                list+="<li class='create'>"+this.createTime+"</li>";
                 list+="<li>";
-                list+="<div id='reCon"+el.id+"' class='content'>";
-                list+="<span>"+el.review+"</span>";
-                list+='<input type="button" value="삭제" onclick="onDelete('+el.id+')">';
-                list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+el.id+',"'+el.review+'",'+el.productId+")'>";
+                list+="<div id='reCon"+this.id+"' class='review_content'>";
+                list+="<span>"+this.review+"</span>";
+                list+="<div class='Btn'>";
+                list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';
+                list+="<input type='button' class='replyUpBtn' value='수정' onclick='showUpDate("+this.id+',"'+this.review+'",'+this.productId+")'>";
                 list+="</div>";
-                list+="<div id='showUp"+el.id+"'>";
+                list+="</div>";
+                list+="<div id='showUp"+this.id+"' class='show'>";
                 list+="</div>";
                 list+="</li>";
                 list+="</ul>";
-
+                 
                 $('#reviewCon').append(list); // replyCon에 추가
             });
             }
@@ -91,13 +97,14 @@ function showUpDate(id,review,productId){
     console.log(review)
     console.log(id)
     console.log(productId)
-
+    const reviews = $('#reviews');
     const reId = $('#reCon'+id);
-    console.log(reId.hasClass('hidden'));
-    if(reId.hasClass('hidden')){
-        reId.removeClass('hidden')
+    console.log(reId.hasClass('content'));
+    if(reId.hasClass('content')){
+        reId.removeClass('content')
     }else{
-        reId.addClass('hidden')
+        reviews.addClass('content')
+        reId.addClass('content')
          $('#showUp'+id).html(
              "<textarea id='review"+id+"'>"+review+"</textarea>"
             +"<input type='button' class='replyUpBtn' value='완료' onclick='replyUpDate("+id+','+productId+")'>"
