@@ -1,4 +1,4 @@
-.container .root .product-info_section .product-info-detail_area .review-con{
+/* .container .root .product-info_section .product-info-detail_area .review-con{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +28,6 @@
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul{
     width: inherit;
     display: flex;
-    /* justify-content: center; */
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -40,8 +39,6 @@
     display: flex;
     justify-content: start;
     margin-bottom: 15px;
-    /* text-align: center;
-    align-items: center; */
     box-sizing: border-box;
 }
 .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li:not(.Btn) textarea{
@@ -71,10 +68,8 @@
     box-shadow: 0 10px 10px 0 #cccccc;
 }
 
-/* reply */
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList{
     padding: 10px;
-    /* box-sizing: border-box; */
     align-items: center;
     justify-content: center;
     box-shadow: inset 0px -2px 4px -1px #8c9cdb;
@@ -154,4 +149,18 @@
 .container .root .product-info_section .product-info-detail_area .review-con .reviewList .reviewCon>ul .show input:hover{
     color: white;
     background: #7285d3;
-}
+} */
+
+
+/* 예진 */
+/* .product-info-detail_area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0 20px 0;
+  } */
+
+  .container .root .product-info_section .product-info-detail_area .review-con{
+    border: 2px red;
+  }
