@@ -61,7 +61,7 @@ public class CartService {
         cart.setCartCount(cart.getCartCount()+amount);
     }
 
-    // 멤버id로 해당 멤버의 장바구니 찾기
+    // memberId로 해당 member의 장바구니 찾기
     public CartEntity findMemberCart(Long memberId){
         // MemberEntity 생성
         MemberEntity member = new MemberEntity();
@@ -99,15 +99,11 @@ public class CartService {
     // 카트상품 리스트 중 해당하는 상품id의 상품만 반환
     public CartItemEntity findCartItemById(Long cartItemId) {
 
-        CartItemEntity cartItem= cartItemRepository.findCartItemByCartItemId(cartItemId);
+        CartItemEntity cartItem = cartItemRepository.findCartItemByCartItemId(cartItemId);
         return cartItem;
     }
-
-    // 장바구니의 상품 개별 삭제
-//    public void cartItemDelete(Long cartItemId){
-//        cartItemRepository.deleteById(cartItemId);
-//    }
-
+    
+    // 장바구니 아이템 개별 삭제
     public void cartItemDelete(Long cartItemId){
         CartItemEntity cartItem = cartItemRepository.findById(cartItemId).orElseThrow(IllegalAccessError::new);
         if (cartItem != null) {
@@ -117,7 +113,7 @@ public class CartService {
         }
     }
 
-    // 장바구니 아이템 전체 삭제 → 매개변수는 멤버id
+    // 장바구니 아이템 전체 삭제 → 매개변수는 memberId
     public void allCartItemDelete(Long cartItemId){
 
         // 전체 cartItem 찾기
@@ -132,8 +128,4 @@ public class CartService {
             }
         }
     }
-
-
-
-
 }
