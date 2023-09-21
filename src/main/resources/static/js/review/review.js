@@ -50,7 +50,7 @@ function replyList(){
                 list+="<li class='writer'>"+this.reviewWriter+"</li>";
                 list+="<li class='create'>"+this.createTime+"</li>";
                 list+="<li>";
-                list+="<div id='reCon"+this.id+"'>";
+                list+="<div id='reCon"+this.id+"' class='reCon'>";
                 list+="<span>"+this.review+"</span>";
                 list+="<div class='Btn'>";
                 list+='<input type="button" value="삭제" onclick="onDelete('+this.id+')">';

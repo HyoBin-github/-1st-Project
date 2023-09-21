@@ -15,17 +15,6 @@
 
         <!-- 송원철 -->
         <span th:if="${false}" th:text="${member.memberId}"></span> <!-- th:if="${false}" 입력 시 안보이게 처리 -->
-        <script th:inline="javascript">
-            /* Thymeleaf에서 memberId를 JavaScript 변수로 가져옵니다. */
-            var memberId = /*[[${member?.memberId}]]*/ null;
-
-            /* memberId가 null이 아닌 경우에만 console에 출력합니다. */
-            if (memberId !== null) {
-                console.log('MemberId:', memberId);
-            }else {
-                console.log('MemberId: null');
-            }
-        </script>
         <!----------->
 
     <div class="root">

@@ -76,9 +76,11 @@ public class ProductController {
     public String getProductWrite(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
 
         MemberEntity member=myUserDetails.getMemberEntity();
+        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
         if (member != null) {
             model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
             log.info("MemberId: {}", member.getMemberId());
         }else {
             log.info("member is null");
