@@ -161,6 +161,17 @@
     padding: 40px 0 20px 0;
   } */
 
-  .container .root .product-info_section .product-info-detail_area .review-con{
-    border: 2px red;
+  .container .root .product-info_section .product-info-detail_area .review-con>ul{
+    position: relative;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con>ul>li.writer{
+    height: 20px;
+    position: absolute;
+    font-size: 20px;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con>ul>li.create{
+    height: 20px;
+    line-height: 20px;
+    display: flex;
+    justify-content: flex-end;
   }
