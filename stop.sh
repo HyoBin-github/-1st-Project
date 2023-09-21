@@ -1,7 +1,7 @@
 
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/app
+REPOSITORY=/home/ubuntu/app/build/libs
 
 ./gradlew clean build
 
