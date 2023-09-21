@@ -158,21 +158,16 @@ public class PaymentService {
                     .encode()
                     .build()
                     .toUri();
-
             ResponseEntity<KakaoPayPrepareDto> result = restTemplate.exchange(uri, HttpMethod.POST, entity, KakaoPayPrepareDto.class);
-
             //카카오 paymentJson자체를 컬럼에 insert하려고 to string함
             try {
                 kakaoJsonString = objectMapper.writeValueAsString(result.getBody());
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("kakao payment request : json to string error : " + e);
             }
-
             paymentEntity.setPaymentReadyJson(kakaoJsonString);
-
             paymentRepository.save(paymentEntity);
             return result.getBody().getNext_redirect_pc_url();
-
 
         } else {
             throw new RuntimeException("제휴되지 않은 결제 업체 입니다.!!!!");
