@@ -43,6 +43,9 @@ jobs:
 
     - name: Add permission
       run: chmod +x gradlew
+      
+    - name: Build with Gradle
+      run: ./gradlew clean build
 
     - name: Build with Gradle
       run: ./gradlew build

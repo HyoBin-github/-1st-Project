@@ -46,8 +46,7 @@ public class CartController {
 
         cartService.addCart(member, product, amount);
 
-        return "redirect:/product/"+productId;
-//        return "redirect:/product/{productId}";
+        return "redirect:/product/" + productId;
     }
 
     // 장바구니 페이지
@@ -79,6 +78,7 @@ public class CartController {
             for (CartItemEntity cartItem : cartItemEntityList) {
                 Long productId = cartItem.getProduct().getId();
                 productEntities.add(productService.productView(productId));
+//                List<ProductImgDTO> productImgs = productUtilService.getProductImagesByProductId(productId);
                 List<ProductImgDTO> productImgs = productUtilService.getProductImagesByProductId(productId);
                 productImages.addAll(productImgs);
             }
@@ -92,6 +92,7 @@ public class CartController {
             model.addAttribute("memberImageUrl", memberImageUrl); // 프로필 이미지 불러옴
 
             return "/member/cart";
+
         }else {
             // 로그인 id와 장바구니 접속 id가 같지 않은 경우
             return "redirect:/";

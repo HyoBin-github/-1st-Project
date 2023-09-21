@@ -23,12 +23,10 @@ public class PaymentController {
 
         return null;
     }
-
     @GetMapping("/paymentTestPg")
     public String testPg() {
 
         return "payment/paymentIndex";
-
     }
 
 

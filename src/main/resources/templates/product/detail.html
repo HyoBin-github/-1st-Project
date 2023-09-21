@@ -100,7 +100,7 @@
           <!-- 송원철 -->
           <form class="wishListForm" name="wishListForm" sec:authorize="hasAnyRole('MEMBER', 'SEMIMEMBER', 'SELLER', 'ADMIN')"
                 onsubmit="return addProduct();"
-                th:action="@{(${member != null} ? '/cart/member/' + ${member.getMemberId()} + '/' + ${product.id} : '/cart/semiMember/' + ${#authentication.principal.semiMemberEntity.semiMemberId} + '/' + ${product.id})}"
+                th:action="@{(${member != null} ? '/cart/member/' + ${member.getMemberId()} + '/' + ${product.id} : '/cart/semiMember/' + ${semiMember.getSemiMemberId()} + '/' + ${product.id})}"
                 method="post">
             <input class="form-control text-center me-3" id="amount" name="amount" type="num" value="1"
                   style="max-width: 3rem; display: none;" />
@@ -147,6 +147,9 @@
 
         <!---------------->
         <!-- =============================================== -->
+        <style>
+          .review_content {display:none}
+        </style>
         <div class="review-con">
           <div class="review-title">
             <h3>상품리뷰</h3>
