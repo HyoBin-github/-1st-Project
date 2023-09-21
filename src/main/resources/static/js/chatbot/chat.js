@@ -8,9 +8,7 @@ function showMessage(message){
     $("#chat-content").scrollTop($("#chat-content").prop("scrollHeight"));
 }
 function disconnect(){
-//    if(stompClient != null){
-//        stompClient.disconnect();
-//    }
+
     window.close();
 }
 function connect(){

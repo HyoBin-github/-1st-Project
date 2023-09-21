@@ -5,14 +5,14 @@ $(document).ready(function(){
 });
 
 function replyFn() {
-
+    const replys = $('#reply').val();
     const date = {
         'inqId': $('#inqId').val(),
         'reply': $('#reply').val()
     }
 
 
-
+    if(replys!=""){
     $.ajax({
         type: 'POST',
         url: "/reply/write",
@@ -22,6 +22,9 @@ function replyFn() {
         replyList();
         }
     });
+    }else{
+    alert("문의사항을 작성해주세요");
+    }
     $('#reply').val("");
 }
 
