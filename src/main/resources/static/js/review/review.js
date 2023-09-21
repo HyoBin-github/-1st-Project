@@ -116,9 +116,9 @@ function replyUpDate(id,productId){
         'id':id,
         'productId':productId
     };
-    
+    console.log(data);
     $.ajax({
-        url:"/reply/up",
+        url:"/review/up",
         type:'POST',
         data:data,
         success:function(res){
