@@ -26,7 +26,7 @@ function replyFn() {
 }
 
 function replyList(){
-    const inqId = $('#inqId').val();
+    const inqId = $('#inqId2').val();
     const data = {
         'inqId':inqId
     }

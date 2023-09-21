@@ -20,7 +20,7 @@ public class ProductImgSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("isProductImgDisplayed"),true);
     }
 
-    // productId에 따라 필터링하는 쿼리
+    // productId로 필터링하는 쿼리
     public static Specification<ProductImgEntity> byProductId(Long productId) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("productEntity").get("id"), productId);
     }

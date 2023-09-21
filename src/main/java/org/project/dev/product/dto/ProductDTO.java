@@ -38,25 +38,20 @@ public class ProductDTO {
     private Long productPrice;
     private Boolean isProductDisplayed;
 
-    // from BaseEntity
     private LocalDateTime productCreateTime;
     private LocalDateTime productUpdateTime;
 
-    // from ProductBrandDTO
     private ProductBrandDTO productBrand;
-
-    // from ProductCategoryDTO
     private ProductCategoryDTO productCategory;
-
-    // from ProductImgDTO
     private List<ProductImgDTO> productImgDTOS;
 
     // 송원철 / 장바구니 관련
     private MemberEntity member;
-
     // 송원철 / memberNickName 출력 용도
     private String memberNickName;
-    
+
+
+
     public static ProductDTO toDTO(ProductEntity productEntity){
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(productEntity.getId());

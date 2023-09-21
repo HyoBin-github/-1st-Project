@@ -33,24 +33,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>, J
     void updateHits(@Param("id") Long id);
 
     // DELETE (삭제)
-    // 이름은 delete이지만, 실제 로직은 update.
-    // productDisplay 값을 false로 바꿔, 사용자에게 보이지 않도록 처리합니다.
+    // 이름은 delete이지만, 실제로는 productDisplay 값을 false로 바꿔 사용자에게 보이지 않도록 처리.
     @Modifying
     @Query("update ProductEntity p set p.isProductDisplayed = false where p.id = :id")
     void softDelete(@Param("id") Long id);
 
-    // Cursor-Based List
-//    @Query(value = "SELECT p FROM ProductEntity p ORDER BY p.id DESC")
-//    List<ProductEntity> findProductsByOrderByIdDesc(Pageable pageable);
-//
-//    @Query(value = "SELECT p FROM ProductEntity p WHERE p.id < :lastId ORDER BY p.id DESC")
-//    List<ProductEntity> findProductsByIdLessThanOrderByIdDesc(@Param("lastId") Long lastId, Pageable pageable);
-
     // 가장 큰 id 값을 찾음.
     Optional<ProductEntity> findTopByOrderByIdDesc();
-
-
-
 
 
 

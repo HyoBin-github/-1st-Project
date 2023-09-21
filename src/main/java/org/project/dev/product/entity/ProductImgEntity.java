@@ -52,4 +52,5 @@ public class ProductImgEntity extends BaseEntity {
     private ProductEntity productEntity;
 
 
+
 }

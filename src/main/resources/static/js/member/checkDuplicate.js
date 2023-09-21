@@ -8,10 +8,7 @@ $(document).ready(function () {
     $('#emailCheckButton').click(function () {
 
     // 현재 입력된 이메일 값 가져오기
-            let memberEmail = $('#memberEmail').val();
-
-            // semiMemberEmail 필드에 memberEmail 값 자동으로 채우기
-                    $('#semiMemberEmail').val(memberEmail);
+        let memberEmail = $('#memberEmail').val();
 
         $.ajax({
             url: '/api/member/memberEmail/check',

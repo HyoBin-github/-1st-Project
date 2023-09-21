@@ -47,6 +47,7 @@
     <div class="product-info_section">
 
       <div class="product-id_box">
+        <a href="">수정</a>
         <p class="product-id_text">상품번호: <span th:if="${product.id != null}" th:text="${product.id}" class="product-id_text"></span></p>
       </div>
 
@@ -94,56 +95,56 @@
           <span th:if="${product.productPrice != null}" th:text="${product.productPrice}" class="price-result_text"></span>
         </div>
 
-        <a href="" class="purchase_link">
-          <div class="purchase_btn">
-            <span class="purchase_text">구매하기</span>
-          </div>
-        </a>
+        <div class="wish-purchase_box">
 
-<!--        <a href="" class="cart_link">-->
-<!--          <div class="cart_btn">-->
-<!--            <span class="cart_text">장바구니 추가</span>-->
-<!--          </div>-->
-<!--        </a>-->
-        <!-- 송원철 -->
-        <form class="wishListForm" name="wishListForm" sec:authorize="hasAnyRole('MEMBER', 'SEMIMEMBER', 'SELLER', 'ADMIN')"
-              onsubmit="return addProduct();"
-              th:action="@{(${member != null} ? '/cart/member/' + ${member.getMemberId()} + '/' + ${product.id} : '/cart/semiMember/' + ${#authentication.principal.semiMemberEntity.semiMemberId} + '/' + ${product.id})}"
-              method="post">
-          <input class="form-control text-center me-3" id="amount" name="amount" type="num" value="1"
-                 style="max-width: 3rem" />
-          <div class="cart_btn" id="wish1" style="cursor:pointer;">
-            <i class="bi-cart-fill me-1"></i>
-            <span class="cart_text">장바구니 추가</span>
-          </div>
-        </form>
-        <script th:inline="javascript">
-          /* <![CDATA[ */
-          const submitButton = document.querySelector('.cart_btn');
-              submitButton.addEventListener('click', function() {
-                 const form = document.forms.wishListForm;
-                 form.submit();
-              });
+          <!-- 송원철 -->
+          <form class="wishListForm" name="wishListForm" sec:authorize="hasAnyRole('MEMBER', 'SEMIMEMBER', 'SELLER', 'ADMIN')"
+                onsubmit="return addProduct();"
+                th:action="@{(${member != null} ? '/cart/member/' + ${member.getMemberId()} + '/' + ${product.id} : '/cart/semiMember/' + ${#authentication.principal.semiMemberEntity.semiMemberId} + '/' + ${product.id})}"
+                method="post">
+            <input class="form-control text-center me-3" id="amount" name="amount" type="num" value="1"
+                  style="max-width: 3rem; display: none;" />
+            <div class="cart_btn" id="wish1" style="cursor:pointer;">
+              <i class="bi-cart-fill me-1"></i>
+              <span class="cart_text">장바구니 추가</span>
+            </div>
+          </form>
+          <script th:inline="javascript">
+            /* <![CDATA[ */
+            const submitButton = document.querySelector('.cart_btn');
+                submitButton.addEventListener('click', function() {
+                  const form = document.forms.wishListForm;
+                  form.submit();
+                });
 
-          function addProduct() {
-              var count = document.getElementById("amount").value
-              if (isNaN(count)) {
-                  alert("숫자를 입력해주세요.")
-                  return false
-              } else {
-                  return true
-              }
-          }
-        </script>
-        <!-- 비로그인 시 -->
-        <form class="abc" sec:authorize="!isAuthenticated()">
-          <a class="btn btn-outline-dark" th:href="@{/login}">
-            <i class="bi-cart-fill me-1"></i>
-            <div class="cart_btn1" style="cursor:pointer;">
-              <span class="cart_text1">장바구니 추가</span>
+            function addProduct() {
+                var count = document.getElementById("amount").value
+                if (isNaN(count)) {
+                    alert("숫자를 입력해주세요.")
+                    return false
+                } else {
+                    return true
+                }
+            }
+          </script>
+          <!-- 비로그인 시 -->
+          <form class="abc" sec:authorize="!isAuthenticated()">
+            <a class="btn btn-outline-dark" th:href="@{/login}">
+              <i class="bi-cart-fill me-1"></i>
+              <div class="cart_btn1" style="cursor:pointer;">
+                <span class="cart_text1">장바구니 추가</span>
+              </div>
+            </a>
+          </form>
+
+          <a href="" class="purchase_link">
+            <div class="purchase_btn">
+              <span class="purchase_text">구매하기</span>
             </div>
           </a>
-        </form>
+
+        </div>
+
         <!---------------->
         <!-- =============================================== -->
         <style>
