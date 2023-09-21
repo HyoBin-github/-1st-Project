@@ -190,22 +190,6 @@ public class MemberService {
 //        return memberRepository.existsByMemberPhone(memberPhone);
 //    }
 
-    // 임시 비밀번호 발급 관련 메서드
-    public void SetTempPassword(String memberEmail, String tempPassword) {
-
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
-
-        if (optionalMemberEntity.isPresent()) {
-            MemberEntity memberEntity = optionalMemberEntity.get();
-            String encodedPassword = passwordEncoder.encode(tempPassword);
-            memberEntity.setMemberPassword(encodedPassword);
-            memberRepository.save(memberEntity);
-            log.info("이메일 주소에 임시 비밀번호가 설정되었습니다: {}", memberEmail);
-        } else {
-            log.error("해당 이메일을 가진 회원을 찾을수없습니다: {}", memberEmail);
-        }
-    }
-
     // 닉네임, 휴대전화번호 이용한 이메일 찾기 메서드
     public String findEmailByNicknameAndPhone(String memberNickName, String memberPhone) {
 
@@ -223,7 +207,35 @@ public class MemberService {
         return memberEntity != null; // 이메일과 휴대전화번호가 일치하면 memberEntity 객체가 반환되어서 null이 아님
     }
 
-    // 비밀번호 변경 메서드 // gpt
+    // 임시 비밀번호 발급 관련 메서드
+    public void SetTempPassword(String memberEmail, String tempPassword) {
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
+
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            String encodedPassword = passwordEncoder.encode(tempPassword);
+            memberEntity.setMemberPassword(encodedPassword);
+            memberRepository.save(memberEntity);
+            log.info("이메일 주소에 임시 비밀번호가 설정되었습니다: {}", memberEmail);
+        } else {
+            log.error("해당 이메일을 가진 회원을 찾을수없습니다: {}", memberEmail);
+        }
+    }
+
+    // 비밀번호 변경 전 현재 비밀번호 확인
+    // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지 확인하는 메서드
+    public boolean checkCurrentPassword(Long memberId, String currentPassword) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            return passwordEncoder.matches(currentPassword, memberEntity.getMemberPassword());
+        }
+        return false;
+    }
+
+    // 비밀번호 변경 메서드
     public boolean changePassword(Long memberId, String currentPassword, String newPassword, MemberDto memberDto) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
 
@@ -246,17 +258,6 @@ public class MemberService {
         memberRepository.save(memberEntity);
 
         return true;
-    }
-
-    // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지 확인하는 메서드
-    public boolean checkCurrentPassword(Long memberId, String currentPassword) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
-
-        if (optionalMemberEntity.isPresent()) {
-            MemberEntity memberEntity = optionalMemberEntity.get();
-            return passwordEncoder.matches(currentPassword, memberEntity.getMemberPassword());
-        }
-        return false;
     }
 
     // memberId로 member 찾기

@@ -254,6 +254,20 @@ public class MemberController {
 
         return "member/confirmPassword";
     }
+
+    // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
+    @PostMapping("/checkCurrentPassword")
+    @ResponseBody
+    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
+                                                         @RequestParam("memberId") Long memberId) {
+
+        boolean valid = memberService.checkCurrentPassword(memberId, currentPassword);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("valid", valid);
+        return response;
+    }
+
     @PostMapping("/confirmPassword")
     public String postConfirmPassword(@RequestParam("currentPassword") String currentPassword,
                                       @RequestParam("memberId") Long memberId,
@@ -281,6 +295,7 @@ public class MemberController {
 
         return "member/changePassword"; // changePassword.html 페이지로 이동
     }
+
     // 비밀번호 변경 실행
     @PostMapping("/changePassword")
     public String postChangePassword(@RequestParam("memberId") Long memberId,
@@ -307,18 +322,6 @@ public class MemberController {
             System.out.println("비밀번호 변경 실패");
             return "redirect:/member/changePassword"; // 비밀번호 변경 페이지로 다시 이동
         }
-    }
-    // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
-    @PostMapping("/checkCurrentPassword")
-    @ResponseBody
-    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
-                                                     @RequestParam("memberId") Long memberId) {
-
-        boolean valid = memberService.checkCurrentPassword(memberId, currentPassword);
-
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("valid", valid);
-        return response;
     }
 
     // 회원(소셜로그인 사용자 포함) 탈퇴 전 이메일 인증 확인 - 입력 화면

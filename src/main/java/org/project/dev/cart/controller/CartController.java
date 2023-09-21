@@ -46,8 +46,7 @@ public class CartController {
 
         cartService.addCart(member, product, amount);
 
-        return "redirect:/product/"+productId;
-//        return "redirect:/product/{productId}";
+        return "redirect:/product/" + productId;
     }
 
     // 장바구니 페이지
