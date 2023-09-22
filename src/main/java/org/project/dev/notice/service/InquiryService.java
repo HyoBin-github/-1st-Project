@@ -80,19 +80,15 @@ public class InquiryService {
         }else if(inquirySelect.equals("inquiryContent")){
             inquiryEntities = inquiryRepository.findByInquiryContentContaining(pageable,inquirySearch);
         }else if(inquirySelect.equals("memberEmail")){
-            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch); // 송원철
+            inquiryEntities = inquiryRepository.findByMemberMemberEmailContaining(pageable,inquirySearch);
         }else{
             inquiryEntities = inquiryRepository.findAll(pageable);
         }
-
-
         inquiryEntities.getNumber();
         inquiryEntities.getTotalElements();
         inquiryEntities.getTotalPages();
         inquiryEntities.getSize();
         Page<InquiryDto> inquiryDtoPage = inquiryEntities.map(InquiryDto::toinquiryDto);
-
-
 
         return inquiryDtoPage;
     }
@@ -176,23 +172,6 @@ public class InquiryService {
         }
         return null;
     }
-//    @Transactional
-//    public InquiryDto inquiryUpdateOk(InquiryDto inquiryDto, Long id) {
-//
-//        InquiryEntity inquiryEntity = inquiryRepository.findById(id).orElseThrow(()->{
-//            throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
-//        });
-//
-//        Long inquiryId = inquiryRepository.save(InquiryEntity.toInquiryEntityUpdate(inquiryDto)).getInqId(); // 수정을 위한 jparepository
-//
-//        InquiryEntity inquiryEntity1 = inquiryRepository.findById(inquiryId).orElseThrow(()->{
-//            throw new IllegalArgumentException("수정한 공지사항이 존재하지 않습니다.");
-//        });
-//
-//        return InquiryDto.toinquiryDto(inquiryEntity1);
-//    }
-    
-    // 송원철 / 문의사항 수정 시 member 정보 유지해서 같이 저장
     @Transactional
     public InquiryDto inquiryUpdateOk(InquiryDto inquiryDto, Long id) {
     
