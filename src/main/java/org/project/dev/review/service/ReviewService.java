@@ -31,7 +31,6 @@ public class ReviewService {
 
         ReviewEntity reviewEntity = ReviewEntity.builder()
                 .review(replyDto.getReview())
-//                .replyWriter(replyDto.getReplyWriter())
                 .reviewWriter(myUserDetails.getMemberEntity().getMemberEmail())
                 .productEntity(productEntity)
                 .build();
