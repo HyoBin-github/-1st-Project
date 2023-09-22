@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
     // 이미지 URL 기본값 설정(이미지 없을 경우 기본 이미지로 설정)
     private final String defaultImageUrl = "/profileImages/default.png";
 
-    @Value("${file.productImgUploadDir}")
+    @Value("${file.profileImgUploadDir}")
     private String uploadFolder;
 
 
