@@ -110,7 +110,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
+<<<<<<< Updated upstream
     border-radius: 8px;
     color: white;
     cursor: pointer;
 }
+=======
+    padding: 40px 0 20px 0;
+  } */
+
+  .container .root .product-info_section .product-info-detail_area .review-con{
+    padding: 20px 0 0 0px;
+    width: 100%;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con .review-title{
+    text-align: center;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con .review-title h3{
+    padding: 10px;
+    font-size: 20px;
+    border-bottom: 2px solid #7286d3;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li textarea{
+    resize: none;
+    width: 420px;
+    height: 300px;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li.Btn{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con .review-write form>ul>li.Btn input{
+    height: 44px;
+    width: 210px;
+    background-color: #7286d3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  .container .root .product-info_section .product-info-detail_area .review-con .review-write .reviewList{
+    
+  }
+>>>>>>> Stashed changes
