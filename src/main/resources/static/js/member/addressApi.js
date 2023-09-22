@@ -35,7 +35,7 @@ function execPostCode() {
                 $("[name=memberPostCode]").val(data.zonecode);
                 $("[name=memberStreetAddress]").val(fullRoadAddr);
 
-                document.getElementById('memberPostCode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('memberPostCode').value = data.zonecode; // 5자리 새우편번호 사용
                 document.getElementById('memberStreetAddress').value = fullRoadAddr;
 //                document.getElementById('memberDetailAddress').value = data.jibunAddress;
             }

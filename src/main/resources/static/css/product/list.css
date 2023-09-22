@@ -18,16 +18,14 @@
 }
 
 .container {
-  /* height: auto;
-  width: 100vw; */
   background-color: #ffffff;
   display: flex;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  /* max-width: 1280px; */
   padding: 0 40px 0 40px;
   position: relative;
+  margin-bottom: -40px;
 }
 
 .menu-bar {
@@ -40,8 +38,6 @@
   display: flex;
   flex-direction: column;
   box-shadow: 10px 0px 10px -5px #f1f1f1;
-  /* background-color: #6e86da; */
-  /* background-color: #ffffff; */
 }
 
 .product-list-container {
@@ -73,22 +69,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*  */
 .inputBorder-hole {
   position: absolute;
   height: 3px;
@@ -101,10 +81,77 @@
 
 
 
-/* search */
+.filter-text_box {
+  display: flex;
+  align-items: center;
+  padding: 20px 0 10px 0;
+}
+.filter_text {
+  font-size: 15px;
+  font-weight: normal;
+  padding-right: 10px;
+}
+.applied-filter_area {
+  width: 100%;
+  min-height: 50px;
+}
+.applied-filter_box {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+}
+.reset-filter_btn {
+  cursor: pointer;
+  background-color: #41444B;
+  padding: 5px;
+  border-radius: 4px;
+  margin: 2px 2px 2px 2px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 55px;
+}
+.reset-filter_btn img {
+  height: 10px;
+  width: 10px;
+  filter: invert(100%) 
+          sepia(0%) 
+          saturate(7483%) 
+          hue-rotate(53deg) 
+          brightness(99%) 
+          contrast(102%);
+}
+.reset-filter_btn span {
+  font-size: 10px;
+  color: #ffffff;
+  margin: 0 2px 0 2px;
+}
+.filter-tag {
+  background-color: #efefef;
+  padding: 4px 5px 4px 5px;
+  border-radius: 4px;
+  margin: 2px 2px 2px 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filter-tag span {
+  font-size: 10px;
+  padding-right: 2px;
+}
+.filter-tag img {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+}
 
+
+
+
+/* search */
 .productSearchInput {
-  /* margin: 10px 0 10px 0; */
   margin-bottom: 25px;
   padding-top: 5px;
   position: relative;
@@ -112,7 +159,6 @@
 
 .searchKeyword {
   width: 185px;
-  /* min-width: 200px; */
   height: 25px;
   border: 1px solid #dddddd !important;
   font-size: 0.8rem;
@@ -128,12 +174,9 @@ input::placeholder {
 }
 
 .searchKeyword-label {
-  /* display: inline-block; */
   position: absolute;
   top: -6px;
   left: 8px;
-  /* padding: 0 2px 0 2px;
-  background: white; */
   font-size: 12px;
   color: #888;
   font-weight: bold;
@@ -156,8 +199,8 @@ input::placeholder {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border: none;  /* Remove default border */
-  cursor: pointer;  /* Change cursor to pointer on hover */
+  border: none;  
+  cursor: pointer; 
   filter: 
     invert(96%) 
     sepia(0%) 
@@ -169,11 +212,15 @@ input::placeholder {
 
 
 /* productCategorySelector */
-
-.productSearchText, .productCategoryText, .productBrandText, .productColorText {
+.productSearchText {
   font-size: 15px;
   font-weight: normal;
-  /* padding-top: 20px; */
+  padding: 20px 0 10px 0;
+  border-top: 1px solid #dddddd;
+}
+.productCategoryText, .productBrandText, .productColorText {
+  font-size: 15px;
+  font-weight: normal;
   padding: 20px 0 10px 0;
   border-top: 1px solid #dddddd;
 }
@@ -184,59 +231,24 @@ input::placeholder {
 }
 .categoryNames, .brandNames {
   font-weight: normal;
-  font-size: 13px;
+  font-size: 12px;
   margin-left: 6px;
 }
 .categoryNames-con, .brandNames-con {
-  height: 25px;
+  height: 24px;
   display: flex;
   justify-content: start;
   align-items: center;
 }
 
-/* productBrandSelector */
 
-/* .productBrandText {
-  font-size: 15px;
-  font-weight: normal;
-}
-.productBrandSelector{
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0 20px 0;
-}
-.brandNames {
-  font-weight: normal;
-  font-size: 13px;
-  margin-left: 6px;
-}
-.brandNames-con {
-  height: 30px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-} */
-
-
-/* productColorText */
-/* .productColorText {
-  font-size: 15px;
-  font-weight: normal;
-  padding-top: 10px;
-  border-top: 1px solid #dddddd;
-} */
 /* productColorSelector */
 .productColorSelector {
   display: flex;
-  /* flex-wrap: wrap; */
   justify-content: space-evenly;
-  /* margin: 10px; */
   padding-top: 10px;
-  /* padding: 10px 0 10px 0; */
-  /* margin: 10px 0 20px 0; */
   margin-bottom: 20px;
-  /* justify-content: space-between;
-  align-items: center; */
+
 }
 .productColorSelector input[type=checkbox]{
   display: none;
@@ -246,11 +258,10 @@ input::placeholder {
   cursor: pointer;
   width: 13px;
   height: 13px;
-  border-radius: 50%; /* 원형으로 만들기 */
-  text-align: center; /* 텍스트 중앙 정렬 */
-  line-height: 100px; /* 텍스트 수직 중앙 정렬 */
+  border-radius: 50%; 
+  text-align: center;
+  line-height: 100px; 
   position: inherit;
-  /* margin: 5px; */
 }
 
 .productColorSelector input[type=checkbox]:checked+label{
@@ -258,11 +269,10 @@ input::placeholder {
   cursor: pointer;
   width: 13px;
   height: 13px;
-  border-radius: 50%; /* 원형으로 만들기 */
-  text-align: center; /* 텍스트 중앙 정렬 */
-  line-height: 100px; /* 텍스트 수직 중앙 정렬 */
+  border-radius: 50%;
+  text-align: center;
+  line-height: 100px;
   position: inherit;
-  /* margin: 5px; */
 
   background-image: url("/images/product/iconmonstr-check-mark-17-24.png");
   background-position: center;
@@ -276,7 +286,6 @@ input::placeholder {
   height: 13px;
   border-radius: 50%; /* 원형으로 만들기 */
   position: inherit;
-  /* margin: 5px; */
 
   background-image: url("/images/product/iconmonstr-check-mark-17-24-black.png");
   background-position: center;
@@ -358,15 +367,11 @@ input::placeholder {
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  /* box-shadow: 0px 0px 10px 0px #f1f1f1; */
-  /* background-color: #ffffff; */
 }
 
 .productImageBox {
-  /* position: relative; */
   height: 200px;
   width: 200px;
-  /* margin: 18px auto 0 auto; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -423,28 +428,26 @@ input::placeholder {
 }
 
 .productBrandName {
-  width: 160px;
-  /* position: relative; */
-  /* left: 20px; */
-  margin: 5px 0 10px 5px;
-  font-weight: 600px;
+  width: 95%;
+  padding: 5px 5px 0 5px;
+  font-size: 15px;
   font-weight: bold;
 }
 
 .productName {
-  width: 160px;
-  /* position: relative; */
-  /* left: 20px; */
-  margin: 0 0 0 5px;
-  font-weight: 200px;
+  width: 95%;
+  padding: 5px 5px 0 5px;
   font-size: 13px;
+  font-weight: lighter;
 }
 
 .productPrice {
-  width: 160px;
-  /* position: relative; */
-  /* left: 20px; */
-  margin: 0 0 0 5px;
+  width: 95%;
+  padding: 5px 5px 5px 5px;
+  display: flex;
+  justify-content: end;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 

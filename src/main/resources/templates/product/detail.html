@@ -20,21 +20,20 @@
 <body>
 <div th:replace="~{fragments/common/header :: headerFragment}"></div>
 <div class="container">
-  <!-- 박상재 -->
-  <div class="root">
 
+  <div class="root">
 
     <div class="image_section">
 
         <div class="image-expand_area" id="imagePreviewExpand-box">
-          <img src="/images/product/iconmonstr-photo-camera-13.svg" alt="미리보기 화면" class="image-expand__img-alt" id="imagePreviewExpand">
+          <img src="/images/product/iconmonstr-photo-camera-13.svg" alt="미리보기 이미지 확대" class="image-expand__img-alt" id="imagePreviewExpand">
         </div>
 
         <div class="image-preview_area" id="image-container">
           <ul class="image-preview_ul" id="image-preview-box-container">
             <th:block th:each="img : ${productImages}">
               <li class="image-preview_box">
-                <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="" height="100" class="image-preview_img"/>
+                <img th:src="@{/images/{filename}(filename=${img.productImgSavedName})}" alt="미리보기 이미지" height="100" class="image-preview_img"/>
               </li>
             </th:block>
           </ul>
@@ -46,9 +45,14 @@
 
     <div class="product-info_section">
 
-      <div class="product-id_box">
-        <a href="">수정</a>
-        <p class="product-id_text">상품번호: <span th:if="${product.id != null}" th:text="${product.id}" class="product-id_text"></span></p>
+      <div class="update-id_box">
+        <a th:href="@{'/product/update/' + ${product.id}}" class="update_contents" sec:authorize="hasAnyRole('SELLER', 'ADMIN')">
+          <img src="/images/product/iconmonstr-pencil-lined.svg" alt="수정링크 아이콘">
+          <span>수정</span>
+        </a>
+        <div class="id_contents">
+          <p class="id_text">상품번호: <span th:if="${product.id != null}" th:text="${product.id}" class="id_text"></span></p>
+        </div>
       </div>
 
       <div class="brand_box">
@@ -83,16 +87,12 @@
         <div class="price-stock-quantity_box">
           <div class="quantity-stock_contents">
             <img src="/images/product/iconmonstr-minus-square-filled.svg" alt="minus" class="minus_img" id="minus-button">
-            <div class="quantity-result_text-num" id="quantity">
-              1
-            </div>
+            <div class="quantity-result_text-num" id="quantity">1</div>
             <img src="/images/product/iconmonstr-plus-square-filled.svg" alt="plus" class="plus_img" id="plus-button">
             <p class="stock-result_text">남은 재고수량 :</p>
             <span th:if="${product.productStock != null}" th:text="${product.productStock}" class="stock-result_text" id="stock"></span>
           </div>
-          <!-- <div class="stock_contents">
-          </div> -->
-          <span th:if="${product.productPrice != null}" th:text="${product.productPrice}" class="price-result_text"></span>
+          <span th:if="${product.productPrice != null}" th:text="${product.productPrice}" class="price-result_text" id="productPrice" data-original-price=""></span>
         </div>
 
         <div class="wish-purchase_box">
@@ -176,24 +176,6 @@
           </div>
         </div>
         <!-- =============================================== -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       </div>
     </div>

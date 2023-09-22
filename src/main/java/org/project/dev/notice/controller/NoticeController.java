@@ -250,16 +250,18 @@ public class NoticeController {
     public String getNoticeDetail(@PathVariable("id") Long id, Model model,
                                   @AuthenticationPrincipal MyUserDetails myUserDetails){
 
-        MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
-        String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
+        if (myUserDetails != null) {
+            MemberDto member = memberService.detailMember(myUserDetails.getMemberEntity().getMemberId());
+            String memberImageUrl = imageService.findImage(member.getMemberEmail()).getImageUrl();
 
+            model.addAttribute("member", member);
+            model.addAttribute("memberImageUrl", memberImageUrl);
+        }
 
         NoticeDto noticeDto = noticeService.noticeDetail(id);
 
         if(noticeDto != null){
             model.addAttribute("noticeDto", noticeDto);
-            model.addAttribute("member", member);
-            model.addAttribute("memberImageUrl", memberImageUrl);
             return "notice/detail";
         }
 //        model.addAttribute("myUserDetails", myUserDetails);

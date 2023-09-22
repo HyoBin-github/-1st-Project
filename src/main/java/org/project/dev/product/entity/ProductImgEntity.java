@@ -41,7 +41,7 @@ public class ProductImgEntity extends BaseEntity {
     @Column(name = "product_img_Order", nullable = false)
     private int productImgOrder;
 
-    @Column(name = "is_product_img_displayed")
+    @Column(name = "is_product_img_displayed", nullable = false)
     @ColumnDefault("false")
     private Boolean isProductImgDisplayed;
 

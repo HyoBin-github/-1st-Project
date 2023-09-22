@@ -491,9 +491,27 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
+
+    // 삭제 의사를 되묻는 코드 (모달)
+    const deleteButton = document.querySelector(".delete_btn");
+    const modal = document.getElementById("customConfirm");
+    const confirmYes = document.getElementById("confirmYes");
+    const confirmNo = document.getElementById("confirmNo");
+
+    deleteButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        modal.style.display = "block";
+    });
+
+    confirmYes.addEventListener("click", function() {
+        modal.style.display = "none";
+        window.location.href = deleteButton.getAttribute("href");
+    });
+
+    confirmNo.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
   
-
-
 });
 
 
