@@ -14,16 +14,16 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
+@Configuration // 이 클래스가 Spring의 설정 파일임을 의미
+@EnableWebSecurity // Spring Security 활성화
 public class WebSecurityConfigClass {
 
     // 관리자
     @Configuration
-    @Order(0)
+    @Order(0) // 구성 클래스의 우선 순위, 낮을수록 높음
     public static class AdminConfig{
 
-        @Bean
+        @Bean // HttpSecurity : 인증, 인가의 세부적인 기능을 설정할 수 있도록 API를 제공해주는 클래스
         public SecurityFilterChain filterChainApp0(HttpSecurity http) throws Exception {
             http.antMatcher("/admin/**")
                     .authorizeHttpRequests()

@@ -32,7 +32,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         this.attributes = attributes;
     }
 
-    // 권한
+    // 권한(사용자의 권한을 접두사 "ROLE_"를 붙여서 반환)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collectRole = new ArrayList<>();
@@ -45,6 +45,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         return collectRole;
     }
 
+    // OAuth2 사용 시 추가 사용자 속성을 반환
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;

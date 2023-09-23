@@ -128,8 +128,6 @@ function replyUpDate(id,productId){
                 alert("수정실패")
             }
             replyList();
-
         }
     });
-
 }

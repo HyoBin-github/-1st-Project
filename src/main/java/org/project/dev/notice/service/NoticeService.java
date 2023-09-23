@@ -83,7 +83,6 @@ public class NoticeService {
     @Transactional
     public Page<NoticeDto> noticeList(Pageable pageable, String noticeSelect, String noticeSearch) {
 
-//    myUserDetails.getMemberEntity();
         Page<NoticeEntity> noticeEntities = null; // 기본 null 값으로 설정
 
         if (noticeSelect.equals("noticeTitle")) {
@@ -208,8 +207,6 @@ public class NoticeService {
         NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(()->{
             throw new IllegalArgumentException("수정할 공지사항이 존재하지 않습니다.");
         });
-//        noticeDto.setNotId(id);
-
         Long noticeId = noticeRepository.save(NoticeEntity.toNoticeEntityUpdate(noticeDto)).getNotId(); // 수정을 위한 jparepository
 
         NoticeEntity noticeEntity1 = noticeRepository.findById(noticeId).orElseThrow(()->{

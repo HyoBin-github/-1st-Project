@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	let limit = 10; // 초기 10개 로딩, 이후 8개 로딩.
 	
+	// 페이지 이동시, 첫 lastProductId는 자바에서 보내져온다. (html에서 선언)
+
 	fetchAndDisplayProducts(lastProductId);  // 초기 상품 로딩
 	
 	// 상품 정보를 가져와서 화면에 표시하는 함수
@@ -160,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		productName.className = "productName";
 
 		const productPrice = document.createElement('div');
-		productPrice.textContent = `${product.productPrice} ￦`;
+		productPrice.textContent = `${product.productPrice.toLocaleString()} ￦`;
 		productPrice.className = "productPrice";
 
 		// 카트 관련 이동할 요소
@@ -196,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		debounceTimer = setTimeout(function() {
 			// 브라우저 창 상태에 따라 height에 변동이 있을 수 있기 때문에, -30만큼의 여유분을 주었다.
-			if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 30) {
+			if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
 				if (isScrolledDownToBottom === false) {
 					lastProductId = minProductId;
 					if (isLoadingFirstTime === true) {
@@ -217,20 +219,45 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// 검색 및 필터 ===============================================================
 
+	let activeFilterCount = 0;
+
+	document.getElementById("searchKeyword").addEventListener("keydown", function(event) {
+		if (event.code === 'Enter') {
+			event.preventDefault();
+			document.getElementById("searchButton").click();
+		}
+	});
+
 	document.getElementById("searchButton").addEventListener("click", function(e) {
 		const searchKeyword = document.getElementById('searchKeyword');
-		searchQuery = searchKeyword.value;
+		const newSearchQuery = searchKeyword.value;
 	
+		if (newSearchQuery && !searchQuery) {
+			activeFilterCount++;
+		}
+		
+		if (!newSearchQuery && searchQuery) {
+			activeFilterCount--;
+		}
+		
+		searchQuery = newSearchQuery;
+
+		if (activeFilterCount > 4) {
+			alert("최대 4개의 필터까지 사용할 수 있습니다.");
+			searchQuery = ""; // 검색어 초기화
+			searchKeyword.value = ""; // 검색어 입력창 초기화
+			activeFilterCount--; // 필터 수 감소
+			return;
+		}
+
 		// 기존 상품 목록을 지우기
 		while (productList.firstChild) {
 		productList.removeChild(productList.firstChild);
 		}
 
 		resetProductInfo();
-		scrollToTop(); // 스크롤 초기화.
-
-		// 검색어가 변경되면 상품을 다시 로딩
 		fetchAndDisplayProducts(lastProductId);
+		addAppliedFilterList();
 	});
 	
 	document.getElementById("filters").addEventListener("change", function(e) {
@@ -239,11 +266,18 @@ document.addEventListener("DOMContentLoaded", function() {
 		const value = e.target.value;
 	
 		if (e.target.checked) {
+			if (activeFilterCount >= 4) {
+				alert("최대 4개의 필터까지를 사용할 수 있습니다.");
+				e.target.checked = false;
+				return;
+			}
 			selectedFilters[name].push(value);
+			activeFilterCount++;
 		} else {
 			const index = selectedFilters[name].indexOf(value);
 			if (index > -1) {
 			selectedFilters[name].splice(index, 1);
+			activeFilterCount--;
 			}
 		}
 	
@@ -253,19 +287,145 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	
 		resetProductInfo();
-		scrollToTop(); // 스크롤 초기화.
-
-		// 필터가 변경되면 상품을 다시 로딩
 		fetchAndDisplayProducts(lastProductId);
+		addAppliedFilterList();
 	});
+
+
 	
+	function addAppliedFilterList() {
+		const filterListBox = document.querySelector('.applied-filter_box');
+		const filterTextBox = document.getElementById('filter-text_box'); 
+		
+		// 기존 필터 태그를 제거
+		while (filterListBox.firstChild) {
+			filterListBox.removeChild(filterListBox.firstChild);
+		}
+		
+		// 검색어가 있으면 추가
+		if (searchQuery) {
+			const searchTag = document.createElement('div');
+			searchTag.className = 'filter-tag';
+			searchTag.innerHTML = `<span>상품명: ${searchQuery}</span>`;
+
+			const deleteImg = document.createElement('img');
+			deleteImg.src = '/images/product/iconmonstr-x-mark-lined.svg';
+			deleteImg.addEventListener('click', function() {
+				removeFilter("search", searchQuery);
+			});
+
+			searchTag.appendChild(deleteImg);
+			filterListBox.appendChild(searchTag);
+		}
+		
+		// 선택된 필터 추가
+		for (const [key, values] of Object.entries(selectedFilters)) {
+			values.forEach(value => {
+				const filterTag = document.createElement('div');
+				filterTag.className = 'filter-tag';
+				filterTag.innerHTML = `<span>${value}</span>`;
+
+				const deleteImg = document.createElement('img');
+				deleteImg.src = '/images/product/iconmonstr-x-mark-lined.svg';
+				deleteImg.addEventListener('click', function() {
+					removeFilter(key, value);
+				});
+	
+				filterTag.appendChild(deleteImg);
+				filterListBox.appendChild(filterTag);
+			});
+		}
+
+		
+		const existingResetButton = document.getElementById('reset-filter_btn');
+
+		// 필터 초기화 버튼이 이미 있는지 확인
+		// 버튼이 없으면 추가
+		if (!existingResetButton) {
+			const resetButton = document.createElement('button');
+			resetButton.className = 'reset-filter_btn';
+			resetButton.id = 'reset-filter_btn';
+
+			resetButton.addEventListener("click", resetAllFilters);
+
+			const resetImg = document.createElement('img');
+			resetImg.src = '/images/product/iconmonstr-sync-lined.svg';
+
+			const resetText = document.createElement('span');
+			resetText.innerHTML = '초기화';
+
+			resetButton.appendChild(resetImg);
+			resetButton.appendChild(resetText);
+			filterTextBox.appendChild(resetButton);
+		}
+		
+		if (filterListBox.childNodes.length === 0 && existingResetButton) {
+			filterTextBox.removeChild(existingResetButton);
+		}
+	}
+
+	function removeFilter(filterType, filterValue) {
+		if (filterType === "search") {
+			searchQuery = ""; // searchQuery 리셋
+			document.getElementById('searchKeyword').value = ""; // 검색어 입력창도 리셋
+			activeFilterCount--;
+		} else {
+			const checkboxes = document.querySelectorAll(`input[name="${filterType}"]`);
+			checkboxes.forEach(checkbox => {
+				if (checkbox.value === filterValue) {
+					checkbox.checked = false;
+
+					const index = selectedFilters[filterType].indexOf(filterValue);
+					if (index > -1) {
+						selectedFilters[filterType].splice(index, 1);
+					}
+				}
+			});
+			activeFilterCount--;
+		}
+	
+		while (productList.firstChild) {
+			productList.removeChild(productList.firstChild);
+		}
+	
+		resetProductInfo();
+		fetchAndDisplayProducts(lastProductId);
+		addAppliedFilterList();
+	}
+	
+	function resetAllFilters() {
+		// searchQuery 초기화
+		searchQuery = "";
+		document.getElementById('searchKeyword').value = ""; // 검색어 입력창도 리셋
+	
+		// 모든 selectedFilters 초기화
+		for (const filterType in selectedFilters) {
+			const checkboxes = document.querySelectorAll(`input[name="${filterType}"]`);
+			checkboxes.forEach(checkbox => {
+				checkbox.checked = false;
+			});
+			selectedFilters[filterType] = [];
+		}
+	
+		// 상품 목록 초기화
+		while (productList.firstChild) {
+			productList.removeChild(productList.firstChild);
+		}
+	
+		activeFilterCount = 0;
+		resetProductInfo();
+		scrollToTop();
+		fetchAndDisplayProducts(lastProductId);
+		addAppliedFilterList();
+	}
+	
+
 	function resetProductInfo() {
 		lastProductId = maxProductId;
 		limit = 10;
 		isLoadingFirstTime = true;
 		isScrolledDownToBottom = false;
 	}
-
 
 	// 기타 로직 ===========================================================
 

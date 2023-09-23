@@ -183,14 +183,28 @@
       
       <div class="submit_area">
         <div class="submit-input_box">
+          <a th:href="@{'/product/delete/' + ${product.id}}" class="delete_btn"><span>판매글 삭제</span></a>
           <input type="submit" value="판매글작성" class="submit_input" id="productSubmit">
-          <label for="productSubmit" class="submit_input_label">판매글 작성</label>
+          <label for="productSubmit" class="submit_input_label">판매글 수정</label>
         </div>
       </div>
 
     </div>
   </form>
 </div>
+
+<!-- 모달 -->
+<div id="customConfirm" class="modal">
+  <div class="modal-content">
+    <img src="/images/product/iconmonstr-warning-6.svg" alt="주의 아이콘">
+    <p>정말로 삭제하시겠습니까?</p>
+    <div class="confirmation">
+      <button id="confirmNo">취소</button>
+      <button id="confirmYes">확인</button>
+    </div>
+  </div>
+</div>
+
 <div th:replace="~{fragments/common/footer :: footerFragment}"></div>
 </body>
 </html>

@@ -55,31 +55,27 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "product_hits")
     private int productHits;
 
-    @Column(name = "product_price")
+    @Column(name = "product_price", nullable = false)
     private Long productPrice;
 
-    @Column(name = "is_product_displayed")
+    @Column(name = "is_product_displayed", nullable = false)
     @ColumnDefault("true")
     private Boolean isProductDisplayed;
 
 
 
-    // DB 연관관계 설정 -> ProductImgEntity
     @OneToMany(mappedBy = "productEntity", cascade = CascadeType.REMOVE)
     private List<ProductImgEntity> productImgEntities = new ArrayList<>();
 
-    // DB 연관관계 설정 -> ReviewEntity
     @OneToMany(mappedBy = "productEntity",cascade = CascadeType.REMOVE)
     private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
-    // DB 연관관계 설정 -> ProductBrandEntity
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_brand_id") // Foreign Key
+    @JoinColumn(name = "product_brand_id")
     private ProductBrandEntity productBrandEntity;
 
-    // DB 연관관계 설정 -> ProductCategoryEntity
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category_id") // Foreign Key
+    @JoinColumn(name = "product_category_id")
     private ProductCategoryEntity productCategoryEntity;
 
 

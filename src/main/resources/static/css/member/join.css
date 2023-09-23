@@ -97,7 +97,7 @@
 }
 /* label 넓이 고정 */
 .container .join .join-con .join-form form>ul>li label{
-    width: 100px;
+    width: 110px;
     font-weight: bold;
 }
 /* 입력 받는 input */
