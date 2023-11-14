@@ -72,12 +72,12 @@ spring:
     include: oauth2
 
   # code.aiaru@gmail.com
-  servlet:
-    multipart:
-      # 단일 파일에 대한 최대 허용 크기.
-      max-file-size: 10MB
-      # 전체 HTTP 요청에 대한 최대 허용 크기.
-      max-request-size: 50MB
+  # servlet:
+  #   multipart:
+  #     # 단일 파일에 대한 최대 허용 크기.
+  #     max-file-size: 10MB
+  #     # 전체 HTTP 요청에 대한 최대 허용 크기.
+  #     max-request-size: 50MB
 
 # code.aiaru@gmail.com
 # 파일 쪽 본인 이메일 쓰시고 디렉토리 설정해주시면 깔끔해질 것 같습니다. (깃 커밋 시 본인 설정 주석처리)
