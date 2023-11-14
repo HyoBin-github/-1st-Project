@@ -265,7 +265,13 @@ function replyList(){
 ````
 </details>
 <br/>
-<br/>
+<details>
+  <summary>리뷰 리스트 Script</summary>
+
+  ```
+```
+
+</details>
 
 
 
