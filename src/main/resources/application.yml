@@ -4,21 +4,21 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-#    username: admin
-#    password: '00000000'
+#    url: 
+#    username: 
+#    password: 
 
-  #    url: jdbc:mysql://localhost:3306/test2
-      url: jdbc:mysql://localhost:3306/springdb
-      username: root
-      password: '1234'
+  #    url: 
+      url: 
+      username: 
+      password: 
 
   mail:
     # google smtp server 사용
     host: smtp.gmail.com
     port: 587
-    username: songwc333@gmail.com
-    password: lqbppyxhkethghnb
+    username: 
+    password: 
     properties: # 이메일 구성에 대한 추가 속성
       mail:
         smtp:
@@ -72,12 +72,12 @@ spring:
     include: oauth2
 
   # code.aiaru@gmail.com
-  servlet:
-    multipart:
-      # 단일 파일에 대한 최대 허용 크기.
-      max-file-size: 10MB
-      # 전체 HTTP 요청에 대한 최대 허용 크기.
-      max-request-size: 50MB
+  # servlet:
+  #   multipart:
+  #     # 단일 파일에 대한 최대 허용 크기.
+  #     max-file-size: 10MB
+  #     # 전체 HTTP 요청에 대한 최대 허용 크기.
+  #     max-request-size: 50MB
 
 # code.aiaru@gmail.com
 # 파일 쪽 본인 이메일 쓰시고 디렉토리 설정해주시면 깔끔해질 것 같습니다. (깃 커밋 시 본인 설정 주석처리)
