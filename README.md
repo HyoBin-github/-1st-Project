@@ -399,3 +399,187 @@ function replyUpDate(id,productId){
 ````
   
 </details>
+<br/><br/>
+
+## 🤖 ChatBot
+<details>
+  <summary>ChatBot 팝업창</summary>
+
+````
+const chatbot = document.querySelector('.chatbot');
+
+chatbot.addEventListener("click",function(){
+    let options = "toolbar=no,scrollbars=no,resizable=yes, status=no,menubar=no,width=500,height=600, left=600, top=150";
+    window.open("/chatbot/chat",'팝업', options);
+});
+````
+  
+</details>
+<br/>
+
+<details>
+  <summary>ChatBot JavaScript</summary>
+
+````
+let stompClient = null;
+$(function(){
+    $("#question").keyup(qKeyupFn);
+    connect();
+})
+function showMessage(message){
+    $("#chat-content").append(message);
+    $("#chat-content").scrollTop($("#chat-content").prop("scrollHeight"));
+}
+function disconnect(){
+
+    window.close();
+}
+function connect(){
+
+    let soket = new SockJS('/chatEndpoint');
+    stompClient = Stomp.over(soket);
+    stompClient.connect({},function (frame){
+        console.log('Connected:'+frame);
+        stompClient.subscribe('/topic/greetings',function(botMessage){
+            showMessage(JSON.parse(botMessage.body).message);
+        });
+        stompClient.subscribe('/topic/message',function(botMessage){
+                    showMessage(JSON.parse(botMessage.body).message);
+                });
+        // @MessageMapping -> 처음연결시
+        stompClient.send("/chat/hello",{}, JSON.stringify({'content':'guest'}));
+    });
+}
+function inputTagString(text){
+    let now = new Date();
+    let ampm = (now.getHours()>11)?"오후":"오전";
+    let time = ampm + now.getHours()%12+":"+now.getMinutes();
+    let message = `
+    <div class="msg_user_flex_end">
+    <div class="message">
+    <div class="part">
+    <p>${text}</p>
+    </div>
+    <div class="time">${time}</div>
+    </div>
+    </div>`;
+    return message;
+}
+function menuclickFn(event){
+    let text = event.target.innerText.trim();
+    let message = inputTagString(text);
+    showMessage(message);
+    stompClient.send("/chat/message", {}, JSON.stringify({'content':text}));
+}
+function qKeyupFn(event){
+    if(event.keyCode!=13) return;
+    msgSendClickFn()
+}
+function msgSendClickFn(){
+    let question = $('#question').val().trim();
+    if(question==""||question.length<2) return;
+    let message = inputTagString(question);
+    showMessage(message);
+    $('#question').val("");
+    stompClient.send("/chat/message",{},JSON.stringify({'content':question}));
+}
+````
+  
+</details>
+
+<br/>
+<details>
+  <summary>ChatBot Controller</summary>
+
+````
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/chatbot")
+public class ChatBotController {
+
+    @GetMapping("/chat")
+    public String chatbot(){
+        return "chatbot/chat";
+    }
+
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public BotMessage chatSt() throws Exception{
+        Thread.sleep(50);
+        LocalDateTime today = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        String formattedDay = today.format(formatter);
+        String formattedTime = today.format(DateTimeFormatter.ofPattern("a H:mm"));
+
+        // 처음 실행되는 -> 답장문
+        return new BotMessage("<div class='flex_center_date' >"+formattedDay+"</div>"+
+                "<div class='msg_bot_flex'>"+
+                "<div class='icon'>"+
+                "<img src='/images/chatbot2.png'  th:alt=\"#{chat}\" />" +
+                "</div>"+
+                "<div class='message'>"+
+                "<div class='part'>"+
+                "<p style='text-align:center'>안녕하세요, 챗봇입니다. <br> 궁금한 점은 저에게 물어보세요!</p>"+
+                "</div>" +
+                "<div class='part2'>"+
+                "<p>아래는 자주하는 질문 내용을 클릭이나 입력해 주세요.</p>"+
+                "<div class='flex_center_menu'>"+
+                "<div class='menu-item'><span onclick='menuclickFn(event)'>상품문의</span></div>"+
+                "<div class='menu-item'><span onclick='menuclickFn(event)'>결제문의</span></div>"+
+                "<div class='menu-item'><span onclick='menuclickFn(event)'>배송문의</span></div>"+
+                "</div>"+
+                "</div>"+
+                "<div class='time'>"+
+                formattedTime+
+                "</div>"+
+                "</div>"+
+                "</div>");
+    }
+    @MessageMapping("/message")
+    @SendTo("/topic/message")
+    public BotMessage message(ClientMessage message) throws Exception{
+        Thread.sleep(100);
+        LocalDateTime today = LocalDateTime.now();
+        String formattedTime = today.format(DateTimeFormatter.ofPattern("a H:mm"));
+        String responseText = message.getContent()+"에 대한 안내입니다.";
+
+        return new BotMessage("<div class='msg_bot_flex'>"+
+                "<div class='icon'>"+
+                "<img src='/images/chatbot2.png'  th:alt=\"#{chat}\" />" +
+                "</div>"+
+                "<div class='message'>"+
+                "<div class='part'>"+
+                "<p>"+responseText+"</p>"+
+                "</div>"+
+                "<div class='time'>"+
+                formattedTime+
+                "</div>"+
+                "</div>"+
+                "</div>");
+    }
+
+}
+````
+  
+</details>
+
+<details>
+  <summary>ChatBot WebSocketConfig</summary>
+
+````
+@Configuration
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/topic");
+        config.setApplicationDestinationPrefixes("/chat");
+    }
+
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/chatEndpoint").withSockJS();
+    }
+}
+````
+</details>
