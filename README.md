@@ -39,7 +39,7 @@ ppt 템플릿 - 김＊＊ <br/>
 DB구조 사진
 <br/>
 
-![DB구조](https://github.com/HyoBin-github/-1st-Project/files/13366404/1.DB.pdf)
+![DB구조](https://github.com/HyoBin-github/-1st-Project/issues/8#issue-1994988218)
 
 
 <br/>
