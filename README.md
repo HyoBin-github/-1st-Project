@@ -4,6 +4,7 @@
   - 선정사유 : KREAM이라는 쇼핑몰의 깔끔한 UI와 상품의 직관성이 뚜렷해 참고하였습니다.
   - 시나리오형 챗봇 기능을 구현했습니다.
 <br/>
+<br/>
 
 ## 1차 팀 구현기능
 DB - 개인 <br/>
@@ -17,6 +18,8 @@ ppt 템플릿 - 김＊＊ <br/>
 관리자 카테고리 - 이＊＊ <br/>
 댓글 + 챗봇 - 방＊＊
 
+<br/>
+<br/>
 
 ## 🖥 개발 환경
 - Language : Java11, Javascript, HTML5, CSS3
@@ -26,6 +29,9 @@ ppt 템플릿 - 김＊＊ <br/>
 - Database : MySQL
 - Version Management : Git, Github
 
+<br/>
+<br/>
+
 ## 🔑DB구조
 - 리뷰(Review) <br/>
 &nbsp; 한 회원이 여러개의 댓글을 작성가능하도록 설정하였습니다. <br/>
@@ -33,6 +39,9 @@ ppt 템플릿 - 김＊＊ <br/>
   <summary>DB사진</summary>
 // DB사진
 </details>
+
+<br/>
+<br/>
 
 ## 리뷰 코드
 <details>
