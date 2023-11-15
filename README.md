@@ -37,7 +37,7 @@ ppt 템플릿 - 김＊＊ <br/>
 &nbsp; 한 회원이 여러개의 댓글을 작성가능하도록 설정하였습니다. <br/>
 <details>
   <summary>DB사진</summary>
-// DB사진
+[DB구조](https://github.com/HyoBin-github/-1st-Project/files/13366404/1.DB.pdf)
 </details>
 
 <br/>
