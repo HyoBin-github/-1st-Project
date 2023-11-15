@@ -27,7 +27,6 @@ ppt 템플릿 - 김＊＊ <br/>
 - Version Management : Git, Github
 
 ## 🔑DB구조
-<br/>
 - 리뷰(Review) <br/>
 &nbsp; 한 회원이 여러개의 댓글을 작성가능하도록 설정하였습니다. <br/>
 <details>
