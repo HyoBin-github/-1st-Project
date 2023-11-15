@@ -562,7 +562,7 @@ public class ChatBotController {
 ````
   
 </details>
-
+<br/>
 <details>
   <summary>ChatBot WebSocketConfig</summary>
 
