@@ -351,7 +351,7 @@ function onDelete(id){
 ````
   
 </details>
-<br/><br/>
+<br/>
 
 <details>
   <summary> 📝리뷰수정</summary>
