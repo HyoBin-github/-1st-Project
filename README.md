@@ -45,6 +45,11 @@ DB구조 사진
 <br/>
 <br/>
 
+### 리뷰 사진
+![댓글사진](https://github.com/HyoBin-github/-1st-Project/assets/133307549/78ebc8d0-5b83-429b-8cd2-3ce42baa5d40)
+
+<br/>
+
 ## 리뷰 코드
 <details>
   <summary> 💁‍♂️ Controller</summary>
@@ -404,6 +409,8 @@ function replyUpDate(id,productId){
 <br/><br/>
 
 ## 🤖 ChatBot
+
+![챗봇](https://github.com/HyoBin-github/-1st-Project/assets/133307549/e655eb7d-d2f5-4f89-bf1f-f997364e4361)
 <details>
   <summary>ChatBot 팝업창</summary>
 
