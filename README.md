@@ -7,7 +7,7 @@
   - 상품 카테고리, 게시판 카테고리의 댓글들을 구현했습니다.
 <br/>
 
-![1차 메인페이지](https://github.com/HyoBin-github/-1st-Project/assets/133307549/cbeb7299-9dfe-4886-9196-100eba592951)
+![1차 메인페이지](https://github.com/HyoBin-github/-1st-Project/assets/133307549/28b6c884-d7e0-4a56-ae25-7851d6c90d81)
 
 <br/>
 
