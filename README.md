@@ -46,12 +46,14 @@ DB구조 사진
 <br/>
 <br/>
 
-### 리뷰 사진
-![댓글사진](https://github.com/HyoBin-github/-1st-Project/assets/133307549/78ebc8d0-5b83-429b-8cd2-3ce42baa5d40)
+
+## 📃 리뷰
 
 <br/>
 
-## 리뷰 코드
+![댓글사진](https://github.com/HyoBin-github/-1st-Project/assets/133307549/78ebc8d0-5b83-429b-8cd2-3ce42baa5d40)
+
+<br/>
 <details>
   <summary> 💁‍♂️ Controller</summary>
   
